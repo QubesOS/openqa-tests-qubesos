@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 933,
+      "ypos": 672,
+      "width": 88,
+      "height": 41,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "installer-install-done-reboot"
+  ]
+}

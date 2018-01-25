@@ -1,0 +1,22 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 162,
+      "ypos": 601,
+      "width": 139,
+      "height": 20,
+      "type": "match"
+    },
+    {
+      "xpos": 169,
+      "ypos": 130,
+      "width": 832,
+      "height": 40,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "installer-install-initramfs-gen"
+  ]
+}

@@ -1,0 +1,86 @@
+#!/usr/share/openqa/script/load_templates
+#
+# Fedora Machines, Products, TestSuites and JobTemplates
+#
+# use load_templates to load the file into the database
+#
+{
+  JobTemplates => [
+                    {
+                      machine    => { name => "64bit" },
+                      prio       => 10,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_default" },
+                    },
+                    {
+                      machine    => { name => "uefi" },
+                      prio       => 11,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_default" },
+                    },
+		  ],
+  Machines     => [
+                    {
+                      backend   => "qemu",
+                      name      => "64bit",
+                      settings  => [
+                        { key => "QEMUCPU", value => "host" },
+                        { key => "QEMUCPUS", value => "2"},
+                        { key => "QEMURAM", value => "4096"},
+                        { key => "HDDSIZEGB", value => "30"},
+                        { key => "NICMODEL", value => "e1000e"},
+                        { key => "PART_TABLE_TYPE", value => "mbr"}
+                      ],
+                    },
+                    {
+                      backend   => "qemu",
+                      name      => "uefi",
+                      settings  => [
+                        { key => "QEMUCPU", value => "host" },
+                        { key => "QEMUCPUS", value => "2"},
+                        { key => "QEMURAM", value => "4096"},
+                        { key => "HDDSIZEGB", value => "30"},
+                        { key => "NICMODEL", value => "e1000e"},
+                        { key => "UEFI", value => "1"},
+                        { key => "PART_TABLE_TYPE", value => "gpt"}
+                      ],
+                    },
+                  ],
+  Products     => [
+                    {
+                      arch      => "x86_64",
+                      distri    => "qubesos",
+                      flavor    => "install-iso",
+                      name      => "",
+                      settings  => [
+                                     { key => "ISO_MAXSIZE", value => 4700372992 },
+                                   ],
+                      version   => "*",
+                    },
+                  ],
+  TestSuites   => [
+                    {
+                      name => "install_default",
+                      settings => [
+                        { key => "PACKAGE_SET", value => "default" },
+                      ],
+                    },
+                    {
+                      name => "install_default_upload",
+                      settings => [
+                        { key => "PACKAGE_SET", value => "default" },
+                        { key => "STORE_HDD_1", value => "disk_%FLAVOR%_%MACHINE%.qcow2" },
+                      ],
+                    },
+                  ],
+}

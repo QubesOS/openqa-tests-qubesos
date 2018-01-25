@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 424,
+      "ypos": 447,
+      "width": 168,
+      "height": 47,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "luks-prompt"
+  ]
+}

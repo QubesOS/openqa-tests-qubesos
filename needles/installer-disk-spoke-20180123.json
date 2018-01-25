@@ -1,0 +1,30 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 4,
+      "ypos": 433,
+      "width": 505,
+      "height": 149,
+      "type": "match"
+    },
+    {
+      "xpos": 11,
+      "ypos": 9,
+      "width": 233,
+      "height": 23,
+      "type": "match"
+    },
+    {
+      "xpos": 24,
+      "ypos": 39,
+      "width": 53,
+      "height": 23,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "installer-disk-spoke",
+    "installer-done"
+  ]
+}

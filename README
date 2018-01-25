@@ -1,0 +1,3 @@
+OpenQA Tests for Qubes OS 
+
+To install clone this repo to /var/lib/openqa/tests/qubesos

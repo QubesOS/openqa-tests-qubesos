@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 548,
+      "ypos": 127,
+      "width": 47,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "installer-software-debian"
+  ],
+  "properties": []
+}

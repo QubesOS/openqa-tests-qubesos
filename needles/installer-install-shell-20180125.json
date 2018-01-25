@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "tags": [
+    "install-shell"
+  ],
+  "area": [
+    {
+      "xpos": 3,
+      "ypos": 3,
+      "width": 221,
+      "height": 11,
+      "type": "match"
+    }
+  ]
+}

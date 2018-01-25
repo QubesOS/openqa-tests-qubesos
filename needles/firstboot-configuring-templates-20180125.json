@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 407,
+      "ypos": 415,
+      "width": 153,
+      "height": 27,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "firstboot-configuring-templates"
+  ],
+  "properties": []
+}

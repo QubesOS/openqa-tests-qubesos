@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 292,
+      "ypos": 142,
+      "width": 187,
+      "height": 26,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "firstboot-qubes"
+  ]
+}

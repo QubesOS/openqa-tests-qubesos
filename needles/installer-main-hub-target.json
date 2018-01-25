@@ -1,0 +1,22 @@
+{
+  "properties": [],
+  "tags": [
+    "installer-main-hub-target"
+  ],
+  "area": [
+    {
+      "xpos": 163,
+      "ypos": 9,
+      "width": 245,
+      "height": 29,
+      "type": "match"
+    },
+    {
+      "xpos": 164,
+      "ypos": 440,
+      "width": 351,
+      "height": 86,
+      "type": "match"
+    }
+  ]
+}

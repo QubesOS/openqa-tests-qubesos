@@ -91,6 +91,22 @@ sub test_flags {
     return { fatal => 1 };
 }
 
+sub post_fail_hook {
+
+    select_console('install-shell');
+    type_string "export SYSTEMD_PAGER=\n";
+    type_string "if ls /tmp/anaconda-tb-*; then\n";
+    type_string "  cat /tmp/anaconda-tb-* >/dev/$serialdev\n";
+    type_string "else\n";
+    type_string "  ls -l /tmp /var/log >/dev/$serialdev\n";
+    type_string "  tail -n 20 /tmp/*.log >/dev/$serialdev\n";
+    type_string "  journalctl -b >/dev/$serialdev\n";
+    type_string "fi\n";
+    sleep 2;
+    save_screenshot;
+
+};
+
 1;
 
 # vim: set sw=4 et:

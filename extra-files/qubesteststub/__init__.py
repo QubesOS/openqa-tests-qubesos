@@ -7,3 +7,4 @@ class DefaultPV(qubes.ext.Extension):
         super().__init__()
         qubes.vm.qubesvm.QubesVM.virt_mode._default = 'pv'
         qubes.vm.qubesvm.QubesVM.virt_mode._default_function = None
+        qubes.vm.qubesvm.QubesVM.virt_mode._setter = lambda _self, _prop, _value: 'pv'

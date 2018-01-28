@@ -35,15 +35,15 @@ sub run {
         send_key 'ret';
     }
 
-    # wait for the desktop to appear
+    # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;
 
     send_key 'f12';
+    if (check_screen('installer-prerelease')) {
+        assert_and_click 'installer-prerelease';
+    }
     if (check_screen 'installer-unsupported-hardware' ) {
         assert_and_click 'installer-unsupported-hardware';
-    }
-    if (check_screen 'installer-prerelease' ) {
-        assert_and_click 'installer-prerelease';
     }
     assert_screen 'installer-main-hub';
     assert_and_click 'installer-main-hub-target';
@@ -80,7 +80,7 @@ sub run {
     assert_screen 'installer-install-user-created';
     assert_screen 'installer-post-install-tasks', 900;
     #assert_and_click 'installer-install-done-reboot', 'left', 600;
-    assert_screen 'installer-install-done-reboot', 600;
+    assert_screen 'installer-install-done-reboot', 900;
 }
 
 sub test_flags {

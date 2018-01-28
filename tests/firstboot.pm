@@ -25,16 +25,16 @@ sub run {
     # wait for bootloader to appear
     assert_screen "bootloader", 90;
 
-	if (match_has_tag("bootloader-installer")) {
-		# troubleshooting
-		send_key "down";
-		send_key "ret";
-		# boot from local disk
-		send_key "down";
-		send_key "down";
-		send_key "down";
-		send_key "ret";
-	}
+    if (match_has_tag("bootloader-installer")) {
+        # troubleshooting
+        send_key "down";
+        send_key "ret";
+        # boot from local disk
+        send_key "down";
+        send_key "down";
+        send_key "down";
+        send_key "ret";
+    }
 
     # press enter to boot right away
     send_key "ret";
@@ -55,9 +55,9 @@ sub run {
 
     assert_screen "firstboot-configuring-templates", 90;
 	
-	my $timeout = 240;
+    my $timeout = 240;
     if (check_var('INSTALL_TEMPLATES', 'all')) {
-		$timeout *= 4;
+        $timeout *= 4;
     }
     if (index(get_var('INSTALL_TEMPLATES', ''), 'whonix') != -1) {
         $timeout += 2 * 240;
@@ -67,7 +67,7 @@ sub run {
     }
     assert_screen "firstboot-configuring-salt", $timeout;
     assert_screen "firstboot-setting-network", 240;
-    assert_screen "firstboot-done", 120;
+    assert_screen "firstboot-done", 240;
     send_key "f12";
 
     assert_screen "login-prompt-user-selected", 60;

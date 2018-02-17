@@ -39,7 +39,8 @@
                         { key => "QEMURAM", value => "4096"},
                         { key => "HDDSIZEGB", value => "30"},
                         { key => "NICMODEL", value => "e1000e"},
-                        { key => "PART_TABLE_TYPE", value => "mbr"}
+                        { key => "PART_TABLE_TYPE", value => "mbr"},
+                        { key => "VIRTIO_CONSOLE", value => "1"},
                       ],
                     },
                     {
@@ -52,7 +53,8 @@
                         { key => "HDDSIZEGB", value => "30"},
                         { key => "NICMODEL", value => "e1000e"},
                         { key => "UEFI", value => "1"},
-                        { key => "PART_TABLE_TYPE", value => "gpt"}
+                        { key => "PART_TABLE_TYPE", value => "gpt"},
+                        { key => "VIRTIO_CONSOLE", value => "1"},
                       ],
                     },
                   ],

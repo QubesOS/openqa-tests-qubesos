@@ -71,9 +71,9 @@ sub run {
     assert_screen 'installer-user';
     type_string 'user';
     send_key 'tab';
-    type_string 'userpass';
+    type_string $password;
     send_key 'tab';
-    type_string 'userpass';
+    type_string $password;
     send_key 'f12';
     assert_screen 'installer-user-weak-pass';
     send_key 'f12';

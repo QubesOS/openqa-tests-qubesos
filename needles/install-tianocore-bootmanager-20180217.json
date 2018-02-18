@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "tianocore-bootmanager"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "xpos": 2,
+      "ypos": 192,
+      "width": 124,
+      "height": 21,
+      "type": "match"
+    }
+  ]
+}

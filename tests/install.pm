@@ -18,9 +18,10 @@
 use base 'basetest';
 use strict;
 use testapi;
+use bootloader_setup;
 
 sub run {
-    if (!check_var('UEFI_DIRECT', '1')) {
+    if (!check_var('UEFI', '1') or !check_var('UEFI_DIRECT', '1')) {
         # wait for bootloader to appear
         assert_screen 'bootloader', 30;
 
@@ -33,6 +34,16 @@ sub run {
 
         # press enter to boot right away
         send_key 'ret';
+    }
+    if (check_var('UEFI', '1') and check_var('UEFI_DIRECT', '1')) {
+        # in direct UEFI boot we enable /mapbs workaround, which crashes dom0
+        # under OVMF
+        tianocore_select_bootloader();
+        send_key_until_needlematch('tianocore-menu-efi-shell', 'up', 5, 5);
+        send_key 'ret';
+        send_key 'esc';
+        type_string "fs0:\n";
+        type_string "EFI\\BOOT\\BOOTX64.efi qubes\n";
     }
 
     # wait for the installer welcome screen to appear

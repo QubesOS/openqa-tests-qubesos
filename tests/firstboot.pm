@@ -24,22 +24,24 @@ my $configuring = 0;
 sub run {
     my ($self) = @_;
 
-    # wait for bootloader to appear
-    assert_screen "bootloader", 90;
+    if (!check_var('UEFI', '1')) {
+        # wait for bootloader to appear
+        assert_screen "bootloader", 90;
 
-    if (match_has_tag("bootloader-installer")) {
-        # troubleshooting
-        send_key "down";
-        send_key "ret";
-        # boot from local disk
-        send_key "down";
-        send_key "down";
-        send_key "down";
+        if (match_has_tag("bootloader-installer")) {
+            # troubleshooting
+            send_key "down";
+            send_key "ret";
+            # boot from local disk
+            send_key "down";
+            send_key "down";
+            send_key "down";
+            send_key "ret";
+        }
+
+        # press enter to boot right away
         send_key "ret";
     }
-
-    # press enter to boot right away
-    send_key "ret";
 
     assert_screen "luks-prompt";
 

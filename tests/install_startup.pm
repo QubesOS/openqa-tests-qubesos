@@ -48,50 +48,6 @@ sub run {
 
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;
-
-    send_key 'f12';
-    if (check_screen('installer-prerelease')) {
-        assert_and_click 'installer-prerelease';
-    }
-    if (check_screen 'installer-unsupported-hardware' ) {
-        assert_and_click 'installer-unsupported-hardware';
-    }
-    assert_screen 'installer-main-hub';
-    assert_and_click 'installer-main-hub-target';
-    assert_screen 'installer-disk-spoke';
-    assert_and_click 'installer-done';
-    assert_screen 'installer-disk-luks-passphrase';
-    type_string 'lukspass';
-    send_key 'tab';
-    type_string 'lukspass';
-    send_key 'ret';
-    assert_screen 'installer-main-hub';
-    unless (check_var('INSTALL_TEMPLATES', 'all')) {
-    	assert_and_click 'installer-main-hub-software';
-        if (index(get_var('INSTALL_TEMPLATES'), 'whonix') == -1) {
-            assert_and_click 'installer-software-whonix';
-	    }
-        if (index(get_var('INSTALL_TEMPLATES'), 'debian') == -1) {
-            assert_and_click 'installer-software-debian';
-        }
-        assert_and_click 'installer-software-done';
-    }
-    assert_screen 'installer-main-ready';
-    send_key 'f12';
-    assert_and_click 'installer-install-hub-user';
-    assert_screen 'installer-user';
-    type_string 'user';
-    send_key 'tab';
-    type_string $password;
-    send_key 'tab';
-    type_string $password;
-    send_key 'f12';
-    assert_screen 'installer-user-weak-pass';
-    send_key 'f12';
-    assert_screen 'installer-install-user-created';
-    assert_screen 'installer-post-install-tasks', 900;
-    #assert_and_click 'installer-install-done-reboot', 'left', 600;
-    assert_screen 'installer-install-done-reboot', 900;
 }
 
 sub test_flags {
@@ -104,16 +60,8 @@ sub test_flags {
 
 sub post_fail_hook {
 
-    select_console('install-shell');
-    type_string "export SYSTEMD_PAGER=\n";
-    type_string "if ls /tmp/anaconda-tb-*; then\n";
-    type_string "  cat /tmp/anaconda-tb-* >/dev/$serialdev\n";
-    type_string "else\n";
-    type_string "  ls -l /tmp /var/log >/dev/$serialdev\n";
-    type_string "  tail -n 20 /tmp/*.log >/dev/$serialdev\n";
-    type_string "  journalctl -b >/dev/$serialdev\n";
-    type_string "fi\n";
-    sleep 2;
+    # hide plymouth if any
+    send_key "esc";
     save_screenshot;
 
 };
@@ -121,3 +69,4 @@ sub post_fail_hook {
 1;
 
 # vim: set sw=4 et:
+

@@ -15,21 +15,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use base 'anacondatest';
 use strict;
 use testapi;
-use autotest;
 
-require 'qubesdistribution.pm';
-testapi::set_distribution(qubesdistribution->new());
-
-autotest::loadtest "tests/isosize.pm";
-autotest::loadtest "tests/install_startup.pm";
-autotest::loadtest "tests/install_welcome.pm";
-autotest::loadtest "tests/install_partitioning_default.pm";
-autotest::loadtest "tests/install_templates.pm";
-autotest::loadtest "tests/install_do_user.pm";
-autotest::loadtest "tests/install_fixups.pm";
-autotest::loadtest "tests/firstboot.pm";
+sub run {
+    unless (check_var('INSTALL_TEMPLATES', 'all')) {
+    	assert_and_click 'installer-main-hub-software';
+        if (index(get_var('INSTALL_TEMPLATES'), 'whonix') == -1) {
+            assert_and_click 'installer-software-whonix';
+	    }
+        if (index(get_var('INSTALL_TEMPLATES'), 'debian') == -1) {
+            assert_and_click 'installer-software-debian';
+        }
+        assert_and_click 'installer-software-done';
+    }
+    assert_screen 'installer-main-hub';
+}
 
 1;
 

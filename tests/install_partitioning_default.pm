@@ -15,21 +15,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use base 'anacondatest';
 use strict;
 use testapi;
-use autotest;
 
-require 'qubesdistribution.pm';
-testapi::set_distribution(qubesdistribution->new());
-
-autotest::loadtest "tests/isosize.pm";
-autotest::loadtest "tests/install_startup.pm";
-autotest::loadtest "tests/install_welcome.pm";
-autotest::loadtest "tests/install_partitioning_default.pm";
-autotest::loadtest "tests/install_templates.pm";
-autotest::loadtest "tests/install_do_user.pm";
-autotest::loadtest "tests/install_fixups.pm";
-autotest::loadtest "tests/firstboot.pm";
+sub run {
+    assert_and_click 'installer-main-hub-target';
+    assert_screen 'installer-disk-spoke';
+    assert_and_click 'installer-done';
+    assert_screen 'installer-disk-luks-passphrase';
+    type_string 'lukspass';
+    send_key 'tab';
+    type_string 'lukspass';
+    send_key 'ret';
+    assert_screen 'installer-main-hub';
+}
 
 1;
 

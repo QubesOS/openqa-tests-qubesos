@@ -15,21 +15,32 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use base 'anacondatest';
 use strict;
 use testapi;
-use autotest;
+use bootloader_setup;
 
-require 'qubesdistribution.pm';
-testapi::set_distribution(qubesdistribution->new());
+sub run {
+    # wait for the installer welcome screen to appear
+    assert_screen 'installer', 300;
 
-autotest::loadtest "tests/isosize.pm";
-autotest::loadtest "tests/install_startup.pm";
-autotest::loadtest "tests/install_welcome.pm";
-autotest::loadtest "tests/install_partitioning_default.pm";
-autotest::loadtest "tests/install_templates.pm";
-autotest::loadtest "tests/install_do_user.pm";
-autotest::loadtest "tests/install_fixups.pm";
-autotest::loadtest "tests/firstboot.pm";
+    send_key 'f12';
+    if (check_screen('installer-prerelease')) {
+        assert_and_click 'installer-prerelease';
+    }
+    if (check_screen 'installer-unsupported-hardware' ) {
+        assert_and_click 'installer-unsupported-hardware';
+    }
+    assert_screen 'installer-main-hub';
+}
+
+sub test_flags {
+    # 'fatal'          - abort whole test suite if this fails (and set overall state 'failed')
+    # 'ignore_failure' - if this module fails, it will not affect the overall result at all
+    # 'milestone'      - after this test succeeds, update 'lastgood'
+    # 'norollback'     - don't roll back to 'lastgood' snapshot if this fails
+    return { fatal => 1 };
+}
 
 1;
 

@@ -19,6 +19,8 @@ use base "basetest";
 use strict;
 use testapi;
 
+my $configuring = 0;
+
 sub run {
     my ($self) = @_;
 
@@ -54,16 +56,18 @@ sub run {
     send_key "f12";
 
     assert_screen "firstboot-configuring-templates", 90;
+
+    $configuring = 1;
 	
-    my $timeout = 240;
+    my $timeout = 360;
     if (check_var('INSTALL_TEMPLATES', 'all')) {
         $timeout *= 4;
     }
-    if (index(get_var('INSTALL_TEMPLATES', ''), 'whonix') != -1) {
-        $timeout += 2 * 240;
+    if (get_var('INSTALL_TEMPLATES', '') =~ /whonix/) {
+        $timeout += 2 * 360;
     }
-    if (index(get_var('INSTALL_TEMPLATES', ''), 'debian') != -1) {
-        $timeout += 1 * 240;
+    if (get_var('INSTALL_TEMPLATES', '') =~ /debian/) {
+        $timeout += 1 * 360;
     }
     assert_screen "firstboot-configuring-salt", $timeout;
     assert_screen "firstboot-setting-network", 240;
@@ -84,6 +88,29 @@ sub test_flags {
     # 'important' - if this fails, set the overall state to 'fail'
     return { important => 1 };
 }
+
+sub post_fail_hook {
+
+    if ($configuring) {
+        send_key "ret";
+        sleep 2;
+        send_key "f12";
+
+        check_screen "login-prompt-user-selected", 30;
+
+        select_console('root-console');
+        script_run "export SYSTEMD_PAGER=\n";
+        script_run "tail /var/log/libvirt/libxl/libxl-driver.log >/dev/$serialdev\n";
+        script_run "tail -n 500 \$(ls -tr /var/log/xen/console/*log|tail -4) >/dev/$serialdev\n";
+        script_run "journalctl -b >/dev/$serialdev\n";
+        script_run "xl info >/dev/$serialdev\n";
+        script_run "qvm-prefs sys-net >/dev/$serialdev\n";
+        script_run "qvm-prefs sys-firewall >/dev/$serialdev\n";
+        sleep 5;
+        save_screenshot;
+    }
+
+};
 
 1;
 

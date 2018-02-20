@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "tags": [
+    "install-custom-type-btrfs"
+  ],
+  "area": [
+    {
+      "xpos": 65,
+      "ypos": 239,
+      "width": 63,
+      "height": 22,
+      "type": "match"
+    }
+  ]
+}

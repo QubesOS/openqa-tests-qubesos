@@ -28,6 +28,28 @@
                                     },
                       test_suite => { name => "install_default" },
                     },
+                    {
+                      machine    => { name => "64bit" },
+                      prio       => 10,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_btrfs" },
+                    },
+                    {
+                      machine    => { name => "uefi" },
+                      prio       => 11,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_btrfs" },
+                    },
 		  ],
   Machines     => [
                     {
@@ -77,6 +99,13 @@
                       name => "install_default",
                       settings => [
                         { key => "PACKAGE_SET", value => "default" },
+                      ],
+                    },
+                    {
+                      name => "install_btrfs",
+                      settings => [
+                        { key => "PACKAGE_SET", value => "default" },
+                        { key => "PARTITIONING", value => "btrfs" },
                       ],
                     },
                     {

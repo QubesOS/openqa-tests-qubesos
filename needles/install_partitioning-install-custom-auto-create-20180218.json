@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "tags": [
+    "install-custom-auto-create"
+  ],
+  "area": [
+    {
+      "xpos": 52,
+      "ypos": 144,
+      "width": 272,
+      "height": 39,
+      "type": "match"
+    }
+  ]
+}

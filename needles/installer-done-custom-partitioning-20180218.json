@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "installer-done"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "xpos": 12,
+      "width": 53,
+      "height": 23,
+      "type": "match",
+      "ypos": 33
+    }
+  ]
+}

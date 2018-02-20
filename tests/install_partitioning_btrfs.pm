@@ -15,25 +15,32 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use base 'anacondatest';
 use strict;
 use testapi;
-use autotest;
 
-require 'qubesdistribution.pm';
-testapi::set_distribution(qubesdistribution->new());
-
-autotest::loadtest "tests/isosize.pm";
-autotest::loadtest "tests/install_startup.pm";
-autotest::loadtest "tests/install_welcome.pm";
-if (get_var('PARTITIONING')) {
-    autotest::loadtest "tests/install_partitioning_" . get_var('PARTITIONING') . ".pm";
-} else {
-    autotest::loadtest "tests/install_partitioning_default.pm";
+sub run {
+    assert_and_click 'installer-main-hub-target';
+    assert_screen 'installer-disk-spoke';
+    assert_and_click 'installer-disk-custom-partitioning';
+    assert_and_click 'installer-done';
+    assert_screen 'installer-disk-luks-passphrase';
+    type_string 'lukspass';
+    send_key 'tab';
+    type_string 'lukspass';
+    send_key 'ret';
+    assert_screen 'installer-custom-partitioning';
+    # TODO: this may be language dependent
+    send_key 'alt-n';
+    send_key_until_needlematch('install-custom-type-btrfs', 'up', 5, 1);
+    send_key 'shift-tab';
+    send_key 'ret';
+    assert_and_click 'installer-done';
+    # disk passphrase again
+    send_key 'ret';
+    assert_and_click 'installer-custom-summary-accept';
+    assert_screen 'installer-main-hub';
 }
-autotest::loadtest "tests/install_templates.pm";
-autotest::loadtest "tests/install_do_user.pm";
-autotest::loadtest "tests/install_fixups.pm";
-autotest::loadtest "tests/firstboot.pm";
 
 1;
 

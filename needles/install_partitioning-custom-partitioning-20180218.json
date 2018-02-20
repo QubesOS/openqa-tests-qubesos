@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "tags": [
+    "installer-disk-custom-partitioning"
+  ],
+  "area": [
+    {
+      "xpos": 263,
+      "ypos": 478,
+      "width": 196,
+      "height": 29,
+      "type": "match"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "tags": [
+    "installer-custom-summary-accept"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "xpos": 189,
+      "ypos": 268,
+      "width": 254,
+      "height": 268,
+      "type": "match"
+    },
+    {
+      "xpos": 754,
+      "ypos": 548,
+      "width": 115,
+      "height": 24,
+      "type": "match"
+    }
+  ]
+}

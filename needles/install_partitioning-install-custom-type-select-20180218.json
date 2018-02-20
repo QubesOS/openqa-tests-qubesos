@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "install-custom-type-select"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "xpos": 246,
+      "ypos": 228,
+      "width": 36,
+      "height": 49,
+      "type": "match"
+    }
+  ]
+}

@@ -56,7 +56,7 @@
                       backend   => "qemu",
                       name      => "64bit",
                       settings  => [
-                        { key => "QEMUCPU", value => "host" },
+                        { key => "QEMUCPU", value => "host,+svm" },
                         { key => "QEMUCPUS", value => "2"},
                         { key => "QEMURAM", value => "4096"},
                         { key => "HDDSIZEGB", value => "30"},
@@ -69,7 +69,7 @@
                       backend   => "qemu",
                       name      => "uefi",
                       settings  => [
-                        { key => "QEMUCPU", value => "host" },
+                        { key => "QEMUCPU", value => "host,+svm" },
                         { key => "QEMUCPUS", value => "2"},
                         { key => "QEMURAM", value => "4096"},
                         { key => "HDDSIZEGB", value => "30"},

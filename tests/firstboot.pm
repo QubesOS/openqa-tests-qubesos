@@ -38,9 +38,6 @@ sub run {
             send_key "down";
             send_key "ret";
         }
-
-        # press enter to boot right away
-        send_key "ret";
     }
 
     assert_screen "luks-prompt";

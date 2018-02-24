@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 5,
+      "ypos": 8,
+      "width": 109,
+      "height": 18,
+      "type": "match"
+    },
+    {
+      "xpos": 271,
+      "ypos": 107,
+      "width": 79,
+      "height": 27,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "installer-user"
+  ],
+  "properties": []
+}

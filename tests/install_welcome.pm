@@ -25,10 +25,10 @@ sub run {
     assert_screen 'installer', 300;
 
     send_key 'f12';
-    if (check_screen('installer-prerelease')) {
+    if (check_screen('installer-prerelease', 10)) {
         assert_and_click 'installer-prerelease';
     }
-    if (check_screen 'installer-unsupported-hardware' ) {
+    if (check_screen 'installer-unsupported-hardware', 10) {
         assert_and_click 'installer-unsupported-hardware';
     }
     assert_screen 'installer-main-hub';

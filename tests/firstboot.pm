@@ -98,13 +98,13 @@ sub post_fail_hook {
         check_screen "login-prompt-user-selected", 30;
 
         select_console('root-console');
-        script_run "export SYSTEMD_PAGER=\n";
-        script_run "tail /var/log/libvirt/libxl/libxl-driver.log >/dev/$serialdev\n";
-        script_run "tail -n 500 \$(ls -tr /var/log/xen/console/*log|tail -4) >/dev/$serialdev\n";
-        script_run "journalctl -b >/dev/$serialdev\n";
-        script_run "xl info >/dev/$serialdev\n";
-        script_run "qvm-prefs sys-net >/dev/$serialdev\n";
-        script_run "qvm-prefs sys-firewall >/dev/$serialdev\n";
+        script_run "export SYSTEMD_PAGER=";
+        script_run "tail /var/log/libvirt/libxl/libxl-driver.log >/dev/$serialdev";
+        script_run "tail -n 500 \$(ls -tr /var/log/xen/console/*log|tail -4) >/dev/$serialdev";
+        script_run "journalctl -b >/dev/$serialdev";
+        script_run "xl info >/dev/$serialdev";
+        script_run "qvm-prefs sys-net >/dev/$serialdev";
+        script_run "qvm-prefs sys-firewall >/dev/$serialdev";
         sleep 5;
         save_screenshot;
     }

@@ -1,0 +1,23 @@
+{
+  "tags": [
+    "anaconda-error",
+    "anaconda-error-report"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "xpos": 273,
+      "ypos": 315,
+      "width": 227,
+      "height": 29,
+      "type": "match"
+    },
+    {
+      "xpos": 573,
+      "ypos": 425,
+      "width": 94,
+      "height": 26,
+      "type": "match"
+    }
+  ]
+}

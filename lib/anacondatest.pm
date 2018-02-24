@@ -18,23 +18,66 @@
 package anacondatest;
 use base 'basetest';
 use strict;
-use testapi;
+use testapi qw(select_console type_string save_screenshot);
+use networking;
+
+sub new {
+    my ($class, $args) = @_;
+    my $self = $class->SUPER::new($args);
+    $self->{network_up} = 0;
+    return $self;
+}
 
 sub post_fail_hook {
+    my $self = shift;
 
-    select_console('install-shell');
-    type_string "export SYSTEMD_PAGER=\n";
-    type_string "if ls /tmp/anaconda-tb-*; then\n";
-    type_string "  cat /tmp/anaconda-tb-* >/dev/$serialdev\n";
-    type_string "else\n";
-    type_string "  ls -l /tmp /var/log >/dev/$serialdev\n";
-    type_string "  tail -n 20 /tmp/*.log >/dev/$serialdev\n";
-    type_string "  journalctl -b >/dev/$serialdev\n";
-    type_string "fi\n";
-    sleep 2;
+    # if error dialog is shown, click "report" - it then creates directory structure for ABRT
+    my $has_traceback = 0;
+    if (check_screen "anaconda-error", 10) {
+        assert_and_click "anaconda-error-report";
+        $has_traceback = 1;
+    } elsif (check_screen "anaconda-text-error", 10) {  # also for text install
+        type_string "1\n";
+        $has_traceback = 1;
+    }
+
     save_screenshot;
+    select_console('install-shell');
+    if (!$self->{network_up}) {
+        enable_dom0_network_no_netvm();
+        $self->{network_up} = 1;
+    }
+    upload_logs "/tmp/X.log", failok=>1;
+    upload_logs "/tmp/anaconda.log", failok=>1;
+    upload_logs "/tmp/packaging.log", failok=>1;
+    upload_logs "/tmp/storage.log", failok=>1;
+    upload_logs "/tmp/syslog", failok=>1;
+    upload_logs "/tmp/program.log", failok=>1;
+    upload_logs "/tmp/dnf.log", failok=>1;
+    upload_logs "/tmp/dnf.librepo.log", failok=>1;
+    upload_logs "/tmp/dnf.rpm.log", failok=>1;
 
-};
+    if ($has_traceback) {
+        # Upload Anaconda traceback logs
+        script_run "tar czf /tmp/anaconda_tb.tar.gz /tmp/anaconda-tb-*";
+        upload_logs "/tmp/anaconda_tb.tar.gz";
+    }
+
+    # Upload all ABRT logs (if there are any)
+    unless (script_run 'test -n "$(ls -A /var/tmp)" && tar czf /var/tmp/var_tmp.tar.gz /var/tmp') {
+        upload_logs "/var/tmp/var_tmp.tar.gz";
+    }
+
+    # Upload /var/log
+    unless (script_run "tar czf /tmp/var_log.tar.gz /var/log") {
+        upload_logs "/tmp/var_log.tar.gz";
+    }
+
+    # Upload anaconda core dump, if there is one
+    unless (script_run "ls /tmp/anaconda.core.* && tar czf /tmp/anaconda.core.tar.gz /tmp/anaconda.core.*") {
+        upload_logs "/tmp/anaconda.core.tar.gz";
+    }
+}
 
 sub test_flags {
     # 'fatal'          - abort whole test suite if this fails (and set overall state 'failed')
@@ -45,3 +88,4 @@ sub test_flags {
 }
 
 1;
+# vim: sw=4 et ts=4:

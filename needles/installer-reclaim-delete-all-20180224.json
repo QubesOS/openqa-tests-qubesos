@@ -1,0 +1,22 @@
+{
+  "properties": [],
+  "tags": [
+    "installer-reclaim-delete-all"
+  ],
+  "area": [
+    {
+      "xpos": 7,
+      "ypos": 116,
+      "width": 145,
+      "height": 20,
+      "type": "match"
+    },
+    {
+      "xpos": 935,
+      "ypos": 519,
+      "width": 74,
+      "height": 22,
+      "type": "match"
+    }
+  ]
+}

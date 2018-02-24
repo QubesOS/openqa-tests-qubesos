@@ -21,35 +21,39 @@ use testapi;
 use bootloader_setup;
 
 sub run {
-    pre_bootmenu_setup();
-
-    if (!check_var('UEFI', '1') or !check_var('UEFI_DIRECT', '1')) {
-        # wait for bootloader to appear
-        assert_screen 'bootloader', 30;
-
-        # skip media verification
-        if (check_var('UEFI', '1')) {
-            send_key 'down';
-        } else {
-            send_key 'up';
-        }
-
-        # press enter to boot right away
-        send_key 'ret';
+    if (check_var('UEFI', '1')) {
+        die "UEFI not supported by this test";
     }
-    if (check_var('UEFI', '1') and check_var('UEFI_DIRECT', '1')) {
-        # in direct UEFI boot we enable /mapbs workaround, which crashes dom0
-        # under OVMF
-        tianocore_select_bootloader();
-        send_key_until_needlematch('tianocore-menu-efi-shell', 'up', 5, 5);
-        send_key 'ret';
-        send_key 'esc';
-        type_string "fs0:\n";
-        type_string "EFI\\BOOT\\BOOTX64.efi qubes\n";
-    }
+    # wait for bootloader to appear
+    assert_screen 'bootloader', 30;
+
+    # skip media verification
+    send_key 'up';
+
+    # press enter to boot right away
+    send_key 'ret';
 
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;
+
+    select_console('root-virtio-terminal');
+
+    # emulate PureOS partition layout
+    my $sfdisk_layout = "label: dos\n\n";
+    $sfdisk_layout .= "size=2GiB, type=83\n"; # "rescue"
+    $sfdisk_layout .= "size=750MiB, type=83, bootable\n"; # /boot
+    $sfdisk_layout .= "type=5\n";
+    $sfdisk_layout .= "type=83\n"; # LUKS
+    assert_script_run("echo '$sfdisk_layout' | sfdisk /dev/vda");
+    # make "rescue" filesystem broken as in PureOS installation,
+    # to not ease anaconda's life (see bug #3050)
+    assert_script_run("mkfs.ext4 -F -S /dev/vda1 600000");
+    assert_script_run("mkfs.ext4 /dev/vda2");
+    assert_script_run("cryptsetup luksFormat /dev/vda5 -q -l 64 /dev/urandom");
+    assert_script_run("sync");
+    type_string("reboot -fn\n");
+    select_console('installation');
+    reset_consoles();
 }
 
 sub test_flags {
@@ -59,14 +63,6 @@ sub test_flags {
     # 'norollback'     - don't roll back to 'lastgood' snapshot if this fails
     return { fatal => 1 };
 }
-
-sub post_fail_hook {
-
-    # hide plymouth if any
-    send_key "esc";
-    save_screenshot;
-
-};
 
 1;
 

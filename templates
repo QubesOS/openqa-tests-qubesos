@@ -40,6 +40,17 @@
                       test_suite => { name => "install_btrfs" },
                     },
                     {
+                      machine    => { name => "64bit" },
+                      prio       => 10,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_over_existing" },
+                    },
+                    {
                       machine    => { name => "uefi" },
                       prio       => 11,
                       product    => {
@@ -99,6 +110,12 @@
                       name => "install_default",
                       settings => [
                         { key => "PACKAGE_SET", value => "default" },
+                      ],
+                    },
+                    {
+                      name => "install_over_existing",
+                      settings => [
+                        { key => "INSTALL_OVER_EXISTING", value => "1" },
                       ],
                     },
                     {

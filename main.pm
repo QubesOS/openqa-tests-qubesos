@@ -23,6 +23,9 @@ require 'qubesdistribution.pm';
 testapi::set_distribution(qubesdistribution->new());
 
 autotest::loadtest "tests/isosize.pm";
+if (get_var('INSTALL_OVER_EXISTING')) {
+    autotest::loadtest "tests/install_preexisting_system.pm";
+}
 autotest::loadtest "tests/install_startup.pm";
 autotest::loadtest "tests/install_welcome.pm";
 if (get_var('PARTITIONING')) {

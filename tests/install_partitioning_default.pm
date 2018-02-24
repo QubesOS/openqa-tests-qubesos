@@ -28,6 +28,11 @@ sub run {
     send_key 'tab';
     type_string 'lukspass';
     send_key 'ret';
+    if (get_var('INSTALL_OVER_EXISTING')) {
+        assert_and_click 'installer-reclaim-space-question';
+        assert_and_click 'installer-reclaim-delete-all';
+        assert_and_click 'installer-reclaim-confirm';
+    }
     assert_screen 'installer-main-hub';
 }
 

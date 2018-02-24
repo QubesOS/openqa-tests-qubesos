@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 2,
+      "ypos": 160,
+      "width": 171,
+      "height": 15,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "boot-menu-select"
+  ],
+  "properties": []
+}

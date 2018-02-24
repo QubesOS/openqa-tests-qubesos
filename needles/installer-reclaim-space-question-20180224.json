@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 219,
+      "ypos": 348,
+      "width": 308,
+      "height": 19,
+      "type": "match"
+    },
+    {
+      "xpos": 687,
+      "ypos": 545,
+      "width": 101,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "installer-reclaim-space-question"
+  ],
+  "properties": []
+}

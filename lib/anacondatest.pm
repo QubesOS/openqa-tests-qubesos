@@ -18,7 +18,7 @@
 package anacondatest;
 use base 'basetest';
 use strict;
-use testapi qw(select_console type_string save_screenshot);
+use testapi;
 use networking;
 
 sub new {

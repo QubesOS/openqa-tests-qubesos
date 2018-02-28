@@ -18,6 +18,7 @@
 use base "basetest";
 use strict;
 use testapi;
+use networking;
 
 my $configuring = 0;
 
@@ -97,11 +98,18 @@ sub post_fail_hook {
 
         check_screen "login-prompt-user-selected", 30;
 
-        select_console('root-console');
-        script_run "export SYSTEMD_PAGER=";
-        script_run "tail /var/log/libvirt/libxl/libxl-driver.log >/dev/$serialdev";
-        script_run "tail -n 500 \$(ls -tr /var/log/xen/console/*log|tail -4) >/dev/$serialdev";
-        script_run "journalctl -b >/dev/$serialdev";
+        select_console('root-virtio-terminal');
+        enable_dom0_network_netvm();
+        upload_logs('/var/log/libvirt/libxl/libxl-driver.log');
+        unless (script_run('journalctl -b >/tmp/journalctl.log')) {
+            upload_logs('/tmp/journalctl.log');
+        }
+        script_run("echo ------ >/dev/$serialdev; ls -1 /var/log/xen/console/*.log; echo ===== >/dev/$serialdev");
+        my $logs = wait_serial(qr/------.*=====/);
+        foreach (split(/\n/, $logs)) {
+            next if m/^---\|^===/;
+            upload_logs($_);
+        }
         script_run "xl info >/dev/$serialdev";
         script_run "qvm-prefs sys-net >/dev/$serialdev";
         script_run "qvm-prefs sys-firewall >/dev/$serialdev";

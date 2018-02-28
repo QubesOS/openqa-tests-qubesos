@@ -48,6 +48,28 @@
                                       flavor  => "install-iso",
                                       version => "*",
                                     },
+                      test_suite => { name => "install_usbvm_combined" },
+                    },
+                    {
+                      machine    => { name => "64bit" },
+                      prio       => 10,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_no_usbvm" },
+                    },
+                    {
+                      machine    => { name => "64bit" },
+                      prio       => 10,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
                       test_suite => { name => "install_over_existing" },
                     },
                     {
@@ -123,6 +145,20 @@
                       settings => [
                         { key => "PACKAGE_SET", value => "default" },
                         { key => "PARTITIONING", value => "btrfs" },
+                      ],
+                    },
+                    {
+                      name => "install_usbvm_combined",
+                      settings => [
+                        { key => "PACKAGE_SET", value => "default" },
+                        { key => "USBVM", value => "sys-net" },
+                      ],
+                    },
+                    {
+                      name => "install_no_usbvm",
+                      settings => [
+                        { key => "PACKAGE_SET", value => "default" },
+                        { key => "USBVM", value => "none" },
                       ],
                     },
                     {

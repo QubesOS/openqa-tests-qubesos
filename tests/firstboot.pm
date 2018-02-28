@@ -51,6 +51,15 @@ sub run {
 
     assert_and_click "firstboot-qubes";
 
+    if (check_var('USBVM', 'none')) {
+        # expect checkbox to be enabled by default and disable it
+        assert_and_click('firstboot-qubes-usbvm-enabled', 'left', 5);
+    } elsif (get_var('USBVM', 'sys-usb') eq 'sys-usb') {
+        assert_screen('firstboot-qubes-usbvm-enabled', 5);
+    } elsif (check_var('USBVM', 'sys-net')) {
+        assert_screen('firstboot-qubes-usbvm-enabled', 5);
+        assert_and_click('firstboot-qubes-usbvm-combine', 'left', 5);
+    }
     # TODO: check defaults, select various options
 
     send_key "f12";

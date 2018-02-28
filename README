@@ -15,3 +15,7 @@ Variables:
  - `ARCH` - always `x86_64`
  - `BUILD` - build number, not interpreted (but displayed in UI)
  - `UEFI_DIRECT` - UEFI boots directly to Xen, no separate bootloader
+
+Variables used in tests:
+ - `INSTALL_TEMPLATES` - space separated list of template groups (`debian`, `whonix`), or `all`
+ - `USBVM` - USB VM configuration: `none`, `sys-usb` (default), `sys-net` (combined with Net VM)

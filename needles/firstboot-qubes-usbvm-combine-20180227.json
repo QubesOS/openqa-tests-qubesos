@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 289,
+      "ypos": 212,
+      "width": 326,
+      "height": 17,
+      "type": "match"
+    },
+    {
+      "xpos": 269,
+      "ypos": 211,
+      "width": 17,
+      "height": 20,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "firstboot-qubes-usbvm-combine"
+  ],
+  "properties": []
+}

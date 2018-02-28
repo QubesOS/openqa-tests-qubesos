@@ -83,6 +83,17 @@
                                     },
                       test_suite => { name => "install_btrfs" },
                     },
+                    {
+                      machine    => { name => "mac" },
+                      prio       => 20,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_default" },
+                    },
 		  ],
   Machines     => [
                     {
@@ -104,6 +115,23 @@
                       settings  => [
                         { key => "QEMUCPU", value => "host,+svm" },
                         { key => "QEMUCPUS", value => "2"},
+                        { key => "QEMURAM", value => "4096"},
+                        { key => "HDDSIZEGB", value => "30"},
+                        { key => "NICMODEL", value => "e1000e"},
+                        { key => "CDMODEL", value => "ide-cd"},
+                        { key => "UEFI", value => "1"},
+                        { key => "BIOS", value => "/usr/share/qemu/ovmf-x86_64.bin"},
+                        { key => "PART_TABLE_TYPE", value => "gpt"},
+                        { key => "VIRTIO_CONSOLE", value => "1"},
+                      ],
+                    },
+                    {
+                      backend   => "qemu",
+                      name      => "mac",
+                      settings  => [
+                        { key => "QEMUCPU", value => "host,+svm" },
+                        { key => "QEMUCPUS", value => "2"},
+                        { key => "QEMU_SMBIOS", value => "type=3,manufacturer=apple"},
                         { key => "QEMURAM", value => "4096"},
                         { key => "HDDSIZEGB", value => "30"},
                         { key => "NICMODEL", value => "e1000e"},

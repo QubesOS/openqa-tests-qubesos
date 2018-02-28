@@ -1,3 +1,4 @@
+import asyncio
 
 import qubes.ext
 import qubes.vm.qubesvm
@@ -23,3 +24,14 @@ class DefaultPV(qubes.ext.Extension):
             qubes.vm.qubesvm.QubesVM.virt_mode._default = 'pv'
             qubes.vm.qubesvm.QubesVM.virt_mode._default_function = None
             qubes.vm.qubesvm.QubesVM.virt_mode._setter = lambda _self, _prop, _value: 'pv'
+
+    @qubes.ext.handler('features-request')
+    @asyncio.coroutine
+    def on_features_request(self, vm, event, untrusted_features):
+        if vm.klass != 'TemplateVM':
+            return
+        if not vm.features.get('fixups-installed', False):
+            # nested virtualization confuses systemd
+            dropin = '/etc/systemd/system/xendriverdomain.service.d'
+            yield from vm.run_for_stdio('mkdir -p {dropin} && echo -e "[Unit]\\nConditionVirtualization=" > {dropin}/30_openqa.conf'.format(dropin=dropin), user='root')
+            vm.features['fixups-installed'] = True

@@ -68,15 +68,15 @@ sub run {
 
     $configuring = 1;
 	
-    my $timeout = 360;
+    my $timeout = 600;
     if (check_var('INSTALL_TEMPLATES', 'all')) {
         $timeout *= 4;
     }
     if (get_var('INSTALL_TEMPLATES', '') =~ /whonix/) {
-        $timeout += 2 * 360;
+        $timeout += 2 * 600;
     }
     if (get_var('INSTALL_TEMPLATES', '') =~ /debian/) {
-        $timeout += 1 * 360;
+        $timeout += 1 * 600;
     }
     assert_screen "firstboot-configuring-salt", $timeout;
     assert_screen "firstboot-setting-network", 240;

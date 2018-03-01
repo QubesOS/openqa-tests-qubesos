@@ -32,10 +32,16 @@ sub run {
     type_string "cd /root/extra-files\n";
     type_string "python3 ./setup.py install\n";
     type_string "echo '$testapi::password' | passwd --stdin root\n";
-    save_screenshot;
+    type_string "systemctl enable serial-getty\@hvc1.service\n";
     type_string "exit\n";
-    script_run "sed -ie s:console=none:console=vga,com1: /mnt/sysimage/boot/grub2/grub.cfg";
-    script_run "sed -ie s:console=none:console=vga,com1: /mnt/sysimage/boot/efi/EFI/qubes/xen.cfg";
+    script_run "sed -i -e s:console=none:console=vga,com1: /mnt/sysimage/boot/grub2/grub.cfg";
+    my $xen_cfg = '/mnt/sysimage/boot/efi/EFI/qubes/xen.cfg';
+    if (!script_run("grep console= $xen_cfg")) {
+        script_run "sed -i -e s:console=none:console=vga,com1: $xen_cfg";
+    } else {
+        script_run "sed -i -e 's:^options=:options=console=vga,com1 :' $xen_cfg";
+    }
+    script_run "sed -i -e s:console=none:console=vga,com1: /mnt/sysimage/etc/default/grub";
     type_string "sync\n";
     select_console('installation');
     #eject_cd;

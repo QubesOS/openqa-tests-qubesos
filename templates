@@ -102,7 +102,7 @@
                       settings  => [
                         { key => "QEMUCPU", value => "host,+svm" },
                         { key => "QEMUCPUS", value => "2"},
-                        { key => "QEMURAM", value => "4096"},
+                        { key => "QEMURAM", value => "6144"},
                         { key => "HDDSIZEGB", value => "30"},
                         { key => "NICMODEL", value => "e1000e"},
                         { key => "PART_TABLE_TYPE", value => "mbr"},
@@ -115,7 +115,7 @@
                       settings  => [
                         { key => "QEMUCPU", value => "host,+svm" },
                         { key => "QEMUCPUS", value => "2"},
-                        { key => "QEMURAM", value => "4096"},
+                        { key => "QEMURAM", value => "6144"},
                         { key => "HDDSIZEGB", value => "30"},
                         { key => "NICMODEL", value => "e1000e"},
                         { key => "CDMODEL", value => "ide-cd"},
@@ -132,7 +132,7 @@
                         { key => "QEMUCPU", value => "host,+svm" },
                         { key => "QEMUCPUS", value => "2"},
                         { key => "QEMU_SMBIOS", value => "type=3,manufacturer=apple"},
-                        { key => "QEMURAM", value => "4096"},
+                        { key => "QEMURAM", value => "6144"},
                         { key => "HDDSIZEGB", value => "30"},
                         { key => "NICMODEL", value => "e1000e"},
                         { key => "CDMODEL", value => "ide-cd"},

@@ -24,6 +24,9 @@ class DefaultPV(qubes.ext.Extension):
             qubes.vm.qubesvm.QubesVM.virt_mode._default = 'pv'
             qubes.vm.qubesvm.QubesVM.virt_mode._default_function = None
             qubes.vm.qubesvm.QubesVM.virt_mode._setter = lambda _self, _prop, _value: 'pv'
+        else:
+            # nested SVM has problems with SMP guests...
+            qubes.vm.qubesvm.QubesVM.vcpus._default = 1
 
     @qubes.ext.handler('features-request')
     @asyncio.coroutine

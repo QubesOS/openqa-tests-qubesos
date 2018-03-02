@@ -38,6 +38,8 @@ autotest::loadtest "tests/install_do_user.pm";
 autotest::loadtest "tests/install_fixups.pm";
 autotest::loadtest "tests/firstboot.pm";
 
+autotest::loadtest "tests/usbvm.pm";
+
 1;
 
 # vim: set sw=4 et:

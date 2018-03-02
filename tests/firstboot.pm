@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use base "basetest";
+use base "installedtest";
 use strict;
 use testapi;
 use networking;
@@ -99,6 +99,7 @@ sub test_flags {
 }
 
 sub post_fail_hook {
+    my $self = shift;
 
     if ($configuring) {
         send_key "ret";
@@ -106,26 +107,8 @@ sub post_fail_hook {
         send_key "f12";
 
         check_screen "login-prompt-user-selected", 30;
-
-        select_console('root-virtio-terminal');
-        enable_dom0_network_netvm();
-        upload_logs('/var/log/libvirt/libxl/libxl-driver.log');
-        unless (script_run('journalctl -b >/tmp/journalctl.log')) {
-            upload_logs('/tmp/journalctl.log');
-        }
-        script_run("echo ------ >/dev/$serialdev; ls -1 /var/log/xen/console/*.log; echo ===== >/dev/$serialdev");
-        my $logs = wait_serial(qr/------.*=====/);
-        foreach (split(/\n/, $logs)) {
-            next if m/^---\|^===/;
-            upload_logs($_);
-        }
-        script_run "xl info >/dev/$serialdev";
-        script_run "qvm-prefs sys-net >/dev/$serialdev";
-        script_run "qvm-prefs sys-firewall >/dev/$serialdev";
-        sleep 5;
-        save_screenshot;
+        $self->SUPER::post_fail_hook();
     }
-
 };
 
 1;

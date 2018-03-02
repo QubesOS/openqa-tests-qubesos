@@ -28,6 +28,7 @@ sub init {
     $self->SUPER::init();
     $testapi::password = 'userpass';
     $self->init_consoles();
+    $testapi::serialdev = 'hvc0';
 }
 
 
@@ -43,7 +44,9 @@ sub init_consoles {
     $self->add_console('installation',   'tty-console', {tty => check_var('VIDEOMODE', 'text') ? 1 : 6});
     $self->add_console('root-console',   'tty-console', {tty => 3});
     $self->add_console('user-console',   'tty-console', {tty => 4});
-    $self->add_console('log-console', 'tty-console', {tty => 5});
+    $self->add_console('log-console',    'tty-console', {tty => 5});
+
+    $self->add_console('x11',            'tty-console', {tty => 1});
 
     return;
 }

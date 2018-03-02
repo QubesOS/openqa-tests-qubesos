@@ -16,7 +16,8 @@
     }
   ],
   "tags": [
-    "desktop"
+    "desktop",
+    "x11"
   ],
   "properties": []
 }

@@ -40,6 +40,10 @@ autotest::loadtest "tests/firstboot.pm";
 
 autotest::loadtest "tests/usbvm.pm";
 
+if (get_var("STORE_HDD_1") || get_var("PUBLISH_HDD_1")) {
+    autotest::loadtest "tests/shutdown.pm";
+}
+
 1;
 
 # vim: set sw=4 et:

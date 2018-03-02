@@ -190,10 +190,10 @@
                       ],
                     },
                     {
-                      name => "install_default_upload",
+                      name => "install_minimal_upload",
                       settings => [
                         { key => "PACKAGE_SET", value => "default" },
-                        { key => "STORE_HDD_1", value => "disk_%FLAVOR%_%MACHINE%.qcow2" },
+                        { key => "STORE_HDD_1", value => "disk_minimal_%MACHINE%.qcow2" },
                       ],
                     },
                   ],

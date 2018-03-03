@@ -137,7 +137,7 @@
                         { key => "NICMODEL", value => "e1000e"},
                         { key => "CDMODEL", value => "ide-cd"},
                         { key => "UEFI", value => "1"},
-                        { key => "BIOS", value => "/usr/share/qemu/ovmf-x86_64.bin"},
+                        { key => "BIOS", value => "/var/lib/openqa/tests/qubesos/utils/OVMF-mac.fd"},
                         { key => "PART_TABLE_TYPE", value => "gpt"},
                         { key => "VIRTIO_CONSOLE", value => "1"},
                       ],

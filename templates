@@ -15,22 +15,22 @@
                                       flavor  => "install-iso",
                                       version => "*",
                                     },
-                      test_suite => { name => "install_default" },
+                      test_suite => { name => "install_minimal" },
                     },
                     {
                       machine    => { name => "uefi" },
-                      prio       => 11,
+                      prio       => 10,
                       product    => {
                                       arch    => "x86_64",
                                       distri  => "qubesos",
                                       flavor  => "install-iso",
                                       version => "*",
                                     },
-                      test_suite => { name => "install_default" },
+                      test_suite => { name => "install_minimal" },
                     },
                     {
                       machine    => { name => "64bit" },
-                      prio       => 10,
+                      prio       => 15,
                       product    => {
                                       arch    => "x86_64",
                                       distri  => "qubesos",
@@ -63,7 +63,7 @@
                     },
                     {
                       machine    => { name => "64bit" },
-                      prio       => 10,
+                      prio       => 15,
                       product    => {
                                       arch    => "x86_64",
                                       distri  => "qubesos",
@@ -74,7 +74,7 @@
                     },
                     {
                       machine    => { name => "uefi" },
-                      prio       => 11,
+                      prio       => 15,
                       product    => {
                                       arch    => "x86_64",
                                       distri  => "qubesos",
@@ -85,14 +85,36 @@
                     },
                     {
                       machine    => { name => "mac" },
-                      prio       => 20,
+                      prio       => 40,
                       product    => {
                                       arch    => "x86_64",
                                       distri  => "qubesos",
                                       flavor  => "install-iso",
                                       version => "*",
                                     },
-                      test_suite => { name => "install_default" },
+                      test_suite => { name => "install_minimal" },
+                    },
+                    {
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_default_upload" },
+                    },
+                    {
+                      machine    => { name => "uefi" },
+                      prio       => 51,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_default_upload" },
                     },
 		  ],
   Machines     => [
@@ -103,7 +125,7 @@
                         { key => "QEMUCPU", value => "host,+svm" },
                         { key => "QEMUCPUS", value => "2"},
                         { key => "QEMURAM", value => "6144"},
-                        { key => "HDDSIZEGB", value => "30"},
+                        { key => "HDDSIZEGB", value => "40"},
                         { key => "NICMODEL", value => "e1000e"},
                         { key => "PART_TABLE_TYPE", value => "mbr"},
                         { key => "VIRTIO_CONSOLE", value => "1"},
@@ -116,7 +138,7 @@
                         { key => "QEMUCPU", value => "host,+svm" },
                         { key => "QEMUCPUS", value => "2"},
                         { key => "QEMURAM", value => "6144"},
-                        { key => "HDDSIZEGB", value => "30"},
+                        { key => "HDDSIZEGB", value => "40"},
                         { key => "NICMODEL", value => "e1000e"},
                         { key => "CDMODEL", value => "ide-cd"},
                         { key => "UEFI", value => "1"},
@@ -133,7 +155,7 @@
                         { key => "QEMUCPUS", value => "2"},
                         { key => "QEMU_SMBIOS", value => "type=3,manufacturer=apple"},
                         { key => "QEMURAM", value => "6144"},
-                        { key => "HDDSIZEGB", value => "30"},
+                        { key => "HDDSIZEGB", value => "40"},
                         { key => "NICMODEL", value => "e1000e"},
                         { key => "CDMODEL", value => "ide-cd"},
                         { key => "UEFI", value => "1"},
@@ -157,9 +179,9 @@
                   ],
   TestSuites   => [
                     {
-                      name => "install_default",
+                      name => "install_minimal",
                       settings => [
-                        { key => "PACKAGE_SET", value => "default" },
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
                       ],
                     },
                     {
@@ -190,10 +212,10 @@
                       ],
                     },
                     {
-                      name => "install_minimal_upload",
+                      name => "install_default_upload",
                       settings => [
-                        { key => "PACKAGE_SET", value => "default" },
-                        { key => "STORE_HDD_1", value => "disk_minimal_%MACHINE%.qcow2" },
+                        { key => "INSTALL_TEMPLATES", value => "all" },
+                        { key => "PUBLISH_HDD_1", value => "disk_default_%MACHINE%.qcow2" },
                       ],
                     },
                   ],

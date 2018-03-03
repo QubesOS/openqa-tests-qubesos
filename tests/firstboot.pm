@@ -79,7 +79,7 @@ sub run {
         $timeout += 1 * 600;
     }
     assert_screen "firstboot-configuring-salt", $timeout;
-    assert_screen "firstboot-setting-network", 240;
+    assert_screen "firstboot-setting-network", 600;
     assert_screen "firstboot-done", 240;
     send_key "f12";
 

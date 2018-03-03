@@ -33,7 +33,17 @@ sub run {
     assert_screen 'installer-user-weak-pass';
     send_key 'f12';
     assert_screen 'installer-install-user-created';
-    assert_screen 'installer-post-install-tasks', 900;
+    my $timeout = 1200;
+    if (check_var('INSTALL_TEMPLATES', 'all')) {
+        $timeout += 4 * 240;
+    }
+    if (get_var('INSTALL_TEMPLATES', '') =~ /whonix/) {
+        $timeout += 2 * 240;
+    }
+    if (get_var('INSTALL_TEMPLATES', '') =~ /debian/) {
+        $timeout += 1 * 240;
+    }
+    assert_screen 'installer-post-install-tasks', $timeout;
     #assert_and_click 'installer-install-done-reboot', 'left', 600;
     assert_screen 'installer-install-done-reboot', 900;
 }

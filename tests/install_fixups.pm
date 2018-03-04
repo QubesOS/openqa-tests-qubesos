@@ -42,6 +42,15 @@ sub run {
         script_run "sed -i -e 's:^options=:options=console=vga,com1 :' $xen_cfg";
     }
     script_run "sed -i -e s:console=none:console=vga,com1: /mnt/sysimage/etc/default/grub";
+
+    # need to use explicit UUID to override (empty) options from /etc/crypttab,
+    # rd.luks.options=discard works only for disks not mentioned in
+    # /etc/crypttab; see systemd-cryptsetup-generator(8)
+    my $sed_enable_discard = 'sed -i -e \'s:uuid=luks-\([^ ]*\) :\0rd.luks.options=\1=discard :g\'';
+    script_run "$sed_enable_discard $xen_cfg";
+    script_run "$sed_enable_discard /mnt/sysimage/boot/grub2/grub.cfg";
+    script_run "$sed_enable_discard /mnt/sysimage/etc/default/grub";
+
     type_string "sync\n";
     select_console('installation');
     #eject_cd;

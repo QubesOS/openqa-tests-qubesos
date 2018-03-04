@@ -44,12 +44,11 @@ sub post_fail_hook {
     enable_dom0_network_netvm() unless $self->{network_up};
     upload_logs('/var/log/libvirt/libxl/libxl-driver.log');
     $self->save_and_upload_log('journalctl -b', 'journalctl.log');
-    my $list_cmd = "{ echo ------; ls -1 /var/log/xen/console/*.log; echo =====; }";
-    $list_cmd .= "> /dev/$serialdev" unless testapi::is_serial_terminal();
-    type_string("$list_cmd\n");
-    my $logs = wait_serial(qr/------\n.*=====/);
+    upload_logs('/var/lib/qubes/qubes.xml');
+    my $logs = script_output('ls -1 /var/log/xen/console/*.log');
     foreach (split(/\n/, $logs)) {
         next unless m/\/var\/log/;
+        chop;
         upload_logs($_);
     }
     $self->save_and_upload_log('qvm-prefs sys-net', 'qvm-prefs-sys-net.log');

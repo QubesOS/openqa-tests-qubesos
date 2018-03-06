@@ -45,12 +45,17 @@ sub post_fail_hook {
     upload_logs('/var/log/libvirt/libxl/libxl-driver.log');
     $self->save_and_upload_log('journalctl -b', 'journalctl.log');
     upload_logs('/var/lib/qubes/qubes.xml');
-    my $logs = script_output('ls -1 /var/log/xen/console/*.log');
-    foreach (split(/\n/, $logs)) {
-        next unless m/\/var\/log/;
-        chop;
-        upload_logs($_);
+    #my $logs = script_output('ls -1 /var/log/xen/console/*.log');
+    #foreach (split(/\n/, $logs)) {
+    #    next unless m/\/var\/log/;
+    #    chop if /\.log./;
+    #    upload_logs($_);
+    #}
+    # Upload /var/log
+    unless (script_run "tar czf /tmp/var_log.tar.gz /var/log") {
+        upload_logs "/tmp/var_log.tar.gz";
     }
+
     $self->save_and_upload_log('qvm-prefs sys-net', 'qvm-prefs-sys-net.log');
     $self->save_and_upload_log('qvm-prefs sys-firewall', 'qvm-prefs-sys-firewall.log');
     $self->save_and_upload_log('qvm-prefs sys-usb', 'qvm-prefs-sys-usb.log');

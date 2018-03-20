@@ -88,6 +88,7 @@ sub run {
     send_key "ret";
 
     assert_screen "desktop";
+    wait_still_screen;
 }
 
 sub test_flags {

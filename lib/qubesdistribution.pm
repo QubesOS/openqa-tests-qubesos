@@ -21,11 +21,16 @@ use base 'distribution';
 use strict;
 use serial_terminal ();
 
-use testapi qw(diag check_var assert_screen type_string type_password match_has_tag wait_serial get_var send_key);
+use testapi qw(diag check_var get_var
+
+    assert_screen check_screen match_has_tag save_screenshot wait_screen_change wait_still_screen
+
+    type_string type_password wait_serial send_key send_key_until_needlematch);
 
 sub init {
     my ($self) = @_;
     $self->SUPER::init();
+    $testapi::username = 'user';
     $testapi::password = 'userpass';
     $self->init_consoles();
     $testapi::serialdev = 'hvc0';

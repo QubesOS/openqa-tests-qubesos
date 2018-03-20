@@ -19,10 +19,13 @@ package networking;
 
 use base 'Exporter';
 use Exporter;
+use File::Basename qw(basename dirname);
 
 use testapi;
 
-our @EXPORT = qw(enable_dom0_network_no_netvm enable_dom0_network_netvm);
+our @EXPORT = qw(enable_dom0_network_no_netvm enable_dom0_network_netvm
+    curl_via_netvm
+);
 
 sub enable_dom0_network_no_netvm {
     return unless script_run('ip r |grep ^default');
@@ -51,6 +54,41 @@ sub enable_dom0_network_netvm {
         # commit
         assert_script_run('qubesdb-write -d sys-net /qubes-firewall/10.137.99.1 ""');
     }
+}
+
+=head2
+
+  curl_via_netvm()
+
+Setup curl wrapper that will download/upload a file using sys-net and qvm-run.
+It affects only the current shell, and assume the shell is bash (it is a bash
+function).
+
+=cut
+
+sub curl_via_netvm {
+
+    my $curl_wrapper = <<ENDFUNC;
+curl() {
+    local allargs="\$*"
+    local inputfile
+    if [[ "\$allargs" = *"@"* ]]; then
+        inputfile=\${allargs#*@}
+        inputfile=\${inputfile%% *}
+        allargs=\${allargs/\@\$inputfile/\@-}
+    fi
+
+    if [ -n "\$inputfile" ]; then
+        qvm-run -p sys-net "curl \$allargs" <\$inputfile
+    else
+        qvm-run -p sys-net "curl \$allargs"
+    fi
+}
+ENDFUNC
+    # cut EOL as assert_script_run will append "; echo $?" and ";" is invalid
+    # without preceeding command
+    chop($curl_wrapper);
+    assert_script_run("$curl_wrapper");
 }
 
 1;

@@ -44,12 +44,12 @@ sub run {
     $sfdisk_layout .= "size=750MiB, type=83, bootable\n"; # /boot
     $sfdisk_layout .= "type=5\n";
     $sfdisk_layout .= "type=83\n"; # LUKS
-    assert_script_run("echo '$sfdisk_layout' | sfdisk /dev/vda");
+    assert_script_run("echo '$sfdisk_layout' | sfdisk /dev/?da");
     # make "rescue" filesystem broken as in PureOS installation,
     # to not ease anaconda's life (see bug #3050)
-    assert_script_run("mkfs.ext4 -F -S /dev/vda1 600000");
-    assert_script_run("mkfs.ext4 /dev/vda2");
-    assert_script_run("cryptsetup luksFormat /dev/vda5 -q -l 64 /dev/urandom");
+    assert_script_run("mkfs.ext4 -F -S /dev/?da1 600000");
+    assert_script_run("mkfs.ext4 /dev/?da2");
+    assert_script_run("cryptsetup luksFormat /dev/?da5 -q -l 64 /dev/urandom");
     assert_script_run("sync");
     type_string("reboot -fn\n");
     select_console('installation');

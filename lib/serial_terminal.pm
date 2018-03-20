@@ -85,8 +85,8 @@ sub login {
     type_string(qq/PS1="$serial_term_prompt"\n/);
     wait_serial(qr/PS1="$serial_term_prompt"/);
     # TODO: Send 'tput rmam' instead/also
-    script_run('export TERM=dumb; stty cols 2048');
-    assert_script_run('echo Logged into $(tty)', $bmwqemu::default_timeout, result_title => 'vconsole_login');
+    script_run('export TERM=dumb; stty cols 2048 rows 25');
+    assert_script_run('echo Logged into $(tty)', timeout => $bmwqemu::default_timeout, result_title => 'vconsole_login');
 }
 
 =head2 select_virtio_console

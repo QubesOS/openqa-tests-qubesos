@@ -157,5 +157,100 @@ sub set_standard_prompt {
     }
 }
 
+sub become_root {
+    my ($self) = @_;
+
+    type_string "sudo -s\n";
+    type_string "whoami > /dev/$testapi::serialdev\n";
+    wait_serial("root", 10) || die "Root prompt not there";
+    type_string "cd /tmp\n";
+    $self->set_standard_prompt('root');
+    type_string "clear\n";
+}
+
+sub init_desktop_runner {
+    my ($program, $timeout) = @_;
+
+    send_key 'alt-f2';
+    if (!check_screen('desktop-runner', $timeout)) {
+        record_info('workaround', 'desktop-runner does not show up on alt-f2, retrying up to three times (see bsc#978027)');
+        send_key 'esc';    # To avoid failing needle on missing 'alt' key - poo#20608
+        send_key_until_needlematch 'desktop-runner', 'alt-f2', 3, 10;
+    }
+    # krunner may use auto-completion which sometimes gets confused by
+    # too fast typing or looses characters because of the load caused (also
+    # see below). See https://progress.opensuse.org/issues/18200
+    if (check_var('DESKTOP', 'kde')) {
+        type_string_slow $program;
+    }
+    else {
+        type_string $program;
+    }
+}
+
+=head2 x11_start_program
+
+  x11_start_program($program [, timeout => $timeout ] [, no_wait => 0|1 ] [, valid => 0|1, [target_match => $target_match, ] [match_timeout => $match_timeout, ] [match_no_wait => 0|1 ]]);
+
+Start the program C<$program> in an X11 session using the I<desktop-runner>
+and looking for a target screen to match.
+
+The timeout for C<check_screen> for I<desktop-runner> can be configured with
+optional C<$timeout>. Specify C<no_wait> to skip the C<wait_still_screen>
+after the typing of C<$program>. Overwrite C<valid> with a false value to exit
+after I<desktop-runner> executed without checking for the result. C<valid=1>
+is especially useful when the used I<desktop-runner> has an auto-completion
+feature which can cause high load while typing potentially causing the
+subsequent C<ret> to fail. By default C<x11_start_program> looks for a screen
+tagged with the value of C<$program> with C<assert_screen> after executing the
+command to launch C<$program>. The tag(s) can be customized with the parameter
+C<$target_match>. C<$match_timeout> can be specified to configure the timeout
+on that internal C<assert_screen>. Specify C<match_no_wait> to forward the
+C<no_wait> option to the internal C<assert_screen>.
+If user wants to assert that command was typed correctly in the I<desktop-runner>
+she can pass needle tag using C<match_typed> parameter. This will check typed text
+and retry once in case of typos or unexpected results (see poo#25972).
+
+The combination of C<no_wait> with C<valid> and C<target_match> is the
+preferred solution for the most efficient approach by saving time within
+tests.
+
+This method is overwriting the base method in os-autoinst.
+
+=cut
+
+sub x11_start_program {
+    my ($self, $program, %args) = @_;
+    my $timeout = $args{timeout};
+    # enable valid option as default
+    $args{valid}         //= 1;
+    $args{target_match}  //= $program;
+    $args{match_no_wait} //= 0;
+    die "no desktop-runner available on minimalx" if check_var('DESKTOP', 'minimalx');
+    # Start desktop runner and type command there
+    init_desktop_runner($program, $timeout);
+    # With match_typed we check typed text and if doesn't match - retrying
+    # Is required by firefox test on kde, as typing fails on KDE desktop runnner sometimes
+    if ($args{match_typed} && !check_screen($args{match_typed})) {
+        send_key 'esc';
+        init_desktop_runner($program, $timeout);
+    }
+    wait_still_screen(1);
+    save_screenshot;
+    send_key 'ret';
+    # As above especially krunner seems to take some time before disappearing
+    # after 'ret' press we should wait in this case nevertheless
+    wait_still_screen(3) unless ($args{no_wait} || ($args{valid} && $args{target_match} && !check_var('DESKTOP', 'kde')));
+    return unless $args{valid};
+    for (1 .. 3) {
+        assert_screen([ref $args{target_match} eq 'ARRAY' ? @{$args{target_match}} : $args{target_match}, 'desktop-runner-border'],
+            $args{match_timeout}, no_wait => $args{match_no_wait});
+        last unless match_has_tag 'desktop-runner-border';
+        wait_screen_change {
+            send_key 'ret';
+        };
+    }
+}
+
 1;
 # vim: sw=4 et ts=4:

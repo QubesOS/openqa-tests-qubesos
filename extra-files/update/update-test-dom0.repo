@@ -1,0 +1,5 @@
+[update-test]
+name = update test
+baseurl = {{ salt['pillar.get']('update:repo') }}/dom0
+gpgkey = file:///etc/pki/rpm-gpg/update-test
+gpgcheck = 1

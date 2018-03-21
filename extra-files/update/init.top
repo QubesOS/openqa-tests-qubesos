@@ -1,0 +1,8 @@
+base:
+  dom0:
+    - match: nodegroup
+    - update.dom0
+  qubes:type:template:
+    - match: pillar
+    - update.vm
+

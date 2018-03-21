@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 678,
+      "ypos": 25,
+      "width": 131,
+      "height": 46,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "whonix-connected"
+  ]
+}

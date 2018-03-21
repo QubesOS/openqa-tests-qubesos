@@ -22,21 +22,29 @@ use autotest;
 require 'qubesdistribution.pm';
 testapi::set_distribution(qubesdistribution->new());
 
-autotest::loadtest "tests/isosize.pm";
-if (get_var('INSTALL_OVER_EXISTING')) {
-    autotest::loadtest "tests/install_preexisting_system.pm";
-}
-autotest::loadtest "tests/install_startup.pm";
-autotest::loadtest "tests/install_welcome.pm";
-if (get_var('PARTITIONING')) {
-    autotest::loadtest "tests/install_partitioning_" . get_var('PARTITIONING') . ".pm";
+if (get_var('ISO')) {
+    autotest::loadtest "tests/isosize.pm";
+    if (get_var('INSTALL_OVER_EXISTING')) {
+        autotest::loadtest "tests/install_preexisting_system.pm";
+    }
+    autotest::loadtest "tests/install_startup.pm";
+    autotest::loadtest "tests/install_welcome.pm";
+    if (get_var('PARTITIONING')) {
+        autotest::loadtest "tests/install_partitioning_" . get_var('PARTITIONING') . ".pm";
+    } else {
+        autotest::loadtest "tests/install_partitioning_default.pm";
+    }
+    autotest::loadtest "tests/install_templates.pm";
+    autotest::loadtest "tests/install_do_user.pm";
+    autotest::loadtest "tests/install_fixups.pm";
+    autotest::loadtest "tests/firstboot.pm";
 } else {
-    autotest::loadtest "tests/install_partitioning_default.pm";
+    autotest::loadtest "tests/startup.pm";
+    autotest::loadtest "tests/whonix_firstrun.pm";
+    if (get_var('UPDATE')) {
+        autotest::loadtest "tests/update.pm";
+    }
 }
-autotest::loadtest "tests/install_templates.pm";
-autotest::loadtest "tests/install_do_user.pm";
-autotest::loadtest "tests/install_fixups.pm";
-autotest::loadtest "tests/firstboot.pm";
 
 autotest::loadtest "tests/usbvm.pm";
 

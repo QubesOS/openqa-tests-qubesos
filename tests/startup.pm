@@ -23,39 +23,7 @@ use networking;
 sub run {
     my ($self) = @_;
 
-    if (!check_var('UEFI', '1')) {
-        # wait for bootloader to appear
-        assert_screen "bootloader", 90;
-
-        if (match_has_tag("bootloader-installer")) {
-            # troubleshooting
-            send_key "down";
-            send_key "ret";
-            # boot from local disk
-            send_key "down";
-            send_key "down";
-            send_key "down";
-            send_key "ret";
-        }
-    }
-
-    assert_screen "luks-prompt", 120;
-
-    type_string "lukspass";
-
-    send_key "ret";
-
-    assert_screen "login-prompt-user-selected", 240;
-    type_string "userpass";
-    send_key "ret";
-
-    assert_screen "desktop";
-    select_console('root-virtio-terminal');
-    assert_script_run "chown $testapi::username /dev/$testapi::serialdev";
-    select_console('x11');
-    wait_still_screen;
-    # disable screensaver
-    x11_start_program('killall xscreensaver', valid => 0);
+    $self->handle_system_startup;
 }
 
 sub test_flags {

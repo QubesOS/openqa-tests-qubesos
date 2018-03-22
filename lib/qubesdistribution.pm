@@ -21,7 +21,9 @@ use base 'distribution';
 use strict;
 use serial_terminal ();
 
-use testapi qw(diag check_var get_var
+use testapi qw(diag check_var get_var set_var
+
+    record_info
 
     assert_screen check_screen match_has_tag save_screenshot wait_screen_change wait_still_screen
 
@@ -33,7 +35,8 @@ sub init {
     $testapi::username = 'user';
     $testapi::password = 'userpass';
     $self->init_consoles();
-    $testapi::serialdev = 'hvc0';
+    # testapi::init override $testapi::serialdev and is called later
+    set_var('SERIALDEV', 'hvc0');
 }
 
 

@@ -32,6 +32,7 @@ sub run {
     type_string "cd /root/extra-files\n";
     type_string "python3 ./setup.py install\n";
     type_string "echo '$testapi::password' | passwd --stdin root\n";
+    type_string "gpasswd -a $testapi::username \$(stat -c %G /dev/$testapi::serialdev)\n";
     type_string "systemctl enable serial-getty\@hvc1.service\n";
     type_string "exit\n";
     script_run "sed -i -e s:console=none:console=vga,com1: /mnt/sysimage/boot/grub2/grub.cfg";

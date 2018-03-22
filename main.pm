@@ -46,6 +46,7 @@ if (get_var('ISO')) {
     }
 }
 
+autotest::loadtest "tests/mount_and_boot_options.pm";
 autotest::loadtest "tests/usbvm.pm";
 
 if (get_var("STORE_HDD_1") || get_var("PUBLISH_HDD_1")) {

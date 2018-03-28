@@ -1,0 +1,16 @@
+{
+  "tags": [
+    "ENV-VERSION-3.2",
+    "firstboot-qubes-usbvm-combine"
+  ],
+  "area": [
+    {
+      "ypos": 228,
+      "type": "match",
+      "xpos": 254,
+      "width": 352,
+      "height": 17
+    }
+  ],
+  "properties": []
+}

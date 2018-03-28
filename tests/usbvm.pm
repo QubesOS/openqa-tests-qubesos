@@ -21,10 +21,32 @@ use testapi;
 
 sub run {
     my ($self) = @_;
+    my $qvmpci_cmd;
+    my $mouse_action;
 
     assert_screen "desktop";
 
     select_console('root-virtio-terminal');
+
+    if (get_var('VERSION') =~ /^3/) {
+        my $qvmpci_wrapper = <<ENDFUNC;
+qvm_pci_wrapper() {
+    for dev in \$(qvm-pci \$1); do
+        dev=\$(echo "\$dev"|tr -d "[],\\"'")
+        [ -n "\$dev" ] || continue
+        lspci|grep ^\$dev
+    done
+}
+ENDFUNC
+        chop($qvmpci_wrapper);
+        assert_script_run($qvmpci_wrapper);
+        $qvmpci_cmd = 'qvm_pci_wrapper';
+        $mouse_action = 'ask';
+    } else {
+        $qvmpci_cmd = 'qvm-pci ls';
+        $mouse_action = 'allow';
+    }
+
 
     assert_script_run('xl list');
     if (check_var('USBVM', 'none')) {
@@ -33,18 +55,18 @@ sub run {
     } elsif (get_var('USBVM', 'sys-usb') eq 'sys-usb') {
         assert_script_run('xl domid sys-usb');
         assert_script_run('qvm-check --running sys-usb');
-        assert_script_run('qvm-pci ls sys-usb|grep USB');
-        assert_script_run('grep "sys-usb.*dom0.*allow" /etc/qubes-rpc/policy/qubes.InputMouse');
-        assert_script_run('! grep "sys-net.*dom0.*allow" /etc/qubes-rpc/policy/qubes.InputMouse');
-        assert_script_run('! grep "sys-usb.*dom0.*allow" /etc/qubes-rpc/policy/qubes.InputKeyboard');
+        assert_script_run("$qvmpci_cmd sys-usb|grep USB");
+        assert_script_run("grep \"sys-usb.*dom0.*$mouse_action\" /etc/qubes-rpc/policy/qubes.InputMouse");
+        assert_script_run('! grep "sys-net.*dom0.*\(allow\|ask\)" /etc/qubes-rpc/policy/qubes.InputMouse');
+        assert_script_run('! grep "sys-usb.*dom0.*\(allow\|ask\)" /etc/qubes-rpc/policy/qubes.InputKeyboard');
     } elsif (check_var('USBVM', 'sys-net')) {
         assert_script_run('! xl domid sys-usb');
         assert_script_run('! qvm-check sys-usb');
         assert_script_run('xl domid sys-net');
         assert_script_run('qvm-check --running sys-net');
-        assert_script_run('qvm-pci ls sys-net|grep USB');
-        assert_script_run('grep "sys-net.*dom0.*allow" /etc/qubes-rpc/policy/qubes.InputMouse');
-        assert_script_run('! grep "sys-usb.*dom0.*allow" /etc/qubes-rpc/policy/qubes.InputMouse');
+        assert_script_run("$qvmpci_cmd sys-net|grep USB");
+        assert_script_run("grep \"sys-net.*dom0.*$mouse_action\" /etc/qubes-rpc/policy/qubes.InputMouse");
+        assert_script_run('! grep "sys-usb.*dom0.*\(allow\|ask\)" /etc/qubes-rpc/policy/qubes.InputMouse');
     }
     select_console('x11');
 }

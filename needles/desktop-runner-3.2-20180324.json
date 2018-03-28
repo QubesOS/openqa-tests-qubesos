@@ -1,0 +1,23 @@
+{
+  "tags": [
+    "ENV-VERSION-3.2",
+    "desktop-runner"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "xpos": 380,
+      "width": 193,
+      "height": 18,
+      "ypos": 351,
+      "type": "match"
+    },
+    {
+      "height": 53,
+      "width": 127,
+      "xpos": 316,
+      "type": "match",
+      "ypos": 375
+    }
+  ]
+}

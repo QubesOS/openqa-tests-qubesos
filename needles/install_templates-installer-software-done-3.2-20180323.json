@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "ypos": 12,
+      "type": "match",
+      "height": 20,
+      "width": 179,
+      "xpos": 18
+    },
+    {
+      "width": 56,
+      "xpos": 22,
+      "height": 24,
+      "ypos": 53,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-3.2",
+    "installer-software-done"
+  ]
+}

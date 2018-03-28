@@ -1,0 +1,16 @@
+{
+  "tags": [
+    "ENV-VERSION-3.2",
+    "installer-install-done-reboot"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "height": 41,
+      "xpos": 933,
+      "width": 88,
+      "type": "match",
+      "ypos": 669
+    }
+  ]
+}

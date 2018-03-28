@@ -1,0 +1,16 @@
+{
+  "tags": [
+    "ENV-VERSION-3.2",
+    "installer-software-debian"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "xpos": 552,
+      "width": 47,
+      "height": 18,
+      "ypos": 139,
+      "type": "match"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "tags": [
+    "ENV-VERSION-3.2",
+    "firstboot-done"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "xpos": 285,
+      "ypos": 129,
+      "width": 314,
+      "height": 74,
+      "type": "match"
+    },
+    {
+      "xpos": 836,
+      "ypos": 731,
+      "width": 176,
+      "height": 21,
+      "type": "match"
+    }
+  ]
+}

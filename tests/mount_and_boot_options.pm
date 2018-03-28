@@ -27,8 +27,11 @@ sub run {
     x11_start_program('xterm');
     send_key('alt-f10');
     script_run('mount');
-    if (script_run('mount | grep " / " | grep discard') != 0) {
-        record_soft_failure('discard option missing on root filesystem');
+    # expect discard option by default only in 4.0+
+    if (get_var('VERSION') !~ /^3/) {
+        if (script_run('mount | grep " / " | grep discard') != 0) {
+            record_soft_failure('discard option missing on root filesystem');
+        }
     }
     script_run('xl info');
     if (script_run('xl info | grep ^xen_commandline | grep ucode=scan') != 0) {

@@ -1,0 +1,16 @@
+{
+  "tags": [
+    "ENV-VERSION-3.2",
+    "installer"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "ypos": 91,
+      "type": "match",
+      "height": 94,
+      "xpos": 203,
+      "width": 236
+    }
+  ]
+}

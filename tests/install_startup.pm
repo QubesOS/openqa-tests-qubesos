@@ -23,12 +23,28 @@ use bootloader_setup;
 sub run {
     pre_bootmenu_setup();
 
-    if (!check_var('UEFI', '1') or !check_var('UEFI_DIRECT', '1')) {
+    if (check_var('UEFI', '1')) {
+        # grub2-efi can't load xen.efi on OVMF...
+        # default direct xen.efi boot is also broken on OVMF - see below
+        tianocore_select_bootloader();
+        send_key_until_needlematch('tianocore-menu-efi-shell', 'up', 5, 5);
+        send_key 'ret';
+        send_key 'esc';
+        type_string "fs0:\n";
+        if (check_var('UEFI_DIRECT', '1')) {
+            # in direct UEFI boot we enable /mapbs workaround, which crashes dom0
+            # under OVMF - choose different boot option than default (qubes-verbose)
+            type_string "EFI\\BOOT\\BOOTX64.efi qubes\n";
+        } else {
+            type_string "EFI\\BOOT\\xen.efi qubes\n";
+        }
+    } else {
         # wait for bootloader to appear
         assert_screen 'bootloader', 30;
 
         # skip media verification
         if (check_var('UEFI', '1')) {
+            # maybe one day grub2-efi will work with xen.efi
             send_key 'down';
         } else {
             send_key 'up';
@@ -36,17 +52,7 @@ sub run {
 
         # press enter to boot right away
         send_key 'ret';
-    }
-    if (check_var('UEFI', '1') and check_var('UEFI_DIRECT', '1')) {
-        # in direct UEFI boot we enable /mapbs workaround, which crashes dom0
-        # under OVMF
-        tianocore_select_bootloader();
-        send_key_until_needlematch('tianocore-menu-efi-shell', 'up', 5, 5);
-        send_key 'ret';
-        send_key 'esc';
-        type_string "fs0:\n";
-        type_string "EFI\\BOOT\\BOOTX64.efi qubes\n";
-    }
+}
 
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;

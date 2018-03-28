@@ -1,0 +1,16 @@
+{
+  "tags": [
+    "ENV-VERSION-3.2",
+    "installer-install-hub-user"
+  ],
+  "area": [
+    {
+      "width": 266,
+      "xpos": 620,
+      "height": 86,
+      "ypos": 139,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

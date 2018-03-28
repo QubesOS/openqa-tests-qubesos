@@ -34,6 +34,14 @@ sub run {
     type_string "echo '$testapi::password' | passwd --stdin root\n";
     type_string "gpasswd -a $testapi::username \$(stat -c %G /dev/$testapi::serialdev)\n";
     type_string "systemctl enable serial-getty\@hvc1.service\n";
+    if (get_var('VERSION') =~ /^3/) {
+        # disable e820-host, breaks sys-net on OVMF; core2 don't have nice
+        # extensions for that...
+        # "pci_e820_host": {"default": True}
+        my $sed_expr = "s#\\(pci_e820_host.*default.*\\) True#\\1 False#";
+        my $core2_path = '/usr/lib64/python2.6/site-packages/qubes/modules/000QubesVm.py';
+        type_string "sed -ie '$sed_expr' $core2_path\n";
+    }
     type_string "exit\n";
     script_run "sed -i -e s:console=none:console=vga,com1: /mnt/sysimage/boot/grub2/grub.cfg";
     my $xen_cfg = '/mnt/sysimage/boot/efi/EFI/qubes/xen.cfg';

@@ -44,8 +44,15 @@ sub run {
     assert_script_run('! grep ERROR qubesctl-upgrade.log');
     assert_script_run('! grep "^  Failed: *[1-9]" qubesctl-upgrade.log');
     upload_logs("qubesctl-upgrade.log");
-    type_string("exit\n");
-    type_string("exit\n");
+
+    if (check_var('RESTART_AFTER_UPDATE', '1')) {
+        type_string("reboot\n");
+        assert_screen ["bootloader", "luks-prompt", "login-prompt-user-selected"], 300;
+        $self->handle_system_startup;
+    } else {
+        type_string("exit\n");
+        type_string("exit\n");
+    }
 }
 
 sub test_flags {

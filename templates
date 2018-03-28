@@ -1,6 +1,6 @@
 #!/usr/share/openqa/script/load_templates
 #
-# Fedora Machines, Products, TestSuites and JobTemplates
+# QubesOS Machines, Products, TestSuites and JobTemplates
 #
 # use load_templates to load the file into the database
 #
@@ -103,7 +103,7 @@
                                       flavor  => "install-iso",
                                       version => "*",
                                     },
-                      test_suite => { name => "install_default_upload" },
+                      test_suite => { name => "install_unencrypted_upload" },
                     },
                     {
                       machine    => { name => "uefi" },
@@ -114,7 +114,7 @@
                                       flavor  => "install-iso",
                                       version => "*",
                                     },
-                      test_suite => { name => "install_default_upload" },
+                      test_suite => { name => "install_unencrypted_upload" },
                     },
 		  ],
   Machines     => [
@@ -218,7 +218,15 @@
                       name => "install_default_upload",
                       settings => [
                         { key => "INSTALL_TEMPLATES", value => "all" },
-                        { key => "PUBLISH_HDD_1", value => "disk_default_%MACHINE%.qcow2" },
+                        { key => "PUBLISH_HDD_1", value => "disk_default_%VERSION%_%MACHINE%.qcow2" },
+                      ],
+                    },
+                    {
+                      name => "install_unencrypted_upload",
+                      settings => [
+                        { key => "INSTALL_TEMPLATES", value => "all" },
+                        { key => "PARTITIONING", value => "unencrypted" },
+                        { key => "PUBLISH_HDD_1", value => "disk_unencrypted_%VERSION%_%MACHINE%.qcow2" },
                       ],
                     },
                   ],

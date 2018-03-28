@@ -41,11 +41,13 @@ sub run {
         }
     }
 
-    assert_screen "luks-prompt";
+    # handle both encrypted and unencrypted setups
+    assert_screen ["luks-prompt", "firstboot-not-ready"], 120;
 
-    type_string "lukspass";
-
-    send_key "ret";
+    if (match_has_tag('luks-prompt')) {
+        type_string "lukspass";
+        send_key "ret";
+    }
 
     assert_screen "firstboot-not-ready", 90;
 

@@ -1,0 +1,22 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 17,
+      "ypos": 16,
+      "width": 153,
+      "height": 15,
+      "type": "match"
+    },
+    {
+      "xpos": 38,
+      "ypos": 623,
+      "width": 32,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "installer-keyboard-add"
+  ]
+}

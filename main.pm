@@ -29,6 +29,9 @@ if (get_var('ISO')) {
     }
     autotest::loadtest "tests/install_startup.pm";
     autotest::loadtest "tests/install_welcome.pm";
+    if (get_var('KEYBOARD_LAYOUT')) {
+        autotest::loadtest "tests/install_keyboard.pm";
+    }
     if (get_var('PARTITIONING')) {
         autotest::loadtest "tests/install_partitioning_" . get_var('PARTITIONING') . ".pm";
     } else {

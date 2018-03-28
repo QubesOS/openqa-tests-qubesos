@@ -18,13 +18,19 @@
 use base 'anacondatest';
 use strict;
 use testapi;
+use utils qw(us_colemak);
 
 sub run {
     assert_screen 'installer-main-ready';
     send_key 'f12';
     assert_and_click 'installer-install-hub-user';
     assert_screen 'installer-user';
-    type_string 'user';
+    if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
+        type_string us_colemak('user');
+        $password = us_colemak($password);
+    } else {
+        type_string 'user';
+    }
     send_key 'tab';
     if (get_var('VERSION') =~ /^3/) {
         send_key 'tab';

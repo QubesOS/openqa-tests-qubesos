@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "tags": [
+    "installer-keyboard-move-up"
+  ],
+  "area": [
+    {
+      "xpos": 120,
+      "ypos": 621,
+      "width": 35,
+      "height": 29,
+      "type": "match"
+    }
+  ]
+}

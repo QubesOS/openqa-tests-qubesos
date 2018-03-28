@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "tags": [
+    "installer-keyboard-add-ok"
+  ],
+  "area": [
+    {
+      "xpos": 717,
+      "ypos": 570,
+      "width": 75,
+      "height": 27,
+      "type": "match"
+    }
+  ]
+}

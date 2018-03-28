@@ -35,6 +35,7 @@ sub run {
     send_key_until_needlematch('install-custom-type-btrfs', 'up', 5, 1);
     send_key 'shift-tab';
     send_key 'ret';
+    save_screenshot;
     assert_and_click 'installer-done';
     # disk passphrase again
     send_key 'ret';

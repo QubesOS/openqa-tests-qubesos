@@ -43,6 +43,8 @@ sub post_fail_hook {
 
     save_screenshot;
     select_console('install-shell');
+    # during installation Xen doesn't have console=com1
+    $testapi::serialdev = 'ttyS0';
     if (!$self->{network_up}) {
         enable_dom0_network_no_netvm();
         $self->{network_up} = 1;

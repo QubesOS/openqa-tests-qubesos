@@ -52,7 +52,7 @@ sub run {
     assert_script_run("cryptsetup luksFormat /dev/?da5 -q -l 64 /dev/urandom");
     assert_script_run("sync");
     type_string("reboot -fn\n");
-    select_console('installation');
+    select_console('installation', await_console=>0);
     reset_consoles();
 }
 

@@ -123,7 +123,7 @@
                                       arch    => "x86_64",
                                       distri  => "qubesos",
                                       flavor  => "install-iso",
-                                      version => "*",
+                                      version => "4.*",
                                     },
                       test_suite => { name => "install_minimal" },
                     },

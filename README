@@ -20,3 +20,4 @@ Variables used in tests:
  - `INSTALL_TEMPLATES` - space separated list of template groups (`debian`, `whonix`), or `all`
  - `USBVM` - USB VM configuration: `none`, `sys-usb` (default), `sys-net` (combined with Net VM)
  - `KEYBOARD_LAYOUT` - install with non-default keyboard layout; currently only `us-colemak` value is supported
+ - `LOCALE` - install with non-default locale; currently only `en_DK.utf8` value is supported

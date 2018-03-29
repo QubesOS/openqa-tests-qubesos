@@ -24,6 +24,10 @@ sub run {
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;
 
+    if (check_var('LOCALE', 'en_DK.utf8')) {
+        assert_and_click 'installer-language-english-denmark';
+    }
+
     send_key 'f12';
     if (check_screen('installer-prerelease', 10)) {
         assert_and_click 'installer-prerelease';

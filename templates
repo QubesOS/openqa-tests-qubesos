@@ -92,6 +92,17 @@
                                       flavor  => "install-iso",
                                       version => "*",
                                     },
+                      test_suite => { name => "install_locale" },
+                    },
+                    {
+                      machine    => { name => "64bit" },
+                      prio       => 20,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
                       test_suite => { name => "install_keyboard_layout" },
                     },
                     {
@@ -240,6 +251,12 @@
                       name => "install_keyboard_layout",
                       settings => [
                         { key => "KEYBOARD_LAYOUT", value => "us-colemak" },
+                      ],
+                    },
+                    {
+                      name => "install_locale",
+                      settings => [
+                        { key => "LOCALE", value => "en_DK.utf8" },
                       ],
                     },
                     {

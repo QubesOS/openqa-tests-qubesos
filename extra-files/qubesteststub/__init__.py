@@ -26,7 +26,9 @@ class DefaultPV(qubes.ext.Extension):
             qubes.vm.qubesvm.QubesVM.virt_mode._setter = lambda _self, _prop, _value: 'pv'
         else:
             # nested SVM has problems with SMP guests...
-            qubes.vm.qubesvm.QubesVM.vcpus._default = 1
+            qubes.vm.qubesvm.QubesVM.vcpus._default_function = (lambda _self:
+                2 if _self.kernel and _self.kernel.startswith('4')
+                      and _self.kernel.split('.') >= ['4', '15'] else 1)
 
         qubes.vm.qubesvm.QubesVM.qrexec_timeout._default = 90
 

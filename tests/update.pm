@@ -29,10 +29,24 @@ sub run {
     send_key('alt-f10');
     become_root;
     curl_via_netvm;
-    assert_script_run("curl " . autoinst_url('/assets/other/salt_state_update.tgz') . " >salt_state_update.tgz");
-    assert_script_run('tar xf salt_state_update.tgz -C /srv/salt');
+    # WTF part
+    assert_script_run('qvm-pci dt sys-net dom0:00_04.0');
+    assert_script_run('qvm-pci at sys-net dom0:00_04.0 -p -o no-strict-reset=True');
+
+    # update extra files
+    open EXTRA_TARBALL, "tar cz -C " . testapi::get_required_var('CASEDIR') . " extra-files|base64|" or die "failed to create tarball";
+    my $tarball = do { local $/; <EXTRA_TARBALL> };
+    close(EXTRA_TARBALL);
+    save_tmp_file('extra-files.tar.gz.b64', $tarball);
+
+    assert_script_run("curl " . autoinst_url('/files/extra-files.tar.gz.b64') . " | base64 -d | tar xz -C /root");
+    type_string "cd /root/extra-files\n";
+    type_string "python3 ./setup.py install\n";
+    type_string "cd\n";
+
+    assert_script_run('cp -a /root/extra-files/update /srv/salt/');
     assert_script_run('qubesctl top.enable update');
-    
+
     # until QubesOS/qubes-issues#3655 got implemented
     assert_script_run('sed -i -e s:max_concurrency=4:max_concurrency=1: /usr/lib/python2.7/site-packages/qubessalt/__init__.py');
     assert_script_run('sed -i -e s:default=4:default=1: /usr/bin/qubesctl');

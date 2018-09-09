@@ -37,6 +37,9 @@ sub run {
     if (script_run('xl info | grep ^xen_commandline | grep ucode=scan') != 0) {
         record_soft_failure('Xen ucode=scan option missing');
     }
+    if (script_run('xl info | grep ^xen_commandline | grep smt=off') != 0) {
+        record_soft_failure('Xen smt=off option missing');
+    }
     type_string("exit\n");
 }
 

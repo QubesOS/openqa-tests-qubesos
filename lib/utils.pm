@@ -34,6 +34,9 @@ have us-colemak.
 sub us_colemak {
     my $input = shift;
 
+    # lukspass: uindradd  iler;arr
+    # userpass: idksradd
+    #            qwertyuiopasdfghjkl;zxcvbnm
     $input =~ tr/qwfpgjluy;arstdhneiozxcvbkm/qwertyuiopasdfghjkl;zxcvbnm/;
     return $input;
 }

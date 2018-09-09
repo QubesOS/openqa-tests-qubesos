@@ -19,6 +19,7 @@ use base "installedtest";
 use strict;
 use testapi;
 use networking;
+use utils qw(us_colemak);
 
 my $configuring = 0;
 
@@ -86,11 +87,16 @@ sub run {
     send_key "f12";
 
     assert_screen "login-prompt-user-selected", 60;
-    type_string "userpass";
+    type_string $password;
     send_key "ret";
 
     assert_screen "desktop";
     wait_still_screen;
+
+    # make other tests working
+    if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
+        x11_start_program(us_colemak('setxkbmap us'), valid => 0);
+    }
 }
 
 sub test_flags {

@@ -1,0 +1,16 @@
+{
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-3.2",
+    "installer-language-english-denmark"
+  ],
+  "area": [
+    {
+      "width": 137,
+      "xpos": 605,
+      "height": 26,
+      "ypos": 331,
+      "type": "match"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 17,
+      "width": 158,
+      "ypos": 13,
+      "type": "match",
+      "height": 18
+    },
+    {
+      "ypos": 188,
+      "type": "match",
+      "height": 17,
+      "width": 114,
+      "xpos": 31
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-3.2",
+    "installer-keyboard-select-colemak"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 721,
+      "width": 75,
+      "height": 27,
+      "type": "match",
+      "ypos": 572
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-3.2",
+    "installer-keyboard-add-ok"
+  ]
+}

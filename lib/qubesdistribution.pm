@@ -103,7 +103,7 @@ sub activate_console {
         assert_screen $console;
     }
     elsif ($type eq 'virtio-terminal') {
-        serial_terminal::login($user, "$user ");
+        serial_terminal::login($user, "$user# ");
     }
 
 

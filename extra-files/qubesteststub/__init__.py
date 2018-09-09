@@ -28,6 +28,8 @@ class DefaultPV(qubes.ext.Extension):
             # nested SVM has problems with SMP guests...
             qubes.vm.qubesvm.QubesVM.vcpus._default = 1
 
+        qubes.vm.qubesvm.QubesVM.qrexec_timeout._default = 90
+
     @qubes.ext.handler('features-request')
     @asyncio.coroutine
     def on_features_request(self, vm, event, untrusted_features):

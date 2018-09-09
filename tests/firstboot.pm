@@ -67,9 +67,9 @@ sub run {
 
     send_key "f12";
 
-    assert_screen "firstboot-configuring-templates", 90;
-
     $configuring = 1;
+
+    assert_screen "firstboot-configuring-templates", 90;
 	
     my $timeout = 600;
     if (check_var('INSTALL_TEMPLATES', 'all')) {

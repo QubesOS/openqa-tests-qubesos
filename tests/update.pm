@@ -53,7 +53,7 @@ sub run {
     # and another workaround
     assert_script_run('sed -i -e "s:\(qrexec_timeout.*default\)=60:\1=90:" /usr/lib/python3.5/site-packages/qubes/vm/qubesvm.py');
     assert_script_run('systemctl restart qubesd');
-    assert_script_run('(set -o pipefail; qubesctl --templates --show-output state.highstate | tee qubesctl-upgrade.log)', timeout => 2400);
+    assert_script_run('(set -o pipefail; qubesctl --templates --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log)', timeout => 3600);
     assert_script_run('tail -1 qubesctl-upgrade.log|grep -v failed');
     assert_script_run('! grep ERROR qubesctl-upgrade.log');
     assert_script_run('! grep "^  Failed: *[1-9]" qubesctl-upgrade.log');
@@ -83,6 +83,7 @@ sub post_fail_hook {
 
     $self->SUPER::post_fail_hook();
     upload_logs('/tmp/qubesctl-upgrade.log', failok => 1);
+    script_run('pidof -x qvm-start-gui || echo qvm-start-gui crashed');
 };
 
 1;

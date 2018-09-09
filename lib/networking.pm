@@ -46,6 +46,7 @@ sub enable_dom0_network_netvm {
     } else {
         # there is netvm, connect network through it
         assert_script_run('xl network-attach 0 ip=10.137.99.1 script=/etc/xen/scripts/vif-route-qubes backend=sys-net');
+        sleep(2);
         assert_script_run('ip a a 10.137.99.1/24 dev eth0');
         assert_script_run('ip l s eth0 up');
         assert_script_run('ip r a default dev eth0');

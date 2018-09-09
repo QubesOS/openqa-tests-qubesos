@@ -79,6 +79,7 @@ sub post_fail_hook {
     select_console('root-virtio-terminal');
     script_run "xl info";
     script_run "xl list";
+    script_run "journalctl -b|cat";
     enable_dom0_network_netvm() unless $self->{network_up};
     upload_logs('/var/log/libvirt/libxl/libxl-driver.log');
     $self->save_and_upload_log('journalctl -b', 'journalctl.log');

@@ -42,7 +42,7 @@ sub run {
     assert_screen 'installer-user-weak-pass';
     send_key 'f12';
     assert_screen 'installer-install-user-created';
-    my $timeout = 1200;
+    my $timeout = 1500;
     if (check_var('INSTALL_TEMPLATES', 'all')) {
         $timeout += 4 * 240;
     }
@@ -54,7 +54,7 @@ sub run {
     }
     assert_screen 'installer-post-install-tasks', $timeout;
     #assert_and_click 'installer-install-done-reboot', 'left', 600;
-    assert_screen 'installer-install-done-reboot', 900;
+    assert_screen 'installer-install-done-reboot', 2200;
 }
 
 1;

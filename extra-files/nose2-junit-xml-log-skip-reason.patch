@@ -1,0 +1,27 @@
+From 4c44d9a6074eaa1aad8979e282f3908cadef1a85 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>
+Date: Sun, 9 Sep 2018 03:17:43 +0200
+Subject: [PATCH] junit-xml: log skip reason
+
+---
+ nose2/plugins/junitxml.py | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/nose2/plugins/junitxml.py b/nose2/plugins/junitxml.py
+index ced1ce7..02777fc 100644
+--- a/nose2/plugins/junitxml.py
++++ b/nose2/plugins/junitxml.py
+@@ -160,6 +160,9 @@ class JUnitXmlReporter(events.Plugin):
+         elif event.outcome == result.SKIP:
+             self.skipped += 1
+             skipped = ET.SubElement(testcase, 'skipped')
++            if msg:
++                skipped.set('message', 'test skipped')
++                skipped.text = msg
+         elif event.outcome == result.FAIL and event.expected:
+             self.skipped += 1
+             skipped = ET.SubElement(testcase, 'skipped')
+-- 
+2.17.1
+

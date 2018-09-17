@@ -48,6 +48,10 @@ sub run {
 
     assert_script_run('cp -a /root/extra-files/update /srv/salt/');
     assert_script_run('qubesctl top.enable update');
+    if (get_var("SYSTEM_TESTS")) {
+        assert_script_run('cp -a /root/extra-files/system-tests /srv/salt/');
+        assert_script_run('qubesctl top.enable system-tests');
+    }
 
     # until QubesOS/qubes-issues#3655 got implemented
     assert_script_run('sed -i -e s:max_concurrency=4:max_concurrency=1: /usr/lib/python2.7/site-packages/qubessalt/__init__.py');

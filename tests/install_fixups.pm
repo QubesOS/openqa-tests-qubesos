@@ -24,7 +24,10 @@ sub run {
     my ($self) = @_;
 
     select_console('root-virtio-terminal');
-    open EXTRA_TARBALL, "tar cz -C " . testapi::get_required_var('CASEDIR') . " extra-files|base64|" or die "failed to create tarball";
+    # include only absolutely necessary files to make the archive small, to be typed
+    open EXTRA_TARBALL, "tar cz -C " . testapi::get_required_var('CASEDIR') .
+        " extra-files/qubesteststub/__init__.py extra-files/setup.py" .
+        "|base64|" or die "failed to create tarball";
     my $tarball = do { local $/; <EXTRA_TARBALL> };
     close(EXTRA_TARBALL);
     assert_script_run("echo '$tarball' | base64 -d | tar xz -C /mnt/sysimage/root");
@@ -39,7 +42,7 @@ sub run {
         # extensions for that...
         # "pci_e820_host": {"default": True}
         my $sed_expr = "s#\\(pci_e820_host.*default.*\\) True#\\1 False#";
-        my $core2_path = '/usr/lib64/python2.6/site-packages/qubes/modules/000QubesVm.py';
+        my $core2_path = '/usr/lib64/python2.7/site-packages/qubes/modules/000QubesVm.py';
         type_string "sed -ie '$sed_expr' $core2_path\n";
     }
     type_string "exit\n";
@@ -59,6 +62,14 @@ sub run {
     script_run "$sed_enable_discard $xen_cfg";
     script_run "$sed_enable_discard /mnt/sysimage/boot/grub2/grub.cfg";
     script_run "$sed_enable_discard /mnt/sysimage/etc/default/grub";
+
+    my $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:\0 console=hvc0 console=tty0:g\'';
+    script_run "$sed_enable_dom0_console_log $xen_cfg";
+    script_run "$sed_enable_dom0_console_log /mnt/sysimage/boot/grub2/grub.cfg";
+    script_run "$sed_enable_dom0_console_log /mnt/sysimage/etc/default/grub";
+
+    # log resulting bootloader configuration
+    script_run "cat /mnt/sysimage/etc/default/grub $xen_cfg";
 
     type_string "sync\n";
     select_console('installation');

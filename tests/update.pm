@@ -30,8 +30,10 @@ sub run {
     become_root;
     curl_via_netvm;
     # WTF part
-    assert_script_run('qvm-pci dt sys-net dom0:00_04.0');
-    assert_script_run('qvm-pci at sys-net dom0:00_04.0 -p -o no-strict-reset=True');
+    if (script_run('qvm-check --running sys-net') != 0) {
+        assert_script_run('qvm-pci dt sys-net dom0:00_04.0');
+        assert_script_run('qvm-pci at sys-net dom0:00_04.0 -p -o no-strict-reset=True');
+    }
 
     # update extra files
     open EXTRA_TARBALL, "tar cz -C " . testapi::get_required_var('CASEDIR') . " extra-files|base64|" or die "failed to create tarball";
@@ -42,7 +44,7 @@ sub run {
     assert_script_run("curl " . autoinst_url('/files/extra-files.tar.gz.b64') . " | base64 -d | tar xz -C /root");
     type_string "cd /root/extra-files\n";
     type_string "python3 ./setup.py install\n";
-    type_string "cd\n";
+    type_string "cd -\n";
 
     assert_script_run('cp -a /root/extra-files/update /srv/salt/');
     assert_script_run('qubesctl top.enable update');
@@ -53,10 +55,10 @@ sub run {
 
     assert_script_run('systemctl restart qubesd');
     assert_script_run('(set -o pipefail; qubesctl --templates --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log)', timeout => 3600);
+    upload_logs("qubesctl-upgrade.log");
     assert_script_run('tail -1 qubesctl-upgrade.log|grep -v failed');
     assert_script_run('! grep ERROR qubesctl-upgrade.log');
     assert_script_run('! grep "^  Failed: *[1-9]" qubesctl-upgrade.log');
-    upload_logs("qubesctl-upgrade.log");
 
     if (check_var('RESTART_AFTER_UPDATE', '1')) {
         type_string("reboot\n");

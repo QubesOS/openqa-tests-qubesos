@@ -1,6 +1,7 @@
 {% if grains['os'] == 'Debian' %}
 python-apt:
-  pkg.installed: []
+  pkg.installed:
+    - reload_modules: True
 {% endif %}
 
 {% if salt['pillar.get']('update:repo', '') %}

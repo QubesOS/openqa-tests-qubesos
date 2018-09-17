@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 234,
+      "ypos": 192,
+      "width": 401,
+      "height": 20,
+      "type": "match"
+    },
+    {
+      "xpos": 703,
+      "ypos": 557,
+      "width": 86,
+      "height": 28,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "whonix-connected",
+    "whonix-connected-wizard"
+  ],
+  "properties": []
+}

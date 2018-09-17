@@ -23,6 +23,8 @@ sub run {
     my ($self) = @_;
 
     select_console('x11');
+    # wait for "connection established" popup to disappear
+    wait_still_screen(10, 50);
     if (!check_screen('whonix-firstrun')) {
         # no firstrun wizard? maybe already accepted
         # TODO: add a variable to configure it and fail if the wizard was
@@ -30,10 +32,28 @@ sub run {
         record_soft_failure('No Whonix firstrun wizzard detected');
         return;
     }
+    if (match_has_tag('whonixcheck-time-unstable')) {
+        send_key('ret');
+        wait_still_screen;
+    }
+    send_key('ret');
     wait_still_screen;
-    send_key('alt-n');
+    if (check_screen('whonixcheck-time-unstable')) {
+        send_key('ret');
+        wait_still_screen;
+    }
+    send_key('tab');
+    send_key('tab');
+    send_key('ret');
     assert_screen "whonix-connecting";
-    assert_screen "whonix-connected";
+    assert_screen "whonix-connected", timeout => 60;
+    if (match_has_tag('whonix-connected-wizard')) {
+        send_key('ret');
+    }
+    if (check_screen('whonixcheck-time-unstable')) {
+        send_key('ret');
+        wait_still_screen;
+    }
 }
 
 1;

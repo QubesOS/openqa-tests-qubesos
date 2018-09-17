@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 232,
+      "ypos": 162,
+      "width": 179,
+      "height": 23,
+      "type": "match"
+    },
+    {
+      "xpos": 230,
+      "ypos": 192,
+      "width": 148,
+      "height": 21,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "whonix-connecting"
+  ],
+  "properties": []
+}

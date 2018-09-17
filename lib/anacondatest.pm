@@ -49,6 +49,7 @@ sub post_fail_hook {
         enable_dom0_network_no_netvm();
         $self->{network_up} = 1;
     }
+    assert_script_run('cat /tmp/anaconda.log');
     upload_logs "/tmp/X.log", failok=>1;
     upload_logs "/tmp/anaconda.log", failok=>1;
     upload_logs "/tmp/packaging.log", failok=>1;

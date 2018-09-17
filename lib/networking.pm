@@ -30,10 +30,17 @@ our @EXPORT = qw(enable_dom0_network_no_netvm enable_dom0_network_netvm
 sub enable_dom0_network_no_netvm {
     return unless script_run('ip r |grep ^default');
     assert_script_run('dhclient $(ls /sys/class/net|head -1)');
+    script_run('ip a; ip r');
 }
 
 sub enable_dom0_network_netvm {
     return unless script_run('ip r |grep ^default');
+
+    # if netvm is there, but stuck on boot, kill it
+    if (script_run('xl list sys-net |tail -1| grep \' 0.0$\'') == 0) {
+        # bypass libvirt intentionally
+        script_run('xl destroy sys-net');
+    }
     
     # check if netvm is up
     if (script_run('xl domid sys-net')) {

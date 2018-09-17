@@ -22,7 +22,14 @@ update-test-import:
     - onchanges:
       - file: /etc/pki/rpm-gpg/update-test
 
-
 update:
   pkg.uptodate:
    - refresh: true
+
+kernel-latest-qubes-vm:
+  pkg.installed: []
+
+qubes-prefs default-kernel $(ls -v /var/lib/qubes/vm-kernels|tail -1|tee /dev/stderr):
+  cmd.run:
+   - onchanges:
+     - pkg: kernel-latest-qubes-vm

@@ -57,6 +57,14 @@ ENDFUNC
             record_info('fail', "Tests $test failed", result => 'fail');
             $self->record_testresult('fail');
         }
+        # try to close any popups left from the test, focust _must_ be on xterm window
+        send_key('esc');
+        send_key('esc');
+        send_key('esc');
+        send_key('ctrl-c');
+        send_key('ret');
+        x11_start_program('xdotool search --class ^xterm windowfocus', valid => 0);
+
         upload_logs("tests-$test.log");
         # upload also original xml, if something goes wrong with conversion
         upload_logs("nose2-junit.xml");

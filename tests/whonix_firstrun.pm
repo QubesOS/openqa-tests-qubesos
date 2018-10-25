@@ -25,13 +25,19 @@ sub run {
     select_console('x11');
     # wait for "connection established" popup to disappear
     wait_still_screen(10, 50);
-    if (!check_screen('whonix-firstrun')) {
+    if (!check_screen(['whonix-connected', 'whonix-firstrun'], 120)) {
         # no firstrun wizard? maybe already accepted
         # TODO: add a variable to configure it and fail if the wizard was
         # expected
-        record_soft_failure('No Whonix firstrun wizzard detected');
+        record_soft_failure('No Whonix firstrun wizard detected');
         return;
     }
+
+    if (match_has_tag('whonix-connected')) {
+        # already configured and connected
+        return;
+    }
+
     if (match_has_tag('whonixcheck-time-unstable')) {
         send_key('ret');
         wait_still_screen;

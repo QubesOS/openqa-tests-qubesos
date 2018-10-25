@@ -33,6 +33,11 @@ sub run {
     # until https://github.com/nose-devs/nose2/pull/412 gets merged
     assert_script_run("sudo patch /usr/lib/python3*/site-packages/nose2/plugins/junitxml.py /root/extra-files/nose2-junit-xml-log-skip-reason.patch");
 
+    # DEBUG XXX
+    assert_script_run('echo log_level = 1 | sudo tee -a /etc/libvirt/libvirtd.conf');
+    assert_script_run('echo log_filters = "3:event 3:object" | sudo tee -a /etc/libvirt/libvirtd.conf');
+    assert_script_run('sudo systemctl restart libvirtd');
+
     my $testfunc = <<ENDFUNC;
 testfunc() {
     rm -f nose2-junit.xml
@@ -73,6 +78,9 @@ ENDFUNC
         unless (script_run "sudo tar czf /tmp/objgraphs-$test.tar.gz /tmp/objgraph-*") {
             upload_logs "/tmp/objgraphs-$test.tar.gz";
             script_run "sudo rm -f /tmp/objgraph-*";
+        }
+        if (script_run('pidof -x qvm-start-gui')) {
+            record_soft_failure('qvm-start-gui crashed');
         }
     }
 }

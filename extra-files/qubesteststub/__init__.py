@@ -34,6 +34,9 @@ class DefaultPV(qubes.ext.Extension):
         if 'xen_scrub_pages' not in qubes.config.defaults['kernelopts']:
             qubes.config.defaults['kernelopts'] += ' xen_scrub_pages=0'
             qubes.config.defaults['kernelopts_pcidevs'] += ' xen_scrub_pages=0'
+        if 'journald' not in qubes.config.defaults['kernelopts']:
+            qubes.config.defaults['kernelopts'] += ' systemd.journald.forward_to_console=1'
+            qubes.config.defaults['kernelopts_pcidevs'] += ' systemd.journald.forward_to_console=1'
 
     @qubes.ext.handler('features-request')
     @asyncio.coroutine

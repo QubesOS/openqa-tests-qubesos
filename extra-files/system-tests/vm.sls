@@ -12,6 +12,7 @@ vm-packages:
       - qubes-input-proxy-sender
       - qubes-gpg-split-tests
       - qubes-usb-proxy
+      - qubes-usb-proxy
       - usbutils
       - createrepo
       - python3-pip

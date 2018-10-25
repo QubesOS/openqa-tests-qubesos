@@ -6,19 +6,23 @@ python-apt:
 
 {% if salt['pillar.get']('update:repo', '') %}
 
-# FIXME: provide tor onion service for whonix
+{% if grains['osfullname'] == 'Whonix' %}
+{%   set update_repo = salt['pillar.get']('update:repo_onion', '') %}
+{% else %}
+{%   set update_repo = salt['pillar.get']('update:repo', '') %}
+{% endif %}
 
 update-test:
   pkgrepo.managed:
-    - humanname: udpate test
+    - humanname: update test
 {% if grains['os'] == 'Fedora' %}
     - name: update-test
-    - baseurl: {{ salt['pillar.get']('update:repo') }}/vm/fc{{ grains['osrelease'] }}
+    - baseurl: {{ update_repo }}/vm/fc{{ grains['osrelease'] }}
     - gpgkey: file:///etc/pki/rpm-gpg/update-test
     - gpgcheck: 0
 {% elif grains['os'] == 'Debian' %}
     - key_url: salt://update/update-test.asc
-    - name: deb http://{{ salt['pillar.get']('update:repo') }} {{ grains['oscodename'] }} main
+    - name: deb {{ update_repo }}/vm {{ grains['oscodename'] }} main
     - file: /etc/apt/sources.list.d/update-test.list
     - require:
       - pkg: python-apt
@@ -57,7 +61,21 @@ update-test-import:
 
 update:
   pkg.uptodate:
-   - refresh: true
+   - refresh: True
 {% if grains['os'] == 'Debian' %}
    - dist_upgrade: True
+{% endif %}
+
+
+{% if salt['pillar.get']('update:repo', '') %}
+# since the repo may not be available at later time, disable it here
+disable-update-repo:
+  pkgrepo.absent:
+{% if grains['os'] == 'Fedora' %}
+    - name: update-test
+{% elif grains['os'] == 'Debian' %}
+    - name: deb {{ update_repo }}/vm {{ grains['oscodename'] }} main
+    - require:
+      - pkg: update
+{% endif %}
 {% endif %}

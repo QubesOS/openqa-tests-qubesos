@@ -48,7 +48,17 @@ sub run {
 
     assert_script_run('cp -a /root/extra-files/update /srv/salt/');
     assert_script_run('qubesctl top.enable update');
-    if (get_var("SYSTEM_TESTS")) {
+    if (get_var('REPO_1')) {
+        my $pillar_dir = "/srv/pillar/base/update";
+        my $repo_url = data_url("REPO_1");
+        assert_script_run("mkdir -p $pillar_dir");
+        assert_script_run("printf 'update:\\n  repo: $repo_url\\n' > $pillar_dir/init.sls");
+        $repo_url =~ s/\d+\.\d+\.\d+\.\d+/uedqavcpvbij4kyr.onion/;
+        assert_script_run("printf '  repo_onion: $repo_url\\n' >> $pillar_dir/init.sls");
+        assert_script_run("printf \"base:\\n  '*':\\n    - update\\n\" > $pillar_dir/init.top");
+        assert_script_run('qubesctl top.enable update pillar=True');
+    }
+    if (get_var("SYSTEM_TESTS") or get_var("REPO_1")) {
         assert_script_run('cp -a /root/extra-files/system-tests /srv/salt/');
         assert_script_run('qubesctl top.enable system-tests');
     }
@@ -58,7 +68,7 @@ sub run {
     assert_script_run('sed -i -e s:default=4:default=1: /usr/bin/qubesctl');
 
     assert_script_run('systemctl restart qubesd');
-    assert_script_run('(set -o pipefail; qubesctl --templates --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log)', timeout => 3600);
+    assert_script_run('(set -o pipefail; qubesctl --max-concurrency=3 --templates --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log)', timeout => 7200);
     upload_logs("qubesctl-upgrade.log");
     assert_script_run('tail -1 qubesctl-upgrade.log|grep -v failed');
     assert_script_run('! grep ERROR qubesctl-upgrade.log');
@@ -69,6 +79,11 @@ sub run {
         assert_screen ["bootloader", "luks-prompt", "login-prompt-user-selected"], 300;
         $self->handle_system_startup;
     } else {
+        # only restart key VMs
+        script_run('qvm-shutdown --wait sys-firewall');
+        script_run('qvm-kill sys-firewall');
+        sleep(5);
+        assert_script_run('qvm-start sys-firewall');
         type_string("exit\n");
         type_string("exit\n");
     }

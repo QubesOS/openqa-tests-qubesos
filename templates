@@ -156,6 +156,18 @@
                     {
                       group_name => "Qubes OS updates",
                       machine    => { name => "64bit" },
+                      prio       => 10,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "update",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_update" },
+                    },
+                    {
+                      group_name => "Qubes OS updates",
+                      machine    => { name => "64bit" },
                       prio       => 50,
                       product    => {
                                       arch    => "x86_64",
@@ -294,8 +306,7 @@
                       flavor    => "update",
                       name      => "Qubes OS update",
                       settings  => [
-                                     { key => "UPDATE", value => 1 },
-                                     { key => "HDD_1", value => "disk_unencrypted_%VERSION%_%MACHINE%.qcow2" },
+                                     { key => "HDD_1", value => "disk_unencrypted_%VERSION%_%BUILD%_%MACHINE%.qcow2" },
                                      { key => "MAX_JOB_TIME", value => "21600" },
                                    ],
                       version   => "*",
@@ -376,26 +387,38 @@
                     ### system tests
                     #################
                     {
+                      name => "system_tests_update",
+                      settings => [
+                        { key => "UPDATE", value => 1 },
+                        { key => "HDD_1", value => "disk_unencrypted_%VERSION%_%MACHINE%.qcow2" },
+                        { key => "PUBLISH_HDD_1", value => "disk_unencrypted_%VERSION%_%BUILD%_%MACHINE%.qcow2" },
+                      ],
+                    },
+                    {
                       name => "system_tests_basic_vm_qrexec_gui",
                       settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "SYSTEM_TESTS", value => "qubes.tests.integ.basic qubes.tests.integ.vm_qrexec_gui:7200" },
                       ],
                     },
                     {
                       name => "system_tests_network",
                       settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "SYSTEM_TESTS", value => "qubes.tests.integ.network:10800 qubes.tests.integ.dom0_update" },
                       ],
                     },
                     {
                       name => "system_tests_backup",
                       settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "SYSTEM_TESTS", value => "qubes.tests.integ.backup:18000" },
                       ],
                     },
                     {
                       name => "system_tests_backupcompatibility",
                       settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "SYSTEM_TESTS", value => "qubes.tests.integ.backupcompatibility:10800" },
                         { key => "MAX_JOB_TIME", value => "14400" },
                       ],
@@ -403,12 +426,14 @@
                     {
                       name => "system_tests_pvgrub_salt_storage",
                       settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "SYSTEM_TESTS", value => "qubes.tests.integ.pvgrub qubes.tests.integ.salt qubes.tests.integ.storage" },
                       ],
                     },
                     {
                       name => "system_tests_extra",
                       settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "SYSTEM_TESTS", value => "qubes.tests.extra:10800" },
                         { key => "MAX_JOB_TIME", value => "14400" },
                       ],

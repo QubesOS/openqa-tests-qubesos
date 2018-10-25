@@ -40,6 +40,14 @@ sub run {
     if (script_run('xl info | grep ^xen_commandline | grep smt=off') != 0) {
         record_soft_failure('Xen smt=off option missing');
     }
+    my $boot_mountpoint = '/boot';
+    if (check_var('MACHINE', 'uefi')) {
+        $boot_mountpoint = '/boot/efi';
+    }
+    script_run('df -h');
+    if (script_run("test \$(stat -f -c %b $boot_mountpoint) -gt \$[ 400 * 2**20 / 4096 ]") != 0) {
+        record_soft_failure("$boot_mountpoint smaller than 400MB");
+    }
     type_string("exit\n");
 }
 

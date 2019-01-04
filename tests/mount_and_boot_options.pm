@@ -45,10 +45,11 @@ sub run {
         $boot_mountpoint = '/boot/efi';
     }
     script_run('df -h');
-    if (script_run("test \$(stat -f -c %b $boot_mountpoint) -gt \$[ 400 * 2**20 / 4096 ]") != 0) {
+    if (script_run("test \$(df -k --output=size $boot_mountpoint | tail -n 1) -gt \$[ 400 * 2**10 ]") != 0) {
         record_soft_failure("$boot_mountpoint smaller than 400MB");
     }
     type_string("exit\n");
+    assert_screen "desktop";
 }
 
 1;

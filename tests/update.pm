@@ -63,10 +63,6 @@ sub run {
         assert_script_run('qubesctl top.enable system-tests');
     }
 
-    # until QubesOS/qubes-issues#3655 got implemented
-    assert_script_run('sed -i -e s:max_concurrency=4:max_concurrency=1: /usr/lib/python2.7/site-packages/qubessalt/__init__.py');
-    assert_script_run('sed -i -e s:default=4:default=1: /usr/bin/qubesctl');
-
     assert_script_run('systemctl restart qubesd');
     assert_script_run('(set -o pipefail; qubesctl --max-concurrency=3 --templates --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log)', timeout => 7200);
     upload_logs("qubesctl-upgrade.log");

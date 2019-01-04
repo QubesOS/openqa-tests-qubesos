@@ -14,7 +14,11 @@ vm-packages:
       - qubes-usb-proxy
       - qubes-usb-proxy
       - usbutils
+{% if grains['os'] == 'Fedora' and grains['osmajorrelease'] >= 29 %}
+      - createrepo_c
+{% else %}
       - createrepo
+{% endif %}
       - python3-pip
       - xdotool
       - gcc

@@ -28,7 +28,7 @@ sub run {
     send_key('alt-f10');
     curl_via_netvm;
 
-    assert_script_run("sudo qubes-dom0-update -y python3-nose2 python3-objgraph patch", timeout => 180);
+    assert_script_run("sudo qubes-dom0-update -y python3-nose2 python3-objgraph patch", timeout => 240);
     assert_script_run("sudo cat /root/extra-files/convert_junit.py >convert_junit.py");
     # until https://github.com/nose-devs/nose2/pull/412 gets merged
     assert_script_run("sudo patch /usr/lib/python3*/site-packages/nose2/plugins/junitxml.py /root/extra-files/nose2-junit-xml-log-skip-reason.patch");

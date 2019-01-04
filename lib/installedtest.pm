@@ -68,7 +68,7 @@ sub handle_system_startup {
 
 sub save_and_upload_log {
     my ($self, $cmd, $file, $args) = @_;
-    script_run("$cmd | tee $file", $args->{timeout});
+    script_run("$cmd > $file", $args->{timeout});
     upload_logs($file) unless $args->{noupload};
     save_screenshot if $args->{screenshot};
 }
@@ -80,10 +80,10 @@ sub post_fail_hook {
     script_run "xl info";
     script_run "xl list";
     script_run "xl dmesg";
-    script_run "journalctl -b|tail -n 10000";
+    script_run "journalctl -b|tail -n 10000", timeout => 120;
     enable_dom0_network_netvm() unless $self->{network_up};
     upload_logs('/var/log/libvirt/libxl/libxl-driver.log');
-    $self->save_and_upload_log('journalctl -b', 'journalctl.log');
+    $self->save_and_upload_log('journalctl -b', 'journalctl.log', {timeout => 120});
     upload_logs('/var/lib/qubes/qubes.xml');
     #my $logs = script_output('ls -1 /var/log/xen/console/*.log');
     #foreach (split(/\n/, $logs)) {
@@ -95,12 +95,13 @@ sub post_fail_hook {
     unless (script_run "tar czf /tmp/var_log.tar.gz /var/log") {
         upload_logs "/tmp/var_log.tar.gz";
     }
+    upload_logs('/home/user/.xsession-errors');
 
     $self->save_and_upload_log('qvm-prefs sys-net', 'qvm-prefs-sys-net.log');
     $self->save_and_upload_log('qvm-prefs sys-firewall', 'qvm-prefs-sys-firewall.log');
     $self->save_and_upload_log('qvm-prefs sys-usb', 'qvm-prefs-sys-usb.log');
     $self->save_and_upload_log('xl dmesg', 'xl-dmesg.log');
-    $self->save_and_upload_log('qvm-run -u root sys-firewall "cat /var/log/xen/xen-hotplug.log"', 'sys-firewall-xen-hotplug.log');
+    $self->save_and_upload_log('qvm-run -p -u root sys-firewall "cat /var/log/xen/xen-hotplug.log"', 'sys-firewall-xen-hotplug.log');
 }
 
 

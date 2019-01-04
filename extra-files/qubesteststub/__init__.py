@@ -48,3 +48,8 @@ class DefaultPV(qubes.ext.Extension):
             dropin = '/etc/systemd/system/xendriverdomain.service.d'
             yield from vm.run_for_stdio('mkdir -p {dropin} && echo -e "[Unit]\\nConditionVirtualization=" > {dropin}/30_openqa.conf'.format(dropin=dropin), user='root')
             vm.features['fixups-installed'] = True
+
+    @qubes.ext.handler('domain-start-failed')
+    def on_start_failed(self, vm, event, **kwargs):
+        import time
+        print('VM {} start failed at {}'.format(vm.name, time.strftime('%F %T')))

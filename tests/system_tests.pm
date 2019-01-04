@@ -35,7 +35,7 @@ sub run {
 
     # DEBUG XXX
     assert_script_run('echo log_level = 1 | sudo tee -a /etc/libvirt/libvirtd.conf');
-    assert_script_run('echo log_filters = "3:event 3:object" | sudo tee -a /etc/libvirt/libvirtd.conf');
+    assert_script_run('echo \'log_filters = "3:event 3:object 3:net"\' | sudo tee -a /etc/libvirt/libvirtd.conf');
     assert_script_run('sudo systemctl restart libvirtd');
 
     my $testfunc = <<ENDFUNC;

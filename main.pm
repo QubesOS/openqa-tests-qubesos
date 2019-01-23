@@ -49,8 +49,10 @@ if (get_var('ISO')) {
     }
 }
 
-autotest::loadtest "tests/mount_and_boot_options.pm";
-autotest::loadtest "tests/usbvm.pm";
+if (!get_var('UPDATE') or check_var('RESTART_AFTER_UPDATE', '1')) {
+    autotest::loadtest "tests/mount_and_boot_options.pm";
+    autotest::loadtest "tests/usbvm.pm";
+}
 
 if (get_var('SYSTEM_TESTS')) {
     autotest::loadtest "tests/system_tests.pm";

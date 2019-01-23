@@ -71,11 +71,10 @@ update:
 # since the repo may not be available at later time, disable it here
 disable-update-repo:
   pkgrepo.absent:
+    - order: last
 {% if grains['os'] == 'Fedora' %}
     - name: update-test
 {% elif grains['os'] == 'Debian' %}
     - name: deb {{ update_repo }}/vm {{ grains['oscodename'] }} main
-    - require:
-      - pkg: update
 {% endif %}
 {% endif %}

@@ -2,6 +2,7 @@ base:
   dom0:
     - match: nodegroup
     - system-tests.dom0
+    - system-tests.dom0-workarounds
   qubes:type:template:
     - match: pillar
     - system-tests.vm

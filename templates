@@ -434,8 +434,8 @@
                       name => "system_tests_extra",
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
-                        { key => "SYSTEM_TESTS", value => "qubes.tests.extra:10800" },
-                        { key => "MAX_JOB_TIME", value => "14400" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.extra:14400" },
+                        { key => "MAX_JOB_TIME", value => "18000" },
                       ],
                     },
                   ],

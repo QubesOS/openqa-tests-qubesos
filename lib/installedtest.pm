@@ -92,7 +92,7 @@ sub post_fail_hook {
     #    upload_logs($_);
     #}
     # Upload /var/log
-    unless (script_run "tar czf /tmp/var_log.tar.gz /var/log") {
+    unless (script_run "tar czf /tmp/var_log.tar.gz --exclude=journal /var/log") {
         upload_logs "/tmp/var_log.tar.gz";
     }
     upload_logs('/home/user/.xsession-errors');

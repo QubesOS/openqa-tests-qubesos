@@ -427,7 +427,7 @@
                       name => "system_tests_pvgrub_salt_storage",
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
-                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.pvgrub qubes.tests.integ.salt qubes.tests.integ.storage" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.grub qubes.tests.integ.salt qubes.tests.integ.storage" },
                       ],
                     },
                     {

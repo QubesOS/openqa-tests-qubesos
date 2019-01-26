@@ -7,6 +7,7 @@ vm-packages:
       - python3-devel
       - nmap-ncat
 {% else %}
+      - python3-cairo
       - libudev-dev
 {% endif %}
       - qubes-input-proxy-sender
@@ -23,6 +24,7 @@ vm-packages:
       - xdotool
       - gcc
       - pulseaudio-utils
+      - git
 
 # broken on Fedora 24, lets install using pip (tests will handle that)
 python-uinput:

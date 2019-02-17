@@ -67,6 +67,17 @@ sub run {
     assert_script_run('! grep ERROR qubesctl-upgrade.log');
     assert_script_run('! grep "^  Failed: *[1-9]" qubesctl-upgrade.log');
 
+    # log package versions
+    $self->save_and_upload_log('rpm -qa qubes-template-*', 'template-versions.txt');
+    $self->save_and_upload_log('rpm -qa', 'dom0-packages.txt');
+    my $templates = script_output('qvm-ls --raw-data --fields name,klass');
+    foreach (split /\n/, $templates) {
+        next unless /Template/;
+        s/|.*//;
+        $self->save_and_upload_log('rpm -qa || dpkg -l', "template-$_-packages.txt", {timeout =>90});
+        assert_script_run("qvm-shutdown --wait $_", timeout => 90);
+    }
+
     if (check_var('RESTART_AFTER_UPDATE', '1')) {
         type_string("reboot\n");
         assert_screen ["bootloader", "luks-prompt", "login-prompt-user-selected"], 300;

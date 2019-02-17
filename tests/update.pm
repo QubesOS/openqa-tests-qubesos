@@ -29,11 +29,6 @@ sub run {
     send_key('alt-f10');
     become_root;
     curl_via_netvm;
-    # WTF part
-    if (script_run('qvm-check --running sys-net') != 0) {
-        assert_script_run('qvm-pci dt sys-net dom0:00_04.0');
-        assert_script_run('qvm-pci at sys-net dom0:00_04.0 -p -o no-strict-reset=True');
-    }
 
     # update extra files
     open EXTRA_TARBALL, "tar cz -C " . testapi::get_required_var('CASEDIR') . " extra-files|base64|" or die "failed to create tarball";

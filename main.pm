@@ -43,6 +43,7 @@ if (get_var('ISO')) {
     autotest::loadtest "tests/firstboot.pm";
 } else {
     autotest::loadtest "tests/startup.pm";
+    autotest::loadtest "tests/startup_fixup.pm";
     autotest::loadtest "tests/whonix_firstrun.pm";
     if (get_var('UPDATE')) {
         autotest::loadtest "tests/update.pm";

@@ -45,7 +45,7 @@ if (get_var('ISO')) {
     autotest::loadtest "tests/startup.pm";
     autotest::loadtest "tests/startup_fixup.pm";
     autotest::loadtest "tests/whonix_firstrun.pm";
-    if (get_var('UPDATE')) {
+    if (get_var('UPDATE') || get_var('SALT_SYSTEM_TESTS')) {
         autotest::loadtest "tests/update.pm";
     }
 }

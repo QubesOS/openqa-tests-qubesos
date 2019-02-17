@@ -23,3 +23,5 @@ Variables used in tests:
  - `LOCALE` - install with non-default locale; currently only `en_DK.utf8` value is supported
  - `SYSTEM_TESTS` - run system tests from those (space separated) modules, each module can be suffixed with ":TIMEOUT" (in seconds); tests are run using nose2
  - `VERBOSE_LIBVIRT` - increase libvirt log level, including libxl logging; slows down the system and may lead to huge logs
+ - `REPO_1` - repository name to install updates (dom0 and vm) from - in addition to standard repos
+ - `SALT_SYSTEM_TESTS` - run salt formula preparing for system tests (mostly install extra packages)

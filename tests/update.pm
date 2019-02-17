@@ -41,8 +41,10 @@ sub run {
     type_string "python3 ./setup.py install\n";
     type_string "cd -\n";
 
-    assert_script_run('cp -a /root/extra-files/update /srv/salt/');
-    assert_script_run('qubesctl top.enable update');
+    if (get_var("UPDATE")) {
+        assert_script_run('cp -a /root/extra-files/update /srv/salt/');
+        assert_script_run('qubesctl top.enable update');
+    }
     if (get_var('REPO_1')) {
         my $pillar_dir = "/srv/pillar/base/update";
         my $repo_url = data_url("REPO_1");
@@ -53,7 +55,7 @@ sub run {
         assert_script_run("printf \"base:\\n  '*':\\n    - update\\n\" > $pillar_dir/init.top");
         assert_script_run('qubesctl top.enable update pillar=True');
     }
-    if (get_var("SYSTEM_TESTS") or get_var("REPO_1")) {
+    if (get_var("SALT_SYSTEM_TESTS")) {
         assert_script_run('cp -a /root/extra-files/system-tests /srv/salt/');
         assert_script_run('qubesctl top.enable system-tests');
     }
@@ -71,10 +73,15 @@ sub run {
         $self->handle_system_startup;
     } else {
         # only restart key VMs
+        script_run('qvm-shutdown --wait sys-whonix');
         script_run('qvm-shutdown --wait sys-firewall');
+        script_run('qvm-shutdown --wait sys-net');
+        script_run('qvm-kill sys-whonix');
         script_run('qvm-kill sys-firewall');
+        script_run('qvm-kill sys-net');
         sleep(5);
-        assert_script_run('qvm-start sys-firewall');
+        assert_script_run('qvm-start sys-firewall', timeout => 120);
+        assert_script_run('qvm-start sys-whonix', timeout => 90);
         type_string("exit\n");
         type_string("exit\n");
     }

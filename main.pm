@@ -41,12 +41,17 @@ if (get_var('ISO')) {
     autotest::loadtest "tests/install_do_user.pm";
     autotest::loadtest "tests/install_fixups.pm";
     autotest::loadtest "tests/firstboot.pm";
+    autotest::loadtest "tests/whonixcheck.pm";
 } else {
     autotest::loadtest "tests/startup.pm";
     autotest::loadtest "tests/startup_fixup.pm";
     autotest::loadtest "tests/whonix_firstrun.pm";
     if (get_var('UPDATE_TEMPLATES')) {
         autotest::loadtest "tests/update_templates.pm";
+    }
+    # run whonixcheck before installing extra packages
+    if (!get_var('SYSTEM_TESTS')) {
+        autotest::loadtest "tests/whonixcheck.pm";
     }
     if (get_var('UPDATE') || get_var('SALT_SYSTEM_TESTS')) {
         autotest::loadtest "tests/update.pm";

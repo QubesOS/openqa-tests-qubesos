@@ -41,7 +41,7 @@ sub enable_dom0_network_netvm {
         # bypass libvirt intentionally
         script_run('xl destroy sys-net');
     }
-    
+
     # check if netvm is up
     if (script_run('xl domid sys-net')) {
         # no netvm, bind network device to dom0
@@ -93,10 +93,10 @@ curl() {
     fi
 }
 ENDFUNC
-    # cut EOL as assert_script_run will append "; echo $?" and ";" is invalid
-    # without preceeding command
-    chop($curl_wrapper);
-    assert_script_run("$curl_wrapper");
+    save_tmp_file('curl-wrapper.sh', $curl_wrapper);
+
+    assert_script_run("qvm-run -p sys-net \"curl " . autoinst_url('/files/curl-wrapper.sh') . "\" > curl-wrapper.sh");
+    assert_script_run(". curl-wrapper.sh");
 }
 
 1;

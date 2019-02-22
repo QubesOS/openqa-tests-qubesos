@@ -318,7 +318,7 @@
                       flavor    => "update",
                       name      => "Qubes OS update",
                       settings  => [
-                                     { key => "HDD_1", value => "disk_unencrypted_%VERSION%_%BUILD%_%MACHINE%.qcow2" },
+                                     { key => "HDD_1", value => "disk_unencrypted_updated.qcow2" },
                                      { key => "MAX_JOB_TIME", value => "21600" },
                                    ],
                       version   => "*",
@@ -404,7 +404,7 @@
                         { key => "DO_UPDATE", value => 1 },
                         { key => "SALT_SYSTEM_TESTS", value => 1 },
                         { key => "HDD_1", value => "disk_unencrypted_%VERSION%_%MACHINE%.qcow2" },
-                        { key => "PUBLISH_HDD_1", value => "disk_unencrypted_%VERSION%_%BUILD%_%MACHINE%.qcow2" },
+                        { key => "STORE_HDD_1", value => "disk_unencrypted_updated.qcow2" },
                       ],
                     },
                     {

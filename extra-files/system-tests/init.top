@@ -6,4 +6,6 @@ base:
   qubes:type:template:
     - match: pillar
     - system-tests.vm
-
+  'whonix* and I@qubes:type:template':
+    - match: compound
+    - system-tests.whonix

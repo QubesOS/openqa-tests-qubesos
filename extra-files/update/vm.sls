@@ -45,6 +45,14 @@ repo-testing:
 {% endif %}
 
 
+{% if grains['os'] == 'Debian' %}
+# Workaround for https://github.com/saltstack/salt/issues/27067
+
+/etc/apt/sources.list.d/qubes-r4.list:
+  file.append:
+    - text: deb [arch=amd64] http://deb.qubes-os.org/r4.0/vm {{ grains['oscodename'] }}-testing main
+
+{% endif %}
 
 {% if grains['os'] == 'Fedora' %}
 /etc/pki/rpm-gpg/update-test:

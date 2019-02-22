@@ -41,26 +41,29 @@ if (get_var('ISO')) {
     autotest::loadtest "tests/install_do_user.pm";
     autotest::loadtest "tests/install_fixups.pm";
     autotest::loadtest "tests/firstboot.pm";
-    autotest::loadtest "tests/whonixcheck.pm";
 } else {
     autotest::loadtest "tests/startup.pm";
     autotest::loadtest "tests/startup_fixup.pm";
     autotest::loadtest "tests/whonix_firstrun.pm";
-    if (get_var('UPDATE_TEMPLATES')) {
-        autotest::loadtest "tests/update_templates.pm";
-    }
-    # run whonixcheck before installing extra packages
-    if (!get_var('SYSTEM_TESTS')) {
-        autotest::loadtest "tests/whonixcheck.pm";
-    }
-    if (get_var('UPDATE') || get_var('SALT_SYSTEM_TESTS')) {
-        autotest::loadtest "tests/update.pm";
+    if (get_var('DO_UPDATE')) {
+        if (get_var('UPDATE_TEMPLATES')) {
+            autotest::loadtest "tests/update_templates.pm";
+        }
+        if (get_var('UPDATE') || get_var('SALT_SYSTEM_TESTS')) {
+            autotest::loadtest "tests/update.pm";
+        }
     }
 }
 
-if (!get_var('UPDATE') or check_var('RESTART_AFTER_UPDATE', '1')) {
+# do not execute same tests before each system tests run
+if (!get_var('SYSTEM_TESTS') and
+        (!get_var('DO_UPDATE') or check_var('RESTART_AFTER_UPDATE', '1'))) {
     autotest::loadtest "tests/mount_and_boot_options.pm";
     autotest::loadtest "tests/usbvm.pm";
+}
+
+if (get_var("WHONIXCHECK")) {
+    autotest::loadtest "tests/whonixcheck.pm";
 }
 
 if (get_var('SYSTEM_TESTS')) {

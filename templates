@@ -168,6 +168,18 @@
                     {
                       group_name => "Qubes OS updates",
                       machine    => { name => "64bit" },
+                      prio       => 40,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "update",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_whonix" },
+                    },
+                    {
+                      group_name => "Qubes OS updates",
+                      machine    => { name => "64bit" },
                       prio       => 50,
                       product    => {
                                       arch    => "x86_64",
@@ -389,7 +401,7 @@
                     {
                       name => "system_tests_update",
                       settings => [
-                        { key => "UPDATE", value => 1 },
+                        { key => "DO_UPDATE", value => 1 },
                         { key => "SALT_SYSTEM_TESTS", value => 1 },
                         { key => "HDD_1", value => "disk_unencrypted_%VERSION%_%MACHINE%.qcow2" },
                         { key => "PUBLISH_HDD_1", value => "disk_unencrypted_%VERSION%_%BUILD%_%MACHINE%.qcow2" },
@@ -437,6 +449,13 @@
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "SYSTEM_TESTS", value => "qubes.tests.extra:14400" },
                         { key => "MAX_JOB_TIME", value => "18000" },
+                      ],
+                    },
+                    {
+                      name => "system_tests_whonix",
+                      settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
+                        { key => "WHONIXCHECK", value => "1" },
                       ],
                     },
                   ],

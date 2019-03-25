@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 529,
+      "ypos": 498,
+      "width": 257,
+      "height": 33,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "global-settings-vm-update-false"
+  ]
+}

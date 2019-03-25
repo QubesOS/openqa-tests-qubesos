@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 151,
+      "ypos": 133,
+      "width": 101,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "global-settings-clockvms-listed"
+  ]
+}

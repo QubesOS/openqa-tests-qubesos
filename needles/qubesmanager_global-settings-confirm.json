@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "global-settings-confirm"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "xpos": 667,
+      "ypos": 396,
+      "width": 85,
+      "height": 28,
+      "type": "match"
+    }
+  ]
+}

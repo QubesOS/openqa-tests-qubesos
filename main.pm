@@ -75,6 +75,10 @@ if (get_var("STORE_HDD_1") || get_var("PUBLISH_HDD_1")) {
     autotest::loadtest "tests/shutdown.pm";
 }
 
+if (get_var("GUI_TESTS")) {
+        autotest::loadtest "tests/qubesmanager_manager.pm";
+}
+
 1;
 
 # vim: set sw=4 et:

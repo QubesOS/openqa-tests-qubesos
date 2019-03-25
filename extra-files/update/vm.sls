@@ -54,6 +54,17 @@ repo-testing:
 
 {% endif %}
 
+{% if grains['osfullname'] == 'Whonix' %}
+# convert to pkgrepo.managed when
+# https://github.com/saltstack/salt/issues/27067 get fixed in
+# default-mgmt-dvm's template
+
+/etc/apt/sources.list.d/whonix.list:
+  file.append:
+    - text: deb https://deb.whonix.org {{ grains['oscodename'] }}-proposed-updates main contrib non-free
+
+{% endif %}
+
 {% if grains['os'] == 'Fedora' %}
 /etc/pki/rpm-gpg/update-test:
   file.managed:

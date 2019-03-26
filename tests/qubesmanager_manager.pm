@@ -25,37 +25,37 @@ sub run {
 	# open global-settings
     	select_console('x11');
 	assert_screen "desktop";
-    	x11_start_program('qubes-global-settings');
+    	x11_start_program('qubes-qube-manager');
 	
-	# change minimal qube memory - fix this when qmemman is less horrible
-	# assert_screen_and_click('global-settings-minmem', 'left', 5);
-	# send_key('ctrl-a')
-	# send_text('400')
-	#
-	assert_and_click('global-settings-dom0up', 'left', 5);
+        # sort by template
+        assert_and_click('qube-manager-sort-template', 'left', 5);
 
-	# exit global settings
-	send_key('ret', 5);
+        # right-click on a non-dom0 vm
+        assert_and_click('qube-manager-vm-rc', 'right', 5);
+        assert_screen('qube-manager-rclicked', 5);
+        send_key("esc");
 
-	# check if changes were made
-	select_console('root-virtio-terminal');
-	assert_script_run('qvm-features dom0 check-updates | grep -v 1', 5);
-	
-}
+        # check if dom0 logs are not empty
+        assert_and_click('qube-manager-dom0-rc', 'right', 5);
+        assert_and_click('qube-manager-dom0-logs', 'left', 5);
+        assert_screen('qube-manager-dom0-logs2', 10);
+        send_key("esc");
+        send_key("esc");
+       
+        # exit politely, also checking if menus click
+        assert_and_click('qube-manager-system-open', 'left', 10);
+        assert_and_click('qube-manager-system-exit', 'left', 10);
 
-sub test_flags {
-    # 'fatal'          - abort whole test suite if this fails (and set overall state 'failed')
-    # 'ignore_failure' - if this module fails, it will not affect the overall result at all
-    # 'milestone'      - after this test succeeds, update 'lastgood'
-    # 'norollback'     - don't roll back to 'lastgood' snapshot if this fails
-    return { milestone => 1 };
 }
 
 sub post_fail_hook {
-
+    my ($self) = @_;
     select_console('x11');
-    send_key "esc";
+    if (!check_screen('desktop', 5)) {
+        send_key('alt-f4');
+    }
     save_screenshot;
+    $self->SUPER::post_fail_hook;
 
 };
 

@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "qube-manager-dom0-rc"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "xpos": 48,
+      "ypos": 169,
+      "width": 186,
+      "height": 25,
+      "type": "match"
+    }
+  ]
+}

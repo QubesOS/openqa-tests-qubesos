@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "backup-cancelled"
+  ],
+  "area": [
+    {
+      "xpos": 384,
+      "ypos": 310,
+      "width": 245,
+      "height": 122,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

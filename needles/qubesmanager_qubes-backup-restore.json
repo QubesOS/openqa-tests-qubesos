@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "qubes-backup-restore"
+  ],
+  "area": [
+    {
+      "xpos": 366,
+      "ypos": 159,
+      "width": 250,
+      "height": 26,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

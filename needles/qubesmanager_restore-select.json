@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "restore-select"
+  ],
+  "area": [
+    {
+      "xpos": 799,
+      "ypos": 285,
+      "width": 31,
+      "height": 27,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

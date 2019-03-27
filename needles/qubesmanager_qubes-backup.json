@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "qubes-backup"
+  ],
+  "area": [
+    {
+      "xpos": 375,
+      "ypos": 56,
+      "width": 241,
+      "height": 15,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

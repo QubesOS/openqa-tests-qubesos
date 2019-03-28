@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "template-cancel"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "xpos": 393,
+      "ypos": 728,
+      "width": 86,
+      "height": 28,
+      "type": "match"
+    }
+  ]
+}

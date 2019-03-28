@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "template-select-dvm"
+  ],
+  "area": [
+    {
+      "xpos": 289,
+      "ypos": 154,
+      "width": 139,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

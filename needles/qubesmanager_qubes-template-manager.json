@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "qubes-template-manager"
+  ],
+  "area": [
+    {
+      "xpos": 184,
+      "ypos": 36,
+      "width": 183,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

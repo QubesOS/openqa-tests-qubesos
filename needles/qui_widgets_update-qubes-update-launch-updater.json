@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 702,
+      "ypos": 80,
+      "width": 148,
+      "height": 26,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "qubes-update-launch-updater"
+  ]
+}

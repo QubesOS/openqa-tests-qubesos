@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 39,
+      "ypos": 93,
+      "width": 65,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "qubes-update-select-dom0"
+  ]
+}

@@ -31,7 +31,7 @@ sub test_flags {
     # 'fatal' - whole test suite is in danger if this fails
     # 'milestone' - after this test succeeds, update 'lastgood'
     # 'important' - if this fails, set the overall state to 'fail'
-    return { fatal => 1, milestone => 1 };
+    return { fatal => 1 };
 }
 
 sub post_fail_hook {

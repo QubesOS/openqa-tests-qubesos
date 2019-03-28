@@ -32,6 +32,8 @@ sub run {
         # don't fail if whonix is not installed
         script_run('qvm-start sys-whonix', timeout => 90);
     }
+    assert_script_run("echo sys-usb dom0 allow > /etc/qubes-rpc/policy/qubes.InputTablet");
+    assert_script_run("qvm-run -u root sys-usb 'systemctl start qubes-input-sender-tablet\@event1'");
     select_console('x11');
 }
 

@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "qui-devices-opened"
+  ],
+  "area": [
+    {
+      "xpos": 623,
+      "ypos": 32,
+      "width": 245,
+      "height": 24,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

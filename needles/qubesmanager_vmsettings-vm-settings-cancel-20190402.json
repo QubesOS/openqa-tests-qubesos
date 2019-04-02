@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 399,
+      "ypos": 30,
+      "width": 125,
+      "height": 24,
+      "type": "match"
+    },
+    {
+      "xpos": 800,
+      "ypos": 669,
+      "width": 83,
+      "height": 34,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-cancel"
+  ]
+}

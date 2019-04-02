@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 89,
+      "ypos": 69,
+      "width": 72,
+      "height": 24,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-advanced-tab"
+  ]
+}

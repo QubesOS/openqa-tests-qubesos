@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 45,
+      "ypos": 221,
+      "width": 66,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-apps-dolphin-select"
+  ]
+}

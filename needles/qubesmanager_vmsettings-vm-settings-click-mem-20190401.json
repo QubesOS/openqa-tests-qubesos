@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "height": 23,
+      "width": 103,
+      "ypos": 137,
+      "xpos": 64,
+      "type": "match"
+    },
+    {
+      "xpos": 176,
+      "ypos": 133,
+      "width": 63,
+      "height": 30,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-click-mem"
+  ]
+}

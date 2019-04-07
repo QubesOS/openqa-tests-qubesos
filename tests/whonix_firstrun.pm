@@ -23,8 +23,6 @@ sub run {
     my ($self) = @_;
 
     select_console('x11');
-    # wait for "connection established" popup to disappear
-    wait_still_screen(10, 50);
     if (!check_screen(['whonix-connected', 'whonix-firstrun'], 120)) {
         # no firstrun wizard? maybe already accepted
         # TODO: add a variable to configure it and fail if the wizard was

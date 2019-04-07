@@ -32,7 +32,11 @@ sub run {
         # don't fail if whonix is not installed
         script_run('qvm-start sys-whonix', timeout => 90);
     }
+    # force "connection established" notification to show again, if it expired already
+    script_run('qvm-run sys-net "killall nm-applet; sleep 1; nm-applet >/dev/null 2>&1 </dev/null & true"', 120);
     select_console('x11');
+    assert_screen("nm-connection-established", 60);
+    assert_screen("no-notifications");
 }
 
 sub test_flags {

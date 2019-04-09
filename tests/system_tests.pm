@@ -64,6 +64,10 @@ ENDFUNC
             $self->record_testresult('fail');
         }
         # try to close any popups left from the test, focust _must_ be on xterm window
+        while (check_screen('qrexec-confirmation-cancel', 1)) {
+            assert_and_click('qrexec-confirmation-cancel');
+            sleep(1);
+        }
         send_key('esc');
         send_key('esc');
         send_key('esc');

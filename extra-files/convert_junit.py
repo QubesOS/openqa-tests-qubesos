@@ -52,6 +52,9 @@ def main():
                 skipped += 1
             else:
                 testcase.set('status', 'success')
+            system_err = testcase.find('system-err')
+            if system_err is not None and not system_err.text:
+                testcase.remove(system_err)
             # xpath support in ElementTree is limited, 'and' not supported
             existing = [e for e in testsuite.findall(
                 "./testcase[@classname='{}']".format(classname))

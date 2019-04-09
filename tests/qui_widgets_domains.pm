@@ -42,7 +42,6 @@ sub run {
         # check for one of the guises of the scrollbar bug        
         # run a new vm
         select_console('root-virtio-terminal');
-        assert_script_run('qvm-prefs work qrexec-timeout 200');
         assert_script_run('qvm-start work', 200);
         select_console('x11');
         # check if its not scrolling

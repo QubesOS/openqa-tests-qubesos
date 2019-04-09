@@ -70,13 +70,24 @@ if (get_var('SYSTEM_TESTS')) {
     autotest::loadtest "tests/system_tests.pm";
 }
 
+if (get_var("GUI_TESTS")) {
+        autotest::loadtest "tests/qui_widgets_clipboard.pm";
+        autotest::loadtest "tests/qui_widgets_devices.pm";
+        autotest::loadtest "tests/qui_widgets_disk_space.pm";
+        autotest::loadtest "tests/qui_widgets_domains.pm";
+        autotest::loadtest "tests/qui_widgets_notifications.pm";
+        autotest::loadtest "tests/qui_widgets_update.pm";
+
+        autotest::loadtest "tests/qubesmanager_backuprestore.pm";
+        autotest::loadtest "tests/qubesmanager_createnewvm.pm";
+        autotest::loadtest "tests/qubesmanager_globalsettings.pm";
+        autotest::loadtest "tests/qubesmanager_manager.pm";
+        autotest::loadtest "tests/qubesmanager_templatemanager.pm";
+        autotest::loadtest "tests/qubesmanager_vmsettings.pm";
+}
 
 if (get_var("STORE_HDD_1") || get_var("PUBLISH_HDD_1")) {
     autotest::loadtest "tests/shutdown.pm";
-}
-
-if (get_var("GUI_TESTS")) {
-        autotest::loadtest "tests/qubesmanager_manager.pm";
 }
 
 1;

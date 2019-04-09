@@ -58,6 +58,7 @@ sub run {
 }
 
 sub prep_backup {
+        $vmname = $_[0]
         x11_start_program('qubes-backup');
 
         # move all vms to unavailable
@@ -68,9 +69,9 @@ sub prep_backup {
         assert_and_click('backup-select-sys-net2', 'left', 15);
 
         # click next
-        assert_and_click('backup-next', 'left', '10');
+        assert_and_click('backup-next', 'left', 10);
 
-        if ($_[0] eq 'sys-net') {
+        if ($vmname eq 'sys-net') {
                 send_key('s');
                 send_key('s');
         } else {

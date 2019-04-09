@@ -24,15 +24,14 @@ sub run {
 
     select_console('x11');
     if (!check_screen(['whonix-connected', 'whonix-firstrun'], 120)) {
-        # no firstrun wizard? maybe already accepted
-        # TODO: add a variable to configure it and fail if the wizard was
-        # expected
-        record_soft_failure('No Whonix firstrun wizard detected');
-        return;
+        # no firstrun wizard? maybe already accepted - verify it
+        x11_start_program('qvm-run sys-whonix \'whonixcheck --autostart --gui\'', valid => 0);
+        assert_screen('whonix-connected', timeout => 60);
     }
 
     if (match_has_tag('whonix-connected')) {
-        # already configured and connected
+        # already configured and connected, wait for notification to disappear
+        assert_screen('no-notifications');
         return;
     }
 
@@ -40,15 +39,8 @@ sub run {
         send_key('ret');
         wait_still_screen;
     }
-    send_key('ret');
-    wait_still_screen;
-    if (check_screen('whonixcheck-time-unstable')) {
-        send_key('ret');
-        wait_still_screen;
-    }
-    send_key('tab');
-    send_key('tab');
-    send_key('ret');
+    assert_and_click('whonix-firstrun');
+    assert_and_click('whonix-firstrun-confirm');
     assert_screen "whonix-connecting";
     assert_screen "whonix-connected", timeout => 60;
     if (match_has_tag('whonix-connected-wizard')) {

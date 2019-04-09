@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 4,
+      "ypos": 9,
+      "width": 125,
+      "height": 14,
+      "type": "match"
+    },
+    {
+      "xpos": 2,
+      "ypos": 308,
+      "width": 102,
+      "height": 19,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "MACHINE-amt",
+    "installer-disk-spoke"
+  ],
+  "properties": []
+}

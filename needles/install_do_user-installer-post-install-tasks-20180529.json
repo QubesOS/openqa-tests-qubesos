@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 170,
+      "ypos": 647,
+      "width": 129,
+      "height": 16,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "MACHINE-amt",
+    "installer-post-install-tasks"
+  ],
+  "properties": []
+}

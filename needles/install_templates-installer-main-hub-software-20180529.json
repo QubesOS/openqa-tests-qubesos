@@ -1,0 +1,16 @@
+{
+  "properties": [],
+  "tags": [
+    "MACHINE-amt",
+    "installer-main-hub-software"
+  ],
+  "area": [
+    {
+      "xpos": 607,
+      "ypos": 238,
+      "width": 147,
+      "height": 20,
+      "type": "match"
+    }
+  ]
+}

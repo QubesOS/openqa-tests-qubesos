@@ -1,0 +1,16 @@
+{
+  "properties": [],
+  "tags": [
+    "MACHINE-amt",
+    "installer-user-weak-pass"
+  ],
+  "area": [
+    {
+      "xpos": 16,
+      "ypos": 747,
+      "width": 121,
+      "height": 17,
+      "type": "match"
+    }
+  ]
+}

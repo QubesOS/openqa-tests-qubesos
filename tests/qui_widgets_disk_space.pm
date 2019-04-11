@@ -22,20 +22,20 @@ use testapi;
 
 
 sub run {
-	# open global-settings
-    	select_console('x11');
-	assert_screen "desktop";
-        
-        # check if the widget started and opens
-        assert_and_click('qui-disk-space-widget', 'left', 20);
-        assert_screen('qui-disk-space-widget2', 20);
+    # open global-settings
+    select_console('x11');
+    assert_screen "desktop";
 
-        # close and open again
-        send_key('esc');
-        assert_and_click('qui-disk-space-widget', 'left', 20);
-        assert_screen('qui-disk-space-widget2', 20);
+    # check if the widget started and opens
+    assert_and_click('qui-disk-space-widget', 'left', 20);
+    assert_screen('qui-disk-space-widget2', 20);
 
-        send_key('esc');
+    # close and open again
+    send_key('esc');
+    assert_and_click('qui-disk-space-widget', 'left', 20);
+    assert_screen('qui-disk-space-widget2', 20);
+
+    send_key('esc');
 
 }
 

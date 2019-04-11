@@ -22,40 +22,40 @@ use testapi;
 
 
 sub run {
-	# open global-settings
-    	select_console('x11');
-	assert_screen "desktop";
+    # open global-settings
+    select_console('x11');
+    assert_screen "desktop";
 
-        # check if widget opened, open it
-        assert_and_click('qui-domains-open', 'left', 20);
-        assert_screen('qui-domains-opened');
+    # check if widget opened, open it
+    assert_and_click('qui-domains-open', 'left', 20);
+    assert_screen('qui-domains-opened');
 
-        # close and open again
-        send_key('esc');
-        assert_and_click('qui-domains-open', 'left', 20);
+    # close and open again
+    send_key('esc');
+    assert_and_click('qui-domains-open', 'left', 20);
 
-        # open a domain
-        send_key('down');
-        assert_screen('qui-domains-domain-opened', 'left', 20);
-        send_key('esc');
+    # open a domain
+    send_key('down');
+    assert_screen('qui-domains-domain-opened', 'left', 20);
+    send_key('esc');
 
-        # check for one of the guises of the scrollbar bug        
-        # run a new vm
-        select_console('root-virtio-terminal');
-        assert_script_run('qvm-start work', 200);
-        select_console('x11');
-        # check if its not scrolling
-        assert_and_click('qui-domains-open', 'left', 60);
-        assert_screen('qui-domains-not-scrolling');
+    # check for one of the guises of the scrollbar bug
+    # run a new vm
+    select_console('root-virtio-terminal');
+    assert_script_run('qvm-start work', 200);
+    select_console('x11');
+    # check if its not scrolling
+    assert_and_click('qui-domains-open', 'left', 60);
+    assert_screen('qui-domains-not-scrolling');
 
-        # close the widget
-        send_key('esc');
-        send_key('esc');
-        select_console('root-virtio-terminal');
-        script_run('qvm-shutdown --wait work', 200);
-        select_console('x11');
-        
-        
+    # close the widget
+    send_key('esc');
+    send_key('esc');
+    select_console('root-virtio-terminal');
+    script_run('qvm-shutdown --wait work', 200);
+    select_console('x11');
+
+
 }
 
 sub post_fail_hook {

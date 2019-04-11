@@ -22,39 +22,39 @@ use testapi;
 
 
 sub run {
-	# open global-settings
-    	select_console('x11');
-	assert_screen "desktop";
-    	x11_start_program('qubes-global-settings');
-	
-        # enable checking for updates for all qubes
-        assert_and_click('global-settings-enable-all', 'left', 5);
-        assert_and_click('global-settings-confirm', 'left', 10);
-        # disable checking for updates for all qubes
-        assert_and_click('global-settings-disable-all', 'left', 5);
-        assert_and_click('global-settings-confirm', 'left', 10);
+    # open global-settings
+    select_console('x11');
+    assert_screen "desktop";
+    x11_start_program('qubes-global-settings');
 
-        # are kernels listing?
-        assert_and_click('global-settings-kernel-listing', 'left', 10);
-        assert_and_click('global-settings-kernels-listed', 'left', 10);
+    # enable checking for updates for all qubes
+    assert_and_click('global-settings-enable-all', 'left', 5);
+    assert_and_click('global-settings-confirm', 'left', 10);
+    # disable checking for updates for all qubes
+    assert_and_click('global-settings-disable-all', 'left', 5);
+    assert_and_click('global-settings-confirm', 'left', 10);
 
-        # are default DispVMs being listed?
-        assert_and_click('global-settings-default-dispvms-listing', 'left', 10);
-        assert_and_click('global-settings-default-dispvms-listed', 'left', 10);
+    # are kernels listing?
+    assert_and_click('global-settings-kernel-listing', 'left', 10);
+    assert_and_click('global-settings-kernels-listed', 'left', 10);
 
-        # are clockVMs being listed?
-        assert_and_click('global-settings-clockvms-listing', 'left', 5);
-        assert_and_click('global-settings-clockvms-listed', 'left', 5);
+    # are default DispVMs being listed?
+    assert_and_click('global-settings-default-dispvms-listing', 'left', 10);
+    assert_and_click('global-settings-default-dispvms-listed', 'left', 10);
 
-	# change vm update default
-	assert_and_click('global-settings-vm-update', 'left', 2);
+    # are clockVMs being listed?
+    assert_and_click('global-settings-clockvms-listing', 'left', 5);
+    assert_and_click('global-settings-clockvms-listed', 'left', 5);
 
-	# is confirming settings working
-	assert_and_click('global-settings-ok', 'left', 2);
+    # change vm update default
+    assert_and_click('global-settings-vm-update', 'left', 2);
 
-        # is cancelling working
-        x11_start_program('qubes-global-settings');
-        assert_and_click('global-settings-cancel', 'left', 2);
+    # is confirming settings working
+    assert_and_click('global-settings-ok', 'left', 2);
+
+    # is cancelling working
+    x11_start_program('qubes-global-settings');
+    assert_and_click('global-settings-cancel', 'left', 2);
 
 }
 

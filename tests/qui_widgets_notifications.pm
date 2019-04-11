@@ -22,33 +22,33 @@ use testapi;
 
 
 sub run {
-	# open global-settings
-    	select_console('x11');
-	assert_screen "desktop";
+    # open global-settings
+    select_console('x11');
+    assert_screen "desktop";
 
-        # run xterm
-        x11_start_program('xterm');
-        # check if domains notify about start
-        assert_script_run("qvm-shutdown --wait work", 200);
-        type_string("qvm-start work\n", 200);
-        assert_screen('qui-notifications-domain-start', 200);
-        assert_script_run('qvm-start --skip-if-running work');
+    # run xterm
+    x11_start_program('xterm');
+    # check if domains notify about start
+    assert_script_run("qvm-shutdown --wait work", 200);
+    type_string("qvm-start work\n", 200);
+    assert_screen('qui-notifications-domain-start', 200);
+    assert_script_run('qvm-start --skip-if-running work');
 
-        # check if devices notify about connecting
-        assert_and_click('qui-notifications-devices', 'left', 20);
-        send_key('down');
-        send_key('right');
-        send_key('ret');
-        assert_screen('qui-notification-device-attach', 60);
-        
-        # exit politely
-        type_string("exit\n");
-        assert_screen "desktop";
-        
-        # turn off work domain
-        select_console('root-virtio-terminal');
-        script_run('qvm-shutdown --wait work', 200);
-        select_console('x11');
+    # check if devices notify about connecting
+    assert_and_click('qui-notifications-devices', 'left', 20);
+    send_key('down');
+    send_key('right');
+    send_key('ret');
+    assert_screen('qui-notification-device-attach', 60);
+
+    # exit politely
+    type_string("exit\n");
+    assert_screen "desktop";
+
+    # turn off work domain
+    select_console('root-virtio-terminal');
+    script_run('qvm-shutdown --wait work', 200);
+    select_console('x11');
 }
 
 sub post_fail_hook {

@@ -22,24 +22,24 @@ use testapi;
 
 
 sub run {
-	# open global-settings
-    	select_console('x11');
-	assert_screen "desktop";
+    # open global-settings
+    select_console('x11');
+    assert_screen "desktop";
 
-        # open the widget, close it
-        assert_and_click('qui-clipboard-open', 'left', 20);
-        assert_screen('qui-clipboard-opened', 20);
-        send_key('esc');
+    # open the widget, close it
+    assert_and_click('qui-clipboard-open', 'left', 20);
+    assert_screen('qui-clipboard-opened', 20);
+    send_key('esc');
 
-        # open it again
-        assert_and_click('qui-clipboard-open', 'left', 20);
+    # open it again
+    assert_and_click('qui-clipboard-open', 'left', 20);
 
-        # click copy from dom0 clipboard
-        assert_and_click('qui-clipboard-copy-dom0', 'left', 20);
-        assert_screen('qui-clipboard-copied-dom0', 20);
+    # click copy from dom0 clipboard
+    assert_and_click('qui-clipboard-copy-dom0', 'left', 20);
+    assert_screen('qui-clipboard-copied-dom0', 20);
 
-        # exit
-        send_key('esc');
+    # exit
+    send_key('esc');
 
 }
 

@@ -22,29 +22,29 @@ use testapi;
 
 
 sub run {
-	# open global-settings
-    	select_console('x11');
-	assert_screen "desktop";
-    	x11_start_program('qubes-qube-manager');
-	
-        # sort by template
-        assert_and_click('qube-manager-sort-template', 'left', 5);
+    # open global-settings
+    select_console('x11');
+    assert_screen "desktop";
+    x11_start_program('qubes-qube-manager');
 
-        # right-click on a non-dom0 vm
-        assert_and_click('qube-manager-vm-rc', 'right', 5);
-        assert_screen('qube-manager-rclicked', 5);
-        send_key("esc");
+    # sort by template
+    assert_and_click('qube-manager-sort-template', 'left', 5);
 
-        # check if dom0 logs are not empty
-        assert_and_click('qube-manager-dom0-rc', 'right', 5);
-        assert_and_click('qube-manager-dom0-logs', 'left', 5);
-        assert_screen('qube-manager-dom0-logs2', 10);
-        send_key("esc");
-        send_key("esc");
-       
-        # exit politely, also checking if menus click
-        assert_and_click('qube-manager-system-open', 'left', 10);
-        assert_and_click('qube-manager-system-exit', 'left', 10);
+    # right-click on a non-dom0 vm
+    assert_and_click('qube-manager-vm-rc', 'right', 5);
+    assert_screen('qube-manager-rclicked', 5);
+    send_key("esc");
+
+    # check if dom0 logs are not empty
+    assert_and_click('qube-manager-dom0-rc', 'right', 5);
+    assert_and_click('qube-manager-dom0-logs', 'left', 5);
+    assert_screen('qube-manager-dom0-logs2', 10);
+    send_key("esc");
+    send_key("esc");
+
+    # exit politely, also checking if menus click
+    assert_and_click('qube-manager-system-open', 'left', 10);
+    assert_and_click('qube-manager-system-exit', 'left', 10);
 
 }
 

@@ -22,24 +22,24 @@ use testapi;
 
 
 sub run {
-	# open global-settings
-    	select_console('x11');
-	assert_screen "desktop";
+    # open global-settings
+    select_console('x11');
+    assert_screen "desktop";
 
-        # check if widget opened, open it
-        assert_and_click('qui-devices-open', 'left', 20);
-        assert_screen('qui-devices-opened');
+    # check if widget opened, open it
+    assert_and_click('qui-devices-open', 'left', 20);
+    assert_screen('qui-devices-opened');
 
-        # close and open again
-        send_key('esc');
-        assert_and_click('qui-devices-open', 'left', 20);
+    # close and open again
+    send_key('esc');
+    assert_and_click('qui-devices-open', 'left', 20);
 
-        # open a device
-        send_key('up');
-        assert_screen('qui-devices-dev-opened', 'left', 20);
-        
-        # close the widget
-        send_key('esc');
+    # open a device
+    send_key('up');
+    assert_screen('qui-devices-dev-opened', 'left', 20);
+
+    # close the widget
+    send_key('esc');
 }
 
 sub post_fail_hook {

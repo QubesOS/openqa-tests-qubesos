@@ -22,42 +22,42 @@ use testapi;
 
 
 sub run {
-	# open global-settings
-    	select_console('x11');
-	assert_screen "desktop";
-        
-        # make sure there's something to update
+    # open global-settings
+    select_console('x11');
+    assert_screen "desktop";
 
-        select_console('root-virtio-terminal');
-        script_run('qvm-features --unset fedora-29 updates-available;qvm-features fedora-29 updates-available 1;qvm-features dom0 updates-available 1');
-        select_console('x11');
-        
-        # wait for update alert to appear
-        assert_screen('qui-updates-update-available', 120);
-        
-        # open the widget
-        assert_and_click('qui-updates-widget-open', 'left', 20);
+    # make sure there's something to update
 
-        # launch the updater
-        assert_and_click('qubes-update-launch-updater', 'left', 20);
-        assert_and_click('qubes-update-enable-for-all', 'left', 20);
+    select_console('root-virtio-terminal');
+    script_run('qvm-features --unset fedora-29 updates-available;qvm-features fedora-29 updates-available 1;qvm-features dom0 updates-available 1');
+    select_console('x11');
 
-        assert_and_click('qubes-update-select-dom0', 'left', 20);
-        assert_and_click('qubes-update-deselect-dom0', 'left', 20);
+    # wait for update alert to appear
+    assert_screen('qui-updates-update-available', 120);
 
-        # go to next, then cancel
-        assert_and_click('qubes-update-next', 'left', 20);
-        assert_and_click('qubes-update-cancel', 'left', 20);
+    # open the widget
+    assert_and_click('qui-updates-widget-open', 'left', 20);
 
-        assert_screen('qubes-update-cancelling');
-        assert_and_click('qubes-update-finish', 'left', 900);
+    # launch the updater
+    assert_and_click('qubes-update-launch-updater', 'left', 20);
+    assert_and_click('qubes-update-enable-for-all', 'left', 20);
 
-        # try launching the updater from console
-        x11_start_program('qubes-update-gui');
-        
-        assert_and_click('qubes-update-cancel');
-        
-        assert_screen('desktop-empty');
+    assert_and_click('qubes-update-select-dom0', 'left', 20);
+    assert_and_click('qubes-update-deselect-dom0', 'left', 20);
+
+    # go to next, then cancel
+    assert_and_click('qubes-update-next', 'left', 20);
+    assert_and_click('qubes-update-cancel', 'left', 20);
+
+    assert_screen('qubes-update-cancelling');
+    assert_and_click('qubes-update-finish', 'left', 900);
+
+    # try launching the updater from console
+    x11_start_program('qubes-update-gui');
+
+    assert_and_click('qubes-update-cancel');
+
+    assert_screen('desktop-empty');
 
 }
 

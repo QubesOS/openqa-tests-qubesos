@@ -22,221 +22,221 @@ use testapi;
 
 
 sub run {
-	# open global-settings
-    	select_console('x11');
-	assert_screen "desktop";
-    	x11_start_program('qubes-vm-settings work');
-	
-        # basic
-        assert_screen('vm-settings-correct_current');
+    # open global-settings
+    select_console('x11');
+    assert_screen "desktop";
+    x11_start_program('qubes-vm-settings work');
 
-        # change label
-        assert_and_click('vm-settings-label-open', 'left', 30, 0.10);
-        assert_and_click('vm-settings-label-click-red');
+    # basic
+    assert_screen('vm-settings-correct_current');
 
-        # change template
-        assert_and_click('vm-settings-template-opened');
-        assert_and_click('vm-settings-template-change-whonix');
+    # change label
+    assert_and_click('vm-settings-label-open', 'left', 30, 0.10);
+    assert_and_click('vm-settings-label-click-red');
 
-        # change networking to None
-        assert_and_click('vm-settings-networking-opened');
-        assert_and_click('vm-settings-networking-change-none');
-        
-        # include in backups by default, run in debug mode, start on boot
-        send_key('tab');
-        send_key('spc');
-        send_key('tab');
-        send_key('spc');
-        send_key('tab');
-        send_key('spc');
+    # change template
+    assert_and_click('vm-settings-template-opened');
+    assert_and_click('vm-settings-template-change-whonix');
 
-        # increase storage
-        send_key('tab');
-        send_key('up');
+    # change networking to None
+    assert_and_click('vm-settings-networking-opened');
+    assert_and_click('vm-settings-networking-change-none');
 
-        # confirm
-        assert_and_click('vm-settings-ok');
+    # include in backups by default, run in debug mode, start on boot
+    send_key('tab');
+    send_key('spc');
+    send_key('tab');
+    send_key('spc');
+    send_key('tab');
+    send_key('spc');
 
-        assert_screen('desktop');
+    # increase storage
+    send_key('tab');
+    send_key('up');
 
-        # check if it worked
-        x11_start_program('qubes-vm-settings work');
-        assert_screen('vm-settings-basics-changed');
+    # confirm
+    assert_and_click('vm-settings-ok');
 
-        # advanced
-        assert_and_click('vm-settings-advanced-tab');
-        assert_screen('vm-settings-advanced-check-current');
+    assert_screen('desktop');
 
-        # change memory
-        send_key('ctrl-a');
-        type_string('50');
+    # check if it worked
+    x11_start_program('qubes-vm-settings work');
+    assert_screen('vm-settings-basics-changed');
+
+    # advanced
+    assert_and_click('vm-settings-advanced-tab');
+    assert_screen('vm-settings-advanced-check-current');
+
+    # change memory
+    send_key('ctrl-a');
+    type_string('50');
+    send_key('ret');
+    assert_and_click('vm-settings-warn-mem');
+    # workaround
+    if (check_screen('vm-settings-warn-mem', 30)) {
         send_key('ret');
-        assert_and_click('vm-settings-warn-mem');
-        # workaround
-        if (check_screen('vm-settings-warn-mem', 30)) {
-            send_key('ret');
-        }
-        assert_and_click('vm-settings-click-mem');
-        send_key('ctrl-a');
-        type_string('600');
-        send_key('tab');
-        type_string('3000');
-        send_key('tab');
-        
-        # change VPUs
-        type_string('1');
+    }
+    assert_and_click('vm-settings-click-mem');
+    send_key('ctrl-a');
+    type_string('600');
+    send_key('tab');
+    type_string('3000');
+    send_key('tab');
 
-        # allow starting dispvms
-        assert_and_click('vm-settings-allow-dispvms');
+    # change VPUs
+    type_string('1');
 
-        # change default dispvm
-        assert_and_click('vm-settings-def-dvm-open');
-        assert_and_click('vm-settings-def-dvm-set-none');
+    # allow starting dispvms
+    assert_and_click('vm-settings-allow-dispvms');
 
-        # change kernel
-        assert_and_click('vm-settings-kernel-open');
-        assert_and_click('vm-settings-kernel-none');
+    # change default dispvm
+    assert_and_click('vm-settings-def-dvm-open');
+    assert_and_click('vm-settings-def-dvm-set-none');
 
-        # virt mode set to hvm
-        assert_and_click('vm-settings-virtmode-opened');
-        assert_and_click('vm-settings-virtmode-hvm');
-        
-        # confirm
-        assert_and_click('vm-settings-ok');
+    # change kernel
+    assert_and_click('vm-settings-kernel-open');
+    assert_and_click('vm-settings-kernel-none');
 
-        assert_screen('desktop');
+    # virt mode set to hvm
+    assert_and_click('vm-settings-virtmode-opened');
+    assert_and_click('vm-settings-virtmode-hvm');
 
-        # check if it worked
-        x11_start_program('qubes-vm-settings work');
-        assert_and_click('vm-settings-advanced-tab');
-        assert_screen('vm-settings-advanced-changed');
+    # confirm
+    assert_and_click('vm-settings-ok');
 
-        # firewall
-        assert_and_click('vm-settings-firewall-tab');
-        assert_and_click('vm-settings-firewall-warning');
-        
-        # add new rule
-        assert_and_click('vm-settings-firewall-limit');
-        assert_and_click('vm-settings-fw-add-rule');
-        type_string('192.168.1.1');
-        assert_and_click('vm-settings-fw-tcp');
-        assert_and_click('vm-settings-service-open');
-        assert_and_click('vm-settings-service-http');
-        send_key('ret');
-        assert_screen('vm-settings-fw-set');
+    assert_screen('desktop');
 
-        # confirm
-        assert_and_click('vm-settings-ok');
-        assert_screen('desktop');
+    # check if it worked
+    x11_start_program('qubes-vm-settings work');
+    assert_and_click('vm-settings-advanced-tab');
+    assert_screen('vm-settings-advanced-changed');
 
-        # check if it worked
-        x11_start_program('qubes-vm-settings work');
-        assert_and_click('vm-settings-firewall-tab');
-        assert_and_click('vm-settings-firewall-warning');
-        assert_screen('vm-settings-fw-set');
+    # firewall
+    assert_and_click('vm-settings-firewall-tab');
+    assert_and_click('vm-settings-firewall-warning');
 
-        # devices
-        assert_and_click('vm-settings-devices-tab');
-        assert_and_click('vm-settings-devices-strict-reset');
-        assert_and_click('vm-settings-devices-strict-ok');
+    # add new rule
+    assert_and_click('vm-settings-firewall-limit');
+    assert_and_click('vm-settings-fw-add-rule');
+    type_string('192.168.1.1');
+    assert_and_click('vm-settings-fw-tcp');
+    assert_and_click('vm-settings-service-open');
+    assert_and_click('vm-settings-service-http');
+    send_key('ret');
+    assert_screen('vm-settings-fw-set');
 
-        # select a device and add
-        assert_and_click('vm-settings-devices-select');
-        assert_and_click('vm-settings-devices-add');
+    # confirm
+    assert_and_click('vm-settings-ok');
+    assert_screen('desktop');
 
-        # confirm
-        assert_and_click('vm-settings-ok');
-        assert_screen('desktop');
+    # check if it worked
+    x11_start_program('qubes-vm-settings work');
+    assert_and_click('vm-settings-firewall-tab');
+    assert_and_click('vm-settings-firewall-warning');
+    assert_screen('vm-settings-fw-set');
 
-        # check if it worked
-        x11_start_program('qubes-vm-settings work');
-        assert_and_click('vm-settings-devices-tab');
-        assert_screen('vm-settings-devices-set');
-       
-        # remove device
-        assert_and_click('vm-settings-devices-remove-all');
-        send_key('alt-o');
+    # devices
+    assert_and_click('vm-settings-devices-tab');
+    assert_and_click('vm-settings-devices-strict-reset');
+    assert_and_click('vm-settings-devices-strict-ok');
 
-        # start again
-        x11_start_program('qubes-vm-settings work');
+    # select a device and add
+    assert_and_click('vm-settings-devices-select');
+    assert_and_click('vm-settings-devices-add');
 
-        # applications
-        assert_and_click('vm-settings-applications-tab');
-        assert_and_click('vm-settings-apps-dolphin-select');
-        assert_and_click('vm-settings-apps-dolphin-add');
+    # confirm
+    assert_and_click('vm-settings-ok');
+    assert_screen('desktop');
 
-        # confirm
-        send_key('alt-o');
-        assert_screen('desktop');
+    # check if it worked
+    x11_start_program('qubes-vm-settings work');
+    assert_and_click('vm-settings-devices-tab');
+    assert_screen('vm-settings-devices-set');
 
-        # check if it worked
-        x11_start_program('qubes-vm-settings work');
-        assert_and_click('vm-settings-applications-tab');
-        assert_screen('vm-settings-applications-set');
+    # remove device
+    assert_and_click('vm-settings-devices-remove-all');
+    send_key('alt-o');
 
-        # services
-        assert_and_click('vm-settings-services-tab');
+    # start again
+    x11_start_program('qubes-vm-settings work');
 
-        # add clocksync
-        type_string('clocksync');
-        send_key('ret');
+    # applications
+    assert_and_click('vm-settings-applications-tab');
+    assert_and_click('vm-settings-apps-dolphin-select');
+    assert_and_click('vm-settings-apps-dolphin-add');
 
-        # confirm
-        send_key('alt-o');
-        assert_screen('desktop');
+    # confirm
+    send_key('alt-o');
+    assert_screen('desktop');
 
-        # check if it worked
-        x11_start_program('qubes-vm-settings work');
-        assert_and_click('vm-settings-services-tab');
-        assert_screen('vm-settings-services-set');
-        
-        # remove clock
-        assert_and_click('vm-settings-service-select-clock');
-        assert_and_click('vm-settings-service-remove-clock');
+    # check if it worked
+    x11_start_program('qubes-vm-settings work');
+    assert_and_click('vm-settings-applications-tab');
+    assert_screen('vm-settings-applications-set');
 
-        # and done
-        assert_and_click('vm-settings-ok');
-        assert_screen('desktop');
-        
-        # check rename, clone and delete qube
-        x11_start_program('qubes-vm-settings work');
-        assert_and_click('vm-settings-rename');
-        type_string('work2');
-        assert_and_click('vm-settings-do-rename');
+    # services
+    assert_and_click('vm-settings-services-tab');
 
-        assert_screen('desktop', 120);
+    # add clocksync
+    type_string('clocksync');
+    send_key('ret');
 
-        x11_start_program('qubes-vm-settings work2');
-        assert_and_click('vm-settings-clone');
-        type_string('work3');
-        assert_and_click('vm-settings-do-clone');
+    # confirm
+    send_key('alt-o');
+    assert_screen('desktop');
 
-        assert_screen('vm-settings-clone-successful', 200);
-        send_key('ret');
+    # check if it worked
+    x11_start_program('qubes-vm-settings work');
+    assert_and_click('vm-settings-services-tab');
+    assert_screen('vm-settings-services-set');
 
-        assert_screen('desktop');
-        x11_start_program('qubes-vm-settings work2');
+    # remove clock
+    assert_and_click('vm-settings-service-select-clock');
+    assert_and_click('vm-settings-service-remove-clock');
 
-        assert_and_click('vm-settings-delete');
-        type_string('work2');
-        assert_and_click('vm-settings-do-delete');
-        
-        assert_screen('desktop');
-        
-        # check if can cancel
-        x11_start_program('qubes-vm-settings work3');
-        assert_and_click('vm-settings-rename');
-        assert_and_click('vm-settings-rename-cancel');
+    # and done
+    assert_and_click('vm-settings-ok');
+    assert_screen('desktop');
 
-        assert_and_click('vm-settings-clone');
-        assert_and_click('vm-settings-clone-cancel');
+    # check rename, clone and delete qube
+    x11_start_program('qubes-vm-settings work');
+    assert_and_click('vm-settings-rename');
+    type_string('work2');
+    assert_and_click('vm-settings-do-rename');
 
-        assert_and_click('vm-settings-delete');
-        assert_and_click('vm-settings-delete-cancel');
+    assert_screen('desktop', 120);
 
-        assert_and_click('vm-settings-cancel');
+    x11_start_program('qubes-vm-settings work2');
+    assert_and_click('vm-settings-clone');
+    type_string('work3');
+    assert_and_click('vm-settings-do-clone');
 
-        assert_screen('desktop');
+    assert_screen('vm-settings-clone-successful', 200);
+    send_key('ret');
+
+    assert_screen('desktop');
+    x11_start_program('qubes-vm-settings work2');
+
+    assert_and_click('vm-settings-delete');
+    type_string('work2');
+    assert_and_click('vm-settings-do-delete');
+
+    assert_screen('desktop');
+
+    # check if can cancel
+    x11_start_program('qubes-vm-settings work3');
+    assert_and_click('vm-settings-rename');
+    assert_and_click('vm-settings-rename-cancel');
+
+    assert_and_click('vm-settings-clone');
+    assert_and_click('vm-settings-clone-cancel');
+
+    assert_and_click('vm-settings-delete');
+    assert_and_click('vm-settings-delete-cancel');
+
+    assert_and_click('vm-settings-cancel');
+
+    assert_screen('desktop');
 
 }
 

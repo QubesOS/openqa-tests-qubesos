@@ -22,59 +22,59 @@ use testapi;
 
 
 sub run {
-	# open global-settings
-    	select_console('x11');
-	assert_screen "desktop";
-    	x11_start_program('qubes-vm-create');
-	
-        # input name
-        type_string('testqube');
+    # open global-settings
+    select_console('x11');
+    assert_screen "desktop";
+    x11_start_program('qubes-vm-create');
 
-        # choose a label
-        assert_and_click('qubes-vm-create-label-open', 'left', 10);
-        assert_and_click('qubes-vm-create-label-choose-blue', 'left', 10);
+    # input name
+    type_string('testqube');
 
-        # choose type
-        assert_and_click('qubes-vm-create-type-open', 'left', 10);
-        assert_and_click('qubes-vm-create-type-appvm', 'left', 10);
+    # choose a label
+    assert_and_click('qubes-vm-create-label-open', 'left', 10);
+    assert_and_click('qubes-vm-create-label-choose-blue', 'left', 10);
 
-        # open template
-        assert_and_click('qubes-vm-create-template-open', 'left', 10);
-        assert_screen('qubes-vm-create-templates-opened', 10);
-        send_key('esc');
+    # choose type
+    assert_and_click('qubes-vm-create-type-open', 'left', 10);
+    assert_and_click('qubes-vm-create-type-appvm', 'left', 10);
 
-        # open networking
-        assert_and_click('qubes-vm-create-networking-open', 'left', 10);
-        assert_screen('qubes-vm-create-networking-opened', 10);
-        send_key('esc');
+    # open template
+    assert_and_click('qubes-vm-create-template-open', 'left', 10);
+    assert_screen('qubes-vm-create-templates-opened', 10);
+    send_key('esc');
 
-        # launch settings
-        assert_and_click('qubes-vm-create-launch-settings', 'left', 10);
+    # open networking
+    assert_and_click('qubes-vm-create-networking-open', 'left', 10);
+    assert_screen('qubes-vm-create-networking-opened', 10);
+    send_key('esc');
 
-        # click ok
-        assert_and_click('qubes-vm-create-ok', 'left', 10);
+    # launch settings
+    assert_and_click('qubes-vm-create-launch-settings', 'left', 10);
 
-        # see if settings launched
-        assert_screen('qubes-vm-create-settings-launched', 60);
-        send_key('esc');
+    # click ok
+    assert_and_click('qubes-vm-create-ok', 'left', 10);
 
-        # see if screen empty
-        assert_screen('desktop');
+    # see if settings launched
+    assert_screen('qubes-vm-create-settings-launched', 60);
+    send_key('esc');
 
-        # launch again
-        x11_start_program('qubes-vm-create');
+    # see if screen empty
+    assert_screen('desktop');
 
-        # click cancel
-        assert_and_click('qubes-vm-create-cancel', 'left', 10);
+    # launch again
+    x11_start_program('qubes-vm-create');
 
-        # see if screen empty
-        assert_screen('desktop');
+    # click cancel
+    assert_and_click('qubes-vm-create-cancel', 'left', 10);
 
-        # launch again
-        x11_start_program('qubes-vm-create');
-        
-        # click exit button
-        assert_and_click('qubes-vm-create-exit', 'left', 10);
+    # see if screen empty
+    assert_screen('desktop');
+
+    # launch again
+    x11_start_program('qubes-vm-create');
+
+    # click exit button
+    assert_and_click('qubes-vm-create-exit', 'left', 10);
 }
 
 sub post_fail_hook {

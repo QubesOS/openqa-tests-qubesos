@@ -180,6 +180,18 @@
                     {
                       group_name => "Qubes OS updates",
                       machine    => { name => "64bit" },
+                      prio       => 40,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "update",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_gui_tools" },
+                    },
+                    {
+                      group_name => "Qubes OS updates",
+                      machine    => { name => "64bit" },
                       prio       => 50,
                       product    => {
                                       arch    => "x86_64",
@@ -456,6 +468,13 @@
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "WHONIXCHECK", value => "1" },
+                      ],
+                    },
+                    {
+                      name => "system_tests_gui_tools",
+                      settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
+                        { key => "GUI_TESTS", value => "1" },
                       ],
                     },
                   ],

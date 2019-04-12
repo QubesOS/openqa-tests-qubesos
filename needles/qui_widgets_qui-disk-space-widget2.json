@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 617,
+      "ypos": 31,
+      "width": 141,
+      "height": 27,
+      "type": "match"
+    },
+    {
+      "xpos": 623,
+      "ypos": 85,
+      "width": 99,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "qui-disk-space-widget2"
+  ]
+}

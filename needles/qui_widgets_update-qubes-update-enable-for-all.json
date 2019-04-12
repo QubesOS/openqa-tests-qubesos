@@ -1,0 +1,22 @@
+{
+  "tags": [
+    "qubes-update-enable-for-all"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "xpos": 121,
+      "ypos": 35,
+      "width": 159,
+      "height": 17,
+      "type": "match"
+    },
+    {
+      "xpos": 12,
+      "ypos": 489,
+      "width": 413,
+      "height": 22,
+      "type": "match"
+    }
+  ]
+}

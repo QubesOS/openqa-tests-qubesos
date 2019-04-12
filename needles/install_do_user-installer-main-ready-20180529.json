@@ -1,0 +1,16 @@
+{
+  "tags": [
+    "MACHINE-amt",
+    "installer-main-ready"
+  ],
+  "area": [
+    {
+      "xpos": 951,
+      "ypos": 721,
+      "width": 65,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

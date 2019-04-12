@@ -1,0 +1,16 @@
+{
+  "tags": [
+    "qvm-start",
+    "work"
+  ],
+  "area": [
+    {
+      "xpos": 833,
+      "ypos": 60,
+      "width": 166,
+      "height": 45,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

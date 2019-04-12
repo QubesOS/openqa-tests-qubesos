@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "qubes-update-cancelling"
+  ],
+  "area": [
+    {
+      "xpos": 105,
+      "ypos": 319,
+      "width": 232,
+      "height": 31,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

@@ -1,0 +1,16 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "ypos": 98,
+      "type": "match",
+      "xpos": 606,
+      "height": 25,
+      "width": 149
+    }
+  ],
+  "tags": [
+    "MACHINE-amt",
+    "installer-install-hub-user"
+  ]
+}

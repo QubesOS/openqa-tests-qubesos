@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "qube-manager-system-exit"
+  ],
+  "area": [
+    {
+      "xpos": 9,
+      "ypos": 158,
+      "width": 230,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

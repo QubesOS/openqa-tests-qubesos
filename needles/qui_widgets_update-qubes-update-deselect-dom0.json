@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "qubes-update-deselect-dom0"
+  ],
+  "area": [
+    {
+      "xpos": 41,
+      "ypos": 95,
+      "width": 57,
+      "height": 16,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

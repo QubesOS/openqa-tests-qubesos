@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 920,
+      "ypos": 144,
+      "width": 48,
+      "height": 39,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-service-remove-clock"
+  ]
+}

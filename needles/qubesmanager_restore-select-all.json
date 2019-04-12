@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 467,
+      "ypos": 301,
+      "width": 85,
+      "height": 30,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "restore-select-all"
+  ]
+}

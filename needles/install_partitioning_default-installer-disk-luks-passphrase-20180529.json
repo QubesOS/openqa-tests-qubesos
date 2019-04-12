@@ -1,0 +1,23 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 357,
+      "ypos": 269,
+      "width": 116,
+      "height": 17,
+      "type": "match"
+    },
+    {
+      "xpos": 600,
+      "ypos": 478,
+      "width": 67,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "MACHINE-amt",
+    "installer-disk-luks-passphrase"
+  ]
+}

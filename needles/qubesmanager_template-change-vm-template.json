@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 290,
+      "ypos": 127,
+      "width": 126,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "template-change-vm-template"
+  ]
+}

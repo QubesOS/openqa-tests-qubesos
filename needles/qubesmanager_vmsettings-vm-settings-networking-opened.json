@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 59,
+      "ypos": 200,
+      "width": 84,
+      "height": 22,
+      "type": "match"
+    },
+    {
+      "xpos": 171,
+      "ypos": 195,
+      "width": 138,
+      "height": 28,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-networking-opened"
+  ]
+}

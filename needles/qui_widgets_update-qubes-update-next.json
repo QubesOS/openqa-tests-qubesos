@@ -1,0 +1,15 @@
+{
+  "tags": [
+    "qubes-update-next"
+  ],
+  "area": [
+    {
+      "xpos": 334,
+      "ypos": 529,
+      "width": 103,
+      "height": 39,
+      "type": "match"
+    }
+  ],
+  "properties": []
+}

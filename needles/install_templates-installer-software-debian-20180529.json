@@ -1,0 +1,16 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 531,
+      "ypos": 92,
+      "width": 24,
+      "height": 10,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "MACHINE-amt",
+    "installer-software-debian"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 6,
+      "ypos": 56,
+      "width": 74,
+      "height": 23,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "qube-manager-system-open"
+  ]
+}

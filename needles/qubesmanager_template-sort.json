@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "area": [
+    {
+      "xpos": 55,
+      "ypos": 64,
+      "width": 138,
+      "height": 24,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "template-sort"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 395,
+      "ypos": 180,
+      "width": 48,
+      "height": 21,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-service-http"
+  ]
+}

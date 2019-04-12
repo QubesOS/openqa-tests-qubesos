@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "height": 94,
+      "type": "match",
+      "width": 238,
+      "xpos": 197,
+      "ypos": 91
+    },
+    {
+      "xpos": 763,
+      "ypos": 33,
+      "width": 161,
+      "height": 20,
+      "type": "match"
+    }
+  ],
+  "tags": [
+    "installer",
+    "installer-welcome-prerelease"
+  ],
+  "properties": []
+}

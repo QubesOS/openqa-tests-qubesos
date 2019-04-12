@@ -1,0 +1,23 @@
+{
+  "properties": [],
+  "tags": [
+    "MACHINE-amt",
+    "installer-user"
+  ],
+  "area": [
+    {
+      "xpos": 6,
+      "ypos": 5,
+      "width": 58,
+      "height": 12,
+      "type": "match"
+    },
+    {
+      "xpos": 379,
+      "ypos": 69,
+      "width": 50,
+      "height": 20,
+      "type": "match"
+    }
+  ]
+}

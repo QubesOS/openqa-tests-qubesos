@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 296,
+      "ypos": 242,
+      "width": 255,
+      "height": 27,
+      "type": "match"
+    },
+    {
+      "xpos": 695,
+      "ypos": 509,
+      "width": 76,
+      "height": 24,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "installer-unsupported-hardware"
+  ]
+}

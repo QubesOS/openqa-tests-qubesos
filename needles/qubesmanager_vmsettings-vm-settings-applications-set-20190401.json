@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 707,
+      "ypos": 141,
+      "width": 91,
+      "height": 26,
+      "type": "match"
+    },
+    {
+      "xpos": 545,
+      "ypos": 167,
+      "width": 75,
+      "height": 27,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-applications-set"
+  ]
+}

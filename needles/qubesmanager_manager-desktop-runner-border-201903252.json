@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 407,
+      "ypos": 64,
+      "width": 214,
+      "height": 20,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "qubes-global-settings"
+  ]
+}

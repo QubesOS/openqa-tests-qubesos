@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 428,
+      "ypos": 131,
+      "width": 146,
+      "height": 35,
+      "type": "match"
+    },
+    {
+      "xpos": 633,
+      "ypos": 137,
+      "width": 62,
+      "height": 24,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-kernel-open"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 289,
+      "ypos": 72,
+      "width": 82,
+      "height": 20,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-devices-tab"
+  ]
+}

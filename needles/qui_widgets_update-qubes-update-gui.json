@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 121,
+      "ypos": 34,
+      "width": 162,
+      "height": 17,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "qubes-update-gui"
+  ]
+}

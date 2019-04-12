@@ -1,0 +1,22 @@
+{
+  "tags": [
+    "restore-cancel"
+  ],
+  "properties": [],
+  "area": [
+    {
+      "xpos": 377,
+      "ypos": 160,
+      "width": 236,
+      "height": 23,
+      "type": "match"
+    },
+    {
+      "xpos": 759,
+      "ypos": 547,
+      "width": 87,
+      "height": 27,
+      "type": "match"
+    }
+  ]
+}

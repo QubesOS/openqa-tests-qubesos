@@ -29,15 +29,15 @@ sub run {
     script_run('mount');
     # expect discard option by default only in 4.0+
     if (get_var('VERSION') !~ /^3/) {
-        if (script_run('mount | grep " / " | grep discard') != 0) {
+        if (script_run('mount | grep " / " | grep discard') ne 0) {
             record_soft_failure('discard option missing on root filesystem');
         }
     }
     script_run('xl info');
-    if (script_run('xl info | grep ^xen_commandline | grep ucode=scan') != 0) {
+    if (script_run('xl info | grep ^xen_commandline | grep ucode=scan') ne 0) {
         record_soft_failure('Xen ucode=scan option missing');
     }
-    if (script_run('xl info | grep ^xen_commandline | grep smt=off') != 0) {
+    if (script_run('xl info | grep ^xen_commandline | grep smt=off') ne 0) {
         record_soft_failure('Xen smt=off option missing');
     }
     my $boot_mountpoint = '/boot';
@@ -45,7 +45,7 @@ sub run {
         $boot_mountpoint = '/boot/efi';
     }
     script_run('df -h');
-    if (script_run("test \$(df -k --output=size $boot_mountpoint | tail -n 1) -gt \$[ 400 * 2**10 ]") != 0) {
+    if (script_run("test \$(df -k --output=size $boot_mountpoint | tail -n 1) -gt \$[ 400 * 2**10 ]") ne 0) {
         record_soft_failure("$boot_mountpoint smaller than 400MB");
     }
     type_string("exit\n");

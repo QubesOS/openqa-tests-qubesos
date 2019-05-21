@@ -81,6 +81,7 @@ sub post_fail_hook {
     script_run "xl list";
     script_run "xl dmesg";
     script_run "journalctl -b|tail -n 10000", timeout => 120;
+    script_run "cat /var/log/salt/minion";
     enable_dom0_network_netvm() unless $self->{network_up};
     upload_logs('/var/log/libvirt/libxl/libxl-driver.log');
     $self->save_and_upload_log('journalctl -b', 'journalctl.log', {timeout => 120});

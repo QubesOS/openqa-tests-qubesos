@@ -33,6 +33,10 @@ sub run {
     # until https://github.com/nose-devs/nose2/pull/412 gets merged
     assert_script_run("sudo patch /usr/lib/python3*/site-packages/nose2/plugins/junitxml.py /root/extra-files/nose2-junit-xml-log-skip-reason.patch");
 
+    if (get_var('TEST_TEMPLATES')) {
+        assert_script_run("export QUBES_TEST_TEMPLATES='" . get_var('TEST_TEMPLATES') . "'");
+    }
+
     if (check_var('VERBOSE_LIBVIRT', '1')) {
         assert_script_run('echo log_level = 1 | sudo tee -a /etc/libvirt/libvirtd.conf');
         assert_script_run('echo \'log_filters = "3:event 3:object 3:net"\' | sudo tee -a /etc/libvirt/libvirtd.conf');

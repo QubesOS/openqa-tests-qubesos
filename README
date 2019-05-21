@@ -30,4 +30,5 @@ Variables used in tests:
  - `REPO_1` - repository name to install updates (dom0 and vm) from - in addition to standard repos
  - `SALT_SYSTEM_TESTS` - run salt formula preparing for system tests (mostly install extra packages)
  - `UPDATE_TEMPLATES` - update listed template packages as a whole (space separated list of templates to update)
+ - `TEST_TEMPLATES` - limit tests to listed templates only (space separated list of templates to update)
  - `UPDATE` - install updates in dom0 and all templates

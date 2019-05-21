@@ -3,7 +3,9 @@
     "ENV-VERSION-3.2",
     "luks-prompt"
   ],
-  "properties": [],
+  "properties": [
+    "workaround"
+  ],
   "area": [
     {
       "type": "match",

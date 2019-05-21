@@ -96,6 +96,8 @@ sub run {
     # make other tests working
     if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
         x11_start_program(us_colemak('setxkbmap us'), valid => 0);
+    } elsif (get_var('LOCALE')) {
+        x11_start_program('setxkbmap us', valid => 0);
     }
 }
 

@@ -42,8 +42,8 @@ def main():
         time = 0.0
         for testcase in testcases[classname]:
             if testcase.find('error') is not None:
-                testcase.set('status', 'error')
-                errors += 1
+                testcase.set('status', 'failure')
+                failures += 1
             elif testcase.find('failure') is not None:
                 testcase.set('status', 'failure')
                 failures += 1
@@ -63,11 +63,12 @@ def main():
                 existing = existing[0]
                 old_status = existing.get('status')
                 new_status = testcase.get('status')
-                # priority list: error -> failure -> skipped -> success
-                for status in ('error', 'failure', 'skipped', 'success'):
+                # priority list: (error, failure) -> skipped -> success
+                for status in ('failure', 'skipped', 'success'):
                     if status in (old_status, new_status):
                         existing.set('status', status)
-                for attr in ('errors', 'failures', 'skipped'):
+                        break
+                for attr in ('failures', 'skipped'):
                     if testcase.get(attr) is not None:
                         # new one can only be '1'
                         old = existing.get(attr) or 0

@@ -19,6 +19,12 @@ disable-whonix-onion:
     - regex: '^.*dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd'
 {% endif %}
 
+
+qubes-update-check.timer:
+  service.dead: []
+qubes-update-check.service:
+  service.dead: []
+
 {% if salt['pillar.get']('update:repo', '') %}
 
 {% if grains['osfullname'] == 'Whonix' %}

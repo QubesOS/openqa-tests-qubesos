@@ -41,7 +41,7 @@ sub run {
         record_soft_failure('Xen smt=off option missing');
     }
     my $boot_mountpoint = '/boot';
-    if (check_var('MACHINE', 'uefi')) {
+    if (check_var('MACHINE', 'uefi') && check_var('UEFI_DIRECT', '1')) {
         $boot_mountpoint = '/boot/efi';
     }
     script_run('df -h');

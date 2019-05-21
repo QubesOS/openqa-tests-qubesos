@@ -47,6 +47,7 @@ sub run {
     }
     type_string "exit\n";
     script_run "sed -i -e 's:console=none:console=vga,com1 loglvl=all:' /mnt/sysimage/boot/grub2/grub.cfg";
+    script_run "sed -i -e 's:console=none:console=vga,com1 loglvl=all:' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
     my $xen_cfg = '/mnt/sysimage/boot/efi/EFI/qubes/xen.cfg';
     if (!script_run("grep console= $xen_cfg")) {
         script_run "sed -i -e 's:console=none:console=vga,com1 loglvl=all:' $xen_cfg";
@@ -61,11 +62,13 @@ sub run {
     my $sed_enable_discard = 'sed -i -e \'s:uuid=luks-\([^ ]*\) :\0rd.luks.options=\1=discard :g\'';
     script_run "$sed_enable_discard $xen_cfg";
     script_run "$sed_enable_discard /mnt/sysimage/boot/grub2/grub.cfg";
+    script_run "$sed_enable_discard /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
     script_run "$sed_enable_discard /mnt/sysimage/etc/default/grub";
 
     my $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:\0 console=hvc0 console=tty0:g\'';
     script_run "$sed_enable_dom0_console_log $xen_cfg";
     script_run "$sed_enable_dom0_console_log /mnt/sysimage/boot/grub2/grub.cfg";
+    script_run "$sed_enable_dom0_console_log /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
     script_run "$sed_enable_dom0_console_log /mnt/sysimage/etc/default/grub";
 
     # log resulting bootloader configuration

@@ -24,7 +24,7 @@ sub run {
 
     select_console('x11');
     assert_screen "desktop";
-    x11_start_program('xterm');
+    x11_start_program('xterm', match_typed => 'desktop-runner-xterm');
     send_key('alt-f10');
     script_run('mount');
     # expect discard option by default only in 4.0+

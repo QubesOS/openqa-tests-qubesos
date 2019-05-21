@@ -21,7 +21,8 @@ use testapi;
 
 sub run {
     unless (check_var('INSTALL_TEMPLATES', 'all')) {
-    	assert_and_click 'installer-main-hub-software';
+        wait_still_screen;
+        assert_and_click 'installer-main-hub-software';
         if (index(get_var('INSTALL_TEMPLATES'), 'whonix') == -1) {
             assert_and_click 'installer-software-whonix';
 	    }

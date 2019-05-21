@@ -180,6 +180,7 @@ sub init_desktop_runner {
         send_key 'esc';    # To avoid failing needle on missing 'alt' key - poo#20608
         send_key_until_needlematch 'desktop-runner', 'alt-f2', 3, 10;
     }
+    sleep(1);
     # krunner may use auto-completion which sometimes gets confused by
     # too fast typing or looses characters because of the load caused (also
     # see below). See https://progress.opensuse.org/issues/18200

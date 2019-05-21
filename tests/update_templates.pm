@@ -33,7 +33,7 @@ sub run {
         if (script_run("rpm -q qubes-template-$_") != 0) {
             $action = "install";
         }
-        assert_script_run("sudo qubes-dom0-update --clean --enablerepo=qubes-*templates* --action=$action -y qubes-template-$_", timeout => 900);
+        assert_script_run("sudo qubes-dom0-update --clean --enablerepo=qubes-*templates* --action=$action -y qubes-template-$_", timeout => 1500);
         $self->save_and_upload_log("rpm -q qubes-template-$_", "template-$_-version.txt");
     }
 

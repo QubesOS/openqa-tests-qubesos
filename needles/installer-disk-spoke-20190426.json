@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "xpos": 16,
+      "ypos": 13,
+      "width": 237,
+      "height": 19,
+      "type": "match"
+    },
+    {
+      "xpos": 23,
+      "ypos": 52,
+      "width": 57,
+      "height": 21,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-disk-spoke",
+    "installer-done"
+  ]
+}

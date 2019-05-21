@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 218,
+      "width": 216,
+      "ypos": 228,
+      "type": "match",
+      "height": 26
+    },
+    {
+      "xpos": 324,
+      "height": 23,
+      "type": "match",
+      "ypos": 301,
+      "width": 87
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-disk-luks-passphrase"
+  ]
+}

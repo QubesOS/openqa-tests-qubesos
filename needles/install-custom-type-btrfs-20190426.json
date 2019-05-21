@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 63,
+      "height": 22,
+      "type": "match",
+      "ypos": 250,
+      "xpos": 66
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "install-custom-type-btrfs"
+  ]
+}

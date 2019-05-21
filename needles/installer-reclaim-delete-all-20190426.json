@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 145,
+      "ypos": 117,
+      "type": "match",
+      "height": 20,
+      "xpos": 9
+    },
+    {
+      "xpos": 933,
+      "ypos": 519,
+      "height": 22,
+      "type": "match",
+      "width": 74
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-reclaim-delete-all"
+  ]
+}

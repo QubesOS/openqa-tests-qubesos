@@ -48,6 +48,14 @@ sub run {
     if (script_run("test \$(df -k --output=size $boot_mountpoint | tail -n 1) -gt \$[ 400 * 2**10 ]") ne 0) {
         record_soft_failure("$boot_mountpoint smaller than 400MB");
     }
+    script_run('systemctl list-units --failed --no-legend --no-pager');
+    if (script_run("test \$(systemctl list-units --failed --no-legend | wc -l) -eq 0") ne 0) {
+        record_soft_failure("there are failed system services");
+    }
+    script_run('systemctl list-units --user --failed --no-legend --no-pager');
+    if (script_run("test \$(systemctl list-units --user --failed --no-legend | wc -l) -eq 0") ne 0) {
+        record_soft_failure("there are failed user services");
+    }
     type_string("exit\n");
     assert_screen "desktop";
 }

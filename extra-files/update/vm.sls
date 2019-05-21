@@ -4,6 +4,21 @@ python-apt:
     - reload_modules: True
 {% endif %}
 
+{% if grains['osfullname'] == 'Debian' %}
+# remove jessie-backports on debian template
+/etc/apt/sources.list:
+  file.line:
+    - mode: delete
+    - content: "https://deb.debian.org/debian jessie-backports main"
+{% endif %}
+
+{% if grains['osfullname'] == 'Whonix' %}
+disable-whonix-onion:
+  file.comment:
+    - name: /etc/apt/sources.list.d/whonix.list
+    - regex: '^.*dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd'
+{% endif %}
+
 {% if salt['pillar.get']('update:repo', '') %}
 
 {% if grains['osfullname'] == 'Whonix' %}

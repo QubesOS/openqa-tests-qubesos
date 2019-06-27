@@ -67,6 +67,11 @@ sub run {
 
     send_key "f12";
 
+    if (check_var('VERSION', '4.1')) {
+        assert_screen "firstboot-done", 5;
+        send_key "f12";
+    }
+
     $configuring = 1;
 
     assert_screen "firstboot-configuring-templates", 90;
@@ -83,8 +88,12 @@ sub run {
     }
     assert_screen "firstboot-configuring-salt", $timeout;
     assert_screen "firstboot-setting-network", 600;
-    assert_screen "firstboot-done", 240;
-    send_key "f12";
+    if (!check_var('VERSION', '4.1')) {
+        assert_screen "firstboot-done", 240;
+        send_key "f12";
+    } else {
+        assert_screen "login-prompt-user-selected", 240;
+    }
 
     assert_screen "login-prompt-user-selected", 60;
     type_string $password;

@@ -261,6 +261,18 @@
                                     },
                       test_suite => { name => "system_tests_extra" },
                     },
+                    {
+                      group_name => "Qubes OS updates",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "update",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_manager" },
+                    },
 		  ],
   Machines     => [
                     {
@@ -461,6 +473,13 @@
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "SYSTEM_TESTS", value => "qubes.tests.extra:18000" },
                         { key => "MAX_JOB_TIME", value => "21600" },
+                      ],
+                    },
+                    {
+                      name => "system_tests_manager",
+                      settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
+                        { key => "SYSTEM_TESTS", value => "qubesmanager.tests" },
                       ],
                     },
                     {

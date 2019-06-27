@@ -46,7 +46,9 @@ sub run {
     my $testfunc = <<ENDFUNC;
 testfunc() {
     rm -f nose2-junit.xml
-    sudo systemctl stop qubesd
+    if [[ "\$1" = "qubes.tests."* ]]; then
+        sudo systemctl stop qubesd
+    fi
     #sudo -E script -e -c "python3 -m qubes.tests.run \$1" tests-\$1.log
     sudo -E script -e -c "nose2 -v --plugin nose2.plugins.loader.loadtests --plugin nose2.plugins.junitxml -X \$1" tests-\$1.log
     retval=\$?

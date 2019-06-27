@@ -442,7 +442,7 @@
                       name => "system_tests_network",
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
-                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.network:10800 qubes.tests.integ.dom0_update" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.network:18000 qubes.tests.integ.dom0_update" },
                       ],
                     },
                     {
@@ -464,7 +464,7 @@
                       name => "system_tests_pvgrub_salt_storage",
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
-                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.grub qubes.tests.integ.salt qubes.tests.integ.storage" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.grub:7200 qubes.tests.integ.salt qubes.tests.integ.storage:7200" },
                       ],
                     },
                     {

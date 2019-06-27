@@ -28,35 +28,35 @@ sub run {
     x11_start_program('qubes-template-manager');
 
     # sort by name
-    assert_and_click('template-sort', 'left', 15);
+    assert_and_click('template-sort', timeout => 15);
 
     # press reset
-    assert_and_click('template-reset', 'left', 20);
+    assert_and_click('template-reset', timeout => 20);
 
     # select two vms
-    assert_and_click('template-selectvm1', 'left', 10);
-    assert_and_click('template-selectvm2', 'left', 10);
+    assert_and_click('template-selectvm1', timeout => 10);
+    assert_and_click('template-selectvm2', timeout => 10);
 
     # change their template to debian
-    assert_and_click('template-select-template', 'left', 20);
-    assert_and_click('template-select-debian', 'left', 20);
+    assert_and_click('template-select-template', timeout => 20);
+    assert_and_click('template-select-debian', timeout => 20);
 
     # clear selection
-    assert_and_click('template-clear-selection', 'left', 20);
+    assert_and_click('template-clear-selection', timeout => 20);
 
     # change template on another vm
-    assert_and_click('template-select-vm-template', 'left', 20);
-    assert_and_click('template-change-vm-template', 'left', 20);
+    assert_and_click('template-select-vm-template', timeout => 20);
+    assert_and_click('template-change-vm-template', timeout => 20);
 
     # press ok
-    assert_and_click('template-ok', 'left', 20);
+    assert_and_click('template-ok', timeout => 20);
     assert_screen('desktop');
 
     # turn on again
     x11_start_program('qubes-template-manager');
 
     # press cancel
-    assert_and_click('template-cancel', 'left', 20);
+    assert_and_click('template-cancel', timeout => 20);
 
 }
 

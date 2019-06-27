@@ -27,16 +27,16 @@ sub run {
     assert_screen "desktop";
 
     # check if widget opened, open it
-    assert_and_click('qui-devices-open', 'left', 20);
+    assert_and_click('qui-devices-open', timeout => 20);
     assert_screen('qui-devices-opened');
 
     # close and open again
     send_key('esc');
-    assert_and_click('qui-devices-open', 'left', 20);
+    assert_and_click('qui-devices-open', timeout => 20);
 
     # open a device
     send_key('up');
-    assert_screen('qui-devices-dev-opened', 'left', 20);
+    assert_screen('qui-devices-dev-opened', timeout => 20);
 
     # close the widget
     send_key('esc');

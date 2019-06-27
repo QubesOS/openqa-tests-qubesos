@@ -31,7 +31,7 @@ sub run {
     assert_screen('vm-settings-correct_current');
 
     # change label
-    assert_and_click('vm-settings-label-open', 'left', 30, 0.10);
+    assert_and_click('vm-settings-label-open', timeout => 30, clicktime => 0.10);
     assert_and_click('vm-settings-label-click-red');
 
     # change template

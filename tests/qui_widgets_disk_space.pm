@@ -27,12 +27,12 @@ sub run {
     assert_screen "desktop";
 
     # check if the widget started and opens
-    assert_and_click('qui-disk-space-widget', 'left', 20);
+    assert_and_click('qui-disk-space-widget', timeout => 20);
     assert_screen('qui-disk-space-widget2', 20);
 
     # close and open again
     send_key('esc');
-    assert_and_click('qui-disk-space-widget', 'left', 20);
+    assert_and_click('qui-disk-space-widget', timeout => 20);
     assert_screen('qui-disk-space-widget2', 20);
 
     send_key('esc');

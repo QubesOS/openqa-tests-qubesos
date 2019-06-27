@@ -53,7 +53,7 @@ sub run {
         $timeout += 1 * 240;
     }
     assert_screen 'installer-post-install-tasks', $timeout;
-    #assert_and_click 'installer-install-done-reboot', 'left', 600;
+    #assert_and_click 'installer-install-done-reboot', timeout => 600;
     assert_screen 'installer-install-done-reboot', 2200;
 }
 

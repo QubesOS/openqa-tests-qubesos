@@ -27,15 +27,15 @@ sub run {
     assert_screen "desktop";
 
     # open the widget, close it
-    assert_and_click('qui-clipboard-open', 'left', 20);
+    assert_and_click('qui-clipboard-open', timeout => 20);
     assert_screen('qui-clipboard-opened', 20);
     send_key('esc');
 
     # open it again
-    assert_and_click('qui-clipboard-open', 'left', 20);
+    assert_and_click('qui-clipboard-open', timeout => 20);
 
     # click copy from dom0 clipboard
-    assert_and_click('qui-clipboard-copy-dom0', 'left', 20);
+    assert_and_click('qui-clipboard-copy-dom0', timeout => 20);
     assert_screen('qui-clipboard-copied-dom0', 20);
 
     # exit

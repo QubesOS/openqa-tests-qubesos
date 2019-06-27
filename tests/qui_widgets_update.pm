@@ -36,21 +36,21 @@ sub run {
     assert_screen('qui-updates-update-available', 120);
 
     # open the widget
-    assert_and_click('qui-updates-widget-open', 'left', 20);
+    assert_and_click('qui-updates-widget-open', timeout => 20);
 
     # launch the updater
-    assert_and_click('qubes-update-launch-updater', 'left', 20);
-    assert_and_click('qubes-update-enable-for-all', 'left', 20);
+    assert_and_click('qubes-update-launch-updater', timeout => 20);
+    assert_and_click('qubes-update-enable-for-all', timeout => 20);
 
-    assert_and_click('qubes-update-select-dom0', 'left', 20);
-    assert_and_click('qubes-update-deselect-dom0', 'left', 20);
+    assert_and_click('qubes-update-select-dom0', timeout => 20);
+    assert_and_click('qubes-update-deselect-dom0', timeout => 20);
 
     # go to next, then cancel
-    assert_and_click('qubes-update-next', 'left', 20);
-    assert_and_click('qubes-update-cancel', 'left', 20);
+    assert_and_click('qubes-update-next', timeout => 20);
+    assert_and_click('qubes-update-cancel', timeout => 20);
 
     assert_screen('qubes-update-cancelling');
-    assert_and_click('qubes-update-finish', 'left', 900);
+    assert_and_click('qubes-update-finish', timeout => 1200);
 
     # try launching the updater from console
     x11_start_program('qubes-update-gui');

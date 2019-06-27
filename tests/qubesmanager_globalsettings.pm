@@ -28,33 +28,33 @@ sub run {
     x11_start_program('qubes-global-settings');
 
     # enable checking for updates for all qubes
-    assert_and_click('global-settings-enable-all', 'left', 5);
-    assert_and_click('global-settings-confirm', 'left', 10);
+    assert_and_click('global-settings-enable-all', timeout => 5);
+    assert_and_click('global-settings-confirm', timeout => 10);
     # disable checking for updates for all qubes
-    assert_and_click('global-settings-disable-all', 'left', 5);
-    assert_and_click('global-settings-confirm', 'left', 10);
+    assert_and_click('global-settings-disable-all', timeout => 5);
+    assert_and_click('global-settings-confirm', timeout => 10);
 
     # are kernels listing?
-    assert_and_click('global-settings-kernel-listing', 'left', 10);
-    assert_and_click('global-settings-kernels-listed', 'left', 10);
+    assert_and_click('global-settings-kernel-listing', timeout => 10);
+    assert_and_click('global-settings-kernels-listed', timeout => 10);
 
     # are default DispVMs being listed?
-    assert_and_click('global-settings-default-dispvms-listing', 'left', 10);
-    assert_and_click('global-settings-default-dispvms-listed', 'left', 10);
+    assert_and_click('global-settings-default-dispvms-listing', timeout => 10);
+    assert_and_click('global-settings-default-dispvms-listed', timeout => 10);
 
     # are clockVMs being listed?
-    assert_and_click('global-settings-clockvms-listing', 'left', 5);
-    assert_and_click('global-settings-clockvms-listed', 'left', 5);
+    assert_and_click('global-settings-clockvms-listing', timeout => 5);
+    assert_and_click('global-settings-clockvms-listed', timeout => 5);
 
     # change vm update default
-    assert_and_click('global-settings-vm-update', 'left', 2);
+    assert_and_click('global-settings-vm-update', timeout => 2);
 
     # is confirming settings working
-    assert_and_click('global-settings-ok', 'left', 2);
+    assert_and_click('global-settings-ok', timeout => 2);
 
     # is cancelling working
     x11_start_program('qubes-global-settings');
-    assert_and_click('global-settings-cancel', 'left', 2);
+    assert_and_click('global-settings-cancel', timeout => 2);
 
 }
 

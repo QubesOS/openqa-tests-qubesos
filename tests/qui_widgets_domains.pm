@@ -27,16 +27,17 @@ sub run {
     assert_screen "desktop";
 
     # check if widget opened, open it
-    assert_and_click('qui-domains-open', 'left', 20);
+    assert_and_click('qui-domains-open', timeout => 20);
     assert_screen('qui-domains-opened');
 
     # close and open again
     send_key('esc');
-    assert_and_click('qui-domains-open', 'left', 20);
+    assert_and_click('qui-domains-open', timeout => 20);
 
     # open a domain
     send_key('down');
-    assert_screen('qui-domains-domain-opened', 'left', 20);
+    send_key('down');
+    assert_screen('qui-domains-domain-opened', timeout => 20);
     send_key('esc');
 
     # check for one of the guises of the scrollbar bug
@@ -45,7 +46,7 @@ sub run {
     assert_script_run('qvm-start work', 200);
     select_console('x11');
     # check if its not scrolling
-    assert_and_click('qui-domains-open', 'left', 60);
+    assert_and_click('qui-domains-open', timeout => 60);
     assert_screen('qui-domains-not-scrolling');
 
     # close the widget

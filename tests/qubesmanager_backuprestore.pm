@@ -26,10 +26,10 @@ sub run {
     assert_screen "desktop";
 
     prep_backup('dom0');
-    assert_and_click('backup-next', 'left', 5);
+    assert_and_click('backup-next', timeout => 5);
 
     # cancel the backup
-    assert_and_click('backup-cancel', 'left', 10);
+    assert_and_click('backup-cancel', timeout => 10);
     assert_screen('backup-cancelled', 30);
     send_key('esc');
     send_key('esc');
@@ -38,8 +38,8 @@ sub run {
 
     # retry backup
     prep_backup('dom0');
-    assert_and_click('backup-next', 'left', 5);
-    assert_and_click('backup-finish', 'left', 120);
+    assert_and_click('backup-next', timeout => 5);
+    assert_and_click('backup-finish', timeout => 120);
 
     assert_screen('desktop', 60);
 
@@ -50,7 +50,7 @@ sub run {
     # and now just check if restore is able to cancel
     x11_start_program('qubes-backup-restore');
 
-    assert_and_click('restore-cancel', 'left', 15);
+    assert_and_click('restore-cancel', timeout => 15);
 
     assert_screen('desktop');
 
@@ -62,14 +62,14 @@ sub prep_backup {
     x11_start_program('qubes-backup');
 
     # move all vms to unavailable
-    assert_and_click('backup-deselect-all', 'left', 15);
+    assert_and_click('backup-deselect-all', timeout => 15);
 
     # select only sys-net
-    assert_and_click('backup-select-sys-net', 'left', 15);
-    assert_and_click('backup-select-sys-net2', 'left', 15);
+    assert_and_click('backup-select-sys-net', timeout => 15);
+    assert_and_click('backup-select-sys-net2', timeout => 15);
 
     # click next
-    assert_and_click('backup-next', 'left', 10);
+    assert_and_click('backup-next', timeout => 10);
 
     if ($vmname eq 'sys-net') {
         send_key('s');
@@ -79,9 +79,9 @@ sub prep_backup {
     }
     send_key('tab');
 
-    assert_and_click('backup-select-backup-dir', 'left', 10);
-    assert_and_click('backup-select-backup-dir2', 'left', 10);
-    assert_and_click('backup-select-backup-dir3', 'left', 10);
+    assert_and_click('backup-select-backup-dir', timeout => 10);
+    assert_and_click('backup-select-backup-dir2', timeout => 10);
+    assert_and_click('backup-select-backup-dir3', timeout => 10);
 
     # input password
     send_key('tab');
@@ -90,7 +90,7 @@ sub prep_backup {
     send_key('tab');
     send_key('a');
 
-    assert_and_click('backup-next', 'left', 5);
+    assert_and_click('backup-next', timeout => 5);
     assert_screen('backup-confirmation-screen', 10);
 
 }
@@ -101,14 +101,14 @@ sub do_restore {
     # make sure dom0 is selected
     send_key('d');
 
-    assert_and_click('restore-select', 'left', 15);
-    assert_and_click('restore-select-home', 'left', 15);
+    assert_and_click('restore-select', timeout => 15);
+    assert_and_click('restore-select-home', timeout => 15);
     send_key("ret");
-    assert_and_click('restore-select-file', 'left', 15);
+    assert_and_click('restore-select-file', timeout => 15);
 
     send_key('ret');
 
-    assert_and_click('restore-verify-only', 'left', 15);
+    assert_and_click('restore-verify-only', timeout => 15);
 
     # password input
     send_key('tab');
@@ -117,19 +117,19 @@ sub do_restore {
 
     send_key('a');
 
-    assert_and_click('restore-next', 'left', 15);
+    assert_and_click('restore-next', timeout => 15);
 
-    assert_and_click('restore-select-all', 'left', 15);
-    assert_and_click('restore-next', 'left', 15);
+    assert_and_click('restore-select-all', timeout => 15);
+    assert_and_click('restore-next', timeout => 15);
 
     # view the summary screen and go forward
-    assert_and_click('restore-next', 'left', 15);
+    assert_and_click('restore-next', timeout => 15);
 
     # wait for success
-    assert_and_click('restore-success', 'left', 90);
+    assert_and_click('restore-success', timeout => 90);
 
     # exit
-    assert_and_click('restore-finish', 'left', 10);
+    assert_and_click('restore-finish', timeout => 10);
 
 }
 

@@ -35,7 +35,7 @@ sub run {
     assert_script_run('qvm-start --skip-if-running work');
 
     # check if devices notify about connecting
-    assert_and_click('qui-notifications-devices', 'left', 20);
+    assert_and_click('qui-notifications-devices', timeout => 20);
     send_key('down');
     send_key('right');
     send_key('ret');

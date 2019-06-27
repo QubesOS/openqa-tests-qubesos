@@ -31,28 +31,28 @@ sub run {
     type_string('testqube');
 
     # choose a label
-    assert_and_click('qubes-vm-create-label-open', 'left', 10);
-    assert_and_click('qubes-vm-create-label-choose-blue', 'left', 10);
+    assert_and_click('qubes-vm-create-label-open', timeout => 10);
+    assert_and_click('qubes-vm-create-label-choose-blue', timeout => 10);
 
     # choose type
-    assert_and_click('qubes-vm-create-type-open', 'left', 10);
-    assert_and_click('qubes-vm-create-type-appvm', 'left', 10);
+    assert_and_click('qubes-vm-create-type-open', timeout => 10);
+    assert_and_click('qubes-vm-create-type-appvm', timeout => 10);
 
     # open template
-    assert_and_click('qubes-vm-create-template-open', 'left', 10);
+    assert_and_click('qubes-vm-create-template-open', timeout => 10);
     assert_screen('qubes-vm-create-templates-opened', 10);
     send_key('esc');
 
     # open networking
-    assert_and_click('qubes-vm-create-networking-open', 'left', 10);
+    assert_and_click('qubes-vm-create-networking-open', timeout => 10);
     assert_screen('qubes-vm-create-networking-opened', 10);
     send_key('esc');
 
     # launch settings
-    assert_and_click('qubes-vm-create-launch-settings', 'left', 10);
+    assert_and_click('qubes-vm-create-launch-settings', timeout => 10);
 
     # click ok
-    assert_and_click('qubes-vm-create-ok', 'left', 10);
+    assert_and_click('qubes-vm-create-ok', timeout => 10);
 
     # see if settings launched
     assert_screen('qubes-vm-create-settings-launched', 60);
@@ -65,7 +65,7 @@ sub run {
     x11_start_program('qubes-vm-create');
 
     # click cancel
-    assert_and_click('qubes-vm-create-cancel', 'left', 10);
+    assert_and_click('qubes-vm-create-cancel', timeout => 10);
 
     # see if screen empty
     assert_screen('desktop');
@@ -74,7 +74,7 @@ sub run {
     x11_start_program('qubes-vm-create');
 
     # click exit button
-    assert_and_click('qubes-vm-create-exit', 'left', 10);
+    assert_and_click('qubes-vm-create-exit', timeout => 10);
 }
 
 sub post_fail_hook {

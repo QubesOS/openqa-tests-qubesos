@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 389,
+      "ypos": 192,
+      "height": 22,
+      "width": 241
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "bootloader"
+  ]
+}

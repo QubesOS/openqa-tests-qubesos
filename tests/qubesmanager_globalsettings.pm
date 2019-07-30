@@ -56,6 +56,9 @@ sub run {
     x11_start_program('qubes-global-settings');
     assert_and_click('global-settings-cancel', timeout => 2);
 
+    select_console('root-virtio-terminal');
+    assert_script_run('qubes-prefs default-kernel $(ls -v /var/lib/qubes/vm-kernels|tail -1|tee /dev/stderr)', 20);
+    select_console('x11');
 }
 
 sub post_fail_hook {

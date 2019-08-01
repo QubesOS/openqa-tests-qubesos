@@ -1,3 +1,12 @@
+{% if grains['oscodename'] == 'buster' %}
+# https://bugs.debian.org/931566
+accept-buster:
+  cmd.run:
+    - name: apt-get update --allow-releaseinfo-change
+    - onlyif:
+      - 'grep -q "^Suite: testing" /var/lib/apt/lists/*buster*Release'
+{% endif %}
+
 vm-packages:
   pkg.installed:
     - pkgs:

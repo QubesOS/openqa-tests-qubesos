@@ -1,5 +1,5 @@
 [qubes-testing]
 name = Qubes updates testing
-baseurl = http://yum.qubes-os.org/r4.0/current-testing/dom0/fc25
+baseurl = http://yum.qubes-os.org/r{{grains['osrelease']}}/current-testing/dom0/{{basedist}}
 gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-qubes-4-primary
 gpgcheck = 1

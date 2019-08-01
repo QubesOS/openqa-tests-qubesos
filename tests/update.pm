@@ -45,16 +45,17 @@ sub run {
         assert_script_run('cp -a /root/extra-files/update /srv/salt/');
         assert_script_run('qubesctl top.enable update');
     }
+    my $pillar_dir = "/srv/pillar/base/update";
+    assert_script_run("mkdir -p $pillar_dir");
+    assert_script_run("printf 'update:\\n  qubes_ver: " . get_var('VERSION') . "\\n' > $pillar_dir/init.sls");
     if (get_var('REPO_1')) {
-        my $pillar_dir = "/srv/pillar/base/update";
         my $repo_url = data_url("REPO_1");
-        assert_script_run("mkdir -p $pillar_dir");
-        assert_script_run("printf 'update:\\n  repo: $repo_url\\n' > $pillar_dir/init.sls");
+        assert_script_run("printf '  repo: $repo_url\\n' >> $pillar_dir/init.sls");
         $repo_url =~ s/\d+\.\d+\.\d+\.\d+/uedqavcpvbij4kyr.onion/;
         assert_script_run("printf '  repo_onion: $repo_url\\n' >> $pillar_dir/init.sls");
-        assert_script_run("printf \"base:\\n  '*':\\n    - update\\n\" > $pillar_dir/init.top");
-        assert_script_run('qubesctl top.enable update pillar=True');
     }
+    assert_script_run("printf \"base:\\n  '*':\\n    - update\\n\" > $pillar_dir/init.top");
+    assert_script_run('qubesctl top.enable update pillar=True');
     if (get_var("SALT_SYSTEM_TESTS")) {
         assert_script_run('cp -a /root/extra-files/system-tests /srv/salt/');
         assert_script_run('qubesctl top.enable system-tests');

@@ -1,3 +1,5 @@
+{% set qubes_ver = salt['pillar.get']('update:qubes_ver', '') %}
+
 {% if grains['os'] == 'Debian' %}
 python-apt:
   pkg.installed:
@@ -65,9 +67,9 @@ repo-testing:
     - disabled: False
 {% if grains['os'] == 'Fedora' %}
     - name: qubes-testing
-    - baseurl: http://yum.qubes-os.org/r4.0/current-testing/vm/fc{{ grains['osrelease'] }}
+    - baseurl: http://yum.qubes-os.org/r{{ qubes_ver }}/current-testing/vm/fc{{ grains['osrelease'] }}
 {% elif grains['os'] == 'Debian' %}
-    - name: deb [arch=amd64] http://deb.qubes-os.org/r4.0/vm {{ grains['oscodename'] }}-testing main
+    - name: deb [arch=amd64] http://deb.qubes-os.org/r{{ qubes_ver }}/vm {{ grains['oscodename'] }}-testing main
     - file: /etc/apt/sources.list.d/qubes-r4.list
     - require:
       - pkg: python-apt
@@ -79,7 +81,7 @@ repo-testing:
 
 /etc/apt/sources.list.d/qubes-r4.list:
   file.append:
-    - text: deb [arch=amd64] http://deb.qubes-os.org/r4.0/vm {{ grains['oscodename'] }}-testing main
+    - text: deb [arch=amd64] http://deb.qubes-os.org/r{{ qubes_ver }}/vm {{ grains['oscodename'] }}-testing main
 
 {% endif %}
 

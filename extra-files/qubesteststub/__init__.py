@@ -31,6 +31,7 @@ class DefaultPV(qubes.ext.Extension):
                       and _self.kernel.split('.') >= ['4', '15'] else 1)
 
         qubes.vm.qubesvm.QubesVM.qrexec_timeout._default = 90
+        qubes.vm.qubesvm.QubesVM.qrexec_timeout._default_function = None
         if 'xen_scrub_pages' not in qubes.config.defaults['kernelopts']:
             qubes.config.defaults['kernelopts'] += ' xen_scrub_pages=0'
             qubes.config.defaults['kernelopts_pcidevs'] += ' xen_scrub_pages=0'

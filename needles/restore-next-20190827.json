@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 38,
+      "width": 92,
+      "ypos": 538,
+      "xpos": 665
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "restore-next"
+  ]
+}

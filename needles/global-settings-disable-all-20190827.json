@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 598,
+      "type": "match",
+      "height": 15,
+      "width": 450,
+      "xpos": 550
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "global-settings-disable-all"
+  ]
+}

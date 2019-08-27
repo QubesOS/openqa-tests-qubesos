@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 23,
+      "type": "match",
+      "width": 74,
+      "ypos": 57,
+      "xpos": 6
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qube-manager-system-open"
+  ]
+}

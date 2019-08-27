@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "ypos": 356,
+      "width": 207,
+      "type": "match",
+      "height": 22,
+      "xpos": 201,
+      "click_point": {
+        "xpos": 176.5,
+        "ypos": 10
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qubes-vm-create-networking-open"
+  ]
+}

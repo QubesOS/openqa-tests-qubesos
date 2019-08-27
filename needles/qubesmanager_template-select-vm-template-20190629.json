@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 23,
+      "ypos": 121,
+      "width": 272,
+      "type": "match",
+      "xpos": 294
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "template-select-vm-template"
+  ]
+}

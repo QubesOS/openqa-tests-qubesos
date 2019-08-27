@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 901,
+      "width": 21,
+      "type": "match",
+      "height": 26,
+      "ypos": 3
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qui-notifications-devices"
+  ]
+}

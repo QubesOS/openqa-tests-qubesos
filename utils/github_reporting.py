@@ -1,8 +1,6 @@
 import requests
 from argparse import ArgumentParser
 import os
-import subprocess
-import sys
 import re
 
 OPENQA_URL = "https://openqa.qubes-os.org"
@@ -11,13 +9,10 @@ OPENQA_API = OPENQA_URL + "/api/v1"
 GITHUB_API_PREFIX = "https://api.github.com/repos"
 GITHUB_BASE_PREFIX = "https://github.com"
 
-# GITHUB_ISSUES_REPO = "QubesOS/qubes-issues"
-# GITHUB_UPDATES_REPO = "QubesOS/updates-status"
-# GITHUB_REPO_PREFIX = "QubesOS/qubes-"
-# GITHUB_BASEURL = "https://github.com/"
-
+COMMENT_TITLE = "# OpenQA test summary"
 
 github_auth = {}
+
 
 class TestFailure:
     def __init__(self, name, title, description, job_id, test_id):
@@ -60,16 +55,27 @@ class TestFailure:
 
 
 class JobData:
-    def __init__(self, job_name, job_id, time_started):
-        self.job_name = job_name
+    def __init__(self, job_id, job_name=None,
+                 time_started=None):
         self.job_id = job_id
+
+        if not job_name:
+            job_name = self.get_job_name()
+
+        self.job_name = job_name
+
         self.time_started = time_started
-        self.failures = []
+        self.failures = {}
 
     def check_restarted(self, new_id, new_time_started):
         if new_time_started > self.time_started:
             self.job_id = new_id
             self.time_started = new_time_started
+
+    def get_job_name(self):
+        json_data = requests.get(
+            "{}/jobs/{}".format(OPENQA_API, self.job_id)).json()
+        return json_data['job']['test']
 
     def get_results(self):
         if self.failures:
@@ -77,6 +83,8 @@ class JobData:
 
         json_data = requests.get(
             "{}/jobs/{}/details".format(OPENQA_API, self.job_id)).json()
+
+        failure_list = []
 
         for test_group in json_data['job']['testresults']:
             for test in test_group['details']:
@@ -87,7 +95,9 @@ class JobData:
                                           self.job_id,
                                           test['num'])
                     if failure.is_valid():
-                        self.failures.append(failure)
+                        failure_list.append(failure)
+
+        self.failures[self.job_name] = failure_list
 
         return self.failures
 
@@ -106,7 +116,8 @@ class JobData:
             if child_name in results:
                 results[child_name].check_restarted(child, child_started)
             else:
-                results[child_name] = JobData(child_name, child, child_started)
+                results[child_name] = JobData(child, job_name=child_name,
+                                              time_started=child_started)
 
         return results
 
@@ -128,10 +139,24 @@ class JobData:
         url = "{}/tests/{}#".format(OPENQA_URL, self.job_id)
         return url
 
+    def get_pull_requests(self):
+        json_data = requests.get(
+            "{}/jobs/{}/details".format(OPENQA_API, self.job_id)).json()
+
+        if 'PULL_REQUESTS' not in json_data['job']['settings']:
+            return []
+
+        pr_raw_list = json_data['job']['settings']['PULL_REQUESTS']
+
+        pr_list = pr_raw_list.strip().split(" ")
+
+        return pr_list
+
     def format_results(self, results):
-        output_string = "# OpenQA test summary\n" \
+        output_string = "{}\n" \
                         "Complete test suite: {}\n" \
-                        "## Failed tests\n".format(self.get_dependency_url())
+                        "## Failed tests\n".format(COMMENT_TITLE,
+                                                   self.get_dependency_url())
 
         for k in results:
             if results[k]:
@@ -141,16 +166,13 @@ class JobData:
 
         return output_string
 
-    # dodac linka do calosci
-    # albo do poszczegolnych testow i calosci
-
     def __str__(self):
         return self.job_name
 
 
 class GitHubIssue:
     def __init__(self, url):
-        self.owner, self.repo, self.type, self.no = self.parse_url(url)
+        self.url, self.issue_no = self.parse_url(url)
         self.init_github_auth()
 
     @staticmethod
@@ -161,7 +183,14 @@ class GitHubIssue:
                 'token {}'.format(os.environ['GITHUB_API_KEY'])
 
     def existing_comment(self):
-        # todo : check if a comment exists, return its ??? if it does or none is not
+        comments_url = self.url + '{}/comments'.format(self.issue_no)
+        comments_json = requests.get(comments_url, headers=github_auth).json()
+
+        for comment in comments_json:
+            comment_title = comment['body'][:len(COMMENT_TITLE)]
+            if comment_title == COMMENT_TITLE:
+                return comment['id']
+
         return None
 
     @staticmethod
@@ -172,76 +201,126 @@ class GitHubIssue:
 
         owner = match.group(1)
         repo = match.group(2)
-        issue_type = 'pulls' if match.group(3) == 'pull' else match.group(3)
+        # issue_type = 'pulls' if match.group(3) == 'pull' else match.group(3)
         no = match.group(4)
 
-        return owner, repo, issue_type, no
+        parsed_url = "{}/{}/{}/issues/".format(
+                GITHUB_API_PREFIX,
+                owner,
+                repo,
+                no)
+
+        return parsed_url, no
 
     def post_comment(self, message_text):
+        if self.existing_comment():
+            url = self.url + 'comments/' + str(self.existing_comment())
+            api_method = requests.patch
+        else:
+            url = self.url + '{}/comments'.format(self.issue_no)
+            api_method = requests.post
 
-        # check if comment exists if yes change it if not edit it
-
-        url = "{}/{}/{}/issues/{}/comments".format(
-            GITHUB_API_PREFIX,
-            self.owner,
-            self.repo,
-            self.no)
-
-        print(url)
-
-        response = requests.post(url,
-            json={'body': message_text},
-            headers=github_auth)
+        response = api_method(url,
+                              json={'body': message_text},
+                              headers=github_auth)
 
         if not response.ok:
             print("FAILED TO COMMENT. Error {}: {}".format(
                 response.status_code, response.content))
 
 
-def get_latest_update_job_id():
-    data = requests.get(
-        OPENQA_API + '/jobs/overview?test=system_tests_update').json()
+class OpenQA:
+    @staticmethod
+    def get_latest_job_id(job_type='system_tests_update', build=None,
+                          version=None):
+        params = []
+        if job_type:
+            params.append('test={}'.format(job_type))
+        if build:
+            params.append('build={}'.format(build))
+        if version:
+            params.append('version={}'.format(version))
 
-    return data[0]['id']
+        if params:
+            params_string = '?' + "&".join(params)
+        else:
+            params_string = ''
+
+        data = requests.get(
+            OPENQA_API + '/jobs/overview' + params_string).json()
+
+        results = []
+
+        for job in data:
+            results.append(job['id'])
+
+        return results
 
 
 def main():
+    parser = ArgumentParser(
+        description="Update GitHub issues with test reporting")
 
-    main_job_id = 3849
+    parser.add_argument(
+        "--auth-token",
+        help="Github authentication token (OAuth2)")
 
-    main_job = JobData("system_tests_update", main_job_id, None)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
+        "--job-id",
+        help="Update all pull requests related to a given job id")
+    group.add_argument(
+        '--latest',
+        action='store_true',
+        help="Find the latest job with optional constraints.")
 
-    result = main_job.format_results(main_job.get_children_results())
+    parser.add_argument(
+        '--job-name',
+        default="system_tests_update",
+        help="Requires --latest. Name of test job. "
+             "Default: system_tests_update")
+    parser.add_argument(
+        '--build',
+        help="Requires --latest. Build to look for.")
+    parser.add_argument(
+        '--version',
+        help="Requires --latest. Version to look for.")
 
+    args = parser.parse_args()
 
+    if args.auth_token:
+        github_auth['Authorization'] = \
+            'token {}'.format(args.auth_token)
+    elif 'GITHUB_API_KEY' in os.environ:
+        github_auth['Authorization'] = \
+            'token {}'.format(os.environ['GITHUB_API_KEY'])
 
-    issue = GitHubIssue("https://github.com/marmarta/qubes-desktop-linux-manager/pull/1")
-    print(github_auth)
+    if (args.job_name or args.build or args.version) and args.job_id:
+        print(
+            "Error: --latest required to use --job-name, --build and --version")
+        return
 
-    issue.post_comment(result)
+    jobs = []
 
-# main_job_id = get_latest_update_job_id()
-# print(get_latest_update_job_id())
+    if args.job_id:
+        jobs.append(args.job_id)
 
-def test1():
-    main_job_id = 3849
+    if args.latest:
+        jobs = OpenQA.get_latest_job_id(args.job_name, args.build, args.version)
 
-    main_job = JobData("system_tests_update", main_job_id, None)
+    for job_id in jobs:
+        job = JobData(job_id)
+        if job.job_name == 'system_tests_update':
+            result = job.format_results(job.get_children_results())
+        else:
+            result = job.format_results(job.get_results())
 
-    result = main_job.get_children_results()
+        # here will be dragons
+        prs = job.get_pull_requests()
+        for pr in prs:
+            issue = GitHubIssue(pr)
+            issue.post_comment(result)
 
-    for k in result:
-        if result[k]:
-            print(k)
-            for fail in result[k]:
-                print('   ' + str(fail))
-
-
-# make it so that this automagically adds github comments
-
-
-# so trzeba znalezc joby z settings - flavor - update
-# i ich dzieci przelistowac
 
 if __name__ == '__main__':
-        main()
+    main()

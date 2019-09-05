@@ -1,0 +1,11 @@
+{
+  "qubes-core-agent": "core-agent-linux",
+  "qubes-core-dom0": "core-admin",
+  "qubes-utils": "linux-utils",
+  "qubes-manager": "manager",
+  "qubes-core-admin-client": "core-admin-client",
+  "python3-qubesadmin": "core-admin-client",
+  "python2-qubesadmin": "core-admin-client",
+  "qubes-mgmt-salt": "mgmt-salt",
+  "qubes-mgmt-salt-vm-connector": "mgmt-salt"
+}

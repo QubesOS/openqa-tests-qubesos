@@ -1,11 +1,5 @@
 {% set qubes_ver = salt['pillar.get']('update:qubes_ver', '') %}
 
-{% if grains['os'] == 'Debian' %}
-python-apt:
-  pkg.installed:
-    - reload_modules: True
-{% endif %}
-
 {% if grains['oscodename'] == 'stretch' %}
 # remove jessie-backports on debian template
 /etc/apt/sources.list:
@@ -22,7 +16,7 @@ apt-get update --allow-releaseinfo-change:
       - 'grep -q "^Suite: testing" /var/lib/apt/lists/*buster*Release'
 {% endif %}
 
-{% if grains['osfullname'] == 'Whonix' %}
+{% if grains['id'].startswith('whonix-') %}
 disable-whonix-onion:
   file.comment:
     - name: /etc/apt/sources.list.d/whonix.list
@@ -35,9 +29,15 @@ qubes-update-check.timer:
 qubes-update-check.service:
   service.dead: []
 
+{% if grains['os'] == 'Debian' %}
+python-apt:
+  pkg.installed:
+    - reload_modules: True
+{% endif %}
+
 {% if salt['pillar.get']('update:repo', '') %}
 
-{% if grains['osfullname'] == 'Whonix' %}
+{% if grains['id'].startswith('whonix-') %}
 {%   set update_repo = salt['pillar.get']('update:repo_onion', '') %}
 {% else %}
 {%   set update_repo = salt['pillar.get']('update:repo', '') %}
@@ -85,7 +85,7 @@ repo-testing:
 
 {% endif %}
 
-{% if grains['osfullname'] == 'Whonix' %}
+{% if grains['id'].startswith('whonix-') %}
 # convert to pkgrepo.managed when
 # https://github.com/saltstack/salt/issues/27067 get fixed in
 # default-mgmt-dvm's template

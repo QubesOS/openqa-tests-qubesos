@@ -42,13 +42,18 @@ sub run {
     assert_and_click('whonix-firstrun');
     assert_and_click('whonix-firstrun-confirm');
     assert_screen "whonix-connecting";
-    assert_screen "whonix-connected", timeout => 60;
+    assert_screen "whonix-connected", timeout => 150;
     if (match_has_tag('whonix-connected-wizard')) {
         send_key('ret');
     }
     if (check_screen('whonixcheck-time-unstable')) {
         send_key('ret');
         wait_still_screen;
+    }
+    if (check_screen("whonix-connecting", 60)) {
+        assert_screen("whonix-connected", 150);
+        # fixed in whonixsetup 4.0-1
+        assert_and_click("whonix-news", timeout => 300);
     }
 }
 

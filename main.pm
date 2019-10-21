@@ -44,8 +44,8 @@ if (get_var('ISO')) {
 } else {
     autotest::loadtest "tests/startup.pm";
     autotest::loadtest "tests/startup_fixup.pm";
-    autotest::loadtest "tests/whonix_firstrun.pm";
     if (get_var('DO_UPDATE')) {
+        autotest::loadtest "tests/whonix_firstrun.pm";
         if (get_var('UPDATE_TEMPLATES')) {
             autotest::loadtest "tests/update_templates.pm";
         }

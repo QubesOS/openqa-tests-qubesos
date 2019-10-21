@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 126,
+      "ypos": 212,
+      "width": 61,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qube-manager-dom0-logs"
+  ]
+}

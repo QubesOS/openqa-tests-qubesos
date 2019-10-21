@@ -1,0 +1,29 @@
+{
+  "area": [
+    {
+      "height": 20,
+      "width": 113,
+      "ypos": 289,
+      "xpos": 437,
+      "type": "match"
+    },
+    {
+      "width": 215,
+      "height": 32,
+      "ypos": 315,
+      "type": "match",
+      "xpos": 424
+    },
+    {
+      "type": "match",
+      "xpos": 793,
+      "ypos": 517,
+      "height": 25,
+      "width": 83
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-clone-successful"
+  ]
+}

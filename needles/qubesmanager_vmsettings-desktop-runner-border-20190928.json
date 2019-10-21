@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 413,
+      "ypos": 35,
+      "width": 172,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "qubes-vm-settings",
+    "work3"
+  ]
+}

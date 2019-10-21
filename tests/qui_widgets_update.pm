@@ -42,8 +42,8 @@ sub run {
     assert_and_click('qubes-update-launch-updater', timeout => 20);
     assert_and_click('qubes-update-enable-for-all', timeout => 20);
 
-    assert_and_click('qubes-update-select-dom0', timeout => 20);
     assert_and_click('qubes-update-deselect-dom0', timeout => 20);
+    assert_and_click('qubes-update-select-dom0', timeout => 20);
 
     # go to next, then cancel
     assert_and_click('qubes-update-next', timeout => 20);

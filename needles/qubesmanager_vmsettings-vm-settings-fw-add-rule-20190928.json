@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "height": 30,
+      "width": 27,
+      "ypos": 185,
+      "xpos": 856,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-fw-add-rule"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "ypos": 630,
+      "type": "match",
+      "xpos": 375,
+      "width": 252,
+      "height": 31
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-devices-strict-reset"
+  ]
+}

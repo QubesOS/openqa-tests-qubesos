@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 21,
+      "height": 25,
+      "xpos": 850,
+      "type": "match",
+      "ypos": 4
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qui-updates-widget-open"
+  ]
+}

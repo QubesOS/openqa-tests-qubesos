@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 642,
+      "ypos": 548,
+      "width": 279,
+      "height": 19,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "global-settings-enable-all"
+  ]
+}

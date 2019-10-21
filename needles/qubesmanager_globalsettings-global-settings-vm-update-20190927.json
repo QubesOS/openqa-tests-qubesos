@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 528,
+      "ypos": 480,
+      "width": 254,
+      "height": 24,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "global-settings-vm-update"
+  ]
+}

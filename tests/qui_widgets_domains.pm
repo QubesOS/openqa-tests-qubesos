@@ -37,6 +37,7 @@ sub run {
     # open a domain
     send_key('down');
     send_key('down');
+    send_key('down');
     assert_screen('qui-domains-domain-opened', timeout => 20);
     send_key('esc');
 

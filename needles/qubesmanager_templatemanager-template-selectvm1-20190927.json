@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 42,
+      "ypos": 177,
+      "width": 64,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "template-selectvm1"
+  ]
+}

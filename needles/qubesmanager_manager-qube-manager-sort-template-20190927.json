@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 291,
+      "ypos": 151,
+      "width": 79,
+      "height": 20,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "qube-manager-sort-template"
+  ]
+}

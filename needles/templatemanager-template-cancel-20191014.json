@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "height": 16,
+      "type": "match",
+      "width": 128,
+      "xpos": 231,
+      "ypos": 35
+    },
+    {
+      "ypos": 731,
+      "type": "match",
+      "height": 21,
+      "width": 67,
+      "xpos": 410
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "button-cancel",
+    "template-cancel"
+  ]
+}

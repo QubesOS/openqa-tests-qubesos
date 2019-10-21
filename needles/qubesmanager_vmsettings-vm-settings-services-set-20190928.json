@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 157,
+      "height": 19,
+      "ypos": 139,
+      "xpos": 116,
+      "type": "match"
+    }
+  ],
+  "properties": [
+    "workaround"
+  ],
+  "tags": [
+    "vm-settings-services-set"
+  ]
+}

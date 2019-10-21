@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "width": 215,
+      "height": 23,
+      "xpos": 121,
+      "type": "match",
+      "ypos": 374
+    },
+    {
+      "width": 74,
+      "height": 17,
+      "xpos": 346,
+      "type": "match",
+      "ypos": 456
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-def-dvm-set-none"
+  ]
+}

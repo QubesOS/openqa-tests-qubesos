@@ -37,7 +37,12 @@ sub run {
 
     # check if dom0 logs are not empty
     assert_and_click('qube-manager-dom0-rc', button => 'right', timeout => 5);
-    assert_and_click('qube-manager-dom0-logs', timeout => 5);
+    # clicking over this menu is sensitive for mouse movements and
+    # unfortunately assert_and_click insists on moving mouse back to the
+    # original possition
+    assert_screen('qube-manager-dom0-logs', 5);
+    send_key("up");
+    send_key("right");
     assert_screen('qube-manager-dom0-logs2', 10);
     send_key("esc");
     send_key("esc");

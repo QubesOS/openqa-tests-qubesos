@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 614,
+      "ypos": 71,
+      "height": 20,
+      "width": 59
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-services-tab"
+  ]
+}

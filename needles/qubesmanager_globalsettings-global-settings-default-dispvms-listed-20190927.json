@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 250,
+      "ypos": 280,
+      "width": 53,
+      "height": 20,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "global-settings-default-dispvms-listed"
+  ]
+}

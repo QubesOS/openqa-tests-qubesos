@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 23,
+      "ypos": 300,
+      "width": 100,
+      "height": 26,
+      "type": "match"
+    },
+    {
+      "xpos": 194,
+      "ypos": 302,
+      "width": 62,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "global-settings-kernel-listing"
+  ]
+}

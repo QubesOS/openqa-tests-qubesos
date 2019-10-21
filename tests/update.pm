@@ -62,7 +62,7 @@ sub run {
     }
 
     assert_script_run('systemctl restart qubesd');
-    assert_script_run('(set -o pipefail; qubesctl --max-concurrency=3 --templates --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log)', timeout => 9000);
+    assert_script_run('(set -o pipefail; qubesctl --max-concurrency=2 --templates --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log)', timeout => 9000);
     upload_logs("qubesctl-upgrade.log");
     assert_script_run('tail -1 qubesctl-upgrade.log|grep -v failed');
     assert_script_run('! grep ERROR qubesctl-upgrade.log');

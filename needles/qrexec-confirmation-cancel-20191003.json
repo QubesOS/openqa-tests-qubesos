@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 487,
+      "xpos": 515,
+      "type": "match",
+      "width": 83,
+      "height": 27
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qrexec-confirmation-cancel"
+  ]
+}

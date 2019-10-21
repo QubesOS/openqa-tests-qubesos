@@ -230,12 +230,13 @@ sub x11_start_program {
     $args{valid}         //= 1;
     $args{target_match}  //= $program;
     $args{match_no_wait} //= 0;
+    $timeout             //= 15;
     die "no desktop-runner available on minimalx" if check_var('DESKTOP', 'minimalx');
     # Start desktop runner and type command there
     init_desktop_runner($program, $timeout);
     # With match_typed we check typed text and if doesn't match - retrying
     # Is required by firefox test on kde, as typing fails on KDE desktop runnner sometimes
-    if ($args{match_typed} && !check_screen($args{match_typed})) {
+    if ($args{match_typed} && !check_screen($args{match_typed}, $timeout)) {
         send_key 'esc';
         init_desktop_runner($program, $timeout);
     }

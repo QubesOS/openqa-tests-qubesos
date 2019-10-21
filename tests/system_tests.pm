@@ -22,6 +22,7 @@ use networking;
 
 sub run {
     my ($self) = @_;
+    my $failed = 0;
 
     select_console('x11');
     x11_start_program('xterm');
@@ -32,6 +33,9 @@ sub run {
     assert_script_run("sudo cat /root/extra-files/convert_junit.py >convert_junit.py");
     # until https://github.com/nose-devs/nose2/pull/412 gets merged
     assert_script_run("sudo patch /usr/lib/python3*/site-packages/nose2/plugins/junitxml.py /root/extra-files/nose2-junit-xml-log-skip-reason.patch");
+
+    # workaround for "ICE default IO handler doing exit(), pid = ..., errno = 32"
+    assert_script_run("rm -f ~/.ICEauthority");
 
     if (get_var('TEST_TEMPLATES')) {
         assert_script_run("export QUBES_TEST_TEMPLATES='" . get_var('TEST_TEMPLATES') . "'");
@@ -46,11 +50,13 @@ sub run {
     my $testfunc = <<ENDFUNC;
 testfunc() {
     rm -f nose2-junit.xml
+    cmd_prefix=
     if [[ "\$1" = "qubes.tests."* ]]; then
         sudo systemctl stop qubesd
+        cmd_prefix="sudo -E"
     fi
     #sudo -E script -e -c "python3 -m qubes.tests.run \$1" tests-\$1.log
-    sudo -E script -e -c "nose2 -v --plugin nose2.plugins.loader.loadtests --plugin nose2.plugins.junitxml -X \$1" tests-\$1.log
+    \$cmd_prefix script -e -c "nose2 -v --plugin nose2.plugins.loader.loadtests --plugin nose2.plugins.junitxml -X \$1" tests-\$1.log
     retval=\$?
     sudo systemctl start qubesd
     python3 convert_junit.py nose2-junit.xml nose2-junit-\$1.xml
@@ -66,8 +72,8 @@ ENDFUNC
         if (!defined $ret) {
             die("Tests $_ timed out");
         } elsif ($ret != 0) {
-            record_info('fail', "Tests $test failed", result => 'fail');
-            $self->record_testresult('fail');
+            record_info('Fail', "Tests $test failed (exit code $ret), details reported separately", result => 'fail');
+            $failed = 1;
         }
         # try to close any popups left from the test, focust _must_ be on xterm window
         while (check_screen('qrexec-confirmation-cancel', 1)) {
@@ -93,6 +99,9 @@ ENDFUNC
         if (script_run('pidof -x qvm-start-gui')) {
             record_soft_failure('qvm-start-gui crashed');
         }
+    }
+    if ($failed) {
+        die "Some tests failed";
     }
 }
 

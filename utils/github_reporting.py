@@ -27,7 +27,7 @@ class PackageName:
         self.version = None
 
         # meaningful Debian lines starts with 'ii'
-        if line.startswith('ii'):
+        if line.startswith('ii '):
             columns = line.split()
             raw_name = columns[1]
             raw_version = columns[2]

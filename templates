@@ -287,6 +287,7 @@
                         { key => "NICMODEL", value => "e1000e"},
                         { key => "PART_TABLE_TYPE", value => "mbr"},
                         { key => "VIRTIO_CONSOLE", value => "1"},
+                        { key => "QEMU_DISABLE_SNAPSHOTS", value => "1"},
                       ],
                     },
                     {
@@ -305,6 +306,7 @@
                         { key => "UEFI_PFLASH_CODE", value => "/usr/share/qemu/ovmf-x86_64-code.bin"},
                         { key => "PART_TABLE_TYPE", value => "gpt"},
                         { key => "VIRTIO_CONSOLE", value => "1"},
+                        { key => "QEMU_DISABLE_SNAPSHOTS", value => "1"},
                       ],
                     },
                     {
@@ -325,6 +327,7 @@
                         { key => "UEFI_PFLASH_VARS", value => "/usr/share/qemu/ovmf-x86_64-vars.bin"},
                         { key => "PART_TABLE_TYPE", value => "gpt"},
                         { key => "VIRTIO_CONSOLE", value => "1"},
+                        { key => "QEMU_DISABLE_SNAPSHOTS", value => "1"},
                       ],
                     },
                   ],

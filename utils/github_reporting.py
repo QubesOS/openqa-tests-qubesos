@@ -204,9 +204,14 @@ class JobData:
 
     def get_related_github_objects(self):
         prs = self.get_pull_requests()
-        if not prs:
-            return self.get_update_issues()
-        return prs
+        if prs:
+            return prs
+
+        update_templates = self.get_template_issues()
+        if update_templates:
+            return update_templates
+
+        return self.get_update_issues()
 
     def get_pull_requests(self):
         json_data = requests.get(self.get_job_api_url(details=True)).json()
@@ -219,6 +224,47 @@ class JobData:
         pr_list = pr_raw_list.strip().split(" ")
 
         return pr_list
+
+    def get_template_issues(self):
+        json_data = requests.get(self.get_job_api_url(details=True)).json()
+
+        test_templates = json_data['job']['settings'].get('TEST_TEMPLATES')
+        if not test_templates:
+            return []
+
+        test_templates = test_templates.split(" ")
+
+        all_templates = []
+
+        for log in json_data['job']['ulogs']:
+            if log == 'update-template-versions.txt':
+                log_file = "{}/tests/{}/file/{}".format(
+                    OPENQA_URL, self.job_id, log)
+
+                template_list = requests.get(log_file).text.split('\n')
+                for line in template_list:
+                    all_templates.append(
+                        re.sub(r"(.*)-([^-]*-[^-]*)\.noarch", r"\1 \2", line))
+
+        templates = []
+
+        for template_name in test_templates:
+            for package_name in all_templates:
+                if package_name.startswith(
+                        "qubes-template-{} ".format(template_name)):
+                    templates.append(package_name)
+
+        repo = GitHubRepo("updates-status")
+        issue_urls = []
+
+        for t in templates:
+            issue_name = "{} (r{})".format(
+               t, json_data['job']['settings']['VERSION'])
+            url = repo.get_issues_by_name(issue_name)
+            if url:
+                issue_urls.append(url)
+
+        return issue_urls
 
     def get_update_issues(self):
         json_data = requests.get(self.get_job_api_url(details=True)).json()
@@ -503,6 +549,12 @@ def main():
     )
 
     parser.add_argument(
+        '--show-github-issues-only',
+        action='store_true',
+        help="Do not post to github, only display found related github issues"
+    )
+
+    parser.add_argument(
         '--enable-labels',
         action='store_true',
         help="Enable adding openqa-ok and openqa-failed labels."
@@ -543,6 +595,11 @@ def main():
             return
 
         prs = job.get_related_github_objects()
+
+        if args.show_github_issues_only:
+            print(prs)
+            return
+
         labels = job.get_labels_from_results(result)
 
         if not prs:

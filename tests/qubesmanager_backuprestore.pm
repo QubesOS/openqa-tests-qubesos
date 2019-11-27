@@ -102,8 +102,8 @@ sub do_restore {
     send_key('d');
 
     assert_and_click('restore-select', timeout => 15);
-    assert_and_click('restore-select-home', timeout => 15);
-    send_key("ret");
+    send_key('~');
+    send_key('ret');
     assert_and_click('restore-select-file', timeout => 15);
 
     send_key('ret');

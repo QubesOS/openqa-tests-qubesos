@@ -130,7 +130,8 @@ sub do_restore {
 
     # exit
     assert_and_click('restore-finish', timeout => 10);
-
+    
+    send_key('esc');
 }
 
 sub post_fail_hook {

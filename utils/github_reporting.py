@@ -111,6 +111,14 @@ class TestFailure:
 
         return output
 
+    def __eq__(self, other):
+        if self.name == getattr(other, "name"):
+            if not self.title:
+                return self.test_id == getattr(other, "test_id")
+            else:
+                return self.title == getattr(other, "title")
+        return False
+
 
 class JobData:
     def __init__(self, job_id, job_name=None,
@@ -317,7 +325,7 @@ class JobData:
             return [LABEL_FAILED]
         return [LABEL_OK]
 
-    def format_results(self, results):
+    def format_results(self, results, reference_job=None):
         output_string = "{}\n" \
                         "Complete test suite and dependencies: {}\n" \
                         "## Failed tests\n".format(COMMENT_TITLE,
@@ -333,6 +341,54 @@ class JobData:
 
         if not number_of_failures:
             output_string += "No failures!\n"
+
+        if reference_job:
+            output_string += "## New failures\n" \
+                             "Compared to: {}\n".format(
+                              reference_job.get_dependency_url())
+
+            if reference_job.job_name == 'system_tests_update':
+                reference_job_results = reference_job.get_children_results()
+            else:
+                reference_job_results = reference_job.get_results()
+
+            for k in results:
+                current_fails = results[k]
+                old_fails = reference_job_results.get(k, [])
+
+                if not current_fails:
+                    continue
+
+                add_to_output = ""
+                for fail in current_fails:
+                    if fail in old_fails:
+                        continue
+                    add_to_output += '  * ' + str(fail) + '\n'
+
+                if add_to_output:
+                    output_string += '* ' + str(k) + "\n"
+                    output_string += add_to_output
+
+            output_string += "## Fixed failures\n" \
+                             "Compared to: {}\n".format(
+                              reference_job.get_dependency_url())
+
+            for k in reference_job_results:
+                current_fails = results.get(k, [])
+                old_fails = reference_job_results.get(k, [])
+
+                if not old_fails:
+                    continue
+
+                add_to_output = ""
+                for fail in old_fails:
+                    if fail in current_fails:
+                        continue
+                    add_to_output += '  * ' + str(fail) + '\n'
+
+                if add_to_output:
+                    output_string += '* ' + str(k) + "\n"
+                    output_string += add_to_output
 
         return output_string
 
@@ -560,6 +616,11 @@ def main():
         help="Enable adding openqa-ok and openqa-failed labels."
     )
 
+    parser.add_argument(
+        '--compare-to-job',
+        help="Provide job id to compare results to."
+    )
+
     args = parser.parse_args()
 
     if (args.build or args.version) and args.job_id:
@@ -581,6 +642,10 @@ def main():
     if args.latest:
         jobs = OpenQA.get_latest_job_id(args.job_name, args.build, args.version)
 
+    reference_job = None
+    if args.compare_to_job:
+        reference_job = JobData(args.compare_to_job)
+
     for job_id in jobs:
         job = JobData(job_id)
         if job.job_name == 'system_tests_update':
@@ -588,7 +653,7 @@ def main():
         else:
             result = job.get_results()
 
-        formatted_result = job.format_results(result)
+        formatted_result = job.format_results(result, reference_job)
 
         if args.show_results_only:
             print(formatted_result)

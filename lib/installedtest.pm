@@ -102,7 +102,7 @@ sub post_fail_hook {
     $self->save_and_upload_log('qvm-prefs sys-firewall', 'qvm-prefs-sys-firewall.log');
     $self->save_and_upload_log('qvm-prefs sys-usb', 'qvm-prefs-sys-usb.log');
     $self->save_and_upload_log('xl dmesg', 'xl-dmesg.log');
-    $self->save_and_upload_log('qvm-run -p -u root sys-firewall "cat /var/log/xen/xen-hotplug.log"', 'sys-firewall-xen-hotplug.log');
+    $self->save_and_upload_log('qvm-run --no-gui -p -u root sys-firewall "cat /var/log/xen/xen-hotplug.log"', 'sys-firewall-xen-hotplug.log');
 }
 
 

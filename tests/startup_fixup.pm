@@ -33,7 +33,7 @@ sub run {
         script_run('qvm-start sys-whonix', timeout => 90);
     }
     assert_script_run('echo sys-usb dom0 allow > /etc/qubes-rpc/policy/qubes.InputTablet');
-    assert_script_run('qvm-run -u root sys-usb \'systemctl start qubes-input-sender-tablet@$(basename $(readlink /dev/input/by-id/usb-QEMU_QEMU_USB_Tablet_*-event-mouse))\'');
+    assert_script_run('qvm-run --no-gui -u root sys-usb \'systemctl start qubes-input-sender-tablet@$(basename $(readlink /dev/input/by-id/usb-QEMU_QEMU_USB_Tablet_*-event-mouse))\'', timeout => 60);
     # force "connection established" notification to show again, if it expired already
     script_run('qvm-run sys-net "pkill nm-applet; sleep 1; nm-applet >/dev/null 2>&1 </dev/null & true"', 120);
     select_console('x11');

@@ -479,7 +479,8 @@
                       name => "system_tests_backup",
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
-                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.backup:18000" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.backup:21600" },
+                        { key => "MAX_JOB_TIME", value => "23400" },
                       ],
                     },
                     {

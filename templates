@@ -271,6 +271,18 @@
                                       flavor  => "update",
                                       version => "*",
                                     },
+                      test_suite => { name => "system_tests_splitgpg" },
+                    },
+                    {
+                      group_name => "Qubes OS updates",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "update",
+                                      version => "*",
+                                    },
                       test_suite => { name => "system_tests_extra" },
                     },
                     {
@@ -486,10 +498,19 @@
                       ],
                     },
                     {
+                      name => "system_tests_splitgpg",
+                      settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.extra:9000" },
+                        { key => "QUBES_TEST_EXTRA_INCLUDE", value => "splitgpg" },
+                      ],
+                    },
+                    {
                       name => "system_tests_extra",
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "SYSTEM_TESTS", value => "qubes.tests.extra:18000" },
+                        { key => "QUBES_TEST_EXTRA_EXCLUDE", value => "splitgpg" },
                         { key => "MAX_JOB_TIME", value => "21600" },
                       ],
                     },

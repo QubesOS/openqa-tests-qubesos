@@ -40,6 +40,12 @@ sub run {
         assert_script_run("export QUBES_TEST_TEMPLATES='" . get_var('TEST_TEMPLATES') . "'");
     }
 
+    foreach ('QUBES_TEST_EXTRA_INCLUDE', 'QUBES_TEST_EXTRA_EXCLUDE') {
+        if (get_var($_)) {
+            assert_script_run("export $_='" . get_var($_) . "'");
+        }
+    }
+
     if (check_var('VERBOSE_LIBVIRT', '1')) {
         assert_script_run('echo log_level = 1 | sudo tee -a /etc/libvirt/libvirtd.conf');
         assert_script_run('echo \'log_filters = "3:event 3:object 3:net"\' | sudo tee -a /etc/libvirt/libvirtd.conf');

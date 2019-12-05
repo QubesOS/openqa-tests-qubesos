@@ -116,6 +116,9 @@ update:
    - dist_upgrade: True
 {% endif %}
 
+notify-updates:
+  cmd.run:
+    - name: /usr/lib/qubes/upgrades-status-notify
 
 {% if salt['pillar.get']('update:repo', '') %}
 # since the repo may not be available at later time, disable it here

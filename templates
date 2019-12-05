@@ -362,7 +362,8 @@
                       flavor    => "install-iso",
                       name      => "Qubes OS",
                       settings  => [
-                                     { key => "ISO_MAXSIZE", value => 4700372992 },
+                                     #{ key => "ISO_MAXSIZE", value => 4700372992 },
+                                     { key => "ISO_MAXSIZE", value => 5700372992 },
                                    ],
                       version   => "*",
                     },

@@ -35,6 +35,10 @@ vm-packages:
       - pulseaudio-utils
       - git
 
+# do not autostart dnsmasq on Debian, it will conflict with the test
+dnsmasq:
+  service.disabled
+
 # broken on Fedora 24, lets install using pip (tests will handle that)
 python-uinput:
   pkg.removed: []

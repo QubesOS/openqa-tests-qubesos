@@ -62,6 +62,10 @@ if (!get_var('SYSTEM_TESTS') and
     autotest::loadtest "tests/usbvm.pm";
 }
 
+if (check_var('TEST_SUSPEND', '1')) {
+    autotest::loadtest "tests/suspend.pm";
+}
+
 if (get_var("WHONIXCHECK")) {
     autotest::loadtest "tests/whonixcheck.pm";
 }

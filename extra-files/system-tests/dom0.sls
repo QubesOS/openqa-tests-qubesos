@@ -10,6 +10,10 @@ dom0-packages:
       - syslinux
       - genisoimage
       - pulseaudio-utils
+      - btrfs-progs
+      - python3-nose2
+      - python3-objgraph
+      - patch
 
 haveged:
   service.running:

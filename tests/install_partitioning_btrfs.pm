@@ -20,15 +20,19 @@ use strict;
 use testapi;
 
 sub run {
+    my $luks_set = 0;
     assert_and_click 'installer-main-hub-target';
     assert_screen 'installer-disk-spoke';
     assert_and_click 'installer-disk-custom-partitioning';
     assert_and_click 'installer-done';
-    assert_screen 'installer-disk-luks-passphrase';
-    type_string 'lukspass';
-    send_key 'tab';
-    type_string 'lukspass';
-    send_key 'ret';
+    assert_screen ['installer-disk-luks-passphrase', 'installer-custom-partitioning'];
+    if (match_has_tag('installer-disk-luks-passphrase')) {
+        type_string 'lukspass';
+        send_key 'tab';
+        type_string 'lukspass';
+        send_key 'ret';
+        $luks_set = 1;
+    }
     assert_screen 'installer-custom-partitioning';
     # TODO: this may be language dependent
     send_key 'alt-n';
@@ -37,10 +41,17 @@ sub run {
     send_key 'ret';
     save_screenshot;
     assert_and_click 'installer-done';
-    # disk passphrase again
-    send_key 'ret';
+    assert_screen ['installer-disk-luks-passphrase', 'installer-custom-summary-accept'];
+    if (match_has_tag('installer-disk-luks-passphrase')) {
+        type_string 'lukspass';
+        send_key 'tab';
+        type_string 'lukspass';
+        send_key 'ret';
+        $luks_set = 1;
+    }
     assert_and_click 'installer-custom-summary-accept';
     assert_screen 'installer-main-hub';
+    die "LUKS passphrase not prompted" unless $luks_set;
 }
 
 1;

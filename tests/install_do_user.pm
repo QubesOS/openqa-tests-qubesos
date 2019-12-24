@@ -20,9 +20,33 @@ use strict;
 use testapi;
 use utils qw(us_colemak);
 
+
 sub run {
+    if (check_var("VERSION", "4.1")) {
+        setup_user();
+    }
     assert_screen 'installer-main-ready';
     send_key 'f12';
+    if (!check_var("VERSION", "4.1")) {
+        setup_user();
+    }
+
+    my $timeout = 1500;
+    if (check_var('INSTALL_TEMPLATES', 'all')) {
+        $timeout += 4 * 240;
+    }
+    if (get_var('INSTALL_TEMPLATES', '') =~ /whonix/) {
+        $timeout += 2 * 240;
+    }
+    if (get_var('INSTALL_TEMPLATES', '') =~ /debian/) {
+        $timeout += 1 * 240;
+    }
+    assert_screen 'installer-post-install-tasks', $timeout;
+    #assert_and_click 'installer-install-done-reboot', timeout => 600;
+    assert_screen 'installer-install-done-reboot', 2200;
+}
+
+sub setup_user {
     assert_and_click 'installer-install-hub-user';
     assert_screen 'installer-user';
     if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
@@ -42,19 +66,6 @@ sub run {
     assert_screen 'installer-user-weak-pass';
     send_key 'f12';
     assert_screen 'installer-install-user-created';
-    my $timeout = 1500;
-    if (check_var('INSTALL_TEMPLATES', 'all')) {
-        $timeout += 4 * 240;
-    }
-    if (get_var('INSTALL_TEMPLATES', '') =~ /whonix/) {
-        $timeout += 2 * 240;
-    }
-    if (get_var('INSTALL_TEMPLATES', '') =~ /debian/) {
-        $timeout += 1 * 240;
-    }
-    assert_screen 'installer-post-install-tasks', $timeout;
-    #assert_and_click 'installer-install-done-reboot', timeout => 600;
-    assert_screen 'installer-install-done-reboot', 2200;
 }
 
 1;

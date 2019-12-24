@@ -47,7 +47,6 @@ sub handle_system_startup {
 
     # handle both encrypted and unencrypted setups
     assert_screen ["luks-prompt", "login-prompt-user-selected"], 240;
-    
     if (match_has_tag('luks-prompt')) {
         type_string "lukspass";
         send_key "ret";

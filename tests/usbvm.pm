@@ -55,7 +55,8 @@ ENDFUNC
     } elsif (get_var('USBVM', 'sys-usb') eq 'sys-usb') {
         assert_script_run('xl domid sys-usb');
         assert_script_run('qvm-check --running sys-usb');
-        assert_script_run("$qvmpci_cmd sys-usb|grep USB");
+        # On Xen >= 4.13 PCI passthrough no longer works on OpenQA (IOMMU strictly required even for PV)
+        assert_script_run("$qvmpci_cmd sys-usb|grep USB") unless check_var("VERSION", "4.1");
         assert_script_run("grep \"sys-usb.*dom0.*$mouse_action\" /etc/qubes-rpc/policy/qubes.InputMouse");
         assert_script_run('! grep "sys-net.*dom0.*\(allow\|ask\)" /etc/qubes-rpc/policy/qubes.InputMouse');
         assert_script_run('! grep "sys-usb.*dom0.*\(allow\|ask\)" /etc/qubes-rpc/policy/qubes.InputKeyboard');
@@ -64,7 +65,8 @@ ENDFUNC
         assert_script_run('! qvm-check sys-usb');
         assert_script_run('xl domid sys-net');
         assert_script_run('qvm-check --running sys-net');
-        assert_script_run("$qvmpci_cmd sys-net|grep USB");
+        # On Xen >= 4.13 PCI passthrough no longer works on OpenQA (IOMMU strictly required even for PV)
+        assert_script_run("$qvmpci_cmd sys-net|grep USB") unless check_var("VERSION", "4.1");
         assert_script_run("grep \"sys-net.*dom0.*$mouse_action\" /etc/qubes-rpc/policy/qubes.InputMouse");
         assert_script_run('! grep "sys-usb.*dom0.*\(allow\|ask\)" /etc/qubes-rpc/policy/qubes.InputMouse');
     }

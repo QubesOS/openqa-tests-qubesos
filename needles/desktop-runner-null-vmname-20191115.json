@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "ypos": 346,
+      "height": 18,
+      "xpos": 385,
+      "type": "match",
+      "width": 193
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "\"(null)\" instead of a \"[Dom0]\" tag in a window title"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "desktop-runner"
+  ]
+}

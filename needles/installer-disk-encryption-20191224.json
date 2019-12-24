@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 234,
+      "xpos": 15,
+      "height": 22,
+      "type": "match",
+      "ypos": 11
+    },
+    {
+      "height": 22,
+      "type": "match",
+      "ypos": 555,
+      "width": 128,
+      "xpos": 20
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-disk-encryption"
+  ]
+}

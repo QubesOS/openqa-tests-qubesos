@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 11,
+      "xpos": 17,
+      "height": 22,
+      "width": 155
+    },
+    {
+      "height": 29,
+      "width": 32,
+      "xpos": 37,
+      "ypos": 621,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-keyboard-add"
+  ]
+}

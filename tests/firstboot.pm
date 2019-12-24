@@ -40,6 +40,9 @@ sub run {
             send_key "down";
             send_key "ret";
         }
+    } else {
+        assert_screen "tianocore-splash", 90;
+        eject_cd;
     }
 
     # handle both encrypted and unencrypted setups

@@ -390,6 +390,7 @@
                       name => "install_over_existing",
                       settings => [
                         { key => "INSTALL_OVER_EXISTING", value => "1" },
+                        { key => "BOOT_MENU", value => "1" },
                       ],
                     },
                     {

@@ -24,7 +24,7 @@ our @EXPORT = qw(
 # choose boot device according to test variables; useful for booting from cdrom
 # the second time, when the disk already contains some system
 sub pre_bootmenu_setup {
-    if (!get_var('UEFI')) {
+    if (!get_var('UEFI') and check_var('BOOT_MENU', '1')) {
         assert_screen "boot-menu", 5;
         send_key('esc');
         assert_screen "boot-menu-select", 4;

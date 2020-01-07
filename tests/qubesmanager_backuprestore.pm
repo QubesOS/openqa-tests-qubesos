@@ -84,6 +84,7 @@ sub prep_backup {
     send_key('~');
     send_key('ret');
     #assert_and_click('backup-select-backup-dir3', timeout => 10);
+    sleep(5); # as above
 
     # input password
     send_key('tab');

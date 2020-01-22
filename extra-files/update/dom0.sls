@@ -1,7 +1,7 @@
 {% if grains['osrelease'] == '4.0' %}
 {% set basedist = 'fc25' %}
 {% elif grains['osrelease'] == '4.1' %}
-{% set basedist = 'fc29' %}
+{% set basedist = 'fc31' %}
 {% else %}
 {% set basedist = 'unknown' %}
 {% endif %}
@@ -10,6 +10,7 @@
 
 /etc/yum.repos.d/update-test.repo:
   file.managed:
+    - order: 10
     - source: salt://update/update-test-dom0.repo
     - template: jinja
     - context:
@@ -19,6 +20,7 @@
 
 /etc/yum.repos.d/qubes-dom0-testing.repo:
   file.managed:
+    - order: 10
     - source: salt://update/qubes-testing-dom0.repo
     - template: jinja
     - context:
@@ -26,10 +28,12 @@
 
 /etc/pki/rpm-gpg/update-test:
   file.managed:
+    - order: 11
     - source: salt://update/update-test.asc
  
 update-test-import:
   cmd.run:
+    - order: 12
     - name: rpm --import /etc/pki/rpm-gpg/update-test
     - unless: rpm -q gpg-pubkey-19f9875c
     - onchanges:

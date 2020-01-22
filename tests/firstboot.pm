@@ -40,9 +40,6 @@ sub run {
             send_key "down";
             send_key "ret";
         }
-    } else {
-        assert_screen "tianocore-splash", 90;
-        eject_cd;
     }
 
     # handle both encrypted and unencrypted setups
@@ -70,10 +67,8 @@ sub run {
 
     send_key "f12";
 
-    if (check_var('VERSION', '4.1')) {
-        assert_screen "firstboot-done", 5;
-        send_key "f12";
-    }
+    assert_screen "firstboot-done", 5;
+    send_key "f12";
 
     $configuring = 1;
 
@@ -91,12 +86,7 @@ sub run {
     }
     assert_screen "firstboot-configuring-salt", $timeout;
     assert_screen "firstboot-setting-network", 600;
-    if (!check_var('VERSION', '4.1')) {
-        assert_screen "firstboot-done", 240;
-        send_key "f12";
-    } else {
-        assert_screen "login-prompt-user-selected", 240;
-    }
+    assert_screen "login-prompt-user-selected", 240;
 
     assert_screen "login-prompt-user-selected", 60;
     type_string $password;

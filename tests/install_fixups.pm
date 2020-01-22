@@ -49,6 +49,7 @@ sub run {
     type_string "exit\n";
     script_run "sed -i -e 's:console=none:console=vga,com1 loglvl=all:' /mnt/sysimage/boot/grub2/grub.cfg";
     script_run "sed -i -e 's:console=none:console=vga,com1 loglvl=all:' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
+    script_run "sed -i -e 's:\\\${xen_rm_opts}::' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
     my $xen_cfg = '/mnt/sysimage/boot/efi/EFI/qubes/xen.cfg';
     if (!script_run("grep console= $xen_cfg")) {
         script_run "sed -i -e 's:console=none:console=vga,com1 loglvl=all:' $xen_cfg";
@@ -74,6 +75,7 @@ sub run {
 
     # log resulting bootloader configuration
     script_run "cat /mnt/sysimage/etc/default/grub $xen_cfg";
+    script_run "cat /mnt/sysimage/boot/grub2/grub.cfg /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
 
     # improve logging
     script_run "echo 'XENCONSOLED_ARGS=--timestamp=all' >> /mnt/sysimage/etc/sysconfig/xencommons";

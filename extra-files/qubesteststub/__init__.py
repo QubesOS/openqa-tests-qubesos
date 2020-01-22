@@ -10,9 +10,10 @@ class DefaultPV(qubes.ext.Extension):
     @qubes.ext.handler('domain-pre-start')
     def on_domain_pre_start(self, vm, event, **kwargs):
         # on Xen 4.13 PCI passthrough on PV requires IOMMU too
-        if vm.name in ('sys-net', 'sys-usb'):
-            for ass in list(vm.devices['pci'].assignments()):
-                yield from vm.devices['pci'].detach(ass)
+        if self.xeninfo['xen_minor'] >= 13:
+            if vm.name in ('sys-net', 'sys-usb'):
+                for ass in list(vm.devices['pci'].assignments()):
+                    yield from vm.devices['pci'].detach(ass)
 
         if len(vm.devices['pci'].persistent()):
             # IOMMU missing
@@ -24,15 +25,18 @@ class DefaultPV(qubes.ext.Extension):
     @qubes.ext.handler('domain-start')
     @asyncio.coroutine
     def on_domain_start(self, vm, event, **kwargs):
-        if vm.name == 'sys-net':
+        if vm.name == 'sys-net' and not len(vm.devices['pci'].persistent()):
             subprocess.call('echo 0000:00:04.0 > /sys/bus/pci/drivers/pciback/unbind', shell=True)
             subprocess.call('echo 0000:00:04.0 > /sys/bus/pci/drivers/e1000e/bind', shell=True)
+            # wait for udev and co
+            yield from asyncio.sleep(1)
+            subprocess.call('udevadm settle', shell=True)
             subprocess.call('brctl addbr xenbr0', shell=True)
             subprocess.call('brctl addif xenbr0 ens4', shell=True)
             subprocess.call('ip l s ens4 up', shell=True)
             subprocess.call('ip l s xenbr0 up', shell=True)
             subprocess.call('xl network-attach sys-net bridge=xenbr0', shell=True)
-        if vm.name == 'sys-usb':
+        if vm.name == 'sys-usb' and not len(vm.devices['pci'].persistent()):
             subprocess.call('echo 0000:00:05.0 > /sys/bus/pci/drivers/pciback/unbind', shell=True)
             subprocess.call('echo 0000:00:05.0 > /sys/bus/pci/drivers/ehci-pci/bind', shell=True)
 
@@ -40,6 +44,7 @@ class DefaultPV(qubes.ext.Extension):
         super().__init__()
         x = xen.lowlevel.xc.xc()
         self.physinfo = x.physinfo()
+        self.xeninfo = x.xeninfo()
         del x
         if 'hvm' not in self.physinfo['virt_caps']:
             qubes.vm.qubesvm.QubesVM.virt_mode._default = 'pv'

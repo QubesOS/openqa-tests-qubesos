@@ -54,6 +54,9 @@ sub run {
         $repo_url =~ s/\d+\.\d+\.\d+\.\d+/uedqavcpvbij4kyr.onion/;
         assert_script_run("printf '  repo_onion: $repo_url\\n' >> $pillar_dir/init.sls");
     }
+    if (get_var('WHONIX_REPO')) {
+       assert_script_run("printf '  whonix_repo: " . get_var('WHONIX_REPO') . "\\n' >> $pillar_dir/init.sls");
+    }
     assert_script_run("printf \"base:\\n  '*':\\n    - update\\n\" > $pillar_dir/init.top");
     assert_script_run('qubesctl top.enable update pillar=True');
     if (get_var("SALT_SYSTEM_TESTS")) {

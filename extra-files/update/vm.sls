@@ -92,7 +92,11 @@ repo-testing:
 
 /etc/apt/sources.list.d/whonix.list:
   file.append:
+{% if salt['pillar.get']('update:whonix_repo', '') %}
+    - text: deb https://deb.whonix.org {{ grains['oscodename'] }}-{{ salt['pillar.get']('update:whonix_repo', '') }} main contrib non-free
+{% else %}
     - text: deb https://deb.whonix.org {{ grains['oscodename'] }}-proposed-updates main contrib non-free
+{% endif %}
 
 {% endif %}
 

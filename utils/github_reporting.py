@@ -132,6 +132,7 @@ class JobData:
 
         self.time_started = time_started
         self.failures = {}
+        self.job_details = None
 
     def check_restarted(self, new_id, new_time_started):
         if new_time_started > self.time_started:

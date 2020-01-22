@@ -297,6 +297,46 @@
                                     },
                       test_suite => { name => "system_tests_manager" },
                     },
+
+                    #################
+                    ### system tests - qubes-whonix
+                    #################
+                    {
+                      group_name => "Qubes-Whonix updates",
+                      machine    => { name => "64bit" },
+                      prio       => 10,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "qubes-whonix",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_update" },
+                    },
+                    {
+                      group_name => "Qubes-Whonix updates",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "qubes-whonix",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_whonix" },
+                    },
+                    {
+                      group_name => "Qubes-Whonix updates",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "qubes-whonix",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_suspend" },
+                    },
 		  ],
   Machines     => [
                     {
@@ -372,6 +412,17 @@
                       distri    => "qubesos",
                       flavor    => "update",
                       name      => "Qubes OS update",
+                      settings  => [
+                                     { key => "HDD_1", value => "disk_unencrypted_updated.qcow2" },
+                                     { key => "MAX_JOB_TIME", value => "21600" },
+                                   ],
+                      version   => "*",
+                    },
+                    {
+                      arch      => "x86_64",
+                      distri    => "qubesos",
+                      flavor    => "qubes-whonix",
+                      name      => "Qubes-Whonix updates",
                       settings  => [
                                      { key => "HDD_1", value => "disk_unencrypted_updated.qcow2" },
                                      { key => "MAX_JOB_TIME", value => "21600" },

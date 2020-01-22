@@ -43,14 +43,6 @@ update:
   pkg.uptodate:
    - refresh: true
 
-kernel-latest-qubes-vm:
-  pkg.installed: []
-
-qubes-prefs default-kernel $(ls -v /var/lib/qubes/vm-kernels|tail -1|tee /dev/stderr):
-  cmd.run:
-   - onchanges:
-     - pkg: kernel-latest-qubes-vm
-
 {% if salt['pillar.get']('update:repo', '') %}
 # since the repo may not be available at later time, disable it here
 disable-update-test:

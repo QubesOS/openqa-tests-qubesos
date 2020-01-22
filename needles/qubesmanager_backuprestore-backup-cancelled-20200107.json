@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "ypos": 299,
+      "width": 174,
+      "xpos": 444,
+      "height": 28,
+      "type": "match"
+    },
+    {
+      "ypos": 358,
+      "xpos": 552,
+      "width": 54,
+      "height": 21,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "backup-cancelled"
+  ]
+}

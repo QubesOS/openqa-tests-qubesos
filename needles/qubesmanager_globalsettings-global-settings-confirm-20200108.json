@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 399,
+      "width": 149,
+      "height": 15,
+      "type": "match",
+      "ypos": 266
+    },
+    {
+      "height": 20,
+      "width": 56,
+      "xpos": 686,
+      "type": "match",
+      "ypos": 353
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "global-settings-confirm"
+  ]
+}

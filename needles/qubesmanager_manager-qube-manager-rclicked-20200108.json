@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "ypos": 252,
+      "type": "match",
+      "height": 67,
+      "xpos": 132,
+      "width": 203
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "qube-manager-rclicked"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "ypos": 259,
+      "type": "match",
+      "width": 151,
+      "xpos": 429,
+      "height": 20
+    },
+    {
+      "height": 23,
+      "width": 65,
+      "xpos": 408,
+      "type": "match",
+      "ypos": 370
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "vm-settings-fw-tcp"
+  ]
+}

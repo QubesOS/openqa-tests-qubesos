@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 23,
+      "type": "match",
+      "ypos": 4,
+      "xpos": 900,
+      "height": 25
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qui-disk-space-widget"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 141,
+      "type": "match",
+      "height": 27,
+      "xpos": 605,
+      "ypos": 37
+    },
+    {
+      "width": 99,
+      "type": "match",
+      "ypos": 91,
+      "xpos": 605,
+      "height": 18
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qui-disk-space-widget2"
+  ]
+}

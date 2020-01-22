@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "height": 24,
+      "xpos": 355,
+      "width": 56,
+      "type": "match",
+      "ypos": 539
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "qubes-update-finish"
+  ]
+}

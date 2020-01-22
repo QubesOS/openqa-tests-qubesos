@@ -11,7 +11,12 @@ OPENQA_API = OPENQA_URL + "/api/v1"
 GITHUB_API_PREFIX = "https://api.github.com/repos"
 GITHUB_BASE_PREFIX = "https://github.com"
 
+# repo for creating issues for FLAVOR=qubes-whonix jobs
+WHONIX_NOTIFICATION_REPO = "Whonix/updates-status"
+
 COMMENT_TITLE = "# OpenQA test summary"
+
+ISSUE_TITLE_PREFIX = "OpenQA test result for build "
 
 LABEL_OK = 'openqa-ok'
 LABEL_FAILED = 'openqa-failed'
@@ -143,11 +148,20 @@ class JobData:
         json_data = requests.get(self.get_job_api_url(details=False)).json()
         return json_data['job']['test']
 
+    def get_job_build(self):
+        json_data = self.get_job_details()
+        return json_data['job']['settings']['BUILD']
+
+    def get_job_details(self):
+        if self.job_details is None:
+            self.job_details = requests.get(self.get_job_api_url(details=True)).json()
+        return self.job_details
+
     def get_results(self):
         if self.failures:
             return self.failures
 
-        json_data = requests.get(self.get_job_api_url(details=True)).json()
+        json_data = self.get_job_details()
 
         failure_list = []
 
@@ -212,6 +226,10 @@ class JobData:
             return "{}/jobs/{}".format(OPENQA_API, job_id)
 
     def get_related_github_objects(self):
+        notification_issues = self.get_notification_issue()
+        if notification_issues:
+            return notification_issues
+
         prs = self.get_pull_requests()
         if prs:
             return prs
@@ -223,7 +241,9 @@ class JobData:
         return self.get_update_issues()
 
     def get_pull_requests(self):
-        json_data = requests.get(self.get_job_api_url(details=True)).json()
+        if self.job_details is None:
+            self.job_details = requests.get(self.get_job_api_url(details=True)).json()
+        json_data = self.job_details
 
         if 'PULL_REQUESTS' not in json_data['job']['settings']:
             return []
@@ -235,7 +255,7 @@ class JobData:
         return pr_list
 
     def get_template_issues(self):
-        json_data = requests.get(self.get_job_api_url(details=True)).json()
+        json_data = self.get_job_details()
 
         test_templates = json_data['job']['settings'].get('TEST_TEMPLATES')
         if not test_templates:
@@ -276,7 +296,7 @@ class JobData:
         return issue_urls
 
     def get_update_issues(self):
-        json_data = requests.get(self.get_job_api_url(details=True)).json()
+        json_data = self.get_job_details()
 
         logs_to_check = []
 
@@ -316,6 +336,16 @@ class JobData:
             url = repo.get_issues_by_name(issue_name)
             if url:
                 issue_urls.append(url)
+
+        return issue_urls
+
+    def get_notification_issue(self, repo_name=None):
+        json_data = self.get_job_details()
+
+        issue_urls = []
+        if json_data['job']['settings']['FLAVOR'] == 'qubes-whonix':
+            issue_urls.append('{}/{}/issues/create-or-update'.format(
+                              GITHUB_BASE_PREFIX, WHONIX_NOTIFICATION_REPO))
 
         return issue_urls
 
@@ -400,7 +430,9 @@ class JobData:
 class GitHubRepo:
     def __init__(self, repo_name, owner="QubesOS"):
         self.data = []
+        self.owner = owner
         self.repo = repo_name
+        self.repo_url = "{}/{}/{}".format(GITHUB_BASE_PREFIX, owner, self.repo)
         self.url = "{}/{}/{}/". format(GITHUB_API_PREFIX, owner, self.repo)
 
     def get_issues_by_name(self, name):
@@ -425,11 +457,14 @@ class GitHubRepo:
             else:
                 url = None
 
-
 class GitHubIssue:
     def __init__(self, url):
         self.existing_comment_no = None
-        self.url, self.issue_no = self.parse_url(url)
+        self.post_as_issue = False
+        self.url, self.owner, self.repo, self.issue_no = self.parse_url(url)
+        if self.issue_no == 'create-or-update':
+            self.post_as_issue = True
+            self.issue_no = None
 
     def existing_comment(self):
         if self.existing_comment_no:
@@ -453,9 +488,22 @@ class GitHubIssue:
 
         return None
 
+    def existing_issue(self, title):
+        if self.issue_no is not None:
+            return self.issue_no
+
+        repo = GitHubRepo(self.repo, owner=self.owner)
+
+        url = repo.get_issues_by_name(title)
+        if url:
+            self.issue_no = self.parse_url(url)[3]
+            return self.issue_no
+
+        return None
+
     @staticmethod
     def parse_url(url):
-        pattern = r'{}/(\w+)/([\w\-]+)/(issues|pull)/(\d+)#?.*'.format(
+        pattern = r'{}/(\w+)/([\w\-]+)/(issues|pull)/(\d+|create-or-update)#?.*'.format(
             GITHUB_BASE_PREFIX)
         match = re.compile(pattern).match(url)
 
@@ -466,22 +514,37 @@ class GitHubIssue:
         parsed_url = "{}/{}/{}/issues/".format(
                 GITHUB_API_PREFIX,
                 owner,
-                repo,
-                no)
+                repo)
 
-        return parsed_url, no
+        return parsed_url, owner, repo, no
 
-    def post_comment(self, message_text):
-        if self.existing_comment():
-            url = self.url + 'comments/' + str(self.existing_comment())
-            api_method = requests.patch
+    def post_comment(self, message_text, title=None):
+        if self.post_as_issue and not title:
+            print('Posting as an issue requested, but no issue title given')
+            return
+        if self.post_as_issue:
+            if self.existing_issue(title):
+                api_method = requests.patch
+                url = self.url + self.issue_no
+            else:
+                api_method = requests.post
+                url = self.url[:-1]
+
+            response = api_method(url,
+                                  json={'title': title,
+                                        'body': message_text},
+                                  headers=github_auth)
         else:
-            url = self.url + '{}/comments'.format(self.issue_no)
-            api_method = requests.post
+            if self.existing_comment():
+                url = self.url + 'comments/' + str(self.existing_comment())
+                api_method = requests.patch
+            else:
+                url = self.url + '{}/comments'.format(self.issue_no)
+                api_method = requests.post
 
-        response = api_method(url,
-                              json={'body': message_text},
-                              headers=github_auth)
+            response = api_method(url,
+                                  json={'body': message_text},
+                                  headers=github_auth)
 
         if not response.ok:
             print("FAILED TO COMMENT. Error {}: {}".format(
@@ -491,7 +554,7 @@ class GitHubIssue:
         # labels should be provided as a list of strings
 
         # check existing labels
-        url = self.url + "{}/labels"
+        url = self.url + "{}/labels".format(self.issue_no)
         labels_to_remove = []
 
         if LABEL_OK in labels:
@@ -672,9 +735,10 @@ def main():
             print("Warning: no related pull requests and issues found.")
             return
 
+        issue_title = ISSUE_TITLE_PREFIX + job.get_job_build()
         for pr in prs:
             issue = GitHubIssue(pr)
-            issue.post_comment(formatted_result)
+            issue.post_comment(formatted_result, title=issue_title)
             if args.enable_labels:
                 issue.add_labels(labels)
 

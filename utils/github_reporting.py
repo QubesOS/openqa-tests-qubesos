@@ -175,7 +175,7 @@ class JobData:
             child_data = requests.get(self.get_job_api_url(
                 details=False, job_id=child)).json()
             child_name = child_data['job']['test']
-            child_started = child_data['job']['t_started']
+            child_started = child_data['job']['t_started'] or '0'
             if child_name in results:
                 results[child_name].check_restarted(child, child_started)
             else:

@@ -623,6 +623,7 @@
                         { key => "SALT_SYSTEM_TESTS", value => 1 },
                         { key => "HDD_1", value => "disk_unencrypted_%VERSION%_%MACHINE%.qcow2" },
                         { key => "STORE_HDD_1", value => "disk_unencrypted_updated.qcow2" },
+                        { key => "WORKER_CLASS", value => "local" },
                       ],
                     },
                     {

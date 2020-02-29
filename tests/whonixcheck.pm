@@ -28,6 +28,11 @@ sub run {
     x11_start_program('xterm');
     curl_via_netvm;
 
+    if (get_var('TEST_TEMPLATES') && !(get_var("TEST_TEMPLATES") =~ m/whonix/)) {
+        record_info('skip', "only selected templates test requested and whonix is not one of them");
+        return;
+    }
+
     my @whonix_vms = split(/\n/, script_output("qvm-ls --raw-list|grep whonix"));
 
     assert_script_run('set -o pipefail');

@@ -32,7 +32,7 @@ sub run {
     assert_script_run("qvm-shutdown --wait work", 200);
     type_string("qvm-start work\n", 200);
     assert_screen('qui-notifications-domain-start', 200);
-    assert_script_run('qvm-start --skip-if-running work');
+    assert_script_run('qvm-run work true');
 
     # check if devices notify about connecting
     assert_and_click('qui-notifications-devices', timeout => 20);

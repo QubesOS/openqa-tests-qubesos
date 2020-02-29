@@ -42,13 +42,16 @@ sub run {
     assert_and_click('vm-settings-networking-opened');
     assert_and_click('vm-settings-networking-change-none');
 
-    # include in backups by default, run in debug mode, start on boot
+    # include in backups by default, start on boot
     send_key('tab');
     send_key('spc');
     send_key('tab');
     send_key('spc');
-    send_key('tab');
-    send_key('spc');
+    if (check_var('VERSION', '4.0')) {
+        # run in debug mode
+        send_key('tab');
+        send_key('spc');
+    }
 
     # increase storage
     send_key('tab');
@@ -68,6 +71,7 @@ sub run {
     assert_screen('vm-settings-advanced-check-current');
 
     # change memory
+    assert_and_click('vm-settings-advanced-memory');
     send_key('ctrl-a');
     type_string('50');
     send_key('ret');
@@ -178,8 +182,14 @@ sub run {
     assert_and_click('vm-settings-services-tab');
 
     # add clocksync
-    type_string('clocksync');
-    send_key('ret');
+    assert_and_click('vm-settings-services-entry');
+    if (check_var('VERSION', '4.0')) {
+        type_string('clocksync');
+        send_key('ret');
+    } else {
+        assert_and_click('vm-settings-services-clocksync');
+        assert_and_click('vm-settings-services-add');
+    }
 
     # confirm
     send_key('alt-o');

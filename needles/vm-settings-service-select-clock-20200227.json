@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 20,
+      "xpos": 119,
+      "width": 89,
+      "type": "match",
+      "ypos": 157
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "vm-settings-service-select-clock"
+  ]
+}

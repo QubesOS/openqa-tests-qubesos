@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "xpos": 438,
+      "ypos": 451,
+      "width": 147,
+      "height": 91,
+      "type": "match"
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "black background instead of grey"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "luks-prompt"
+  ]
+}

@@ -78,6 +78,9 @@ sub run {
     script_run "cat /mnt/sysimage/etc/default/grub $xen_cfg";
     script_run "cat /mnt/sysimage/boot/grub2/grub.cfg /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
 
+    # log kickstart file
+    script_run "cat /mnt/sysimage/root/anaconda-ks.cfg";
+
     # improve logging
     script_run "echo 'XENCONSOLED_ARGS=--timestamp=all' >> /mnt/sysimage/etc/sysconfig/xencommons";
 

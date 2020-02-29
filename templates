@@ -443,7 +443,7 @@
                       backend   => "qemu",
                       name      => "64bit",
                       settings  => [
-                        { key => "QEMUCPU", value => "host,+svm" },
+                        { key => "QEMUCPU", value => "host,+svm,+vmx" },
                         { key => "QEMUCPUS", value => "2"},
                         { key => "QEMURAM", value => "6144"},
                         { key => "HDDSIZEGB", value => "40"},
@@ -458,7 +458,7 @@
                       backend   => "qemu",
                       name      => "uefi",
                       settings  => [
-                        { key => "QEMUCPU", value => "host,+svm" },
+                        { key => "QEMUCPU", value => "host,+svm,+vmx" },
                         { key => "QEMUCPUS", value => "2"},
                         { key => "QEMURAM", value => "6144"},
                         { key => "QEMU_APPEND", value => "boot once=d,menu=on,splash-time=5000" },
@@ -477,7 +477,7 @@
                       backend   => "qemu",
                       name      => "mac",
                       settings  => [
-                        { key => "QEMUCPU", value => "host,+svm" },
+                        { key => "QEMUCPU", value => "host,+svm,+vmx" },
                         { key => "QEMUCPUS", value => "2"},
                         { key => "QEMU_SMBIOS", value => "type=3,manufacturer=apple"},
                         { key => "QEMURAM", value => "6144"},

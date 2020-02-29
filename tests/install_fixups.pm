@@ -47,16 +47,17 @@ sub run {
         type_string "sed -ie '$sed_expr' $core2_path\n";
     }
     type_string "exit\n";
-    script_run "sed -i -e 's:console=none:console=vga,com1 loglvl=all guest_loglvl=all:' /mnt/sysimage/boot/grub2/grub.cfg";
-    script_run "sed -i -e 's:console=none:console=vga,com1 loglvl=all guest_loglvl=all:' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
+    my $extra_xen_opts = 'loglvl=all guest_loglvl=all spec-ctrl=no';
+    script_run "sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /mnt/sysimage/boot/grub2/grub.cfg";
+    script_run "sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
     script_run "sed -i -e 's:\\\${xen_rm_opts}::' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
     my $xen_cfg = '/mnt/sysimage/boot/efi/EFI/qubes/xen.cfg';
     if (!script_run("grep console= $xen_cfg")) {
-        script_run "sed -i -e 's:console=none:console=vga,com1 loglvl=all guest_loglvl=all:' $xen_cfg";
+        script_run "sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' $xen_cfg";
     } else {
-        script_run "sed -i -e 's:^options=:options=console=vga,com1 loglvl=all guest_loglvl=all :' $xen_cfg";
+        script_run "sed -i -e 's:^options=:options=console=vga,com1 $extra_xen_opts :' $xen_cfg";
     }
-    script_run "sed -i -e 's:console=none:console=vga,com1 loglvl=all guest_loglvl=all:' /mnt/sysimage/etc/default/grub";
+    script_run "sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /mnt/sysimage/etc/default/grub";
 
     # need to use explicit UUID to override (empty) options from /etc/crypttab,
     # rd.luks.options=discard works only for disks not mentioned in

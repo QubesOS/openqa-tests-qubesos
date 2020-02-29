@@ -31,6 +31,10 @@ sub run {
     assert_script_run('sudo rtcwake -n -s 30');
     assert_script_run('sudo systemctl suspend');
     sleep(60);
+    send_key('esc');
+    sleep(10);
+    # unlock screen
+    type_string($password);
     send_key('ret');
     sleep(10);
     

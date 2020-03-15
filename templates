@@ -30,6 +30,28 @@
                     },
                     {
                       machine    => { name => "64bit" },
+                      prio       => 20,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_nvme" },
+                    },
+                    {
+                      machine    => { name => "uefi" },
+                      prio       => 20,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_nvme" },
+                    },
+                    {
+                      machine    => { name => "64bit" },
                       prio       => 15,
                       product    => {
                                       arch    => "x86_64",
@@ -546,6 +568,13 @@
                       name => "install_minimal",
                       settings => [
                         { key => "INSTALL_TEMPLATES", value => "fedora" },
+                      ],
+                    },
+                    {
+                      name => "install_nvme",
+                      settings => [
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
+                        { key => "HDDMODEL", value => "nvme" },
                       ],
                     },
                     {

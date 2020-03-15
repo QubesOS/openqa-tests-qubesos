@@ -29,6 +29,7 @@ sub new {
 }
 
 sub handle_system_startup {
+    reset_consoles();
     if (!check_var('UEFI', '1')) {
         # wait for bootloader to appear
         assert_screen "bootloader", 90;
@@ -81,9 +82,11 @@ sub post_fail_hook {
     script_run "xl dmesg";
     script_run "journalctl -b|tail -n 10000", timeout => 120;
     script_run "cat /var/log/salt/minion";
+    script_run "cat /var/log/libvirt/libxl/libxl-driver.log";
     enable_dom0_network_netvm() unless $self->{network_up};
     upload_logs('/var/log/libvirt/libxl/libxl-driver.log');
     $self->save_and_upload_log('journalctl -b', 'journalctl.log', {timeout => 120});
+    $self->save_and_upload_log('sudo -u user journalctl --user -b', 'user-journalctl.log', {timeout => 120});
     upload_logs('/var/lib/qubes/qubes.xml');
     #my $logs = script_output('ls -1 /var/log/xen/console/*.log');
     #foreach (split(/\n/, $logs)) {

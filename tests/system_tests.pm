@@ -33,6 +33,9 @@ sub run {
     # until https://github.com/nose-devs/nose2/pull/412 gets merged
     assert_script_run("sudo patch /usr/lib/python3*/site-packages/nose2/plugins/junitxml.py /root/extra-files/nose2-junit-xml-log-skip-reason.patch");
 
+    # don't let logrotate restart qubesd in the middle of the tests
+    assert_script_run("sudo systemctl stop crond");
+
     # workaround for "ICE default IO handler doing exit(), pid = ..., errno = 32"
     assert_script_run("rm -f ~/.ICEauthority");
 
@@ -101,7 +104,7 @@ ENDFUNC
             upload_logs "/tmp/objgraphs-$test.tar.gz";
             script_run "sudo rm -f /tmp/objgraph-*";
         }
-        if (script_run('pidof -x qvm-start-gui')) {
+        if (script_run('pidof -x qvm-start-gui || pidof -x qvm-start-daemon')) {
             record_soft_failure('qvm-start-gui crashed');
         }
     }

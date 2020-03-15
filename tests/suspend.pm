@@ -28,6 +28,7 @@ sub run {
     x11_start_program('xterm');
     curl_via_netvm;
 
+    assert_script_run('sudo dmesg -n 8');
     assert_script_run('sudo rtcwake -n -s 30');
     assert_script_run('sudo systemctl suspend');
     sleep(60);

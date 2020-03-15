@@ -84,10 +84,10 @@ class TestFailure:
         self.job_id = job_id
         self.test_id = test_id
 
-        if description is None or "\n" in description:
+        if description is None or "\n" in description.strip():
             self.description = None
         else:
-            self.description = description
+            self.description = description.strip()
 
     def get_test_url(self):
         return "{}/tests/{}#step/{}/{}".format(
@@ -166,6 +166,8 @@ class JobData:
         failure_list = []
 
         for test_group in json_data['job']['testresults']:
+            if test_group['result'] == 'passed':
+                continue
             for test in test_group['details']:
                 if test['result'] == 'fail':
                     failure = TestFailure(test_group['name'],
@@ -369,6 +371,10 @@ class JobData:
                 for fail in results[k]:
                     output_string += '  * ' + str(fail) + '\n'
                     number_of_failures += 1
+
+        if results.get('system_tests_update', []):
+            output_string += "\nInstalling updates failed, skipping rest of the report!\n"
+            return output_string
 
         if not number_of_failures:
             output_string += "No failures!\n"
@@ -712,10 +718,9 @@ def main():
 
     for job_id in jobs:
         job = JobData(job_id)
+        result = job.get_results()
         if job.job_name == 'system_tests_update':
-            result = job.get_children_results()
-        else:
-            result = job.get_results()
+            result.update(job.get_children_results())
 
         formatted_result = job.format_results(result, reference_job)
 

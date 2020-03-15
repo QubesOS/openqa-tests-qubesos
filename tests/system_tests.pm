@@ -36,9 +36,6 @@ sub run {
     # don't let logrotate restart qubesd in the middle of the tests
     assert_script_run("sudo systemctl stop crond");
 
-    # workaround for "ICE default IO handler doing exit(), pid = ..., errno = 32"
-    assert_script_run("rm -f ~/.ICEauthority");
-
     if (get_var('TEST_TEMPLATES')) {
         assert_script_run("export QUBES_TEST_TEMPLATES='" . get_var('TEST_TEMPLATES') . "'");
     }

@@ -2,9 +2,7 @@
 # https://bugs.debian.org/931566
 accept-buster:
   cmd.run:
-    - name: apt-get update --allow-releaseinfo-change
-    - onlyif:
-      - 'grep -q "^Suite: testing" /var/lib/apt/lists/*buster*Release'
+    - name: '! grep -q "^Suite: testing" /var/lib/apt/lists/*buster*Release || apt-get update --allow-releaseinfo-change'
 {% endif %}
 
 vm-packages:

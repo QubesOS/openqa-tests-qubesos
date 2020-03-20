@@ -979,7 +979,7 @@
                       name => "system_tests_basic_vm_qrexec_gui",
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
-                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.basic qubes.tests.integ.vm_qrexec_gui:10800" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.basic qubes.tests.integ.vm_qrexec_gui:14400" },
                       ],
                     },
                     {

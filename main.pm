@@ -55,6 +55,10 @@ if (get_var('ISO')) {
     }
 }
 
+if (check_var('RELEASE_UPGRADE', '1')) {
+    autotest::loadtest "tests/release_upgrade.pm";
+}
+
 # do not execute same tests before each system tests run
 if (!get_var('SYSTEM_TESTS') and
         (!get_var('DO_UPDATE') or check_var('RESTART_AFTER_UPDATE', '1'))) {

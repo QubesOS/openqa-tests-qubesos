@@ -608,6 +608,153 @@
                                     },
                       test_suite => { name => "system_tests_suspend" },
                     },
+                    ###########################
+                    ### release upgrade tests
+                    ###########################
+                    {
+                      group_name => "Qubes OS release upgrade",
+                      machine    => { name => "64bit" },
+                      prio       => 10,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "release-upgrade",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_minimal" },
+                    },
+                    {
+                      group_name => "Qubes OS release upgrade",
+                      machine    => { name => "uefi" },
+                      prio       => 10,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "release-upgrade",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_minimal" },
+                    },
+                    {
+                      group_name => "Qubes OS release upgrade",
+                      machine    => { name => "64bit" },
+                      prio       => 15,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "release-upgrade",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_btrfs" },
+                    },
+                    {
+                      group_name => "Qubes OS release upgrade",
+                      machine    => { name => "64bit" },
+                      prio       => 20,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "release-upgrade",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_nvme" },
+                    },
+                    {
+                      group_name => "Qubes OS release upgrade",
+                      machine    => { name => "uefi" },
+                      prio       => 20,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "release-upgrade",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_nvme" },
+                    },
+                    {
+                      group_name => "Qubes OS release upgrade",
+                      machine    => { name => "64bit" },
+                      prio       => 10,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "release-upgrade",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_usbvm_combined" },
+                    },
+                    {
+                      group_name => "Qubes OS release upgrade",
+                      machine    => { name => "64bit" },
+                      prio       => 10,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "release-upgrade",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_no_usbvm" },
+                    },
+                    {
+                      group_name => "Qubes OS release upgrade",
+                      machine    => { name => "uefi" },
+                      prio       => 15,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "release-upgrade",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_btrfs" },
+                    },
+                    {
+                      group_name => "Qubes OS release upgrade",
+                      machine    => { name => "64bit" },
+                      prio       => 20,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "release-upgrade",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_locale" },
+                    },
+                    {
+                      group_name => "Qubes OS release upgrade",
+                      machine    => { name => "64bit" },
+                      prio       => 20,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "release-upgrade",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_keyboard_layout" },
+                    },
+                    {
+                      group_name => "Qubes OS release upgrade",
+                      machine    => { name => "uefi" },
+                      prio       => 20,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "install-iso",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_keyboard_layout" },
+                    },
+                    {
+                      group_name => "Qubes OS release upgrade",
+                      machine    => { name => "mac" },
+                      prio       => 40,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "release-upgrade",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "install_minimal" },
+                    },
 		  ],
   Machines     => [
                     {
@@ -675,6 +822,19 @@
                       settings  => [
                                      #{ key => "ISO_MAXSIZE", value => 4700372992 },
                                      { key => "ISO_MAXSIZE", value => 5700372992 },
+                                   ],
+                      version   => "*",
+                    },
+                    {
+                      arch      => "x86_64",
+                      distri    => "qubesos",
+                      flavor    => "release-upgrade",
+                      name      => "Qubes OS release upgrade",
+                      settings  => [
+                                     #{ key => "ISO_MAXSIZE", value => 4700372992 },
+                                     { key => "ISO_MAXSIZE", value => 5700372992 },
+                                     { key => "RELEASE_UPGRADE", value => "1" },
+                                     { key => "MAX_JOB_TIME", value => "21600" },
                                    ],
                       version   => "*",
                     },

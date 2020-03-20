@@ -20,6 +20,7 @@ use base 'basetest';
 use strict;
 use testapi;
 use networking;
+use utils qw(us_colemak);
 
 sub new {
     my ($class, $args) = @_;
@@ -54,10 +55,19 @@ sub handle_system_startup {
     }
 
     assert_screen "login-prompt-user-selected", 240;
-    type_string "userpass";
+    type_string $password;
     send_key "ret";
 
     assert_screen "desktop";
+
+    # reset keyboard layout (when we get here, it means it was good at luks and
+    # login prompt)
+    if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
+        x11_start_program(us_colemak('setxkbmap us'), valid => 0);
+    } elsif (get_var('LOCALE')) {
+        x11_start_program('setxkbmap us', valid => 0);
+    }
+
     select_console('root-virtio-terminal');
     assert_script_run "chown $testapi::username /dev/$testapi::serialdev";
     # disable screensaver

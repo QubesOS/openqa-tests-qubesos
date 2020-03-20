@@ -67,8 +67,12 @@ sub run {
 
     send_key "f12";
 
-    assert_screen "firstboot-done", 5;
-    send_key "f12";
+    my $needs_to_confirm_done = 1;
+    assert_screen(["firstboot-done", "firstboot-in-progress"], 5);
+    if (match_has_tag("firstboot-done")) {
+        send_key "f12";
+        $needs_to_confirm_done = 0;
+    }
 
     $configuring = 1;
 
@@ -86,7 +90,12 @@ sub run {
     }
     assert_screen "firstboot-configuring-salt", $timeout;
     assert_screen "firstboot-setting-network", 600;
-    assert_screen "login-prompt-user-selected", 240;
+    if ($needs_to_confirm_done) {
+        assert_screen("firstboot-done", 240);
+        send_key "f12";
+    } else {
+        assert_screen "login-prompt-user-selected", 240;
+    }
 
     assert_screen "login-prompt-user-selected", 60;
     type_string $password;

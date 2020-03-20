@@ -74,7 +74,7 @@ def callback_done(ch, method, properties, body):
     if job_data['FLAVOR'] == 'qubes-whonix':
         subprocess.call(cmd)
 
-    elif job_data['FLAVOR'] == 'update':
+    elif job_data['FLAVOR'] in ('update', 'pull-requests', 'templates'):
         base_job = None
         if os.path.exists(args.jobs_compare_to):
             with open(args.jobs_compare_to) as f:

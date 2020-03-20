@@ -321,6 +321,155 @@
                     },
 
                     #################
+                    ### system tests - pull requests
+                    #################
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 10,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_update" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 40,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_whonix" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 40,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_gui_tools" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 40,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_suspend" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_basic_vm_qrexec_gui" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_network" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_backup" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_backupcompatibility" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_pvgrub_salt_storage" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_splitgpg" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_extra" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_manager" },
+                    },
+
+
+                    #################
                     ### system tests - templates
                     #################
                     {
@@ -545,6 +694,17 @@
                       distri    => "qubesos",
                       flavor    => "templates",
                       name      => "Qubes OS templates",
+                      settings  => [
+                                     { key => "HDD_1", value => "disk_unencrypted_updated.qcow2" },
+                                     { key => "MAX_JOB_TIME", value => "21600" },
+                                   ],
+                      version   => "*",
+                    },
+                    {
+                      arch      => "x86_64",
+                      distri    => "qubesos",
+                      flavor    => "pull-requests",
+                      name      => "Qubes OS pull requests",
                       settings  => [
                                      { key => "HDD_1", value => "disk_unencrypted_updated.qcow2" },
                                      { key => "MAX_JOB_TIME", value => "21600" },

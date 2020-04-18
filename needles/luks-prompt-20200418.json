@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 99,
+      "ypos": 483,
+      "xpos": 405,
+      "height": 29,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "luks-prompt"
+  ]
+}

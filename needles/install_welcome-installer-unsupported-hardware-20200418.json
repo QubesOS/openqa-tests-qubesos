@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 298,
+      "height": 32,
+      "type": "match",
+      "width": 253,
+      "ypos": 246
+    },
+    {
+      "width": 79,
+      "ypos": 503,
+      "xpos": 691,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-unsupported-hardware"
+  ]
+}

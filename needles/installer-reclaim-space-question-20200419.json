@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "ypos": 347,
+      "width": 311,
+      "height": 19,
+      "xpos": 218,
+      "type": "match"
+    },
+    {
+      "width": 101,
+      "ypos": 543,
+      "xpos": 684,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-reclaim-space-question"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 11,
+      "width": 115,
+      "height": 20,
+      "xpos": 899,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-3.2",
+    "installation"
+  ]
+}

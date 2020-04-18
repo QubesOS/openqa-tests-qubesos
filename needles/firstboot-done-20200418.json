@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 177,
+      "ypos": 725,
+      "xpos": 834,
+      "height": 27,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "firstboot-done"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "ypos": 11,
+      "width": 124,
+      "height": 27,
+      "xpos": 164,
+      "type": "match"
+    },
+    {
+      "width": 87,
+      "ypos": 384,
+      "xpos": 566,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "firstboot-qubes"
+  ]
+}

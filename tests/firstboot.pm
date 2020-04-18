@@ -54,6 +54,20 @@ sub run {
 
     assert_and_click "firstboot-qubes";
 
+    if (!check_var("VERSION", "4.0")) {
+        unless (check_var('INSTALL_TEMPLATES', 'all')) {
+            if (index(get_var('INSTALL_TEMPLATES'), 'fedora') == -1) {
+                assert_and_click('disable-install-fedora', timeout => 5);
+            }
+            if (index(get_var('INSTALL_TEMPLATES'), 'debian') == -1) {
+                assert_and_click('disable-install-debian', timeout => 5);
+            }
+            if (index(get_var('INSTALL_TEMPLATES'), 'whonix') == -1) {
+                assert_and_click('disable-install-whonix', timeout => 5);
+            }
+        }
+    }
+
     if (check_var('USBVM', 'none')) {
         # expect checkbox to be enabled by default and disable it
         assert_and_click('firstboot-qubes-usbvm-enabled', timeout => 5);

@@ -37,7 +37,9 @@ if (get_var('ISO')) {
     } else {
         autotest::loadtest "tests/install_partitioning_default.pm";
     }
-    autotest::loadtest "tests/install_templates.pm";
+    if (check_var("VERSION", "4.0")) {
+        autotest::loadtest "tests/install_templates.pm";
+    }
     autotest::loadtest "tests/install_do_user.pm";
     autotest::loadtest "tests/install_fixups.pm";
     autotest::loadtest "tests/firstboot.pm";

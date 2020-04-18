@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 284,
+      "height": 50,
+      "width": 140,
+      "ypos": 571
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-install-user-created"
+  ]
+}

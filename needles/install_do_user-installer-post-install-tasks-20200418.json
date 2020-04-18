@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "width": 87,
+      "ypos": 362,
+      "type": "match",
+      "xpos": 160,
+      "height": 24
+    },
+    {
+      "xpos": 883,
+      "height": 40,
+      "type": "match",
+      "width": 138,
+      "ypos": 724
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-install-done-reboot",
+    "installer-post-install-tasks"
+  ]
+}

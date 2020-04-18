@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "ypos": 11,
+      "width": 191,
+      "height": 22,
+      "xpos": 11,
+      "type": "match"
+    },
+    {
+      "width": 58,
+      "ypos": 176,
+      "xpos": 548,
+      "height": 17,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-software-whonix"
+  ]
+}

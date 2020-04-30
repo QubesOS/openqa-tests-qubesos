@@ -900,6 +900,7 @@
                     {
                       name => "install_over_existing",
                       settings => [
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
                         { key => "INSTALL_OVER_EXISTING", value => "1" },
                         { key => "BOOT_MENU", value => "1" },
                       ],
@@ -907,33 +908,35 @@
                     {
                       name => "install_btrfs",
                       settings => [
-                        { key => "PACKAGE_SET", value => "default" },
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
                         { key => "PARTITIONING", value => "btrfs" },
                       ],
                     },
                     {
                       name => "install_usbvm_combined",
                       settings => [
-                        { key => "PACKAGE_SET", value => "default" },
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
                         { key => "USBVM", value => "sys-net" },
                       ],
                     },
                     {
                       name => "install_no_usbvm",
                       settings => [
-                        { key => "PACKAGE_SET", value => "default" },
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
                         { key => "USBVM", value => "none" },
                       ],
                     },
                     {
                       name => "install_keyboard_layout",
                       settings => [
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
                         { key => "KEYBOARD_LAYOUT", value => "us-colemak" },
                       ],
                     },
                     {
                       name => "install_locale",
                       settings => [
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
                         { key => "LOCALE", value => "en_DK.utf8" },
                       ],
                     },

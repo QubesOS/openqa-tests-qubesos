@@ -83,7 +83,7 @@ sub run {
     foreach (split /\n/, $templates) {
         next unless /Template/;
         s/\|.*//;
-        $self->save_and_upload_log("qvm-run -ap $_ 'rpm -qa; dpkg -l; true'",
+        $self->save_and_upload_log("qvm-run --no-gui -ap $_ 'rpm -qa; dpkg -l; true'",
                 "template-$_-packages.txt", {timeout =>90});
         assert_script_run("qvm-shutdown --wait $_", timeout => 90);
     }

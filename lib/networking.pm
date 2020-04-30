@@ -87,15 +87,15 @@ curl() {
     fi
 
     if [ -n "\$inputfile" ]; then
-        qvm-run -p sys-net "curl \$allargs" <\$inputfile
+        qvm-run --no-gui -p sys-net "curl \$allargs" <\$inputfile
     else
-        qvm-run -p sys-net "curl \$allargs"
+        qvm-run --no-gui -p sys-net "curl \$allargs"
     fi
 }
 ENDFUNC
     save_tmp_file('curl-wrapper.sh', $curl_wrapper);
 
-    assert_script_run("qvm-run -p sys-net \"curl -f " . autoinst_url('/files/curl-wrapper.sh') . "\" > curl-wrapper.sh");
+    assert_script_run("qvm-run --no-gui -p sys-net \"curl -f " . autoinst_url('/files/curl-wrapper.sh') . "\" > curl-wrapper.sh");
     assert_script_run(". curl-wrapper.sh");
 }
 

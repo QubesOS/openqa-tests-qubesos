@@ -1,7 +1,7 @@
 {% if grains['osrelease'] == '4.0' %}
 {% set basedist = 'fc25' %}
 {% elif grains['osrelease'] == '4.1' %}
-{% set basedist = 'fc31' %}
+{% set basedist = 'fc32' %}
 {% else %}
 {% set basedist = 'unknown' %}
 {% endif %}

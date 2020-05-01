@@ -956,15 +956,6 @@
                         { key => "PUBLISH_HDD_1", value => "disk_unencrypted_%VERSION%_%MACHINE%.qcow2" },
                       ],
                     },
-                    {
-                      name => "install_unencrypted_upload",
-                      settings => [
-                        { key => "INSTALL_TEMPLATES", value => "all" },
-                        { key => "PARTITIONING", value => "unencrypted" },
-                        { key => "HDDSIZEGB", value => "80"},
-                        { key => "PUBLISH_HDD_1", value => "disk_unencrypted_%VERSION%_%MACHINE%.qcow2" },
-                      ],
-                    },
                     #################
                     ### system tests
                     #################

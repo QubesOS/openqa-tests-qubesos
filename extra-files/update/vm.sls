@@ -49,6 +49,11 @@ update-test:
     - baseurl: {{ update_repo }}/vm/fc{{ grains['osrelease'] }}
     - gpgkey: file:///etc/pki/rpm-gpg/update-test
     - gpgcheck: 0
+{% elif grains['os'] == 'CentOS' %}
+    - name: update-test
+    - baseurl: {{ update_repo }}/vm/centos{{ grains['osrelease'] }}
+    - gpgkey: file:///etc/pki/rpm-gpg/update-test
+    - gpgcheck: 0
 {% elif grains['os'] == 'Debian' %}
     - key_url: salt://update/update-test.asc
     - name: deb {{ update_repo }}/vm {{ grains['oscodename'] }} main
@@ -66,6 +71,9 @@ repo-testing:
 {% if grains['os'] == 'Fedora' %}
     - name: qubes-testing
     - baseurl: http://yum.qubes-os.org/r{{ qubes_ver }}/current-testing/vm/fc{{ grains['osrelease'] }}
+{% elif grains['os'] == 'CentOS' %}
+    - name: qubes-testing
+    - baseurl: http://yum.qubes-os.org/r{{ qubes_ver }}/current-testing/vm/centos{{ grains['osrelease'] }}
 {% elif grains['os'] == 'Debian' %}
     - name: deb [arch=amd64] http://deb.qubes-os.org/r{{ qubes_ver }}/vm {{ grains['oscodename'] }}-testing main
     - file: /etc/apt/sources.list.d/qubes-r4.list
@@ -98,7 +106,7 @@ repo-testing:
 
 {% endif %}
 
-{% if grains['os'] == 'Fedora' %}
+{% if grains['os'] == 'Fedora' or grains['os'] == 'CentOS' %}
 /etc/pki/rpm-gpg/update-test:
   file.managed:
     - source: salt://update/update-test.asc
@@ -127,7 +135,7 @@ notify-updates:
 disable-update-repo:
   pkgrepo.absent:
     - order: last
-{% if grains['os'] == 'Fedora' %}
+{% if grains['os'] == 'Fedora' or grains['os'] == 'CentOS' %}
     - name: update-test
 {% elif grains['os'] == 'Debian' %}
     - name: deb {{ update_repo }}/vm {{ grains['oscodename'] }} main

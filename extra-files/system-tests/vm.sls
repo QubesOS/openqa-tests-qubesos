@@ -9,7 +9,7 @@ vm-packages:
   pkg.installed:
     - pkgs:
       - dnsmasq
-{% if grains['os'] == 'Fedora' %}
+{% if grains['os'] == 'Fedora' or grains['os'] == 'CentOS' %}
       - redhat-rpm-config
       - python3-devel
       - nmap-ncat

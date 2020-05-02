@@ -28,6 +28,7 @@ Variables used in tests:
  - `SYSTEM_TESTS` - run system tests from those (space separated) modules, each module can be suffixed with ":TIMEOUT" (in seconds); tests are run using nose2
  - `VERBOSE_LIBVIRT` - increase libvirt log level, including libxl logging; slows down the system and may lead to huge logs
  - `REPO_1` - repository name to install updates (dom0 and vm) from - in addition to standard repos
+ - `KEY_1` - repository key short fingerprint to use for REPO_1
  - `SALT_SYSTEM_TESTS` - run salt formula preparing for system tests (mostly install extra packages)
  - `UPDATE_TEMPLATES` - update listed template packages as a whole (space separated list of templates to update)
  - `TEST_TEMPLATES` - limit tests to listed templates only (space separated list of templates to test)

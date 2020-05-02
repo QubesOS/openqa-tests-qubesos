@@ -29,25 +29,16 @@
 /etc/pki/rpm-gpg/update-test:
   file.managed:
     - order: 11
-    - source: salt://update/update-test.asc
+    - source: salt://update/{{salt['pillar.get']('update:key', '19f9875c')}}.asc
  
 update-test-import:
   cmd.run:
     - order: 12
     - name: rpm --import /etc/pki/rpm-gpg/update-test
-    - unless: rpm -q gpg-pubkey-19f9875c
+    - unless: rpm -q gpg-pubkey-{{salt['pillar.get']('update:key', '19f9875c')}}
     - onchanges:
       - file: /etc/pki/rpm-gpg/update-test
 
 update:
   pkg.uptodate:
    - refresh: true
-
-{% if salt['pillar.get']('update:repo', '') %}
-# since the repo may not be available at later time, disable it here
-disable-update-test:
-  file.absent:
-    - name: /etc/yum.repos.d/update-test.repo
-    - require:
-      - pkg: update
-{% endif %}

@@ -55,7 +55,7 @@ update-test:
     - gpgkey: file:///etc/pki/rpm-gpg/update-test
     - gpgcheck: 0
 {% elif grains['os'] == 'Debian' %}
-    - key_url: salt://update/update-test.asc
+    - key_url: salt://update/{{salt['pillar.get']('update:key', '19f9875c')}}.asc
     - name: deb {{ update_repo }}/vm {{ grains['oscodename'] }} main
     - file: /etc/apt/sources.list.d/update-test.list
     - require:
@@ -109,12 +109,12 @@ repo-testing:
 {% if grains['os'] == 'Fedora' or grains['os'] == 'CentOS' %}
 /etc/pki/rpm-gpg/update-test:
   file.managed:
-    - source: salt://update/update-test.asc
+    - source: salt://update/{{salt['pillar.get']('update:key', '19f9875c')}}.asc
  
 update-test-import:
   cmd.run:
     - name: rpm --import /etc/pki/rpm-gpg/update-test
-    - unless: rpm -q gpg-pubkey-19f9875c
+    - unless: rpm -q gpg-pubkey-{{salt['pillar.get']('update:key', '19f9875c')}}.asc
     - onchanges:
       - file: /etc/pki/rpm-gpg/update-test
 {% endif %}

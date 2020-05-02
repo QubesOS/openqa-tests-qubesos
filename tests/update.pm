@@ -49,10 +49,14 @@ sub run {
     assert_script_run("mkdir -p $pillar_dir");
     assert_script_run("printf 'update:\\n  qubes_ver: " . get_var('VERSION') . "\\n' > $pillar_dir/init.sls");
     if (get_var('REPO_1')) {
-        my $repo_url = data_url("REPO_1");
+        my $repo_url = data_url('REPO_1');
         assert_script_run("printf '  repo: $repo_url\\n' >> $pillar_dir/init.sls");
         $repo_url =~ s/\d+\.\d+\.\d+\.\d+/uedqavcpvbij4kyr.onion/;
         assert_script_run("printf '  repo_onion: $repo_url\\n' >> $pillar_dir/init.sls");
+        if (get_var('KEY_1')) {
+            my $key_url = get_var('KEY_1');
+            assert_script_run("printf '  key: $key_url\\n' >> $pillar_dir/init.sls");
+        }
     }
     if (get_var('WHONIX_REPO')) {
        assert_script_run("printf '  whonix_repo: " . get_var('WHONIX_REPO') . "\\n' >> $pillar_dir/init.sls");

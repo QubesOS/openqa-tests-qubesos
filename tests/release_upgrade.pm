@@ -34,6 +34,7 @@ sub run {
     assert_script_run("curl https://raw.githubusercontent.com/fepitre/qubes-migration/master/migration.sh > migration.sh");
 
     assert_script_run("chmod +x migration.sh");
+    assert_script_run("script -a -e -c 'sudo ./migration.sh --assumeyes --double-metadata-size' release-upgrade.log", timeout => 60);
     assert_script_run("script -a -e -c 'sudo ./migration.sh --assumeyes --update' release-upgrade.log", timeout => 3600);
     assert_script_run("script -a -e -c 'sudo ./migration.sh --assumeyes --release-upgrade' release-upgrade.log", timeout => 300);
     assert_script_run("script -a -e -c 'sudo ./migration.sh --assumeyes --dist-upgrade' release-upgrade.log", timeout => 7200);

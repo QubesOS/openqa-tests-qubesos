@@ -108,10 +108,10 @@ sub run {
         assert_screen("firstboot-done", 240);
         send_key "f12";
     } else {
-        assert_screen "login-prompt-user-selected", 240;
+        assert_screen "login-prompt-user-selected", 300;
     }
 
-    assert_screen "login-prompt-user-selected", 60;
+    assert_screen "login-prompt-user-selected", 90;
     type_string $password;
     send_key "ret";
 

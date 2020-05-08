@@ -43,6 +43,7 @@ python-apt:
 
 update-test:
   pkgrepo.managed:
+    - order: 5
     - humanname: update test
 {% if grains['os'] == 'Fedora' %}
     - name: update-test
@@ -68,6 +69,7 @@ update-test:
 
 repo-testing:
   pkgrepo.managed:
+    - order: 5
     - humanname: Qubes updates testing
     - disabled: False
 {% if grains['os'] == 'Fedora' %}

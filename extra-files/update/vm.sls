@@ -49,11 +49,13 @@ update-test:
     - baseurl: {{ update_repo }}/vm/fc{{ grains['osrelease'] }}
     - gpgkey: file:///etc/pki/rpm-gpg/update-test
     - gpgcheck: 0
+    - skip_if_unavailable: True
 {% elif grains['os'] == 'CentOS' %}
     - name: update-test
     - baseurl: {{ update_repo }}/vm/centos{{ grains['osrelease'] }}
     - gpgkey: file:///etc/pki/rpm-gpg/update-test
     - gpgcheck: 0
+    - skip_if_failure: True
 {% elif grains['os'] == 'Debian' %}
     - key_url: salt://update/{{salt['pillar.get']('update:key', '19f9875c')}}.asc
     - name: deb {{ update_repo }}/vm {{ grains['oscodename'] }} main
@@ -130,14 +132,10 @@ notify-updates:
   cmd.run:
     - name: /usr/lib/qubes/upgrades-status-notify
 
-{% if salt['pillar.get']('update:repo', '') %}
+{% if salt['pillar.get']('update:repo', '') and grains['os'] == 'Debian' %}
 # since the repo may not be available at later time, disable it here
 disable-update-repo:
   pkgrepo.absent:
     - order: last
-{% if grains['os'] == 'Fedora' or grains['os'] == 'CentOS' %}
-    - name: update-test
-{% elif grains['os'] == 'Debian' %}
     - name: deb {{ update_repo }}/vm {{ grains['oscodename'] }} main
-{% endif %}
 {% endif %}

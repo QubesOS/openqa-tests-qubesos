@@ -221,6 +221,18 @@
                                       flavor  => "update",
                                       version => "*",
                                     },
+                      test_suite => { name => "system_tests_gui_interactive" },
+                    },
+                    {
+                      group_name => "Qubes OS updates",
+                      machine    => { name => "64bit" },
+                      prio       => 40,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "update",
+                                      version => "*",
+                                    },
                       test_suite => { name => "system_tests_suspend" },
                     },
                     {
@@ -358,6 +370,18 @@
                                       version => "*",
                                     },
                       test_suite => { name => "system_tests_gui_tools" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 40,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_gui_interactive" },
                     },
                     {
                       group_name => "Qubes OS pull requests",
@@ -1048,6 +1072,13 @@
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "GUI_TESTS", value => "1" },
+                      ],
+                    },
+                    {
+                      name => "system_tests_gui_interactive",
+                      settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
+                        { key => "TEST_GUI_INTERACTIVE", value => "1" },
                       ],
                     },
                     {

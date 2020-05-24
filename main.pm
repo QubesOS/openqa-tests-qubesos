@@ -78,6 +78,10 @@ if (get_var('SYSTEM_TESTS')) {
     autotest::loadtest "tests/system_tests.pm";
 }
 
+if (get_var('TEST_GUI_INTERACTIVE')) {
+    autotest::loadtest "tests/simple_gui_apps.pm";
+}
+
 if (get_var("GUI_TESTS")) {
         autotest::loadtest "tests/qui_widgets_clipboard.pm";
         autotest::loadtest "tests/qui_widgets_devices.pm";

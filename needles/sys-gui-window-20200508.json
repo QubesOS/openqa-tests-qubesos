@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 387,
+      "ypos": 37,
+      "width": 116,
+      "height": 15,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "sys-gui-window"
+  ]
+}

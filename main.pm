@@ -60,7 +60,7 @@ if (check_var('RELEASE_UPGRADE', '1')) {
 }
 
 # do not execute same tests before each system tests run
-if (!get_var('SYSTEM_TESTS') and
+if (check_var('TEST_GENERIC', '1') and
         (!get_var('DO_UPDATE') or check_var('RESTART_AFTER_UPDATE', '1'))) {
     autotest::loadtest "tests/mount_and_boot_options.pm";
     autotest::loadtest "tests/usbvm.pm";

@@ -1054,6 +1054,7 @@
                       name => "system_tests_suspend",
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
+                        { key => "TEST_GENERIC", value => "1" },
                         { key => "TEST_SUSPEND", value => "1" },
                       ],
                     },

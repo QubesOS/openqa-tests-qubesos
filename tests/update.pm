@@ -77,6 +77,9 @@ sub run {
     assert_script_run('! grep "^  Failed: *[1-9]" qubesctl-upgrade.log');
     assert_script_run('! grep "Failed to return clean data" qubesctl-upgrade.log');
 
+    # disable all states
+    script_run('rm -f /srv/salt/_tops/base/*');
+
     # log package versions
     $self->save_and_upload_log('rpm -qa qubes-template-*', 'template-versions.txt');
     $self->save_and_upload_log('rpm -qa', 'dom0-packages.txt');

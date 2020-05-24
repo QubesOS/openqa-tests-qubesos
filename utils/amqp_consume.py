@@ -50,8 +50,8 @@ def maybe_restart_failed_job(job_id, job_details):
     return True
 
 def callback_done(ch, method, properties, body):
-    print('received done, properties %r, body %r' % (
-        properties, body))
+    print('received %r, properties %r, body %r' % (
+        method.routing_key, properties, body))
     job_data = json.loads(body)
     r = requests.get('{}/jobs/{}/details'.format(API_BASE, job_data['id']))
     if not r.ok:
@@ -86,6 +86,17 @@ def callback_done(ch, method, properties, body):
         print('Calling: {}'.format(' '.join(cmd)))
         subprocess.call(cmd)
 
+def callback_create(ch, method, properties, body):
+    if args.job_start_callback:
+        subprocess.call(args.job_start_callback, shell=True)
+
+def callback(ch, method, properties, body):
+    print(repr(method.routing_key))
+    _, event = method.routing_key.rsplit('.', 1)
+    if event == 'done':
+        callback_done(ch, method, properties, body)
+    elif event == 'create':
+        callback_create(ch, method, properties, body)
 
 def setup_channel():
     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
@@ -93,13 +104,14 @@ def setup_channel():
     channel.exchange_declare(exchange='pubsub', exchange_type='topic', passive=True, durable=True)
     result = channel.queue_declare('', exclusive=True)
     queue_name = result.method.queue
-    binding_keys = ['qubes.openqa.job.done']
+    binding_keys = ['qubes.openqa.#']
+    #binding_keys = ['qubes.openqa.job.done', 'qubes.openqa.job.create']
     for binding_key in binding_keys:
         channel.queue_bind(exchange='pubsub', queue=queue_name, routing_key=binding_key)
 
     channel.basic_consume(queue=queue_name,
                           auto_ack=True,
-                          on_message_callback=callback_done)
+                          on_message_callback=callback)
     return channel
 
 def main():
@@ -114,6 +126,9 @@ def main():
         '--jobs-compare-to',
         default=DEFAULT_JOBS_COMPARE_TO,
         help='A .json file with a base job to compare to for each VERSION')
+    parser.add_argument(
+        '--job-start-callback',
+        help='A command to run when some job is started. Can be used to wake up workers.')
 
     args = parser.parse_args()
     print(args.package_list)

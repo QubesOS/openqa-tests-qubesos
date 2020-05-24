@@ -842,7 +842,7 @@
                       arch      => "x86_64",
                       distri    => "qubesos",
                       flavor    => "update",
-                      name      => "Qubes OS update",
+                      name      => "Qubes OS updates",
                       settings  => [
                                      { key => "HDD_1", value => "disk_unencrypted_updated.qcow2" },
                                      { key => "MAX_JOB_TIME", value => "21600" },

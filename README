@@ -38,3 +38,4 @@ Variables used in tests:
  - `UPDATE` - install updates in dom0 and all templates
  - `QUBES_TEST_EXTRA_INCLUDE`, `QUBES_TEST_EXTRA_EXCLUDE` - passed directly to the test environment
  - `TEST_GUI_INTERACTIVE` - simple GUI interactive tests (start application from menu etc)
+ - `GUIVM` - create GUI VM

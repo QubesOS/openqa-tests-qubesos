@@ -52,6 +52,9 @@ if (get_var('ISO')) {
         if (get_var('UPDATE') || get_var('SALT_SYSTEM_TESTS')) {
             autotest::loadtest "tests/update.pm";
         }
+        if (get_var('GUIVM')) {
+            autotest::loadtest "tests/update_guivm.pm";
+        }
     }
 }
 
@@ -64,6 +67,12 @@ if (check_var('TEST_GENERIC', '1') and
         (!get_var('DO_UPDATE') or check_var('RESTART_AFTER_UPDATE', '1'))) {
     autotest::loadtest "tests/mount_and_boot_options.pm";
     autotest::loadtest "tests/usbvm.pm";
+}
+
+if (check_var('TEST_GUIVM', '1')) {
+    die "GUIVM not configured" if !check_var('GUIVM', '1');
+    autotest::loadtest "tests/guivm_startup.pm";
+    autotest::loadtest "tests/guivm_manager.pm";
 }
 
 if (check_var('TEST_SUSPEND', '1')) {

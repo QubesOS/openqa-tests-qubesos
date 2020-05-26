@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 622,
+      "width": 99,
+      "type": "match",
+      "height": 25,
+      "xpos": 903
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-reclaim-confirm"
+  ]
+}

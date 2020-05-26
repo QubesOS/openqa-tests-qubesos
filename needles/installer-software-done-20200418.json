@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 14,
+      "height": 22,
+      "type": "match",
+      "width": 187,
+      "ypos": 10
+    },
+    {
+      "height": 23,
+      "xpos": 18,
+      "type": "match",
+      "ypos": 51,
+      "width": 62
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-software-done"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 169,
+      "ypos": 455,
+      "xpos": 16,
+      "height": 26,
+      "type": "match"
+    },
+    {
+      "ypos": 479,
+      "width": 83,
+      "height": 27,
+      "xpos": 227,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-disk-custom-partitioning"
+  ]
+}

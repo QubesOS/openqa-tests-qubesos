@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 195,
+      "ypos": 13,
+      "xpos": 9,
+      "height": 21,
+      "type": "match"
+    },
+    {
+      "ypos": 138,
+      "width": 50,
+      "type": "match",
+      "height": 17,
+      "xpos": 545
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-software-debian"
+  ]
+}

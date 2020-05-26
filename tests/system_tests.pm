@@ -30,9 +30,10 @@ sub run {
     curl_via_netvm;
 
     assert_script_run("sudo cat /root/extra-files/convert_junit.py >convert_junit.py");
-    # until https://github.com/nose-devs/nose2/pull/412 gets merged
-    assert_script_run("sudo patch /usr/lib/python3*/site-packages/nose2/plugins/junitxml.py /root/extra-files/nose2-junit-xml-log-skip-reason.patch");
-
+    if (check_var("VERSION", "4.0")) {
+        # until https://github.com/nose-devs/nose2/pull/412 gets merged
+        assert_script_run("sudo patch /usr/lib/python3*/site-packages/nose2/plugins/junitxml.py /root/extra-files/nose2-junit-xml-log-skip-reason.patch");
+    }
     # don't let logrotate restart qubesd in the middle of the tests
     assert_script_run("sudo systemctl stop crond");
 

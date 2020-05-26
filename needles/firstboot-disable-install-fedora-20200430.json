@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 246,
+      "ypos": 137,
+      "width": 10,
+      "height": 10,
+      "type": "match"
+    },
+    {
+      "xpos": 244,
+      "ypos": 135,
+      "width": 10,
+      "height": 10,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "disable-install-fedora"
+  ]
+}

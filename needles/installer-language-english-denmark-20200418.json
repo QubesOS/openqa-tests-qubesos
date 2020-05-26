@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 604,
+      "height": 26,
+      "type": "match",
+      "width": 137,
+      "ypos": 323
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.0",
+    "installer-language-english-denmark"
+  ]
+}

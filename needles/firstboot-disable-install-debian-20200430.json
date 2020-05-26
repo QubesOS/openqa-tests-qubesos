@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "xpos": 234,
+      "ypos": 77,
+      "width": 179,
+      "height": 25,
+      "type": "match"
+    },
+    {
+      "xpos": 244,
+      "ypos": 157,
+      "width": 10,
+      "height": 12,
+      "type": "match",
+      "click_point": {
+        "xpos": 5,
+        "ypos": 5.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "disable-install-debian"
+  ]
+}

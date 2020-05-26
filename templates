@@ -812,7 +812,7 @@
                         { key => "QEMUCPU", value => "host,+svm,+vmx" },
                         { key => "QEMUCPUS", value => "2"},
                         { key => "QEMURAM", value => "6144"},
-                        { key => "HDDSIZEGB", value => "40"},
+                        { key => "HDDSIZEGB", value => "80"},
                         { key => "HDDMODEL", value => "scsi-hd"},
                         { key => "NICMODEL", value => "e1000e"},
                         { key => "PART_TABLE_TYPE", value => "mbr"},
@@ -828,7 +828,7 @@
                         { key => "QEMUCPUS", value => "2"},
                         { key => "QEMURAM", value => "6144"},
                         { key => "QEMU_APPEND", value => "boot once=d,menu=on,splash-time=5000" },
-                        { key => "HDDSIZEGB", value => "40"},
+                        { key => "HDDSIZEGB", value => "80"},
                         { key => "HDDMODEL", value => "scsi-hd"},
                         { key => "NICMODEL", value => "e1000e"},
                         { key => "CDMODEL", value => "ide-cd"},
@@ -848,7 +848,7 @@
                         { key => "QEMU_SMBIOS", value => "type=3,manufacturer=apple"},
                         { key => "QEMURAM", value => "6144"},
                         { key => "QEMU_APPEND", value => "boot once=d,menu=on,splash-time=5000" },
-                        { key => "HDDSIZEGB", value => "40"},
+                        { key => "HDDSIZEGB", value => "80"},
                         { key => "HDDMODEL", value => "scsi-hd"},
                         { key => "NICMODEL", value => "e1000e"},
                         { key => "CDMODEL", value => "ide-cd"},
@@ -948,6 +948,7 @@
                     {
                       name => "install_over_existing",
                       settings => [
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
                         { key => "INSTALL_OVER_EXISTING", value => "1" },
                         { key => "BOOT_MENU", value => "1" },
                       ],
@@ -955,33 +956,35 @@
                     {
                       name => "install_btrfs",
                       settings => [
-                        { key => "PACKAGE_SET", value => "default" },
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
                         { key => "PARTITIONING", value => "btrfs" },
                       ],
                     },
                     {
                       name => "install_usbvm_combined",
                       settings => [
-                        { key => "PACKAGE_SET", value => "default" },
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
                         { key => "USBVM", value => "sys-net" },
                       ],
                     },
                     {
                       name => "install_no_usbvm",
                       settings => [
-                        { key => "PACKAGE_SET", value => "default" },
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
                         { key => "USBVM", value => "none" },
                       ],
                     },
                     {
                       name => "install_keyboard_layout",
                       settings => [
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
                         { key => "KEYBOARD_LAYOUT", value => "us-colemak" },
                       ],
                     },
                     {
                       name => "install_locale",
                       settings => [
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
                         { key => "LOCALE", value => "en_DK.utf8" },
                       ],
                     },
@@ -997,16 +1000,7 @@
                       settings => [
                         { key => "INSTALL_TEMPLATES", value => "all" },
                         { key => "PARTITIONING", value => "unencrypted" },
-                        { key => "HDDSIZEGB", value => "50"},
-                        { key => "PUBLISH_HDD_1", value => "disk_unencrypted_%VERSION%_%MACHINE%.qcow2" },
-                      ],
-                    },
-                    {
-                      name => "install_unencrypted_upload",
-                      settings => [
-                        { key => "INSTALL_TEMPLATES", value => "all" },
-                        { key => "PARTITIONING", value => "unencrypted" },
-                        { key => "HDDSIZEGB", value => "50"},
+                        { key => "HDDSIZEGB", value => "80"},
                         { key => "PUBLISH_HDD_1", value => "disk_unencrypted_%VERSION%_%MACHINE%.qcow2" },
                       ],
                     },

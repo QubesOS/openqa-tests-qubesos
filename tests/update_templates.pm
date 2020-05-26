@@ -29,13 +29,29 @@ sub run {
     curl_via_netvm;
 
     foreach (split / /, get_var("UPDATE_TEMPLATES")) {
-        my $action = "upgrade";
-        if (script_run("rpm -q qubes-template-$_") != 0) {
-            $action = "install";
+        my $template = $_;
+        if (($_ =~ /^http/) and ($_ =~ /.rpm$/)) {
+            my $rpm = $_;
+            $rpm =~ s/^.*\///;
+
+            $template = $rpm;
+            $template =~ s/^qubes-template-(.*)-(.*)-(.*)-(.*).noarch.rpm$/\1-\2/;
+
+            script_run("qvm-features -D $template fixups-installed");
+            script_run("curl $_ > $rpm", timeout => 1500);
+            assert_script_run("sudo rpm -ivh $rpm", timeout => 1500);
+
+        } else {
+            my $action = "upgrade";
+            if (script_run("rpm -q qubes-template-$template") != 0) {
+                $action = "install";
+            }
+
+            script_run("qvm-features -D $template fixups-installed");
+            assert_script_run("sudo qubes-dom0-update --clean --enablerepo=qubes-*templates* --action=$action -y qubes-template-$template", timeout => 1500);
         }
-        script_run("qvm-features -D $_ fixups-installed");
-        assert_script_run("sudo qubes-dom0-update --clean --enablerepo=qubes-*templates* --action=$action -y qubes-template-$_", timeout => 1500);
-        $self->save_and_upload_log("rpm -q qubes-template-$_", "template-$_-version.txt");
+    
+        $self->save_and_upload_log("rpm -q qubes-template-$template", "template-$template-version.txt");
     }
 
     # restart only sys-whonix - for potential whonixcheck run

@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 85,
+      "xpos": 684,
+      "type": "match",
+      "width": 122,
+      "height": 76
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qui-domains-opened"
+  ]
+}

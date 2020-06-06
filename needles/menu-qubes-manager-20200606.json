@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 163,
+      "xpos": 182,
+      "height": 21,
+      "type": "match",
+      "width": 108
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-1",
+    "menu-qubes-manager"
+  ]
+}

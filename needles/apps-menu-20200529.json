@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "height": 23,
+      "width": 21,
+      "type": "match",
+      "click_point": {
+        "xpos": 10.5,
+        "ypos": 11.5
+      },
+      "xpos": 7,
+      "ypos": 4
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "menu"
+  ]
+}

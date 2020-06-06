@@ -269,6 +269,42 @@
                                       flavor  => "update",
                                       version => "*",
                                     },
+                      test_suite => { name => "system_tests_qrexec" },
+                    },
+                    {
+                      group_name => "Qubes OS updates",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "update",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_network_ipv6" },
+                    },
+                    {
+                      group_name => "Qubes OS updates",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "update",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_network_updates" },
+                    },
+                    {
+                      group_name => "Qubes OS updates",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "update",
+                                      version => "*",
+                                    },
                       test_suite => { name => "system_tests_network" },
                     },
                     {
@@ -318,6 +354,18 @@
                                       version => "*",
                                     },
                       test_suite => { name => "system_tests_splitgpg" },
+                    },
+                    {
+                      group_name => "Qubes OS updates",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "update",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_usbproxy" },
                     },
                     {
                       group_name => "Qubes OS updates",
@@ -441,6 +489,42 @@
                                       flavor  => "pull-requests",
                                       version => "*",
                                     },
+                      test_suite => { name => "system_tests_qrexec" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_network_ipv6" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_network_updates" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
                       test_suite => { name => "system_tests_network" },
                     },
                     {
@@ -490,6 +574,18 @@
                                       version => "*",
                                     },
                       test_suite => { name => "system_tests_splitgpg" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_usbproxy" },
                     },
                     {
                       group_name => "Qubes OS pull requests",
@@ -1020,6 +1116,13 @@
                       ],
                     },
                     {
+                      name => "system_tests_qrexec",
+                      settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.qrexec:14400" },
+                      ],
+                    },
+                    {
                       name => "system_tests_basic_vm_qrexec_gui",
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
@@ -1030,7 +1133,24 @@
                       name => "system_tests_network",
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
-                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.network:18000 qubes.tests.integ.dom0_update" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.network:21600" },
+                        { key => "MAX_JOB_TIME", value => "23400" },
+                      ],
+                    },
+                    {
+                      name => "system_tests_network_ipv6",
+                      settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.network_ipv6:21600" },
+                        { key => "MAX_JOB_TIME", value => "23400" },
+                      ],
+                    },
+                    {
+                      name => "system_tests_network_updates",
+                      settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.dom0_update qubes.tests.integ.vm_update" },
+                        { key => "MAX_JOB_TIME", value => "23400" },
                       ],
                     },
                     {
@@ -1065,11 +1185,19 @@
                       ],
                     },
                     {
+                      name => "system_tests_usbproxy",
+                      settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.extra:9000" },
+                        { key => "QUBES_TEST_EXTRA_INCLUDE", value => "usbproxy" },
+                      ],
+                    },
+                    {
                       name => "system_tests_extra",
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "SYSTEM_TESTS", value => "qubes.tests.extra:18000" },
-                        { key => "QUBES_TEST_EXTRA_EXCLUDE", value => "splitgpg" },
+                        { key => "QUBES_TEST_EXTRA_EXCLUDE", value => "splitgpg usbproxy" },
                         { key => "MAX_JOB_TIME", value => "21600" },
                       ],
                     },

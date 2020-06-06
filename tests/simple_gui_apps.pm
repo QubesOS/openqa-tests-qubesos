@@ -27,6 +27,11 @@ sub run {
     # open work VM settings and add "Document Viewer" application
     assert_and_click("menu");
     assert_and_click("menu-vm-work");
+    if (!check_screen("menu-vm-settings")) {
+        # "settings" entry doesn't fit on screen, scroll to it
+        send_key("right");
+        send_key_until_needlematch("menu-vm-settings", "up");
+    }
     assert_and_click("menu-vm-settings");
     assert_and_click("vm-settings-applications");
     assert_and_click("vm-settings-app-evince");

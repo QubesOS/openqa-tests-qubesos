@@ -62,6 +62,7 @@ if (get_var('ISO')) {
 
 if (check_var('RELEASE_UPGRADE', '1')) {
     autotest::loadtest "tests/release_upgrade.pm";
+    autotest::loadtest "tests/startup_fixup.pm";
 }
 
 # do not execute same tests before each system tests run

@@ -883,6 +883,8 @@
                                      { key => "ISO_MAXSIZE", value => 5700372992 },
                                      { key => "RELEASE_UPGRADE", value => "1" },
                                      { key => "MAX_JOB_TIME", value => "21600" },
+                                     { key => "TEST_GENERIC", value => "1" },
+                                     { key => "TEST_GUI_INTERACTIVE", value => "1" },
                                    ],
                       version   => "*",
                     },

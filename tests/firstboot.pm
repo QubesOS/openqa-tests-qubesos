@@ -92,15 +92,15 @@ sub run {
 
     assert_screen "firstboot-configuring-templates", 90;
 	
-    my $timeout = 600;
+    my $timeout = 900;
     if (check_var('INSTALL_TEMPLATES', 'all')) {
         $timeout *= 4;
     }
     if (get_var('INSTALL_TEMPLATES', '') =~ /whonix/) {
-        $timeout += 2 * 600;
+        $timeout += 2 * 900;
     }
     if (get_var('INSTALL_TEMPLATES', '') =~ /debian/) {
-        $timeout += 1 * 600;
+        $timeout += 1 * 900;
     }
     assert_screen "firstboot-configuring-salt", $timeout;
     assert_screen "firstboot-setting-network", 600;

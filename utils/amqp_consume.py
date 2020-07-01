@@ -7,6 +7,7 @@ import argparse
 import collections
 import requests
 import subprocess
+import sys
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 DEFAULT_PACKAGE_LIST = os.path.join(SCRIPT_DIR, 'github_package_mapping.json')
@@ -39,11 +40,11 @@ def maybe_restart_failed_job(job_id, job_details):
     restart_id = job_details['job']['settings']['BUILD'] + '_' + job_details['job']['settings']['TEST']
     if job_restarts[restart_id] >= RESTART_LIMIT:
         print('Job {} restarted {} times already, not restarting again'.format(
-                  restart_id, job_restarts[restart_id]))
+                  restart_id, job_restarts[restart_id]), file=sys.stderr)
         return False
     job_restarts[restart_id] += 1
 
-    print('Restarting job {} ({})'.format(job_id, restart_id))
+    print('Restarting job {} ({})'.format(job_id, restart_id), file=sys.stderr)
     subprocess.call([
         'openqa-client', '--host', API_BASE.partition('/api/')[0],
         'jobs/{}/restart'.format(job_id), 'post'])
@@ -51,19 +52,25 @@ def maybe_restart_failed_job(job_id, job_details):
 
 def callback_done(ch, method, properties, body):
     print('received %r, properties %r, body %r' % (
-        method.routing_key, properties, body))
+        method.routing_key, properties, body), file=sys.stderr)
     job_data = json.loads(body)
     r = requests.get('{}/jobs/{}/details'.format(API_BASE, job_data['id']))
     if not r.ok:
-        print('failed to get job {} info: {}'.format(job_data['id'], r.text))
+        print('failed to get job {} info: {}'.format(job_data['id'], r.text), file=sys.stderr)
         return
     job_details = r.json()
 
     if maybe_restart_failed_job(job_data['id'], job_details):
         return
 
+    # in case of system_tests_update job, start workers only when it finishes,
+    # not when it is created
+    if job_data['TEST'] == 'system_tests_update' and job_data['result'] == 'passed':
+        if args.job_start_callback:
+            subprocess.call(args.job_start_callback, shell=True)
+
     if job_data['remaining'] > 0:
-        print('group not done yet')
+        print('group not done yet', file=sys.stderr)
         return
 
     version = job_details['job']['settings']['VERSION']
@@ -83,15 +90,26 @@ def callback_done(ch, method, properties, body):
                     base_job = base_jobs[version]
         if base_job:
             cmd.extend(['--compare-to-job', str(base_job)])
-        print('Calling: {}'.format(' '.join(cmd)))
+        print('Calling: {}'.format(' '.join(cmd)), file=sys.stderr)
         subprocess.call(cmd)
 
 def callback_create(ch, method, properties, body):
+    job_data = json.loads(body)
+    r = requests.get('{}/jobs/{}'.format(API_BASE, job_data['id']))
+    if not r.ok:
+        print('failed to get job {} info: {}'.format(job_data['id'], r.text), file=sys.stderr)
+        return
+    job_info = r.json()['job']
+
+    # do not immediately call the callback if jobs are waiting for system_tests_update to finish
+    if job_info['settings'].get('START_AFTER_TEST', None) or job_info['settings']['TEST'] == 'system_tests_update':
+        return
+
     if args.job_start_callback:
         subprocess.call(args.job_start_callback, shell=True)
 
 def callback(ch, method, properties, body):
-    print(repr(method.routing_key))
+    print(repr(method.routing_key), file=sys.stderr)
     _, event = method.routing_key.rsplit('.', 1)
     if event == 'done':
         callback_done(ch, method, properties, body)
@@ -131,12 +149,12 @@ def main():
         help='A command to run when some job is started. Can be used to wake up workers.')
 
     args = parser.parse_args()
-    print(args.package_list)
-    print(args.jobs_compare_to)
+    print(args.package_list, file=sys.stderr)
+    print(args.jobs_compare_to, file=sys.stderr)
 
     channel = setup_channel()
 
-    print('Waiting for messages. To exit press CTRL+C')
+    print('Waiting for messages. To exit press CTRL+C', file=sys.stderr)
     channel.start_consuming()
 
 if __name__ == '__main__':

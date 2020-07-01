@@ -49,7 +49,12 @@ sub enable_dom0_network_netvm {
         script_run('echo 0000:$netdev > /sys/bus/pci/devices/0000:$netdev/driver/unbind');
         script_run('echo 0000:$netdev > /sys/bus/pci/drivers/pciback/remove_slot');
         script_run('echo 0000:$netdev > /sys/bus/pci/drivers_probe');
-        assert_script_run('dhclient $(ls /sys/class/net|head -1)');
+        # dhclient not installed by default anymore
+        #assert_script_run('dhclient $(ls /sys/class/net|head -1)');
+        assert_script_run('dev=$(ls /sys/class/net|head -1)');
+        assert_script_run('ip a a 10.0.2.15/24 dev $dev');
+        assert_script_run('ip r a default via 10.0.2.2');
+        assert_script_run('echo "nameserver 10.0.2.3" > /etc/resolv.conf');
     } else {
         # there is netvm, connect network through it
         assert_script_run('xl network-attach 0 ip=10.137.99.1 script=/etc/xen/scripts/vif-route-qubes backend=sys-net');

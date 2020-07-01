@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 75,
+      "ypos": 162,
+      "width": 277,
+      "xpos": 107
+    },
+    {
+      "type": "match",
+      "height": 45,
+      "ypos": 190,
+      "xpos": 647,
+      "width": 185
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "vm-settings-fw-set"
+  ]
+}

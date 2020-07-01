@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 373,
+      "type": "match",
+      "height": 23,
+      "width": 112,
+      "xpos": 654
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qubes-vm-create-label-choose-blue"
+  ]
+}

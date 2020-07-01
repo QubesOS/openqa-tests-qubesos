@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "height": 16,
+      "type": "match",
+      "width": 188,
+      "ypos": 34,
+      "xpos": 197
+    },
+    {
+      "xpos": 63,
+      "ypos": 67,
+      "width": 62,
+      "type": "match",
+      "height": 29
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "work-evince"
+  ]
+}

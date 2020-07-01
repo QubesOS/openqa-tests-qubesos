@@ -1,0 +1,34 @@
+{
+  "area": [
+    {
+      "width": 103,
+      "xpos": 469,
+      "type": "match",
+      "ypos": 287,
+      "height": 18
+    },
+    {
+      "height": 23,
+      "type": "match",
+      "ypos": 316,
+      "width": 84,
+      "xpos": 301
+    },
+    {
+      "height": 47,
+      "type": "match",
+      "ypos": 356,
+      "width": 85,
+      "xpos": 608,
+      "click_point": {
+        "xpos": 42.5,
+        "ypos": 29.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "vm-settings-do-rename"
+  ]
+}

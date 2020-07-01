@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 20,
+      "type": "match",
+      "ypos": 733,
+      "width": 63,
+      "xpos": 134
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "template-reset"
+  ]
+}

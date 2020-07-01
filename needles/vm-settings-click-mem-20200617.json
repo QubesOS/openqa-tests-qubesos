@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "width": 127,
+      "xpos": 65,
+      "type": "match",
+      "height": 23,
+      "ypos": 144,
+      "click_point": {
+        "xpos": 114.5,
+        "ypos": 11.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "vm-settings-click-mem"
+  ]
+}

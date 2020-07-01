@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 129,
+      "width": 139,
+      "type": "match",
+      "ypos": 528,
+      "height": 17
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "vm-settings-apps-thunar-select"
+  ]
+}

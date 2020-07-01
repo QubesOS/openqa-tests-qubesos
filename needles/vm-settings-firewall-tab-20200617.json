@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 248,
+      "width": 120,
+      "ypos": 73,
+      "type": "match",
+      "height": 22
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "vm-settings-firewall-tab"
+  ]
+}

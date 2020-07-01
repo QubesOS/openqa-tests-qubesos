@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 72,
+      "xpos": 103,
+      "height": 26,
+      "type": "match",
+      "ypos": 173
+    },
+    {
+      "xpos": 360,
+      "width": 83,
+      "type": "match",
+      "ypos": 179,
+      "height": 18
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "global-settings-clockvms-listing"
+  ]
+}

@@ -166,8 +166,8 @@ sub run {
 
     # applications
     assert_and_click('vm-settings-applications-tab');
-    assert_and_click('vm-settings-apps-dolphin-select');
-    assert_and_click('vm-settings-apps-dolphin-add');
+    assert_and_click(['vm-settings-apps-dolphin-select', 'vm-settings-apps-thunar-select']);
+    assert_and_click('vm-settings-apps-add');
 
     # confirm
     send_key('alt-o');

@@ -55,26 +55,17 @@ sub run {
     sleep(1);
     send_key('ctrl-c');
 
+    assert_script_run("script -a -e -c 'sudo ./migration.sh --assumeyes --setup-efi-grub' release-upgrade.log", timeout => 3600);
+
     # install qubesteststub module for updated python version
     assert_script_run("sudo sh -c 'cd /root/extra-files; python3 ./setup.py install'");
-
-    script_run("sudo reboot", timeout => 0);
-    assert_screen ["bootloader", "luks-prompt", "login-prompt-user-selected"], 300;
-    $self->handle_system_startup;
-
-    x11_start_program('xterm');
-    send_key('alt-f10');
-
-    assert_script_run("script -a -e -c 'sudo ./migration.sh --assumeyes --setup-efi-grub' release-upgrade.log", timeout => 3600);
 
     set_var('VERSION', '4.1');
     if (check_var('UEFI_DIRECT', '1')) {
         set_var('UEFI_DIRECT', '');
     }
 
-    # all updated, not check if the system sill boots
     script_run("sudo reboot", timeout => 0);
-    check_screen('bootloader', timeout => 30);
     assert_screen ["bootloader", "luks-prompt", "login-prompt-user-selected"], 300;
     $self->handle_system_startup;
 }

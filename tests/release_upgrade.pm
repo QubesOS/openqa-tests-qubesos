@@ -29,6 +29,11 @@ sub run {
     send_key('alt-f10');
     curl_via_netvm;
 
+    if (check_var('MODIFY_REPO_CONF', '1')) {
+        # just any modification, to trigger .rpmnew file
+        assert_script_run("echo | sudo tee -a /etc/yum.repos.d/qubes-dom0.repo");
+    }
+
     script_run("pkill xscreensaver");
 
     assert_script_run("curl https://raw.githubusercontent.com/fepitre/qubes-migration/master/migration.sh > migration.sh");

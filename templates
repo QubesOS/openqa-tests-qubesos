@@ -899,6 +899,18 @@
                                     },
                       test_suite => { name => "install_minimal" },
                     },
+                    {
+                      group_name => "Qubes OS release upgrade",
+                      machine    => { name => "64bit" },
+                      prio       => 10,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "release-upgrade",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "release_upgrade_modified_repo" },
+                    },
 		  ],
   Machines     => [
                     {
@@ -1100,6 +1112,17 @@
                         { key => "PARTITIONING", value => "unencrypted" },
                         { key => "HDDSIZEGB", value => "80"},
                         { key => "PUBLISH_HDD_1", value => "disk_unencrypted_%VERSION%_%MACHINE%.qcow2" },
+                      ],
+                    },
+                    ####################
+                    ### specific to release upgrade tests
+                    ### (besides install_* tests)
+                    ####################
+                    {
+                      name => "release_upgrade_modified_repo",
+                      settings => [
+                        { key => "INSTALL_TEMPLATES", value => "fedora" },
+                        { key => "MODIFY_REPO_CONF", value => "1" },
                       ],
                     },
                     #################

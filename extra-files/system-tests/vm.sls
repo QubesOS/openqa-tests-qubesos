@@ -11,7 +11,11 @@ vm-packages:
       - dnsmasq
 {% if grains['os'] == 'Fedora' or grains['os'] == 'CentOS' %}
       - redhat-rpm-config
+{% if grains['os'] == 'CentOS' %}
+      - python36-devel
+{% else %}
       - python3-devel
+{% endif %}
       - nmap-ncat
 {% else %}
       - python3-cairo
@@ -23,6 +27,8 @@ vm-packages:
       - qubes-usb-proxy
       - usbutils
 {% if grains['os'] == 'Fedora' and grains['osmajorrelease'] >= 29 %}
+      - createrepo_c
+{% elif grains['os'] == 'CentOS' and grains['osmajorrelease'] >= 8 %}
       - createrepo_c
 {% else %}
       - createrepo

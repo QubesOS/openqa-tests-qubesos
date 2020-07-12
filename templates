@@ -991,6 +991,7 @@
                                      { key => "ISO_MAXSIZE", value => 5700372992 },
                                      { key => "RELEASE_UPGRADE", value => "1" },
                                      { key => "MAX_JOB_TIME", value => "21600" },
+                                     { key => "NOVIDEO", value => "0" },
                                      { key => "TEST_GENERIC", value => "1" },
                                      { key => "TEST_GUI_INTERACTIVE", value => "1" },
                                    ],
@@ -1004,6 +1005,7 @@
                       settings  => [
                                      { key => "HDD_1", value => "disk_unencrypted_updated.qcow2" },
                                      { key => "MAX_JOB_TIME", value => "21600" },
+                                     { key => "NOVIDEO", value => "0" },
                                    ],
                       version   => "*",
                     },
@@ -1015,6 +1017,7 @@
                       settings  => [
                                      { key => "HDD_1", value => "disk_unencrypted_updated.qcow2" },
                                      { key => "MAX_JOB_TIME", value => "21600" },
+                                     { key => "NOVIDEO", value => "0" },
                                    ],
                       version   => "*",
                     },
@@ -1026,6 +1029,7 @@
                       settings  => [
                                      { key => "HDD_1", value => "disk_unencrypted_updated.qcow2" },
                                      { key => "MAX_JOB_TIME", value => "21600" },
+                                     { key => "NOVIDEO", value => "0" },
                                    ],
                       version   => "*",
                     },
@@ -1037,6 +1041,7 @@
                       settings  => [
                                      { key => "HDD_1", value => "disk_unencrypted_updated.qcow2" },
                                      { key => "MAX_JOB_TIME", value => "21600" },
+                                     { key => "NOVIDEO", value => "0" },
                                    ],
                       version   => "*",
                     },

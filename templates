@@ -1208,7 +1208,7 @@
                       name => "system_tests_splitgpg",
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
-                        { key => "SYSTEM_TESTS", value => "qubes.tests.extra:9000" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.extra:10800" },
                         { key => "QUBES_TEST_EXTRA_INCLUDE", value => "splitgpg" },
                       ],
                     },

@@ -12,7 +12,11 @@ vm-packages:
 {% if grains['os'] == 'Fedora' or grains['os'] == 'CentOS' %}
       - redhat-rpm-config
 {% if grains['os'] == 'CentOS' %}
+{% if grains['osmajorrelease'] == 8 %}
+      - python38-devel
+{% else %}
       - python36-devel
+{% endif %}
 {% else %}
       - python3-devel
 {% endif %}

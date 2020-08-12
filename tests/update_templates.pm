@@ -35,7 +35,7 @@ sub run {
             $rpm =~ s/^.*\///;
 
             $template = $rpm;
-            $template =~ s/^qubes-template-(.*)-(.*)-(.*)-(.*).noarch.rpm$/\1-\2/;
+            $template =~ s/^qubes-template-(.*)-(.*)-(.*).noarch.rpm$/\1/;
 
             script_run("qvm-features -D $template fixups-installed");
             script_run("curl $_ > $rpm", timeout => 1500);

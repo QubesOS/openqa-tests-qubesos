@@ -33,12 +33,13 @@ sub run {
     assert_screen("qubes-qube-manager", timeout => 120);
 
     # open work VM settings
+    send_key_until_needlematch("manager-work", 'down');
     assert_and_click("manager-work", button => 'right');
     assert_and_click("manager-vm-settings");
     assert_and_click("vm-settings-applications");
     assert_and_click("vm-settings-applications-refresh");
     # wait until refresh backs to normal (finish refreshing)
-    assert_screen("vm-settings-applications-refresh", timeout => 300);
+    assert_screen("vm-settings-applications-refresh", timeout => 500);
     # wait some more for the VMs to shutdown
     sleep(20);
     assert_and_click("vm-settings-ok");
@@ -52,8 +53,6 @@ sub run {
 
 sub post_fail_hook {
     my ($self) = @_;
-    select_console('x11');
-    send_key('esc');
     save_screenshot;
     $self->SUPER::post_fail_hook;
 

@@ -92,6 +92,8 @@ if (get_var('SYSTEM_TESTS')) {
 
 if (get_var('TEST_GUI_INTERACTIVE')) {
     autotest::loadtest "tests/simple_gui_apps.pm";
+    autotest::loadtest "tests/screenlocker_leaks.pm";
+    autotest::loadtest "tests/gui_keyboard_layout.pm";
 }
 
 if (get_var("GUI_TESTS")) {

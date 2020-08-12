@@ -30,26 +30,31 @@ sub run {
     assert_script_run("qubes-prefs default_guivm sys-gui");
     assert_script_run("qvm-start sys-firewall", 180);
     assert_script_run("! qvm-check sys-whonix || qvm-start sys-whonix", 90);
+    assert_script_run("tail -F /var/log/xen/console/guest-sys-gui.log >> /dev/$testapi::serialdev & true");
+
     type_string("exit\n");
 
-    # start guivm
-    x11_start_program('qvm-start sys-gui', target_match => 'sys-gui-window', match_timeout => 90);
-    wait_still_screen();
+    assert_and_click("panel-user-menu");
+    assert_and_click("panel-user-menu-logout");
+    assert_and_click("panel-user-menu-confirm");
 
-    # make it fullscreen
-    # FIXME: make guivm fullscreen by default
-    wait_screen_change {
-        send_key('alt-spc');
-    };
-    send_key('f');
+    assert_screen("login-prompt-user-selected");
+    assert_and_click("login-prompt-session-type-menu");
+    assert_and_click("login-prompt-session-type-gui-domains");
+    type_string $testapi::password;
+    send_key "ret";
 
-    assert_screen "desktop";
+    assert_screen("desktop", timeout => 90);
+
+    # FIXME: make it packaged, rc.local or such
+    select_console('root-virtio-terminal');
+    assert_script_run("echo -e '$testapi::password\n$testapi::password' | qvm-run -p -u root sys-gui 'passwd --stdin user'");
+    select_console('x11');
+
 }
 
 sub post_fail_hook {
     my ($self) = @_;
-    select_console('x11');
-    send_key('esc');
     save_screenshot;
     $self->SUPER::post_fail_hook;
 

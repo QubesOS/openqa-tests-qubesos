@@ -35,6 +35,10 @@ sub run {
     assert_and_click("menu-vm-settings");
     assert_and_click("vm-settings-applications");
     assert_and_click("vm-settings-app-evince");
+    send_key('end');
+    send_key_until_needlematch("vm-settings-app-xterm", 'up');
+    assert_and_click("vm-settings-app-add");
+    assert_and_click("vm-settings-app-evince");
     assert_and_click("vm-settings-app-add");
     assert_and_click("vm-settings-ok");
     assert_screen("desktop");
@@ -45,16 +49,17 @@ sub run {
     assert_and_click("menu-vm-evince");
     assert_screen("work-evince", timeout => 90);
 
-    # and close it
-    wait_screen_change(sub {
-        send_key("ctrl-q");
-    });
+    # wait for full startup
+    sleep(2);
+    send_key("ctrl-q");
+    wait_still_screen();
     assert_screen("desktop");
 }
 
 sub post_fail_hook {
     my ($self) = @_;
     select_console('x11');
+    send_key('esc');
     send_key('esc');
     save_screenshot;
     $self->SUPER::post_fail_hook;

@@ -221,8 +221,9 @@ sub run {
     type_string('work3');
     assert_and_click('vm-settings-do-clone');
 
-    assert_screen('vm-settings-clone-successful', 200);
-    send_key('ret');
+    assert_and_click('vm-settings-clone-successful', 200);
+    sleep(1);
+    assert_and_click('vm-settings-cancel');
 
     assert_screen('desktop');
     x11_start_program('qubes-vm-settings work2');

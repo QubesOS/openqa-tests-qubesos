@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 894,
+      "ypos": 139,
+      "width": 26,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "panel-user-menu-logout"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 485,
+      "width": 88,
+      "height": 16,
+      "ypos": 236,
+      "type": "match"
+    },
+    {
+      "type": "match",
+      "ypos": 455,
+      "height": 32,
+      "width": 108,
+      "xpos": 613
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "vm-settings-clone-cancel"
+  ]
+}

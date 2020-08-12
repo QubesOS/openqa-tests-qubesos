@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 959,
+      "ypos": 276,
+      "width": 45,
+      "height": 34,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "notification-test"
+  ]
+}

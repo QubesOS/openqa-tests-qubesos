@@ -129,6 +129,9 @@ update:
 {% if grains['os'] == 'Debian' %}
    - dist_upgrade: True
 {% endif %}
+{% if grains['os'] == 'Gentoo' %}
+   - binhost: try
+{% endif %}
 
 notify-updates:
   cmd.run:

@@ -341,6 +341,18 @@
                                       flavor  => "update",
                                       version => "*",
                                     },
+                      test_suite => { name => "system_tests_backupdispvm" },
+                    },
+                    {
+                      group_name => "Qubes OS updates",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "update",
+                                      version => "*",
+                                    },
                       test_suite => { name => "system_tests_pvgrub_salt_storage" },
                     },
                     {
@@ -550,6 +562,18 @@
                                       version => "*",
                                     },
                       test_suite => { name => "system_tests_backupcompatibility" },
+                    },
+                    {
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_backupdispvm" },
                     },
                     {
                       group_name => "Qubes OS pull requests",
@@ -1185,8 +1209,8 @@
                       name => "system_tests_backup",
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
-                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.backup:21600" },
-                        { key => "MAX_JOB_TIME", value => "23400" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.backup:25200" },
+                        { key => "MAX_JOB_TIME", value => "25200" },
                       ],
                     },
                     {
@@ -1194,6 +1218,14 @@
                       settings => [
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "SYSTEM_TESTS", value => "qubes.tests.integ.backupcompatibility:10800" },
+                        { key => "MAX_JOB_TIME", value => "14400" },
+                      ],
+                    },
+                    {
+                      name => "system_tests_backupdispvm",
+                      settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.integ.backupdispvm:10800" },
                         { key => "MAX_JOB_TIME", value => "14400" },
                       ],
                     },

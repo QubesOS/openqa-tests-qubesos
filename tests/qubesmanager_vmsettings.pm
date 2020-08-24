@@ -75,11 +75,9 @@ sub run {
     send_key('ctrl-a');
     type_string('50');
     send_key('ret');
+    # check if label was shown
     assert_and_click('vm-settings-warn-mem');
-    # workaround
-    if (check_screen('vm-settings-warn-mem', 30)) {
-        send_key('ret');
-    }
+    # switch to editing memory
     assert_and_click('vm-settings-click-mem');
     send_key('ctrl-a');
     type_string('600');

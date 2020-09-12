@@ -58,6 +58,9 @@ if (get_var('ISO')) {
             autotest::loadtest "tests/update_guivm.pm";
         }
     }
+    if (get_var('INSTALL_TB78')) {
+        autotest::loadtest "tests/install_tb78.pm";
+    }
 }
 
 if (check_var('RELEASE_UPGRADE', '1')) {

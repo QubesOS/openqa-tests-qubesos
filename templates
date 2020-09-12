@@ -377,6 +377,18 @@
                                       flavor  => "update",
                                       version => "*",
                                     },
+                      test_suite => { name => "system_tests_splitgpg_tb78" },
+                    },
+                    {
+                      group_name => "Qubes OS updates",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "update",
+                                      version => "*",
+                                    },
                       test_suite => { name => "system_tests_usbproxy" },
                     },
                     {
@@ -599,6 +611,18 @@
                                     },
                       test_suite => { name => "system_tests_splitgpg" },
                     },
+{
+                      group_name => "Qubes OS pull requests",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "pull-requests",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_splitgpg_tb78" },
+                    },
                     {
                       group_name => "Qubes OS pull requests",
                       machine    => { name => "64bit" },
@@ -711,6 +735,18 @@
                                       version => "*",
                                     },
                       test_suite => { name => "system_tests_splitgpg" },
+                    },
+                    {
+                      group_name => "Qubes OS templates",
+                      machine    => { name => "64bit" },
+                      prio       => 50,
+                      product    => {
+                                      arch    => "x86_64",
+                                      distri  => "qubesos",
+                                      flavor  => "templates",
+                                      version => "*",
+                                    },
+                      test_suite => { name => "system_tests_splitgpg_tb78" },
                     },
                     {
                       group_name => "Qubes OS templates",
@@ -1242,6 +1278,16 @@
                         { key => "START_AFTER_TEST", value => "system_tests_update" },
                         { key => "SYSTEM_TESTS", value => "qubes.tests.extra:10800" },
                         { key => "QUBES_TEST_EXTRA_INCLUDE", value => "splitgpg" },
+                      ],
+                    },
+                    {
+                      name => "system_tests_splitgpg_tb78",
+                      settings => [
+                        { key => "START_AFTER_TEST", value => "system_tests_update" },
+                        { key => "SYSTEM_TESTS", value => "qubes.tests.extra:10800" },
+                        { key => "QUBES_TEST_EXTRA_INCLUDE", value => "splitgpg" },
+                        { key => "TEST_TEMPLATES", value => "fedora-32" },
+                        { key => "INSTALL_TB78", value => "1" },
                       ],
                     },
                     {

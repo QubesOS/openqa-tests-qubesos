@@ -36,7 +36,7 @@ sub run {
     send_key_until_needlematch("manager-work", 'down');
     assert_and_click("manager-work", button => 'right');
     assert_and_click("manager-vm-settings");
-    assert_and_click("vm-settings-applications");
+    assert_and_click("vm-settings-applications", timeout => 60);
     assert_and_click("vm-settings-applications-refresh");
     # wait until refresh backs to normal (finish refreshing)
     assert_screen("vm-settings-applications-refresh", timeout => 500);

@@ -24,7 +24,7 @@ use testapi;
 sub run {
     select_console('root-virtio-terminal');
     # install mate-notification-daemon, as it triggers the issue more reliably than xfce4-notifyd
-    assert_script_run('qvm-run -p -u root work "dnf -y install mate-notification-daemon || apt -y install mate-notification-daemon"', timeout => 120);
+    assert_script_run('qvm-run -p -u root work "dnf -y install mate-notification-daemon || apt -y install mate-notification-daemon"', timeout => 180);
     select_console('x11');
 
     # start xscreensaver (killed in the test startup); the space at the end is

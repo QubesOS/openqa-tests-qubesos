@@ -33,7 +33,7 @@ sub run {
         send_key_until_needlematch("menu-vm-settings", "up");
     }
     assert_and_click("menu-vm-settings");
-    assert_and_click("vm-settings-applications");
+    assert_and_click("vm-settings-applications", timeout => 60);
     assert_and_click("vm-settings-app-evince");
     send_key('end');
     send_key_until_needlematch("vm-settings-app-xterm", 'up');

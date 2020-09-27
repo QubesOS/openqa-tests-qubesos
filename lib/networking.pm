@@ -46,12 +46,12 @@ sub enable_dom0_network_netvm {
     if (script_run('xl domid sys-net')) {
         # no netvm, bind network device to dom0
         script_run('netdev=$(lspci -n|grep " 0200:"|cut -f 1 -d " ")');
-        script_run('echo 0000:$netdev > /sys/bus/pci/devices/0000:$netdev/driver/unbind');
-        script_run('echo 0000:$netdev > /sys/bus/pci/drivers/pciback/remove_slot');
+        script_run('xl pci-assignable-remove 0000:$netdev');
         script_run('echo 0000:$netdev > /sys/bus/pci/drivers_probe');
         # dhclient not installed by default anymore
         #assert_script_run('dhclient $(ls /sys/class/net|head -1)');
         assert_script_run('dev=$(ls /sys/class/net|head -1)');
+        assert_script_run('ip l s $dev up');
         assert_script_run('ip a a 10.0.2.15/24 dev $dev');
         assert_script_run('ip r a default via 10.0.2.2');
         assert_script_run('echo "nameserver 10.0.2.3" > /etc/resolv.conf');

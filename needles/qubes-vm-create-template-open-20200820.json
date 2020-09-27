@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 216,
+      "ypos": 316,
+      "type": "match",
+      "height": 22,
+      "width": 72
+    },
+    {
+      "width": 42,
+      "height": 18,
+      "ypos": 317,
+      "xpos": 369,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qubes-vm-create-template-open"
+  ]
+}

@@ -15,6 +15,12 @@ Example command for starting tests for a template in templates-*-testing:
 
     openqa-client --host https://openqa.qubes-os.org isos post DISTRI=qubesos VERSION=4.0 FLAVOR=templates ARCH=x86_64 BUILD=2020022706-4.0-fedora-31 UPDATE_TEMPLATES='fedora-31 fedora-31-minimal' TEST_TEMPLATES='fedora-31 fedora-31-minimal'
 
+Job templates:
+
+This is now edited via web UI. The templates.json file is git is a backup.
+Dump the templates: openqa-dump-templates --json > templates.json
+Load the templates: openqa-load-templates templates.json
+
 Variables:
 
  - `DISTRI` - always `qubesos`
@@ -40,3 +46,4 @@ Variables used in tests:
  - `QUBES_TEST_EXTRA_INCLUDE`, `QUBES_TEST_EXTRA_EXCLUDE` - passed directly to the test environment
  - `TEST_GUI_INTERACTIVE` - simple GUI interactive tests (start application from menu etc)
  - `GUIVM` - create GUI VM
+

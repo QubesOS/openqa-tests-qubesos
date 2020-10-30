@@ -1,0 +1,852 @@
+{
+   "Products" : [
+      {
+         "flavor" : "install-iso",
+         "distri" : "qubesos",
+         "settings" : [
+            {
+               "value" : "5700372992",
+               "key" : "ISO_MAXSIZE"
+            }
+         ],
+         "version" : "*",
+         "arch" : "x86_64"
+      },
+      {
+         "flavor" : "update",
+         "arch" : "x86_64",
+         "distri" : "qubesos",
+         "settings" : [
+            {
+               "value" : "disk_unencrypted_updated.qcow2",
+               "key" : "HDD_1"
+            },
+            {
+               "value" : "21600",
+               "key" : "MAX_JOB_TIME"
+            },
+            {
+               "value" : "0",
+               "key" : "NOVIDEO"
+            }
+         ],
+         "version" : "*"
+      },
+      {
+         "flavor" : "templates",
+         "arch" : "x86_64",
+         "version" : "*",
+         "settings" : [
+            {
+               "key" : "HDD_1",
+               "value" : "disk_unencrypted_updated.qcow2"
+            },
+            {
+               "value" : "21600",
+               "key" : "MAX_JOB_TIME"
+            },
+            {
+               "value" : "0",
+               "key" : "NOVIDEO"
+            }
+         ],
+         "distri" : "qubesos"
+      },
+      {
+         "settings" : [
+            {
+               "value" : "disk_unencrypted_updated.qcow2",
+               "key" : "HDD_1"
+            },
+            {
+               "key" : "MAX_JOB_TIME",
+               "value" : "21600"
+            },
+            {
+               "value" : "0",
+               "key" : "NOVIDEO"
+            }
+         ],
+         "distri" : "qubesos",
+         "version" : "*",
+         "arch" : "x86_64",
+         "flavor" : "qubes-whonix"
+      },
+      {
+         "settings" : [
+            {
+               "value" : "5700372992",
+               "key" : "ISO_MAXSIZE"
+            },
+            {
+               "key" : "MAX_JOB_TIME",
+               "value" : "21600"
+            },
+            {
+               "key" : "NOVIDEO",
+               "value" : "0"
+            },
+            {
+               "value" : "1",
+               "key" : "RELEASE_UPGRADE"
+            },
+            {
+               "key" : "TEST_GENERIC",
+               "value" : "1"
+            },
+            {
+               "key" : "TEST_GUI_INTERACTIVE",
+               "value" : "1"
+            }
+         ],
+         "distri" : "qubesos",
+         "version" : "*",
+         "arch" : "x86_64",
+         "flavor" : "release-upgrade"
+      },
+      {
+         "version" : "*",
+         "settings" : [
+            {
+               "key" : "HDD_1",
+               "value" : "disk_unencrypted_updated.qcow2"
+            },
+            {
+               "value" : "21600",
+               "key" : "MAX_JOB_TIME"
+            },
+            {
+               "value" : "0",
+               "key" : "NOVIDEO"
+            }
+         ],
+         "distri" : "qubesos",
+         "arch" : "x86_64",
+         "flavor" : "pull-requests"
+      },
+      {
+         "arch" : "x86_64",
+         "version" : "4.0",
+         "settings" : [
+            {
+               "key" : "HDD_1",
+               "value" : "disk_unencrypted_updated.qcow2"
+            },
+            {
+               "key" : "MAX_JOB_TIME",
+               "value" : "21600"
+            },
+            {
+               "value" : "0",
+               "key" : "NOVIDEO"
+            }
+         ],
+         "distri" : "qubesos",
+         "flavor" : "update"
+      },
+      {
+         "arch" : "x86_64",
+         "version" : "4.1",
+         "distri" : "qubesos",
+         "settings" : [
+            {
+               "value" : "disk_unencrypted_updated.qcow2",
+               "key" : "HDD_1"
+            },
+            {
+               "value" : "21600",
+               "key" : "MAX_JOB_TIME"
+            },
+            {
+               "value" : "0",
+               "key" : "NOVIDEO"
+            }
+         ],
+         "flavor" : "update"
+      }
+   ],
+   "JobGroups" : [
+      {
+         "group_name" : "Qubes OS",
+         "template" : "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-install-iso-x86_64:\n    distri: qubesos\n    flavor: install-iso\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-install-iso-x86_64:\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_over_existing:\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        machine: 64bit\n        priority: 20\n    - install_keyboard_layout:\n        machine: uefi\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_unencrypted_upload:\n        machine: uefi\n        priority: 51\n    - install_unencrypted_upload:\n        machine: 64bit\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n"
+      },
+      {
+         "template" : "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-pull-requests-x86_64:\n    distri: qubesos\n    flavor: pull-requests\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-pull-requests-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_backupcompatibility\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - system_tests_gui_interactive:\n        priority: 40\n    - system_tests_guivm_gui_interactive:\n        priority: 40\n    - system_tests_usbproxy\n    - system_tests_qrexec\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupdispvm\n    - system_tests_splitgpg_tb78\n",
+         "group_name" : "Qubes OS pull requests"
+      },
+      {
+         "template" : "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-release-upgrade-x86_64:\n    distri: qubesos\n    flavor: release-upgrade\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-release-upgrade-x86_64:\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n    - release_upgrade_modified_repo:\n        priority: 10\n",
+         "group_name" : "Qubes OS release upgrade"
+      },
+      {
+         "template" : "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-templates-x86_64:\n    distri: qubesos\n    flavor: templates\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-templates-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix\n    - system_tests_splitgpg\n    - system_tests_splitgpg_tb78\n",
+         "group_name" : "Qubes OS templates"
+      },
+      {
+         "template" : "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-4.0-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.0'\n  qubesos-4.1-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.1'\nscenarios:\n  x86_64:\n    qubesos-4.0-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    qubesos-4.1-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_backupdispvm\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_guivm_gui_interactive\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n",
+         "group_name" : "Qubes OS updates"
+      },
+      {
+         "template" : "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-qubes-whonix-x86_64:\n    distri: qubesos\n    flavor: qubes-whonix\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-qubes-whonix-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix\n    - system_tests_suspend\n",
+         "group_name" : "Qubes-Whonix updates"
+      },
+      {
+         "template" : "products: {}\nscenarios: {}\n",
+         "group_name" : "qubesos-update"
+      }
+   ],
+   "TestSuites" : [
+      {
+         "name" : "install_minimal",
+         "settings" : [
+            {
+               "key" : "INSTALL_TEMPLATES",
+               "value" : "fedora"
+            }
+         ]
+      },
+      {
+         "settings" : [
+            {
+               "key" : "BOOT_MENU",
+               "value" : "1"
+            },
+            {
+               "value" : "1",
+               "key" : "INSTALL_OVER_EXISTING"
+            },
+            {
+               "key" : "INSTALL_TEMPLATES",
+               "value" : "fedora"
+            }
+         ],
+         "name" : "install_over_existing"
+      },
+      {
+         "name" : "install_btrfs",
+         "settings" : [
+            {
+               "value" : "fedora",
+               "key" : "INSTALL_TEMPLATES"
+            },
+            {
+               "key" : "PARTITIONING",
+               "value" : "btrfs"
+            }
+         ]
+      },
+      {
+         "name" : "install_usbvm_combined",
+         "settings" : [
+            {
+               "value" : "fedora",
+               "key" : "INSTALL_TEMPLATES"
+            },
+            {
+               "value" : "sys-net",
+               "key" : "USBVM"
+            }
+         ]
+      },
+      {
+         "settings" : [
+            {
+               "key" : "INSTALL_TEMPLATES",
+               "value" : "fedora"
+            },
+            {
+               "key" : "USBVM",
+               "value" : "none"
+            }
+         ],
+         "name" : "install_no_usbvm"
+      },
+      {
+         "settings" : [
+            {
+               "value" : "fedora",
+               "key" : "INSTALL_TEMPLATES"
+            },
+            {
+               "value" : "us-colemak",
+               "key" : "KEYBOARD_LAYOUT"
+            }
+         ],
+         "name" : "install_keyboard_layout"
+      },
+      {
+         "name" : "install_locale",
+         "settings" : [
+            {
+               "value" : "fedora",
+               "key" : "INSTALL_TEMPLATES"
+            },
+            {
+               "value" : "en_DK.utf8",
+               "key" : "LOCALE"
+            }
+         ]
+      },
+      {
+         "settings" : [
+            {
+               "key" : "INSTALL_TEMPLATES",
+               "value" : "all"
+            },
+            {
+               "key" : "PUBLISH_HDD_1",
+               "value" : "disk_default_%VERSION%_%MACHINE%.qcow2"
+            }
+         ],
+         "name" : "install_default_upload"
+      },
+      {
+         "settings" : [
+            {
+               "key" : "HDDSIZEGB",
+               "value" : "80"
+            },
+            {
+               "value" : "all",
+               "key" : "INSTALL_TEMPLATES"
+            },
+            {
+               "key" : "PARTITIONING",
+               "value" : "unencrypted"
+            },
+            {
+               "value" : "disk_unencrypted_%VERSION%_%MACHINE%.qcow2",
+               "key" : "PUBLISH_HDD_1"
+            }
+         ],
+         "name" : "install_unencrypted_upload"
+      },
+      {
+         "name" : "system_tests_basic_vm_qrexec_gui",
+         "settings" : [
+            {
+               "key" : "START_AFTER_TEST",
+               "value" : "system_tests_update"
+            },
+            {
+               "key" : "SYSTEM_TESTS",
+               "value" : "qubes.tests.integ.basic qubes.tests.integ.vm_qrexec_gui:14400"
+            }
+         ]
+      },
+      {
+         "name" : "system_tests_network",
+         "settings" : [
+            {
+               "key" : "MAX_JOB_TIME",
+               "value" : "23400"
+            },
+            {
+               "key" : "START_AFTER_TEST",
+               "value" : "system_tests_update"
+            },
+            {
+               "key" : "SYSTEM_TESTS",
+               "value" : "qubes.tests.integ.network:21600"
+            }
+         ]
+      },
+      {
+         "name" : "system_tests_backup",
+         "settings" : [
+            {
+               "value" : "25200",
+               "key" : "MAX_JOB_TIME"
+            },
+            {
+               "key" : "START_AFTER_TEST",
+               "value" : "system_tests_update"
+            },
+            {
+               "key" : "SYSTEM_TESTS",
+               "value" : "qubes.tests.integ.backup:25200"
+            }
+         ]
+      },
+      {
+         "name" : "system_tests_pvgrub_salt_storage",
+         "settings" : [
+            {
+               "value" : "system_tests_update",
+               "key" : "START_AFTER_TEST"
+            },
+            {
+               "key" : "SYSTEM_TESTS",
+               "value" : "qubes.tests.integ.grub:7200 qubes.tests.integ.salt qubes.tests.integ.storage:7200"
+            }
+         ]
+      },
+      {
+         "settings" : [
+            {
+               "key" : "MAX_JOB_TIME",
+               "value" : "21600"
+            },
+            {
+               "key" : "QUBES_TEST_EXTRA_EXCLUDE",
+               "value" : "splitgpg usbproxy"
+            },
+            {
+               "key" : "START_AFTER_TEST",
+               "value" : "system_tests_update"
+            },
+            {
+               "value" : "qubes.tests.extra:18000",
+               "key" : "SYSTEM_TESTS"
+            }
+         ],
+         "name" : "system_tests_extra"
+      },
+      {
+         "name" : "system_tests_backupcompatibility",
+         "settings" : [
+            {
+               "value" : "14400",
+               "key" : "MAX_JOB_TIME"
+            },
+            {
+               "value" : "system_tests_update",
+               "key" : "START_AFTER_TEST"
+            },
+            {
+               "value" : "qubes.tests.integ.backupcompatibility:10800",
+               "key" : "SYSTEM_TESTS"
+            }
+         ]
+      },
+      {
+         "settings" : [
+            {
+               "key" : "DO_UPDATE",
+               "value" : "1"
+            },
+            {
+               "key" : "HDD_1",
+               "value" : "disk_unencrypted_%VERSION%_%MACHINE%.qcow2"
+            },
+            {
+               "key" : "SALT_SYSTEM_TESTS",
+               "value" : "1"
+            },
+            {
+               "value" : "disk_unencrypted_updated.qcow2",
+               "key" : "STORE_HDD_1"
+            },
+            {
+               "value" : "local",
+               "key" : "WORKER_CLASS"
+            }
+         ],
+         "name" : "system_tests_update"
+      },
+      {
+         "settings" : [
+            {
+               "key" : "START_AFTER_TEST",
+               "value" : "system_tests_update"
+            },
+            {
+               "value" : "1",
+               "key" : "WHONIXCHECK"
+            }
+         ],
+         "name" : "system_tests_whonix"
+      },
+      {
+         "name" : "system_tests_gui_tools",
+         "settings" : [
+            {
+               "value" : "1",
+               "key" : "GUI_TESTS"
+            },
+            {
+               "key" : "START_AFTER_TEST",
+               "value" : "system_tests_update"
+            }
+         ]
+      },
+      {
+         "settings" : [
+            {
+               "key" : "START_AFTER_TEST",
+               "value" : "system_tests_update"
+            },
+            {
+               "key" : "SYSTEM_TESTS",
+               "value" : "qubesmanager.tests"
+            }
+         ],
+         "name" : "system_tests_manager"
+      },
+      {
+         "settings" : [
+            {
+               "key" : "START_AFTER_TEST",
+               "value" : "system_tests_update"
+            },
+            {
+               "value" : "1",
+               "key" : "TEST_GENERIC"
+            },
+            {
+               "key" : "TEST_SUSPEND",
+               "value" : "1"
+            }
+         ],
+         "name" : "system_tests_suspend"
+      },
+      {
+         "settings" : [
+            {
+               "key" : "QUBES_TEST_EXTRA_INCLUDE",
+               "value" : "splitgpg"
+            },
+            {
+               "value" : "system_tests_update",
+               "key" : "START_AFTER_TEST"
+            },
+            {
+               "key" : "SYSTEM_TESTS",
+               "value" : "qubes.tests.extra:10800"
+            }
+         ],
+         "name" : "system_tests_splitgpg"
+      },
+      {
+         "name" : "install_nvme",
+         "settings" : [
+            {
+               "key" : "HDDMODEL",
+               "value" : "nvme"
+            },
+            {
+               "value" : "fedora",
+               "key" : "INSTALL_TEMPLATES"
+            }
+         ]
+      },
+      {
+         "name" : "system_tests_gui_interactive",
+         "settings" : [
+            {
+               "value" : "system_tests_update",
+               "key" : "START_AFTER_TEST"
+            },
+            {
+               "key" : "TEST_GUI_INTERACTIVE",
+               "value" : "1"
+            }
+         ]
+      },
+      {
+         "name" : "system_tests_guivm_gui_interactive",
+         "settings" : [
+            {
+               "value" : "system_tests_update",
+               "key" : "START_AFTER_TEST"
+            },
+            {
+               "value" : "1",
+               "key" : "TEST_GUIVM"
+            },
+            {
+               "value" : "1",
+               "key" : "TEST_GUI_INTERACTIVE"
+            }
+         ]
+      },
+      {
+         "name" : "system_tests_usbproxy",
+         "settings" : [
+            {
+               "key" : "QUBES_TEST_EXTRA_INCLUDE",
+               "value" : "usbproxy"
+            },
+            {
+               "key" : "START_AFTER_TEST",
+               "value" : "system_tests_update"
+            },
+            {
+               "value" : "qubes.tests.extra:9000",
+               "key" : "SYSTEM_TESTS"
+            }
+         ]
+      },
+      {
+         "settings" : [
+            {
+               "key" : "INSTALL_TEMPLATES",
+               "value" : "fedora"
+            },
+            {
+               "value" : "1",
+               "key" : "MODIFY_REPO_CONF"
+            }
+         ],
+         "name" : "release_upgrade_modified_repo"
+      },
+      {
+         "name" : "system_tests_qrexec",
+         "settings" : [
+            {
+               "key" : "START_AFTER_TEST",
+               "value" : "system_tests_update"
+            },
+            {
+               "value" : "qubes.tests.integ.qrexec:14400",
+               "key" : "SYSTEM_TESTS"
+            }
+         ]
+      },
+      {
+         "settings" : [
+            {
+               "key" : "MAX_JOB_TIME",
+               "value" : "23400"
+            },
+            {
+               "value" : "system_tests_update",
+               "key" : "START_AFTER_TEST"
+            },
+            {
+               "key" : "SYSTEM_TESTS",
+               "value" : "qubes.tests.integ.network_ipv6:21600"
+            }
+         ],
+         "name" : "system_tests_network_ipv6"
+      },
+      {
+         "name" : "system_tests_network_updates",
+         "settings" : [
+            {
+               "key" : "MAX_JOB_TIME",
+               "value" : "23400"
+            },
+            {
+               "value" : "system_tests_update",
+               "key" : "START_AFTER_TEST"
+            },
+            {
+               "key" : "SYSTEM_TESTS",
+               "value" : "qubes.tests.integ.dom0_update qubes.tests.integ.vm_update"
+            }
+         ]
+      },
+      {
+         "name" : "system_tests_backupdispvm",
+         "settings" : [
+            {
+               "key" : "MAX_JOB_TIME",
+               "value" : "14400"
+            },
+            {
+               "value" : "system_tests_update",
+               "key" : "START_AFTER_TEST"
+            },
+            {
+               "key" : "SYSTEM_TESTS",
+               "value" : "qubes.tests.integ.backupdispvm:10800"
+            }
+         ]
+      },
+      {
+         "name" : "system_tests_splitgpg_tb78",
+         "settings" : [
+            {
+               "value" : "1",
+               "key" : "INSTALL_TB78"
+            },
+            {
+               "key" : "QUBES_TEST_EXTRA_INCLUDE",
+               "value" : "splitgpg"
+            },
+            {
+               "value" : "system_tests_update",
+               "key" : "START_AFTER_TEST"
+            },
+            {
+               "value" : "qubes.tests.extra:10800",
+               "key" : "SYSTEM_TESTS"
+            },
+            {
+               "key" : "TEST_TEMPLATES",
+               "value" : "fedora-32"
+            }
+         ]
+      }
+   ],
+   "JobTemplates" : [],
+   "Machines" : [
+      {
+         "backend" : "qemu",
+         "name" : "64bit",
+         "settings" : [
+            {
+               "value" : "scsi-hd",
+               "key" : "HDDMODEL"
+            },
+            {
+               "value" : "80",
+               "key" : "HDDSIZEGB"
+            },
+            {
+               "key" : "NICMODEL",
+               "value" : "e1000e"
+            },
+            {
+               "key" : "PART_TABLE_TYPE",
+               "value" : "mbr"
+            },
+            {
+               "key" : "QEMUCPU",
+               "value" : "host,+svm,+vmx"
+            },
+            {
+               "key" : "QEMUCPUS",
+               "value" : "2"
+            },
+            {
+               "value" : "6144",
+               "key" : "QEMURAM"
+            },
+            {
+               "value" : "1",
+               "key" : "QEMU_DISABLE_SNAPSHOTS"
+            },
+            {
+               "key" : "VIRTIO_CONSOLE",
+               "value" : "1"
+            }
+         ]
+      },
+      {
+         "name" : "uefi",
+         "settings" : [
+            {
+               "value" : "ide-cd",
+               "key" : "CDMODEL"
+            },
+            {
+               "key" : "HDDMODEL",
+               "value" : "scsi-hd"
+            },
+            {
+               "key" : "HDDSIZEGB",
+               "value" : "80"
+            },
+            {
+               "key" : "NICMODEL",
+               "value" : "e1000e"
+            },
+            {
+               "key" : "PART_TABLE_TYPE",
+               "value" : "gpt"
+            },
+            {
+               "value" : "host,+svm,+vmx",
+               "key" : "QEMUCPU"
+            },
+            {
+               "value" : "2",
+               "key" : "QEMUCPUS"
+            },
+            {
+               "key" : "QEMURAM",
+               "value" : "6144"
+            },
+            {
+               "key" : "QEMU_APPEND",
+               "value" : "boot once=d,menu=on,splash-time=5000"
+            },
+            {
+               "value" : "1",
+               "key" : "QEMU_DISABLE_SNAPSHOTS"
+            },
+            {
+               "value" : "1",
+               "key" : "UEFI"
+            },
+            {
+               "value" : "/usr/share/qemu/ovmf-x86_64-code.bin",
+               "key" : "UEFI_PFLASH_CODE"
+            },
+            {
+               "value" : "1",
+               "key" : "VIRTIO_CONSOLE"
+            }
+         ],
+         "backend" : "qemu"
+      },
+      {
+         "backend" : "qemu",
+         "settings" : [
+            {
+               "value" : "ide-cd",
+               "key" : "CDMODEL"
+            },
+            {
+               "value" : "scsi-hd",
+               "key" : "HDDMODEL"
+            },
+            {
+               "value" : "80",
+               "key" : "HDDSIZEGB"
+            },
+            {
+               "value" : "e1000e",
+               "key" : "NICMODEL"
+            },
+            {
+               "key" : "PART_TABLE_TYPE",
+               "value" : "gpt"
+            },
+            {
+               "key" : "QEMUCPU",
+               "value" : "host,+svm,+vmx"
+            },
+            {
+               "value" : "2",
+               "key" : "QEMUCPUS"
+            },
+            {
+               "key" : "QEMURAM",
+               "value" : "6144"
+            },
+            {
+               "value" : "boot once=d,menu=on,splash-time=5000",
+               "key" : "QEMU_APPEND"
+            },
+            {
+               "key" : "QEMU_DISABLE_SNAPSHOTS",
+               "value" : "1"
+            },
+            {
+               "key" : "QEMU_SMBIOS",
+               "value" : "type=3,manufacturer=apple"
+            },
+            {
+               "value" : "1",
+               "key" : "UEFI"
+            },
+            {
+               "value" : "/var/lib/openqa/tests/qubesos/utils/OVMF-mac_CODE.fd",
+               "key" : "UEFI_PFLASH_CODE"
+            },
+            {
+               "value" : "/var/lib/openqa/tests/qubesos/utils/OVMF-mac_VARS.fd",
+               "key" : "UEFI_PFLASH_VARS"
+            },
+            {
+               "key" : "VIRTIO_CONSOLE",
+               "value" : "1"
+            }
+         ],
+         "name" : "mac"
+      }
+   ]
+}

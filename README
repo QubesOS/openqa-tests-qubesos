@@ -18,7 +18,7 @@ Example command for starting tests for a template in templates-*-testing:
 Job templates:
 
 This is now edited via web UI. The templates.json file is git is a backup.
-Dump the templates: openqa-dump-templates --json > templates.json
+Dump the templates: openqa-dump-templates --json | jq -S > templates.json
 Load the templates: openqa-load-templates templates.json
 
 Variables:

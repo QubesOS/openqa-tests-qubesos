@@ -91,6 +91,7 @@ def main():
         output_xml.append(testsuite)
 
     with open(sys.argv[2], 'wb') as f:
+        f.write(b'<?xml version="1.0" encoding="UTF-8"?>\n');
         for ts in output_xml.findall('testsuite'):
             f.write(ElementTree.tostring(ts))
     #ElementTree.ElementTree(output_xml).write(sys.argv[2])

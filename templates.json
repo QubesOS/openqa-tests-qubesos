@@ -6,7 +6,7 @@
     },
     {
       "group_name": "Qubes OS pull requests",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-pull-requests-x86_64:\n    distri: qubesos\n    flavor: pull-requests\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-pull-requests-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_backupcompatibility\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - system_tests_gui_interactive:\n        priority: 40\n    - system_tests_guivm_gui_interactive:\n        priority: 40\n    - system_tests_usbproxy\n    - system_tests_qrexec\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupdispvm\n    - system_tests_splitgpg_tb78\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-pull-requests-x86_64:\n    distri: qubesos\n    flavor: pull-requests\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-pull-requests-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_backupcompatibility\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - system_tests_gui_interactive:\n        priority: 40\n    - system_tests_guivm_gui_interactive:\n        priority: 40\n    - system_tests_usbproxy\n    - system_tests_qrexec\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupdispvm\n"
     },
     {
       "group_name": "Qubes OS release upgrade",
@@ -14,7 +14,7 @@
     },
     {
       "group_name": "Qubes OS templates",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-templates-x86_64:\n    distri: qubesos\n    flavor: templates\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-templates-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix\n    - system_tests_splitgpg\n    - system_tests_splitgpg_tb78\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-templates-x86_64:\n    distri: qubesos\n    flavor: templates\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-templates-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix\n    - system_tests_splitgpg\n"
     },
     {
       "group_name": "Qubes OS updates",
@@ -820,31 +820,6 @@
         {
           "key": "SYSTEM_TESTS",
           "value": "qubes.tests.integ.backupdispvm:10800"
-        }
-      ]
-    },
-    {
-      "name": "system_tests_splitgpg_tb78",
-      "settings": [
-        {
-          "key": "INSTALL_TB78",
-          "value": "1"
-        },
-        {
-          "key": "QUBES_TEST_EXTRA_INCLUDE",
-          "value": "splitgpg"
-        },
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "SYSTEM_TESTS",
-          "value": "qubes.tests.extra:10800"
-        },
-        {
-          "key": "TEST_TEMPLATES",
-          "value": "fedora-32"
         }
       ]
     }

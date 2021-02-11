@@ -6,6 +6,7 @@ dom0-packages:
       - xdotool
       - haveged
       - grub2-xen
+      - grub2-xen-pvh
       - qubes-usb-proxy-dom0
       - syslinux
       - genisoimage

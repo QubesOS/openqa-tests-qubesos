@@ -121,6 +121,9 @@ update-test-import:
     - unless: rpm -q gpg-pubkey-{{salt['pillar.get']('update:key', '19f9875c')}}.asc
     - onchanges:
       - file: /etc/pki/rpm-gpg/update-test
+
+dnf -y makecache:
+  cmd.run: []
 {% endif %}
 
 update:

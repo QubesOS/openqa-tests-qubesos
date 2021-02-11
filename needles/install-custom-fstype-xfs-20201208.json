@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 508,
+      "ypos": 462,
+      "width": 37,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-0",
+    "install-custom-fstype-xfs"
+  ]
+}

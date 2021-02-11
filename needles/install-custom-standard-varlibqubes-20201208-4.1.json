@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 137,
+      "type": "match",
+      "xpos": 49,
+      "width": 113,
+      "height": 21
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "install-custom-standard-varlibqubes"
+  ]
+}

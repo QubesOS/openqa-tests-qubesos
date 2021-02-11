@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 68,
+      "ypos": 253,
+      "width": 122,
+      "height": 19,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-0",
+    "install-custom-type-standard"
+  ]
+}

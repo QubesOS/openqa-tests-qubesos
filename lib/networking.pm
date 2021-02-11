@@ -29,7 +29,13 @@ our @EXPORT = qw(enable_dom0_network_no_netvm enable_dom0_network_netvm
 
 sub enable_dom0_network_no_netvm {
     return unless script_run('ip r |grep ^default');
-    assert_script_run('dhclient $(ls /sys/class/net|head -1)');
+    # dhclient not installed by default anymore
+    #assert_script_run('dhclient $(ls /sys/class/net|head -1)');
+    assert_script_run('dev=$(ls /sys/class/net|head -1)');
+    assert_script_run('ip l s $dev up');
+    assert_script_run('ip a a 10.0.2.15/24 dev $dev');
+    assert_script_run('ip r a default via 10.0.2.2');
+    assert_script_run('echo "nameserver 10.0.2.3" > /etc/resolv.conf');
     script_run('ip a; ip r');
 }
 

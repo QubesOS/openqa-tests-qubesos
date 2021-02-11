@@ -1,5 +1,6 @@
 import asyncio
 import subprocess
+import pathlib
 
 import qubes.ext
 import qubes.vm.qubesvm
@@ -12,11 +13,13 @@ class DefaultPV(qubes.ext.Extension):
     @asyncio.coroutine
     def on_domain_pre_start(self, vm, event, **kwargs):
         # on Xen 4.13 PCI passthrough on PV requires IOMMU too
-        if self.xeninfo['xen_minor'] >= 13 and 'hvm_directio' not in self.physinfo['virt_caps']:
+        pv_passthrough_available = (self.xeninfo['xen_minor'] < 13 or 
+            'qubes.enable_insecure_pv_passthrough' in self.dom0_cmdline)
+        if 'hvm_directio' not in self.physinfo['virt_caps'] and not pv_passthrough_available:
             if vm.name in ('sys-net', 'sys-usb'):
                 for ass in list(vm.devices['pci'].assignments()):
                     yield from vm.devices['pci'].detach(ass)
-        elif 'hvm_directio' in self.physinfo['virt_caps']:
+        elif 'hvm_directio' in self.physinfo['virt_caps'] or pv_passthrough_available:
             # IOMMU is available, (re)attach devices
             if vm.name == 'sys-net':
                 missing = set(self.netdevs)
@@ -97,6 +100,8 @@ class DefaultPV(qubes.ext.Extension):
         if 'journald' not in qubes.config.defaults['kernelopts']:
             qubes.config.defaults['kernelopts'] += ' systemd.journald.forward_to_console=1'
             qubes.config.defaults['kernelopts_pcidevs'] += ' systemd.journald.forward_to_console=1'
+
+        self.dom0_cmdline = pathlib.Path('/proc/cmdline').read_bytes().decode()
 
     @qubes.ext.handler('features-request')
     @asyncio.coroutine

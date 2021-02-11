@@ -68,7 +68,7 @@ sub run {
     script_run "$sed_enable_discard /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
     script_run "$sed_enable_discard /mnt/sysimage/etc/default/grub";
 
-    my $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:\0 console=hvc0 console=tty0:g\'';
+    my $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:\0 console=hvc0 console=tty0 qubes.enable_insecure_pv_passthrough:g\'';
     script_run "$sed_enable_dom0_console_log $xen_cfg";
     script_run "$sed_enable_dom0_console_log /mnt/sysimage/boot/grub2/grub.cfg";
     script_run "$sed_enable_dom0_console_log /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";

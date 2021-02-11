@@ -251,7 +251,6 @@ sub run {
 
 sub post_fail_hook {
     my ($self) = @_;
-    select_console('x11');
     send_key('esc');
     send_key('esc');
     save_screenshot;

@@ -37,15 +37,23 @@ sub run {
 
     # check if dom0 logs are not empty
     assert_and_click('qube-manager-dom0-rc', button => 'right', timeout => 5);
-    # clicking over this menu is sensitive for mouse movements and
-    # unfortunately assert_and_click insists on moving mouse back to the
-    # original possition
-    assert_screen('qube-manager-dom0-logs', 5);
-    send_key("up");
-    send_key("right");
-    assert_screen('qube-manager-dom0-logs2', 10);
-    send_key("esc");
-    send_key("esc");
+    if (check_var("VERSION", "4.0")) {
+        # Qubes 4.0: logs submenu
+        # clicking over this menu is sensitive for mouse movements and
+        # unfortunately assert_and_click insists on moving mouse back to the
+        # original possition
+        assert_screen('qube-manager-dom0-logs', 5);
+        send_key("up");
+        send_key("right");
+        assert_screen('qube-manager-dom0-logs2', 10);
+        send_key("esc");
+        send_key("esc");
+    } else {
+        # Qubes 4.1+: logs dialog
+        assert_and_click('qube-manager-dom0-logs');
+        assert_screen('qube-manager-dom0-logs-window');
+        send_key('esc');
+    }
 
     # exit politely, also checking if menus click
     assert_and_click('qube-manager-system-open', timeout => 10);

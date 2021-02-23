@@ -43,6 +43,9 @@ sub run {
     assert_and_click("vm-settings-ok");
     assert_screen("desktop");
 
+    # wait for menu to regenerate
+    sleep(2);
+
     # now try to start "Document Viewer"
     assert_and_click("menu");
     assert_and_click("menu-vm-work");

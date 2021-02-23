@@ -46,4 +46,5 @@ Variables used in tests:
  - `QUBES_TEST_EXTRA_INCLUDE`, `QUBES_TEST_EXTRA_EXCLUDE` - passed directly to the test environment
  - `TEST_GUI_INTERACTIVE` - simple GUI interactive tests (start application from menu etc)
  - `GUIVM` - create GUI VM
+ - `KEEP_SCREENLOCKER` - do not disable xscreensaver (or whatever screenlocker is there)
 

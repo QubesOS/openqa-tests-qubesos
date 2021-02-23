@@ -71,7 +71,9 @@ sub handle_system_startup {
     select_console('root-virtio-terminal');
     assert_script_run "chown $testapi::username /dev/$testapi::serialdev";
     # disable screensaver
-    assert_script_run('killall xscreensaver');
+    if (!check_var('KEEP_SCREENLOCKER', '1')) {
+        assert_script_run('killall xscreensaver');
+    }
     select_console('x11');
     wait_still_screen;
 }

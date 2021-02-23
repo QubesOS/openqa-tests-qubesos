@@ -27,10 +27,6 @@ sub run {
     assert_script_run('qvm-run -p -u root work "dnf -y install mate-notification-daemon || apt -y install mate-notification-daemon"', timeout => 180);
     select_console('x11');
 
-    # start xscreensaver (killed in the test startup); the space at the end is
-    # intentional, otherwise it autocompletes to xscreensaver-demo
-    x11_start_program('xscreensaver ', valid => 0);
-
     assert_and_click("menu");
     assert_and_click("menu-vm-work");
     assert_and_click("menu-vm-xterm");

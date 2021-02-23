@@ -2,7 +2,7 @@
   "JobGroups": [
     {
       "group_name": "Qubes OS",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-install-iso-x86_64:\n    distri: qubesos\n    flavor: install-iso\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-install-iso-x86_64:\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_over_existing:\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        machine: 64bit\n        priority: 20\n    - install_keyboard_layout:\n        machine: uefi\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_unencrypted_upload:\n        machine: uefi\n        priority: 51\n    - install_unencrypted_upload:\n        machine: 64bit\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-install-iso-x86_64:\n    distri: qubesos\n    flavor: install-iso\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-install-iso-x86_64:\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_over_existing:\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_xfs:\n        machine: 64bit\n        priority: 20\n    - install_xfs:\n        machine: uefi\n        priority: 20\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        machine: 64bit\n        priority: 20\n    - install_keyboard_layout:\n        machine: uefi\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_unencrypted_upload:\n        machine: uefi\n        priority: 51\n    - install_unencrypted_upload:\n        machine: 64bit\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n"
     },
     {
       "group_name": "Qubes OS pull requests",
@@ -773,6 +773,20 @@
         {
           "key": "SYSTEM_TESTS",
           "value": "qubes.tests.integ.backupdispvm:10800"
+        }
+      ]
+    },
+    {
+      "description": "Install with XFS partitioning",
+      "name": "install_xfs",
+      "settings": [
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "PARTITIONING",
+          "value": "xfs"
         }
       ]
     },

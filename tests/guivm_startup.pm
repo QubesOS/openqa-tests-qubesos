@@ -29,6 +29,7 @@ sub run {
     assert_script_run("qvm-shutdown --all --wait", 180);
     assert_script_run("qubes-prefs default_guivm sys-gui");
     assert_script_run("qvm-start sys-firewall", 180);
+    assert_script_run("qvm-start sys-usb", 90);
     assert_script_run("! qvm-check sys-whonix || qvm-start sys-whonix", 90);
     assert_script_run("tail -F /var/log/xen/console/guest-sys-gui.log >> /dev/$testapi::serialdev & true");
 

@@ -33,7 +33,7 @@ sub handle_system_startup {
     reset_consoles();
     if (!check_var('UEFI', '1')) {
         # wait for bootloader to appear
-        assert_screen "bootloader", 90;
+        assert_screen ["bootloader", "luks-prompt", "login-prompt-user-selected"], 90;
 
         if (match_has_tag("bootloader-installer")) {
             # troubleshooting

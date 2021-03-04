@@ -32,6 +32,9 @@ sub run {
     assert_script_run('sudo rtcwake -n -s 30');
     assert_script_run('sudo systemctl suspend');
     sleep(60);
+    wait_screen_change {
+        send_key 'esc';
+    };
     send_key('esc');
     sleep(10);
     # unlock screen

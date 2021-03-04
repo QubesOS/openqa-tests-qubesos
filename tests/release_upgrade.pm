@@ -82,6 +82,7 @@ sub test_flags {
 sub post_fail_hook {
     my $self = shift;
 
+    script_run "cat /home/user/release-upgrade.log";
     $self->SUPER::post_fail_hook();
     upload_logs('/home/user/release-upgrade.log', failok => 1);
 };

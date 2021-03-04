@@ -60,6 +60,9 @@ sub run {
         assert_script_run("qvm-shutdown --wait sys-whonix", timeout => 90);
         assert_script_run("qvm-start sys-whonix", timeout => 90);
     }
+    if (get_var("UPDATE_TEMPLATES") =~ /fedora-33/) {
+        assert_script_run("qvm-prefs default-mgmt-dvm template fedora-33");
+    }
 
     type_string("exit\n");
 }

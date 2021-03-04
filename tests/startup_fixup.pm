@@ -37,7 +37,7 @@ sub run {
     sleep(5);
     assert_script_run('lsusb || qvm-run --no-gui -p -u root $(qvm-check -q sys-usb && echo sys-usb || echo sys-net) \'systemctl start qubes-input-sender-tablet@$(basename $(readlink /dev/input/by-id/usb-QEMU_QEMU_USB_Tablet_*-event-mouse))\'', timeout => 60);
     # force "connection established" notification to show again, if it expired already
-    script_run('qvm-run sys-net "pkill nm-applet; sleep 1; nm-applet >/dev/null 2>&1 </dev/null & true"', 120);
+    script_run('timeout 100s qvm-run sys-net "pkill nm-applet; sleep 1; nm-applet >/dev/null 2>&1 </dev/null & true"', 120);
     select_console('x11');
     assert_screen("nm-connection-established", 60);
     assert_screen("no-notifications");

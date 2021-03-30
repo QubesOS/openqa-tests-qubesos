@@ -1,0 +1,32 @@
+{
+  "area": [
+    {
+      "width": 178,
+      "type": "match",
+      "height": 22,
+      "xpos": 249,
+      "ypos": 79
+    },
+    {
+      "ypos": 178,
+      "type": "match",
+      "height": 15,
+      "width": 61,
+      "xpos": 259,
+      "click_point": {
+        "xpos": 5,
+        "ypos": 5
+      }
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "whonix template not included in the image"
+    }
+  ],
+  "tags": [
+    "disable-install-whonix",
+    "install-whonix-not-available"
+  ]
+}

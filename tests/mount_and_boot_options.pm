@@ -56,6 +56,15 @@ sub run {
     if (script_run("test \$(systemctl list-units --user --failed --no-legend | wc -l) -eq 0") ne 0) {
         record_soft_failure("there are failed user services");
     }
+
+    if (get_var('VERSION') != '4.0') {
+        # 4.1 should have discard on luks enabled (if there is one)
+        if (script_run("sudo dmsetup table|grep luks-") eq 0) {
+            if (script_run("sudo dmsetup table|grep luks-|grep discard") ne 0) {
+                record_soft_failure("LUKS does not have discard enabled");
+            }
+        }
+    }
     type_string("exit\n");
     assert_screen "desktop";
 }

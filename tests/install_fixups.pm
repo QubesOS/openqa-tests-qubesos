@@ -59,14 +59,16 @@ sub run {
     }
     script_run "sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /mnt/sysimage/etc/default/grub";
 
-    # need to use explicit UUID to override (empty) options from /etc/crypttab,
-    # rd.luks.options=discard works only for disks not mentioned in
-    # /etc/crypttab; see systemd-cryptsetup-generator(8)
-    my $sed_enable_discard = 'sed -i -e \'s:uuid=luks-\([^ ]*\) :\0rd.luks.options=\1=discard :g\'';
-    script_run "$sed_enable_discard $xen_cfg";
-    script_run "$sed_enable_discard /mnt/sysimage/boot/grub2/grub.cfg";
-    script_run "$sed_enable_discard /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
-    script_run "$sed_enable_discard /mnt/sysimage/etc/default/grub";
+    if (get_var('VERSION') eq '4.0') {
+        # need to use explicit UUID to override (empty) options from /etc/crypttab,
+        # rd.luks.options=discard works only for disks not mentioned in
+        # /etc/crypttab; see systemd-cryptsetup-generator(8)
+        my $sed_enable_discard = 'sed -i -e \'s:uuid=luks-\([^ ]*\) :\0rd.luks.options=\1=discard :g\'';
+        script_run "$sed_enable_discard $xen_cfg";
+        script_run "$sed_enable_discard /mnt/sysimage/boot/grub2/grub.cfg";
+        script_run "$sed_enable_discard /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
+        script_run "$sed_enable_discard /mnt/sysimage/etc/default/grub";
+    }
 
     my $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:\0 console=hvc0 console=tty0 qubes.enable_insecure_pv_passthrough:g\'';
     script_run "$sed_enable_dom0_console_log $xen_cfg";

@@ -58,6 +58,9 @@ if (get_var('ISO')) {
             autotest::loadtest "tests/update_guivm.pm";
         }
     }
+    if (get_var('PARTITIONING')) {
+        autotest::loadtest "tests/switch_pool.pm";
+    }
 }
 
 if (check_var('RELEASE_UPGRADE', '1')) {

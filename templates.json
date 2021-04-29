@@ -6,7 +6,7 @@
     },
     {
       "group_name": "Qubes OS pull requests",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-pull-requests-x86_64:\n    distri: qubesos\n    flavor: pull-requests\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-pull-requests-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_backupcompatibility\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - system_tests_gui_interactive:\n        priority: 40\n    - system_tests_guivm_gui_interactive:\n        priority: 40\n    - system_tests_usbproxy\n    - system_tests_qrexec\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupdispvm\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-pull-requests-x86_64:\n    distri: qubesos\n    flavor: pull-requests\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-pull-requests-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_backupcompatibility\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - system_tests_gui_interactive:\n        priority: 40\n    - system_tests_guivm_gui_interactive:\n        priority: 40\n    - system_tests_basic_vm_qrexec_gui_xfs\n    - system_tests_basic_vm_qrexec_gui_btrfs\n    - system_tests_basic_vm_qrexec_gui_ext4\n    - system_tests_usbproxy\n    - system_tests_qrexec\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupdispvm\n"
     },
     {
       "group_name": "Qubes OS release upgrade",
@@ -366,71 +366,6 @@
   ],
   "TestSuites": [
     {
-      "name": "install_minimal",
-      "settings": [
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "fedora"
-        }
-      ]
-    },
-    {
-      "name": "install_over_existing",
-      "settings": [
-        {
-          "key": "BOOT_MENU",
-          "value": "1"
-        },
-        {
-          "key": "INSTALL_OVER_EXISTING",
-          "value": "1"
-        },
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "fedora"
-        }
-      ]
-    },
-    {
-      "name": "install_btrfs",
-      "settings": [
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "fedora"
-        },
-        {
-          "key": "PARTITIONING",
-          "value": "btrfs"
-        }
-      ]
-    },
-    {
-      "name": "install_usbvm_combined",
-      "settings": [
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "fedora"
-        },
-        {
-          "key": "USBVM",
-          "value": "sys-net"
-        }
-      ]
-    },
-    {
-      "name": "install_no_usbvm",
-      "settings": [
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "fedora"
-        },
-        {
-          "key": "USBVM",
-          "value": "none"
-        }
-      ]
-    },
-    {
       "name": "install_keyboard_layout",
       "settings": [
         {
@@ -466,27 +401,6 @@
         {
           "key": "PUBLISH_HDD_1",
           "value": "disk_default_%VERSION%_%MACHINE%.qcow2"
-        }
-      ]
-    },
-    {
-      "name": "install_unencrypted_upload",
-      "settings": [
-        {
-          "key": "HDDSIZEGB",
-          "value": "80"
-        },
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "all"
-        },
-        {
-          "key": "PARTITIONING",
-          "value": "unencrypted"
-        },
-        {
-          "key": "PUBLISH_HDD_1",
-          "value": "disk_unencrypted_%VERSION%_%MACHINE%.qcow2"
         }
       ]
     },
@@ -670,19 +584,6 @@
       ]
     },
     {
-      "name": "install_nvme",
-      "settings": [
-        {
-          "key": "HDDMODEL",
-          "value": "nvme"
-        },
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "fedora"
-        }
-      ]
-    },
-    {
       "name": "system_tests_usbproxy",
       "settings": [
         {
@@ -846,6 +747,187 @@
         {
           "key": "TEST_GUI_INTERACTIVE",
           "value": "1"
+        }
+      ]
+    },
+    {
+      "name": "install_minimal",
+      "settings": [
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "name": "install_no_usbvm",
+      "settings": [
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        },
+        {
+          "key": "USBVM",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "name": "install_nvme",
+      "settings": [
+        {
+          "key": "HDDMODEL",
+          "value": "nvme"
+        },
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "name": "install_over_existing",
+      "settings": [
+        {
+          "key": "BOOT_MENU",
+          "value": "1"
+        },
+        {
+          "key": "INSTALL_OVER_EXISTING",
+          "value": "1"
+        },
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "name": "install_usbvm_combined",
+      "settings": [
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        },
+        {
+          "key": "USBVM",
+          "value": "sys-net"
+        }
+      ]
+    },
+    {
+      "name": "install_btrfs",
+      "settings": [
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "PARTITIONING",
+          "value": "btrfs"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "name": "install_unencrypted_upload",
+      "settings": [
+        {
+          "key": "HDDSIZEGB",
+          "value": "80"
+        },
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "all"
+        },
+        {
+          "key": "PARTITIONING",
+          "value": "unencrypted"
+        },
+        {
+          "key": "PUBLISH_HDD_1",
+          "value": "disk_unencrypted_%VERSION%_%MACHINE%.qcow2"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "description": "basic tests on XFS filesystem (reflink pool)",
+      "name": "system_tests_basic_vm_qrexec_gui_xfs",
+      "settings": [
+        {
+          "key": "PARTITIONING",
+          "value": "xfs"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.basic qubes.tests.integ.vm_qrexec_gui:14400"
+        }
+      ]
+    },
+    {
+      "description": "basic tests on BTRFS filesystem (reflink pool)",
+      "name": "system_tests_basic_vm_qrexec_gui_btrfs",
+      "settings": [
+        {
+          "key": "PARTITIONING",
+          "value": "btrfs"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.basic qubes.tests.integ.vm_qrexec_gui:14400"
+        }
+      ]
+    },
+    {
+      "description": "basic tests on ext4 filesystem (file pool)",
+      "name": "system_tests_basic_vm_qrexec_gui_ext4",
+      "settings": [
+        {
+          "key": "PARTITIONING",
+          "value": "standard"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.basic qubes.tests.integ.vm_qrexec_gui:14400"
         }
       ]
     }

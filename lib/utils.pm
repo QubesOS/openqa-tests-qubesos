@@ -21,7 +21,7 @@ use strict;
 use base 'Exporter';
 use Exporter;
 
-our @EXPORT = qw(us_colemak);
+our @EXPORT = qw(us_colemak colemak_us);
 
 =head2 us_colemak
 
@@ -38,6 +38,22 @@ sub us_colemak {
     # userpass: idksradd
     #            qwertyuiopasdfghjkl;zxcvbnm
     $input =~ tr/qwfpgjluy;arstdhneiozxcvbkm/qwertyuiopasdfghjkl;zxcvbnm/;
+    return $input;
+}
+
+=head2 colemak_us
+
+Reverse us_colemak function.
+
+=cut
+
+sub colemak_us {
+    my $input = shift;
+
+    # lukspass: uindradd  iler;arr
+    # userpass: idksradd
+    #                                        qwertyuiopasdfghjkl;zxcvbnm
+    $input =~ tr/qwertyuiopasdfghjkl;zxcvbnm/qwfpgjluy;arstdhneiozxcvbkm/;
     return $input;
 }
 

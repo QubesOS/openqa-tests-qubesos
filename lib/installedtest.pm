@@ -64,6 +64,8 @@ sub handle_system_startup {
     # login prompt)
     if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
         x11_start_program(us_colemak('setxkbmap us'), valid => 0);
+        # set 'password' back to US layout
+        $password = colemak_us($password);
     } elsif (get_var('LOCALE')) {
         x11_start_program('setxkbmap us', valid => 0);
     }

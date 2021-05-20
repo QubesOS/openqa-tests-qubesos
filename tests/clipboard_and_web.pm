@@ -24,42 +24,44 @@ sub run {
     select_console('x11');
     assert_screen "desktop";
 
-    # open work VM settings and add "Document Viewer" application
+    # try to start "Text Editor" (gedit)
     assert_and_click("menu");
     assert_and_click("menu-vm-work");
-    if (!check_screen("menu-vm-settings")) {
-        # "settings" entry doesn't fit on screen, scroll to it
-        send_key("right");
-        send_key_until_needlematch("menu-vm-settings", "up");
-    }
-    assert_and_click("menu-vm-settings");
-    assert_and_click("vm-settings-applications", timeout => 60);
-    assert_and_click("vm-settings-app-evince");
-    send_key('end');
-    send_key_until_needlematch("vm-settings-app-xterm", 'up');
-    assert_and_click("vm-settings-app-add");
-    assert_and_click("vm-settings-app-evince");
-    send_key('end');
-    assert_and_click("vm-settings-app-text-editor");
-    assert_and_click("vm-settings-app-add");
-    assert_and_click("vm-settings-app-evince");
-    assert_and_click("vm-settings-app-add");
-    assert_and_click("vm-settings-ok");
-    assert_screen("desktop");
+    assert_and_click("menu-vm-text-editor");
+    assert_screen("work-text-editor", timeout => 90);
 
-    # wait for menu to regenerate
-    sleep(2);
+    type_string("https://www.qubes-os.org/\n");
+    send_key("ctrl-a");
+    send_key("ctrl-c");
+    send_key("ctrl-shift-c");
+    assert_screen("clipboard-copy-notification");
 
-    # now try to start "Document Viewer"
+    # try to start "Firefox" in personal
     assert_and_click("menu");
-    assert_and_click("menu-vm-work");
-    assert_and_click("menu-vm-evince");
-    assert_screen("work-evince", timeout => 90);
+    assert_and_click("menu-vm-personal");
+    assert_and_click("menu-vm-firefox");
+    assert_screen("personal-firefox", timeout => 90);
 
     # wait for full startup
     sleep(2);
+
+    send_key("ctrl-shift-v");
+    assert_screen("clipboard-paste-notification");
+    send_key("ctrl-v");
+    send_key("ret");
+    assert_screen("qubes-website");
     send_key("ctrl-q");
+    if (check_screen("firefox-multitab-close", timeout => 5)) {
+        assert_and_click("firefox-multitab-close");
+    }
     wait_still_screen();
+
+
+    # close the text editor too
+    send_key("ctrl-q");
+    assert_screen("text-editor-save-prompt");
+    # close without saving
+    send_key("alt-w");
     assert_screen("desktop");
 }
 

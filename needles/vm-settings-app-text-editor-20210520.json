@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 88,
+      "ypos": 562,
+      "width": 81,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "RELEASE-4-1",
+    "vm-settings-app-text-editor"
+  ]
+}

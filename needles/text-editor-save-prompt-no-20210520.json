@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 302,
+      "ypos": 389,
+      "width": 220,
+      "height": 26,
+      "type": "match"
+    },
+    {
+      "xpos": 301,
+      "ypos": 477,
+      "width": 156,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "RELEASE-4-1",
+    "text-editor-save-prompt"
+  ]
+}

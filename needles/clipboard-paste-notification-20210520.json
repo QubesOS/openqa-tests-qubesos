@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 729,
+      "ypos": 63,
+      "width": 267,
+      "height": 48,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "RELEASE-4-1",
+    "clipboard-paste-notification"
+  ]
+}

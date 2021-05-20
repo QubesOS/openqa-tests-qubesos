@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 334,
+      "ypos": 487,
+      "width": 96,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "RELEASE-4-1",
+    "menu-vm-text-editor"
+  ]
+}

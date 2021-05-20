@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 360,
+      "ypos": 291,
+      "width": 66,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "RELEASE-4-1",
+    "menu-vm-firefox"
+  ]
+}

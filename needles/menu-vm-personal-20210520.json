@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 85,
+      "ypos": 265,
+      "width": 78,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "RELEASE-4-1",
+    "menu-vm-personal"
+  ]
+}

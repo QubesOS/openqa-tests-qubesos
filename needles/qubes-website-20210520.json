@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 260,
+      "ypos": 354,
+      "width": 394,
+      "height": 116,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "qubes-website"
+  ]
+}

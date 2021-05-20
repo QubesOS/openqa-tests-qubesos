@@ -64,6 +64,7 @@ sub run {
     if (check_var('UEFI_DIRECT', '1')) {
         set_var('UEFI_DIRECT', '');
     }
+    set_var('KEEP_SCREENLOCKER', '1');
 
     script_run("sudo reboot", timeout => 0);
     assert_screen ["bootloader", "luks-prompt", "login-prompt-user-selected"], 300;

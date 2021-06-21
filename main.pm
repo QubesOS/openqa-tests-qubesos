@@ -90,6 +90,9 @@ if (get_var("WHONIXCHECK")) {
 }
 
 if (get_var('SYSTEM_TESTS')) {
+    if (check_var('SYSTEM_TESTS', 'qubesmanager.tests')) {
+        autotest::loadtest "tests/system_tests_prepare_manager.pm";
+    }
     autotest::loadtest "tests/system_tests.pm";
 }
 

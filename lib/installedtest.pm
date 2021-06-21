@@ -121,6 +121,12 @@ sub post_fail_hook {
     $self->save_and_upload_log('qvm-prefs sys-usb', 'qvm-prefs-sys-usb.log');
     $self->save_and_upload_log('xl dmesg', 'xl-dmesg.log');
     $self->save_and_upload_log('qvm-run --no-gui -p -u root sys-firewall "cat /var/log/xen/xen-hotplug.log"', 'sys-firewall-xen-hotplug.log');
+    # if guivm is enabled in the run, and selected in this very test job:
+    if (check_var('GUIVM', '1') and check_var('TEST_GUIVM', '1')) {
+        $self->save_and_upload_log('qvm-run --no-gui -p -u root sys-gui "cat /home/user/.xsession-errors"', 'sys-gui-xsession-errors.log');
+        $self->save_and_upload_log('qvm-run --no-gui -p sys-gui "journalctl -b --user"', 'sys-gui-user-journalctl.log');
+        $self->save_and_upload_log('qvm-run --no-gui -p -u root sys-gui "tar cz /var/log"', 'sys-gui-var_log.tar.gz');
+    }
 }
 
 

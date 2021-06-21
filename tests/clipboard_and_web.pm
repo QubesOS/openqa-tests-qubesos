@@ -47,11 +47,12 @@ sub run {
 
     send_key("ctrl-shift-v");
     assert_screen("clipboard-paste-notification");
+    assert_and_click("personal-firefox");
     send_key("ctrl-v");
     send_key("ret");
     assert_screen("qubes-website");
     send_key("ctrl-q");
-    if (check_screen("firefox-multitab-close", timeout => 5)) {
+    if (check_screen("firefox-multitab-close", timeout => 8)) {
         assert_and_click("firefox-multitab-close");
     }
     wait_still_screen();
@@ -67,9 +68,6 @@ sub run {
 
 sub post_fail_hook {
     my ($self) = @_;
-    select_console('x11');
-    send_key('esc');
-    send_key('esc');
     save_screenshot;
     $self->SUPER::post_fail_hook;
 

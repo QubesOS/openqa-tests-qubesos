@@ -61,7 +61,6 @@ testfunc() {
         sudo systemctl stop qubesd
         cmd_prefix="sudo -E"
     fi
-    #sudo -E script -e -c "python3 -m qubes.tests.run \$1" tests-\$1.log
     \$cmd_prefix script -e -c "nose2 -v --plugin nose2.plugins.loader.loadtests --plugin nose2.plugins.junitxml -X \$1" tests-\$1.log
     retval=\$?
     sudo systemctl start qubesd

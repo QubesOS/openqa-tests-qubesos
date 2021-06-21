@@ -227,6 +227,7 @@ sub run {
     x11_start_program('qubes-vm-settings work2');
 
     assert_and_click('vm-settings-delete');
+    sleep(1);
     type_string('work2');
     assert_and_click('vm-settings-do-delete');
 

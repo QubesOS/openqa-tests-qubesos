@@ -33,7 +33,7 @@ sub test_file_touch {
     my ($guivm) = @_;
     # touch a file with input from gui domain and then from target vm
     x11_start_program('touch e1qwertya', valid => 0);
-    x11_start_program('qvmrun work xterm', target_match => ['work-xterm', 'work-xterm-inactive'], match_timeout => 60);
+    x11_start_program('qvmrun work xterm', target_match => ['work-xterm', 'work-xterm-inactive'], match_timeout => 90);
     # wait for possibly whonixcheck, then click xterm again
     sleep 5;
     assert_and_click(['work-xterm', 'work-xterm-inactive']);

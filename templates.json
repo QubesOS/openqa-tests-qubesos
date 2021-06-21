@@ -18,7 +18,7 @@
     },
     {
       "group_name": "Qubes OS updates",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-4.0-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.0'\n  qubesos-4.1-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.1'\nscenarios:\n  x86_64:\n    qubesos-4.0-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    qubesos-4.1-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_backupdispvm\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_guivm_gui_interactive\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-4.0-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.0'\n  qubesos-4.1-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.1'\nscenarios:\n  x86_64:\n    qubesos-4.0-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    qubesos-4.1-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_backupdispvm\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_guivm_gui_interactive\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_basic_vm_qrexec_gui_xfs\n    - system_tests_basic_vm_qrexec_gui_btrfs\n    - system_tests_basic_vm_qrexec_gui_ext4\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n"
     },
     {
       "group_name": "Qubes-Whonix updates",
@@ -392,19 +392,6 @@
       ]
     },
     {
-      "name": "install_default_upload",
-      "settings": [
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "all"
-        },
-        {
-          "key": "PUBLISH_HDD_1",
-          "value": "disk_default_%VERSION%_%MACHINE%.qcow2"
-        }
-      ]
-    },
-    {
       "name": "system_tests_basic_vm_qrexec_gui",
       "settings": [
         {
@@ -499,31 +486,6 @@
         {
           "key": "SYSTEM_TESTS",
           "value": "qubes.tests.integ.backupcompatibility:10800"
-        }
-      ]
-    },
-    {
-      "name": "system_tests_update",
-      "settings": [
-        {
-          "key": "DO_UPDATE",
-          "value": "1"
-        },
-        {
-          "key": "HDD_1",
-          "value": "disk_unencrypted_%VERSION%_%MACHINE%.qcow2"
-        },
-        {
-          "key": "SALT_SYSTEM_TESTS",
-          "value": "1"
-        },
-        {
-          "key": "STORE_HDD_1",
-          "value": "disk_unencrypted_updated.qcow2"
-        },
-        {
-          "key": "WORKER_CLASS",
-          "value": "local"
         }
       ]
     },
@@ -873,7 +835,7 @@
         },
         {
           "key": "PUBLISH_HDD_1",
-          "value": "disk_unencrypted_%VERSION%_%MACHINE%.qcow2"
+          "value": "disk_unencrypted_%VERSION%_%MACHINE%_%KERNEL_VERSION%.qcow2"
         },
         {
           "key": "TEST_GENERIC",
@@ -885,6 +847,10 @@
       "description": "basic tests on XFS filesystem (reflink pool)",
       "name": "system_tests_basic_vm_qrexec_gui_xfs",
       "settings": [
+        {
+          "key": "NUMDISKS",
+          "value": "2"
+        },
         {
           "key": "PARTITIONING",
           "value": "xfs"
@@ -904,6 +870,10 @@
       "name": "system_tests_basic_vm_qrexec_gui_btrfs",
       "settings": [
         {
+          "key": "NUMDISKS",
+          "value": "2"
+        },
+        {
           "key": "PARTITIONING",
           "value": "btrfs"
         },
@@ -922,6 +892,10 @@
       "name": "system_tests_basic_vm_qrexec_gui_ext4",
       "settings": [
         {
+          "key": "NUMDISKS",
+          "value": "2"
+        },
+        {
           "key": "PARTITIONING",
           "value": "standard"
         },
@@ -932,6 +906,52 @@
         {
           "key": "SYSTEM_TESTS",
           "value": "qubes.tests.integ.basic qubes.tests.integ.vm_qrexec_gui:14400"
+        }
+      ]
+    },
+    {
+      "name": "install_default_upload",
+      "settings": [
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "all"
+        },
+        {
+          "key": "PUBLISH_HDD_1",
+          "value": "disk_default_%VERSION%_%MACHINE%_%KERNEL_VERSION%.qcow2"
+        }
+      ]
+    },
+    {
+      "name": "system_tests_update",
+      "settings": [
+        {
+          "key": "DO_UPDATE",
+          "value": "1"
+        },
+        {
+          "key": "HDD_1",
+          "value": "disk_unencrypted_%VERSION%_%MACHINE%_%KERNEL_VERSION%.qcow2"
+        },
+        {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
+        },
+        {
+          "key": "QEMU_COMPRESS_QCOW2",
+          "value": "0"
+        },
+        {
+          "key": "SALT_SYSTEM_TESTS",
+          "value": "1"
+        },
+        {
+          "key": "STORE_HDD_1",
+          "value": "disk_unencrypted_updated.qcow2"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "local"
         }
       ]
     }

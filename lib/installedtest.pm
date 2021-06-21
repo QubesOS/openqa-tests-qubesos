@@ -76,6 +76,7 @@ sub handle_system_startup {
     if (!check_var('KEEP_SCREENLOCKER', '1')) {
         assert_script_run('killall xscreensaver');
     }
+    script_run('systemctl is-system-running --wait', timeout => 90);
     select_console('x11');
     wait_still_screen;
 }

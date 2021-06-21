@@ -36,13 +36,20 @@ sub run {
 
     script_run("pkill xscreensaver");
 
-    assert_script_run("curl https://raw.githubusercontent.com/fepitre/qubes-migration/master/migration.sh > migration.sh");
-
+    #assert_script_run("sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing -y qubes-dist-upgrade");
+    #assert_script_run("curl https://raw.githubusercontent.com/marmarek/qubes-dist-upgrade/r4.0-fixes20210115/qubes-dist-upgrade.sh > migration.sh");
+    assert_script_run("curl https://raw.githubusercontent.com/fepitre/qubes-dist-upgrade/update-templates/qubes-dist-upgrade.sh > migration.sh");
+    assert_script_run("curl https://raw.githubusercontent.com/fepitre/qubes-dist-upgrade/update-templates/qubes-hooks.py > qubes-hooks.py");
+    assert_script_run("curl https://raw.githubusercontent.com/fepitre/qubes-dist-upgrade/update-templates/scripts/upgrade-template-standalone.sh > upgrade-template-standalone.sh");
     assert_script_run("chmod +x migration.sh");
-    assert_script_run("script -a -e -c 'sudo ./migration.sh --assumeyes --double-metadata-size' release-upgrade.log", timeout => 60);
-    assert_script_run("script -a -e -c 'sudo ./migration.sh --assumeyes --update' release-upgrade.log", timeout => 3600);
-    assert_script_run("script -a -e -c 'sudo ./migration.sh --assumeyes --release-upgrade' release-upgrade.log", timeout => 300);
-    assert_script_run("script -a -e -c 'sudo ./migration.sh --assumeyes --dist-upgrade' release-upgrade.log", timeout => 7200);
+    assert_script_run("chmod +x upgrade-template-standalone.sh");
+    assert_script_run("sudo cp migration.sh /usr/sbin/qubes-dist-upgrade");
+    assert_script_run("sudo mkdir -p /usr/sbin/scripts/");
+    assert_script_run("sudo cp upgrade-template-standalone.sh /usr/sbin/scripts/");
+    assert_script_run("sudo cp qubes-hooks.py /usr/sbin/qubes-hooks.py");
+
+
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --all --assumeyes' release-upgrade.log", timeout => 10800);
     sleep(1);
     send_key('ctrl-c');
 
@@ -54,8 +61,6 @@ sub run {
     }
     sleep(1);
     send_key('ctrl-c');
-
-    assert_script_run("script -a -e -c 'sudo ./migration.sh --assumeyes --setup-efi-grub' release-upgrade.log", timeout => 3600);
 
     # install qubesteststub module for updated python version
     assert_script_run("sudo sh -c 'cd /root/extra-files; python3 ./setup.py install'");

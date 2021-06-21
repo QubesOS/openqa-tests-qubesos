@@ -34,6 +34,12 @@ sub run {
     }
 
     my @whonix_vms = split(/\n/, script_output("qvm-ls --raw-list|grep whonix"));
+    # sort sys-whonix first
+    @whonix_vms = sort {
+        if ($a == 'sys-whonix') { return -1; }
+        if ($b == 'sys-whonix') { return  1; }
+        return $a cmp $b;
+    } @whonix_vms;
 
     assert_script_run('set -o pipefail');
 

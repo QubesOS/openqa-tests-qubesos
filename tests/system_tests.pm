@@ -46,6 +46,9 @@ sub run {
             assert_script_run("export $_='" . get_var($_) . "'");
         }
     }
+    if (check_var("VERSION", "4.1")) {
+        assert_script_run("export DEFAULT_LVM_POOL=qubes_dom0/vm-pool");
+    }
 
     if (check_var('VERBOSE_LIBVIRT', '1')) {
         assert_script_run('echo log_level = 1 | sudo tee -a /etc/libvirt/libvirtd.conf');

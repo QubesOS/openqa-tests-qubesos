@@ -22,31 +22,24 @@ use testapi;
 # WARNING: this test depends on simple_gui_apps.pm (which adds xterm to the menu)
 
 sub run {
-    select_console('root-virtio-terminal');
-    # install mate-notification-daemon, as it triggers the issue more reliably than xfce4-notifyd
-    assert_script_run('qvm-run -p -u root work "dnf -y install mate-notification-daemon || apt -y install mate-notification-daemon"', timeout => 180);
-    select_console('x11');
-
+    x11_start_program('sh -c \'echo -e "timeout:\t0:02:00" > ~/.xscreensaver\'', valid => 0);
+    x11_start_program('xscreensaver-command -restart', valid => 0);
     assert_and_click("menu");
     assert_and_click("menu-vm-work");
     assert_and_click("menu-vm-xterm");
 
-    assert_screen('work-xterm');
+    my $xterm_title_area = assert_screen('work-xterm')->{area}->[-1];
 
-    type_string("for i in `seq 60`; do notify-send test; sleep 1; done\n");
-    # wait for the first notification
-    assert_screen("notification-test");
-    # lock the screen
-    send_key('ctrl-alt-delete');
-    # wait for notifications to (potentially) appear
-    sleep(3);
-    assert_screen("screenlocker-blank");
-    # wait for the above loop to end
-    sleep(60);
-    # and unlock
-    type_password();
-    send_key('ret');
-    assert_and_click(['work-xterm', 'work-xterm-inactive']);
+    my ($click_x, $click_y) = ($xterm_title_area->{x}, $xterm_title_area->{y}+100);
+    mouse_set($click_x, $click_y);
+    # now click every 10s but don't move!
+    for (1..15) {
+        mouse_click();
+        sleep(10);
+    }
+
+    # clicking should prevent locking the screen
+    assert_screen('work-xterm');
     type_string("exit\n");
 
     assert_screen("desktop");

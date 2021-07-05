@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 148,
+      "type": "match",
+      "height": 23,
+      "ypos": 395,
+      "xpos": 437
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "firstboot-setting-network"
+  ]
+}

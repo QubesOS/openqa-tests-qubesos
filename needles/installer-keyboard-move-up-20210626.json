@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 29,
+      "ypos": 621,
+      "xpos": 119,
+      "width": 35,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-3.2",
+    "installer-keyboard-move-up"
+  ]
+}

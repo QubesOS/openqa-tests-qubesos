@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 58,
+      "xpos": 314,
+      "ypos": 362,
+      "height": 54
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "desktop-runner-xterm"
+  ]
+}

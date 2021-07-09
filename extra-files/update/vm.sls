@@ -19,6 +19,8 @@ disable-whonix-onion:
   file.comment:
     - name: /etc/apt/sources.list.d/whonix.list
     - regex: '^.*dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd'
+    - onlyif:
+      - test -e /etc/apt/sources.list.d/whonix.list
 {% endif %}
 
 

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 706,
+      "height": 76,
+      "ypos": 85,
+      "type": "match",
+      "width": 122
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "ENV-disp-sys-usb-firewall",
+    "qui-domains-opened"
+  ]
+}

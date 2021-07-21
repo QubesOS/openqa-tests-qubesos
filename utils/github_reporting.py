@@ -591,6 +591,11 @@ class OpenQA:
     @staticmethod
     def get_latest_job_id(job_type='system_tests_update', build=None,
                           version=None):
+        return OpenQA.get_latest_job_ids(job_type, build, version, n=1)
+
+    @staticmethod
+    def get_latest_job_ids(job_type='system_tests_update', build=None,
+                          version=None, n=100, result=None):
         params = []
         if job_type:
             params.append('test={}'.format(job_type))
@@ -598,6 +603,10 @@ class OpenQA:
             params.append('build={}'.format(build))
         if version:
             params.append('version={}'.format(version))
+        if n:
+            params.append('limit={}'.format(n))
+        if result:
+            params.append('result={}'.format(result))
 
         if params:
             params_string = '?' + "&".join(params)
@@ -605,15 +614,14 @@ class OpenQA:
             params_string = ''
 
         data = requests.get(
-            OPENQA_API + '/jobs/overview' + params_string).json()
+            OPENQA_API + '/jobs' + params_string).json()
 
-        results = []
+        jobs = []
 
-        for job in data:
-            results.append(job['id'])
+        for job in data['jobs']:
+            jobs.append(job['id'])
 
-        return results
-
+        return jobs
 
 def setup_environ(args):
     global name_mapping

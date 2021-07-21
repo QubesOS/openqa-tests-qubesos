@@ -157,6 +157,11 @@ class JobData:
             self.job_details = requests.get(self.get_job_api_url(details=True)).json()
         return self.job_details
 
+    def get_job_start_time(self):
+        json_data = self.get_job_details()
+
+        return json_data['job']['t_started']
+
     def get_results(self):
         if self.failures:
             return self.failures

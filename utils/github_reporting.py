@@ -84,7 +84,7 @@ class TestFailure:
         self.job_id = job_id
         self.test_id = test_id
 
-        if description is None or "\n" in description.strip():
+        if description is None:
             self.description = None
         else:
             self.description = description.strip()

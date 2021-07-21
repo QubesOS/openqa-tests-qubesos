@@ -4,6 +4,8 @@ import textwrap
 from fnmatch import fnmatch
 
 HISTORY_LEN = 200
+Q_VERSION = "4.1"
+TEST_SUITE_NAME = "system_tests_splitgpg"
 
 def historical_test_failures(test_name, test_title):
     """ Looks at the historical data of a particular test to investigate
@@ -14,17 +16,14 @@ def historical_test_failures(test_name, test_title):
                                                           test_title))
     print("\ton the last {} failed tests".format(HISTORY_LEN))
 
-
-    job_name = "system_tests_splitgpg"
-    jobs = OpenQA.get_latest_job_ids(job_name, version="4.1",
+    jobs = OpenQA.get_latest_job_ids(TEST_SUITE_NAME, version=Q_VERSION,
                                      n=HISTORY_LEN, result="failed")
-
 
     for job_id in jobs:
 
         job = JobData(job_id)
         result = job.get_results()
-        test_failures = result[job_name]
+        test_failures = result[TEST_SUITE_NAME]
 
         print("\n# Job {} (from {})".format(job_id, job.get_job_start_time()))
 
@@ -40,8 +39,6 @@ def historical_test_failures(test_name, test_title):
                     print(test_failure)
                     print("```")
 
-
-
 def main():
     parser = ArgumentParser(
         description="Look for unstable tests")
@@ -50,14 +47,6 @@ def main():
         "--test",
         help="Test Case with wildcard support"
              "(e.g.: TC_00_Direct_*/test_000_version)")
-
-    parser.add_argument(
-        '--build',
-        help="Requires --latest. System build to look for, "
-             "for example 4.0-20190801.1.")
-    parser.add_argument(
-        '--version',
-        help="Requires --latest. System version to look for, for example 4.1.")
 
     args = parser.parse_args()
 

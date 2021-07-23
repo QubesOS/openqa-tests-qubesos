@@ -8,9 +8,11 @@ Q_VERSION = "4.1"
 TEST_SUITE_NAME = "system_tests_network_ipv6"
 FLAVOR = "pull-requests"
 
-def historical_test_failures(test_name, test_title):
-    """ Looks at the historical data of a particular test to investigate
-    the reasons why it fails an the frequency """
+def print_tests_failures(test_name, test_title):
+    """
+    Prints the historical data of a particular of job failures for a
+    particular test pattern
+    """
 
     print("Summary:")
     print("\tLooking for failures of test {}/{}".format(test_name,
@@ -22,25 +24,31 @@ def historical_test_failures(test_name, test_title):
                                      flavor=FLAVOR)
 
     for job_id in jobs:
-
         job = JobData(job_id)
-        result = job.get_results()
-        test_failures = result[TEST_SUITE_NAME]
+        print_test_failure(job, test_name, test_title)
 
-        print("\n## Job {} (flavor '{}' from {})".format(job_id,
-                                                      job.get_job_flavor(),
-                                                      job.get_job_start_time()))
+def print_test_failure(job, test_name, test_title):
+    """
+    Prints the failures of a particular test pattern
+    """
 
-        for test_failure in test_failures:
-            if fnmatch(test_failure.name, test_name):
-                if fnmatch(test_failure.title, test_title):
+    result = job.get_results()
+    test_failures = result[TEST_SUITE_NAME]
 
-                    if test_title != test_failure.title: # wildcard title
-                        print("\n### {}".format(test_failure.title))
+    print("\n## Job {} (flavor '{}' from {})".format(job.job_id,
+                                                    job.get_job_flavor(),
+                                                    job.get_job_start_time()))
 
-                    print("```python")
-                    print(test_failure)
-                    print("```")
+    for test_failure in test_failures:
+        if fnmatch(test_failure.name, test_name):
+            if fnmatch(test_failure.title, test_title):
+
+                if test_title != test_failure.title: # wildcard title
+                    print("\n### {}".format(test_failure.title))
+
+                print("```python")
+                print(test_failure)
+                print("```")
 
 def main():
     parser = ArgumentParser(
@@ -60,7 +68,7 @@ def main():
         test_title = "*"
 
     if args.test:
-        historical_test_failures(test_name, test_title)
+        print_tests_failures(test_name, test_title)
 
 
 if __name__ == '__main__':

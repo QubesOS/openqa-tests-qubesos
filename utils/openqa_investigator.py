@@ -5,7 +5,8 @@ from fnmatch import fnmatch
 
 HISTORY_LEN = 200
 Q_VERSION = "4.1"
-TEST_SUITE_NAME = "system_tests_splitgpg"
+TEST_SUITE_NAME = "system_tests_network_ipv6"
+FLAVOR = "pull-requests"
 
 def historical_test_failures(test_name, test_title):
     """ Looks at the historical data of a particular test to investigate
@@ -17,7 +18,8 @@ def historical_test_failures(test_name, test_title):
     print("\ton the last {} failed tests".format(HISTORY_LEN))
 
     jobs = OpenQA.get_latest_job_ids(TEST_SUITE_NAME, version=Q_VERSION,
-                                     n=HISTORY_LEN, result="failed")
+                                     n=HISTORY_LEN, result="failed",
+                                     flavor=FLAVOR)
 
     for job_id in jobs:
 
@@ -25,7 +27,9 @@ def historical_test_failures(test_name, test_title):
         result = job.get_results()
         test_failures = result[TEST_SUITE_NAME]
 
-        print("\n# Job {} (from {})".format(job_id, job.get_job_start_time()))
+        print("\n## Job {} (flavor '{}' from {})".format(job_id,
+                                                      job.get_job_flavor(),
+                                                      job.get_job_start_time()))
 
         for test_failure in test_failures:
             if fnmatch(test_failure.name, test_name):

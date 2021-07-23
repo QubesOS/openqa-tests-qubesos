@@ -152,15 +152,19 @@ class JobData:
         json_data = self.get_job_details()
         return json_data['job']['settings']['BUILD']
 
-    def get_job_details(self):
-        if self.job_details is None:
-            self.job_details = requests.get(self.get_job_api_url(details=True)).json()
-        return self.job_details
+    def get_job_flavor(self):
+        json_data = self.get_job_details()
+        return json_data['job']['settings']['FLAVOR']
 
     def get_job_start_time(self):
         json_data = self.get_job_details()
 
         return json_data['job']['t_started']
+
+    def get_job_details(self):
+        if self.job_details is None:
+            self.job_details = requests.get(self.get_job_api_url(details=True)).json()
+        return self.job_details
 
     def get_results(self):
         if self.failures:
@@ -600,7 +604,7 @@ class OpenQA:
 
     @staticmethod
     def get_latest_job_ids(job_type='system_tests_update', build=None,
-                          version=None, n=100, result=None):
+                          version=None, n=100, result=None, flavor=None):
         params = []
         if job_type:
             params.append('test={}'.format(job_type))
@@ -612,6 +616,8 @@ class OpenQA:
             params.append('limit={}'.format(n))
         if result:
             params.append('result={}'.format(result))
+        if flavor:
+            params.append('flavor={}'.format(flavor))
 
         if params:
             params_string = '?' + "&".join(params)

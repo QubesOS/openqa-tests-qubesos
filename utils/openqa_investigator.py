@@ -33,12 +33,11 @@ def historical_test_failures(test_name, test_title):
 
         for test_failure in test_failures:
             if fnmatch(test_failure.name, test_name):
-                if not test_title:
-                    print("\n## {}".format(test_failure.title))
-                    print("```python")
-                    print(test_failure)
-                    print("```")
-                elif fnmatch(test_failure.title, test_title):
+                if fnmatch(test_failure.title, test_title):
+
+                    if test_title != test_failure.title: # wildcard title
+                        print("\n### {}".format(test_failure.title))
+
                     print("```python")
                     print(test_failure)
                     print("```")

@@ -40,15 +40,27 @@ def print_test_failure(job, test_suite, test_name, test_title):
                                                     job.get_job_start_time()))
 
     for test_failure in test_failures:
-        if fnmatch(test_failure.name, test_name):
-            if fnmatch(test_failure.title, test_title):
+        if test_matches(test_failure.name, test_name,\
+                        test_failure.title, test_title):
 
-                if test_title != test_failure.title: # wildcard title
-                    print("\n### {}".format(test_failure.title))
+            if not test_title == test_failure.title: # wildcard title
+                print("\n### {}".format(test_failure.title))
 
-                print("```python")
-                print(test_failure)
-                print("```")
+            print("```python")
+            print(test_failure)
+            print("```")
+        else:
+            print("Warning: no matches for {}/{}".format(test_name, test_title))
+
+def test_matches(test_name, test_name_pattern, test_title, test_title_pattern):
+    return test_name_matches(test_name, test_name_pattern) and \
+           test_title_matches(test_title, test_title_pattern)
+
+def test_name_matches(test_name, test_name_pattern):
+    return fnmatch(test_name, test_name_pattern)
+
+def test_title_matches(test_title, test_title_pattern):
+    return fnmatch(test_title, test_title_pattern)
 
 def main():
     parser = ArgumentParser(

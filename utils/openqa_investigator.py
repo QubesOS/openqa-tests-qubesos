@@ -3,11 +3,10 @@ from argparse import ArgumentParser
 import textwrap
 from fnmatch import fnmatch
 
-HISTORY_LEN = 200
 Q_VERSION = "4.1"
 FLAVOR = "pull-requests"
 
-def print_tests_failures(test_suite, test_name, test_title):
+def print_tests_failures(test_suite, history_len, test_name, test_title):
     """
     Prints the historical data of a particular of job failures for a
     particular test pattern
@@ -16,11 +15,11 @@ def print_tests_failures(test_suite, test_name, test_title):
     print("Summary:")
     print("\tLooking for failures of test {}/{}".format(test_name,
                                                           test_title))
-    print("\ton the last {} failed tests".format(HISTORY_LEN))
+    print("\ton the last {} failed tests".format(history_len))
     print("\nsuite: ", test_suite)
 
     jobs = OpenQA.get_latest_job_ids(test_suite, version=Q_VERSION,
-                                     n=HISTORY_LEN, result="failed",
+                                     history_len=history_len, result="failed",
                                      flavor=FLAVOR)
 
     for job_id in jobs:
@@ -76,6 +75,12 @@ def main():
         help="Test Case with wildcard support"
              "(e.g.: TC_00_Direct_*/test_000_version)")
 
+    parser.add_argument(
+        "--last",
+        nargs='?',
+        help="Last N failed tests"
+                "(e.g.: 100)")
+
     args = parser.parse_args()
 
     try:
@@ -84,8 +89,17 @@ def main():
         test_name = args.test
         test_title = "*"
 
+    if not args.last:
+        history_len = 100
+    else:
+        try:
+            history_len = int(args.last)
+        except ValueError:
+            print("Error: {} is not a valid number".format(args.last))
+            exit(1)
+
     if args.test:
-        print_tests_failures(args.suite, test_name, test_title)
+        print_tests_failures(args.suite, history_len, test_name, test_title)
 
 
 if __name__ == '__main__':

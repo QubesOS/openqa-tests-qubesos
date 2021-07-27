@@ -600,11 +600,11 @@ class OpenQA:
     @staticmethod
     def get_latest_job_id(job_type='system_tests_update', build=None,
                           version=None):
-        return OpenQA.get_latest_job_ids(job_type, build, version, n=1)
+        return OpenQA.get_latest_job_ids(job_type, build, version, history_len=1)
 
     @staticmethod
     def get_latest_job_ids(job_type='system_tests_update', build=None,
-                          version=None, n=100, result=None, flavor=None):
+                          version=None, history_len=100, result=None, flavor=None):
         params = []
         if job_type:
             params.append('test={}'.format(job_type))
@@ -612,8 +612,8 @@ class OpenQA:
             params.append('build={}'.format(build))
         if version:
             params.append('version={}'.format(version))
-        if n:
-            params.append('limit={}'.format(n))
+        if history_len:
+            params.append('limit={}'.format(history_len))
         if result:
             params.append('result={}'.format(result))
         if flavor:

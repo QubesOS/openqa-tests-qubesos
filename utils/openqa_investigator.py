@@ -72,8 +72,8 @@ def main():
 
     parser.add_argument(
         "--test",
-        help="Test Case with wildcard support"
-             "(e.g.: TC_00_Direct_*/test_000_version)")
+        help="Test Case with wildcard support (include \"\")"
+             "(e.g.: \"TC_00_Direct_*/test_000_version)\"")
 
     parser.add_argument(
         "--last",

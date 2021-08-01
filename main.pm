@@ -27,7 +27,11 @@ if (get_var('ISO')) {
     if (get_var('INSTALL_OVER_EXISTING')) {
         autotest::loadtest "tests/install_preexisting_system.pm";
     }
-    autotest::loadtest "tests/install_startup.pm";
+    if (get_var('INSTALL_ISO_FILE')) {
+        autotest::loadtest "tests/install_iso_file.pm";
+    } else {
+        autotest::loadtest "tests/install_startup.pm";
+    }
     autotest::loadtest "tests/install_welcome.pm";
     if (get_var('KEYBOARD_LAYOUT')) {
         autotest::loadtest "tests/install_keyboard.pm";

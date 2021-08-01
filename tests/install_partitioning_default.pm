@@ -22,6 +22,9 @@ use testapi;
 sub run {
     assert_and_click 'installer-main-hub-target';
     assert_screen 'installer-disk-spoke';
+    if (check_var('NUMDISKS', '2')) {
+        assert_and_click 'installer-select-disk';
+    }
     assert_and_click 'installer-done';
     assert_screen 'installer-disk-luks-passphrase';
     type_string 'lukspass';

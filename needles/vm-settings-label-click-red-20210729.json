@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 23,
+      "ypos": 32,
+      "xpos": 797,
+      "width": 122,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "vm-settings-label-click-red"
+  ]
+}

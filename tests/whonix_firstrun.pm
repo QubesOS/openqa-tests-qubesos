@@ -23,6 +23,7 @@ sub run {
     my ($self) = @_;
 
     select_console('x11');
+    x11_start_program('qvm-start sys-whonix', valid => 0);
     if (!check_screen(['whonix-connected', 'whonix-firstrun'], 120)) {
         # no firstrun wizard? maybe already accepted - verify it
         x11_start_program('qvm-run sys-whonix \'whonixcheck --autostart --gui\'', valid => 0);

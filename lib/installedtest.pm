@@ -20,7 +20,7 @@ use base 'basetest';
 use strict;
 use testapi;
 use networking;
-use utils qw(us_colemak);
+use utils qw(us_colemak colemak_us);
 
 sub new {
     my ($class, $args) = @_;

@@ -6,25 +6,17 @@ from fnmatch import fnmatch
 Q_VERSION = "4.1"
 FLAVOR = "pull-requests"
 
-def print_tests_failures(test_suite, history_len, test_name, test_title):
+def get_jobs(test_suite, history_len):
     """
-    Prints the historical data of a particular of job failures for a
-    particular test pattern
+    Gets the historical data of a particular of job failures
     """
-
-    print("Summary:")
-    print("\tLooking for failures of test {}/{}".format(test_name,
-                                                          test_title))
-    print("\ton the last {} failed tests".format(history_len))
-    print("\nsuite: ", test_suite)
 
     jobs = OpenQA.get_latest_job_ids(test_suite, version=Q_VERSION,
                                      history_len=history_len, result="failed",
                                      flavor=FLAVOR)
 
     for job_id in jobs:
-        job = JobData(job_id)
-        print_test_failure(job, test_suite, test_name, test_title)
+        yield JobData(job_id)
 
 def print_test_failure(job, test_suite, test_name, test_title):
     """
@@ -99,7 +91,14 @@ def main():
             exit(1)
 
     if args.test:
-        print_tests_failures(args.suite, history_len, test_name, test_title)
+        print("Summary:")
+        print("\tLooking for failures of test {}/{}".format(test_name,
+                                                            test_title))
+        print("\ton the last {} failed tests".format(history_len))
+        print("\nsuite: ", args.suite)
+
+        for job in get_jobs(args.suite, history_len):
+            print_test_failure(job, args.suite, test_name, test_title)
 
 
 if __name__ == '__main__':

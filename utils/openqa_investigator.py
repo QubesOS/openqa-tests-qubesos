@@ -3,6 +3,7 @@ from argparse import ArgumentParser
 import textwrap
 from fnmatch import fnmatch
 from copy import deepcopy
+import re
 
 Q_VERSION = "4.1"
 FLAVOR = "pull-requests"
@@ -57,6 +58,25 @@ def filter_tests(job, test_suite, test_name, test_title):
 
     return filtered_job
 
+def filter_tests_by_error(job, test_suite, error_pattern):
+    """
+    Filters through tests that have a certain error message pattern
+    """
+    results = job.get_results()
+    test_failures = results[test_suite]
+
+    filtered_results = []
+
+    for test_failure in test_failures:
+        if test_failure.description and \
+            re.search(error_pattern, test_failure.description):
+            filtered_results.append(test_failure)
+
+    filtered_job = deepcopy(job)
+    filtered_job.failures[job.get_job_name()] = filtered_results
+
+    return filtered_job
+
 def test_matches(test_name, test_name_pattern, test_title, test_title_pattern):
     return test_name_matches(test_name, test_name_pattern) and \
            test_title_matches(test_title, test_title_pattern)
@@ -82,6 +102,11 @@ def main():
              "(e.g.: \"TC_00_Direct_*/test_000_version)\"")
 
     parser.add_argument(
+        "--error",
+        help="Match only results with a specific error message"
+             "(e.g.: \"dogtail.tree.SearchError: descendent of [file chooser\"")
+
+    parser.add_argument(
         "--last",
         nargs='?',
         help="Last N failed tests"
@@ -104,20 +129,27 @@ def main():
             print("Error: {} is not a valid number".format(args.last))
             exit(1)
 
+
+    print("Summary:")
+    print("\tLooking for failures of test {}/{}".format(test_name,
+                                                        test_title))
+    print("\ton the last {} failed tests".format(history_len))
+    print("\nsuite: ", args.suite)
+
+    jobs = get_jobs(args.suite, history_len)
+
     if args.test:
-        print("Summary:")
-        print("\tLooking for failures of test {}/{}".format(test_name,
-                                                            test_title))
-        print("\ton the last {} failed tests".format(history_len))
-        print("\nsuite: ", args.suite)
-
-        jobs = get_jobs(args.suite, history_len)
         tests_filter = lambda job: filter_tests(job, args.suite,
-                                                test_name, test_title)
-        filtered_jobs = map(tests_filter, jobs)
+                                            test_name, test_title)
+        jobs = map(tests_filter, jobs)
 
-        for job in filtered_jobs:
-            print_test_failure(job, args.suite, test_name, test_title)
+    if args.error:
+        tests_filter = lambda job: filter_tests_by_error(job, args.suite,\
+                                                         args.error)
+        jobs = map(tests_filter, jobs)
+
+    for job in jobs:
+        print_test_failure(job, args.suite, test_name, test_title)
 
 
 if __name__ == '__main__':

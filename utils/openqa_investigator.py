@@ -2,6 +2,7 @@ from github_reporting import OpenQA, JobData, TestFailure
 from argparse import ArgumentParser
 import textwrap
 from fnmatch import fnmatch
+from copy import deepcopy
 
 Q_VERSION = "4.1"
 FLAVOR = "pull-requests"
@@ -29,19 +30,32 @@ def print_test_failure(job, test_suite, test_name, test_title):
     print("\n## Job {} (flavor '{}' from {})".format(job.job_id,
                                                     job.get_job_flavor(),
                                                     job.get_job_start_time()))
+    for test_failure in test_failures:
+        if not test_title == test_failure.title: # wildcard title
+            print("\n### {}".format(test_failure.title))
+
+        print("```python")
+        print(test_failure)
+        print("```")
+
+def filter_tests(job, test_suite, test_name, test_title):
+    """
+    Filters out tests that don't match a particular test pattern
+    """
+    results = job.get_results()
+    test_failures = results[test_suite]
+
+    filtered_results = []
 
     for test_failure in test_failures:
         if test_matches(test_failure.name, test_name,\
                         test_failure.title, test_title):
+            filtered_results.append(test_failure)
 
-            if not test_title == test_failure.title: # wildcard title
-                print("\n### {}".format(test_failure.title))
+    filtered_job = deepcopy(job)
+    filtered_job.failures[job.get_job_name()] = filtered_results
 
-            print("```python")
-            print(test_failure)
-            print("```")
-        else:
-            print("Warning: no matches for {}/{}".format(test_name, test_title))
+    return filtered_job
 
 def test_matches(test_name, test_name_pattern, test_title, test_title_pattern):
     return test_name_matches(test_name, test_name_pattern) and \
@@ -97,7 +111,12 @@ def main():
         print("\ton the last {} failed tests".format(history_len))
         print("\nsuite: ", args.suite)
 
-        for job in get_jobs(args.suite, history_len):
+        jobs = get_jobs(args.suite, history_len)
+        tests_filter = lambda job: filter_tests(job, args.suite,
+                                                test_name, test_title)
+        filtered_jobs = map(tests_filter, jobs)
+
+        for job in filtered_jobs:
             print_test_failure(job, args.suite, test_name, test_title)
 
 

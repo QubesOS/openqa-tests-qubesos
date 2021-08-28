@@ -5,6 +5,10 @@ from fnmatch import fnmatch
 from copy import deepcopy
 import re
 
+import requests_cache
+requests_cache.install_cache('openqa_cache', backend='sqlite', expire_after=8200)
+
+
 Q_VERSION = "4.1"
 FLAVOR = "pull-requests"
 

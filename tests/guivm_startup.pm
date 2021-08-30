@@ -52,6 +52,9 @@ sub run {
     assert_script_run("echo -e '$testapi::password\n$testapi::password' | qvm-run -p -u root sys-gui 'passwd --stdin user'");
     select_console('x11');
 
+    # for some reason, at the very first GUIVM start, the panel fails to load the icons
+    x11_start_program('xfce4-panel --restart', valid=>0);
+
 }
 
 sub post_fail_hook {

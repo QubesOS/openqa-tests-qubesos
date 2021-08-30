@@ -68,8 +68,12 @@ if (get_var('ISO')) {
 }
 
 if (check_var('RELEASE_UPGRADE', '1')) {
-    autotest::loadtest "tests/release_upgrade.pm";
     autotest::loadtest "tests/startup_fixup.pm";
+    if (check_var('INSTALL_TEMPLATES', 'all') or get_var("INSTALL_TEMPLATES") =~ /whonix/) {
+        autotest::loadtest "tests/whonix_firstrun.pm";
+    }
+    autotest::loadtest "tests/release_upgrade.pm";
+    autotest::loadtest "tests/startup_fixup_2.pm";
 }
 
 # do not execute same tests before each system tests run

@@ -36,20 +36,13 @@ sub run {
 
     script_run("pkill xscreensaver");
 
-    #assert_script_run("sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing -y qubes-dist-upgrade");
-    #assert_script_run("curl https://raw.githubusercontent.com/marmarek/qubes-dist-upgrade/r4.0-fixes20210115/qubes-dist-upgrade.sh > migration.sh");
-    assert_script_run("curl https://raw.githubusercontent.com/fepitre/qubes-dist-upgrade/update-templates/qubes-dist-upgrade.sh > migration.sh");
-    assert_script_run("curl https://raw.githubusercontent.com/fepitre/qubes-dist-upgrade/update-templates/qubes-hooks.py > qubes-hooks.py");
-    assert_script_run("curl https://raw.githubusercontent.com/fepitre/qubes-dist-upgrade/update-templates/scripts/upgrade-template-standalone.sh > upgrade-template-standalone.sh");
-    assert_script_run("chmod +x migration.sh");
-    assert_script_run("chmod +x upgrade-template-standalone.sh");
-    assert_script_run("sudo cp migration.sh /usr/sbin/qubes-dist-upgrade");
-    assert_script_run("sudo mkdir -p /usr/sbin/scripts/");
-    assert_script_run("sudo cp upgrade-template-standalone.sh /usr/sbin/scripts/");
-    assert_script_run("sudo cp qubes-hooks.py /usr/sbin/qubes-hooks.py");
+    assert_script_run("sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing -y qubes-dist-upgrade", timeout => 120);
 
-
-    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --all --assumeyes' release-upgrade.log", timeout => 10800);
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --double-metadata-size' release-upgrade.log", timeout => 60);
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --update --max-concurrency=1' release-upgrade.log", timeout => 7200);
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --template-standalone-upgrade' release-upgrade.log", timeout => 7200);
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --release-upgrade' release-upgrade.log", timeout => 300);
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --dist-upgrade' release-upgrade.log", timeout => 7200);
     sleep(1);
     send_key('ctrl-c');
 
@@ -62,18 +55,54 @@ sub run {
     sleep(1);
     send_key('ctrl-c');
 
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --setup-efi-grub' release-upgrade.log", timeout => 3600);
+
     # install qubesteststub module for updated python version
     assert_script_run("sudo sh -c 'cd /root/extra-files; python3 ./setup.py install'");
 
     set_var('VERSION', '4.1');
     if (check_var('UEFI_DIRECT', '1')) {
+        # apply changes to grub, since /etc/default/grub wasn't present during
+        # initial install_fixups.pm call
+        my $extra_xen_opts = 'loglvl=all guest_loglvl=all spec-ctrl=no';
+        if (!script_run("grep 'GRUB_CMDLINE_XEN_DEFAULT.*console=' /etc/default/grub")) {
+            script_run "sudo sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /etc/default/grub";
+        } else {
+            script_run "sudo sed -i -e 's:GRUB_CMDLINE_XEN_DEFAULT=\":\\0console=vga,com1 $extra_xen_opts :' /etc/default/grub";
+        }
+        if (!script_run("grep 'multiboot.*console=' /boot/efi/EFI/qubes/grub.cfg")) {
+            script_run "sudo sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /boot/efi/EFI/qubes/grub.cfg";
+        } else {
+            script_run "sudo sed -i -e 's:multiboot.*:\\0 console=vga,com1 $extra_xen_opts:' /boot/efi/EFI/qubes/grub.cfg";
+        }
+        my $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:\0 console=hvc0 console=tty0 qubes.enable_insecure_pv_passthrough:g\'';
+        script_run "sudo $sed_enable_dom0_console_log /boot/efi/EFI/qubes/grub.cfg";
+        script_run "sudo $sed_enable_dom0_console_log /etc/default/grub";
         set_var('UEFI_DIRECT', '');
+        # upload_logs doesn't work here, until reboot
+        script_run "sudo cat /etc/default/grub";
+        save_screenshot;
+        script_run "sudo grep -C 5 vmlinuz /boot/efi/EFI/qubes/grub.cfg";
+        save_screenshot;
     }
     set_var('KEEP_SCREENLOCKER', '1');
 
     script_run("sudo reboot", timeout => 0);
     assert_screen ["bootloader", "luks-prompt", "login-prompt-user-selected"], 300;
     $self->handle_system_startup;
+
+    x11_start_program('xterm');
+    send_key('alt-f10');
+    curl_via_netvm;
+
+    upload_logs('/home/user/release-upgrade.log', failok => 1);
+
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --resync-appmenus-features' release-upgrade-post-reboot.log", timeout => 3600);
+    upload_logs('/home/user/release-upgrade-post-reboot.log', failok => 1);
+
+    type_string("exit\n");
+
+    assert_screen("desktop");
 }
 
 sub test_flags {

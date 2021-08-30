@@ -1,0 +1,98 @@
+% use Mojo::File 'path';
+% use OpenQA::Log qw(log_fatal log_error);
+% use Data::Dumper;
+% my $build = $job->BUILD;
+% my $step_url = url_for('step')->to_abs;
+% my $module = stash('moduleid');
+% my $step = stash('stepid');
+% if ($step) {
+%     $step_url = url_for('step', moduleid => $module, stepid => $step)->to_abs;
+% }
+% my %product_details = ();
+% my $scenario_description = $job->scenario_description // '';
+%# my @details = @{OpenQA::Schema::Result::JobModules::job_module($job, $moduleid)->results()->{details}};
+%# log_error("test5");
+%# log_error(Dumper({moduleid => $moduleid}));
+%# log_error(Dumper($job->modules->all()));
+%# log_error(Dumper($job->modules->search({name => $moduleid})));
+% my $text_data = '$TEXT_DATA$';
+% if (!($module eq '$MODULE$')) {
+% my @details = @{$job->modules->search({name => $moduleid})->first->results()->{details}};
+% my $step_data = $details[$step-1];
+
+% if ($step_data->{text} && $step_data->{text_data}) {
+%    $text_data = $step_data->{text_data};
+% } elsif ($step_data->{text}) {
+%    my $file = path($job->result_dir(), $step_data->{text});
+%    $text_data = $file->slurp;
+% }
+% }
+
+<% my %distri_to_product_url_new = (
+    qubesos => 'https://github.com/QubesOS/qubes-issues/issues/new',
+);%>
+<% my %distri_to_prod = (
+    qubesos => 'Qubes OS',
+); %>
+<% my %flavor_to_prod_sle = (
+    'install-iso' => 'Installation',
+    'update' => 'Update',
+    'templates' => 'Templates',
+    Installer => 'Server',
+); %>
+% my $distri = $distri_to_prod{$job->DISTRI} // 'DISTRI NOT FOUND: Adjust templates/openSUSE/external_reporting.html.ep';
+% my $product = join(' ', $distri_to_prod{$job->DISTRI} // 'Qubes OS', $job->VERSION);
+
+% sub build_link {
+%     my ($job) = @_;
+%     return '[' . $job->BUILD . '](' . url_for('test', testid => $job->id)->to_abs .  ')';
+% }
+% my $scenario = $job->scenario_name;
+% my $first_known_bad = build_link($job) . ' (current job)';
+% my $last_good = '(unknown)';
+% for my $prev ($job->_previous_scenario_jobs) {
+%     if ($prev->result =~ '(passed|softfailed)') {
+%         $last_good = build_link($prev);
+%         last;
+%     }
+%     $first_known_bad = build_link($prev);
+% }
+% my $latest = url_for('latest')->query($job->scenario_hash)->to_abs;
+<% my $description = "## Observation
+
+openQA test in scenario $scenario fails in
+[$module]($step_url)
+
+```
+$text_data
+```
+
+## Test suite description
+$scenario_description
+
+
+## Reproducible
+
+Fails since (at least) Build $first_known_bad
+
+
+## Expected result
+
+Last good: $last_good (or more recent)
+
+
+## Further details
+
+Always latest result in this scenario: [latest]($latest)
+"; %>
+
+% $product_details{title} = "[Build $build] openQA test fails in $module";
+% $product_details{body} = $description;
+% $product_details{milestone} = "$distri $product";
+% $product_details{labels} = "T: bug";
+% #$product_details{bug_file_loc} = $step_url;
+% $product_details{template} = 'bug-report.md';
+% my $product_url_new = $distri_to_product_url_new{$job->DISTRI};
+% if ($product) {
+    %= stepaction_for('Report product bug' => url_for($product_url_new)->query(%product_details), 'fa-bug', 'report product_bug');
+% }

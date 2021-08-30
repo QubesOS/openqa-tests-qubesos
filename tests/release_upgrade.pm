@@ -37,6 +37,11 @@ sub run {
     script_run("pkill xscreensaver");
 
     assert_script_run("sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing -y qubes-dist-upgrade", timeout => 120);
+    assert_script_run("curl https://raw.githubusercontent.com/marmarek/qubes-dist-upgrade/r4.0-fixes20210709/qubes-dist-upgrade.sh > qubes-dist-upgrade.sh");
+    assert_script_run("curl https://raw.githubusercontent.com/marmarek/qubes-dist-upgrade/r4.0-fixes20210709/scripts/upgrade-template-standalone.sh > upgrade-template-standalone.sh");
+    assert_script_run("chmod +x qubes-dist-upgrade.sh");
+    assert_script_run("sudo mv -f qubes-dist-upgrade.sh /usr/sbin/qubes-dist-upgrade");
+    assert_script_run("sudo mv -f upgrade-template-standalone.sh /usr/lib/qubes/");
 
     assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --double-metadata-size' release-upgrade.log", timeout => 60);
     assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --update --max-concurrency=1' release-upgrade.log", timeout => 7200);

@@ -2,7 +2,7 @@
 # https://bugs.debian.org/931566
 accept-buster:
   cmd.run:
-    - name: '! grep -q "^Suite: testing" /var/lib/apt/lists/*buster*Release || apt-get update --allow-releaseinfo-change'
+    - name: 'apt-get update --allow-releaseinfo-change'
 {% endif %}
 
 {% if grains['os'] == 'Gentoo' %}

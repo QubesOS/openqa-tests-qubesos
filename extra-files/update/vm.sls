@@ -10,8 +10,9 @@
 
 {% if grains['oscodename'] == 'buster' %}
 # https://bugs.debian.org/931566
-'! grep -q "^Suite: testing" /var/lib/apt/lists/*buster*Release || apt-get update --allow-releaseinfo-change':
-  cmd.run: []
+'apt-get update --allow-releaseinfo-change':
+  cmd.run:
+   - order: 1
 {% endif %}
 
 {% if grains['id'].startswith('whonix-') %}

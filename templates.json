@@ -14,7 +14,7 @@
     },
     {
       "group_name": "Qubes OS templates",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-templates-x86_64:\n    distri: qubesos\n    flavor: templates\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-templates-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix\n    - system_tests_splitgpg\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-templates-x86_64:\n    distri: qubesos\n    flavor: templates\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-templates-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix\n    - system_tests_splitgpg\n"
     },
     {
       "group_name": "Qubes OS updates",

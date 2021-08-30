@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 515,
+      "ypos": 362,
+      "width": 120,
+      "height": 35,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-1",
+    "xscreensaver-prompt"
+  ]
+}

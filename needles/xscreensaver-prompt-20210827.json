@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 106,
+      "type": "match",
+      "ypos": 404,
+      "xpos": 520,
+      "height": 35
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "xscreensaver-prompt"
+  ]
+}

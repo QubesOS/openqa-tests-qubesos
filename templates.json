@@ -2,7 +2,7 @@
   "JobGroups": [
     {
       "group_name": "Qubes OS",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-install-iso-x86_64:\n    distri: qubesos\n    flavor: install-iso\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-install-iso-x86_64:\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_over_existing:\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_xfs:\n        machine: 64bit\n        priority: 20\n    - install_xfs:\n        machine: uefi\n        priority: 20\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        machine: 64bit\n        priority: 20\n    - install_keyboard_layout:\n        machine: uefi\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_unencrypted_upload:\n        machine: uefi\n        priority: 51\n    - install_unencrypted_upload:\n        machine: 64bit\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-install-iso-x86_64:\n    distri: qubesos\n    flavor: install-iso\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-install-iso-x86_64:\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_default:\n        machine: 64bit\n        priority: 15\n    - install_default:\n        machine: uefi\n        priority: 15\n    - install_iso_file:\n        machine: 64bit\n        priority: 15\n    - install_over_existing:\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_xfs:\n        machine: 64bit\n        priority: 20\n    - install_xfs:\n        machine: uefi\n        priority: 20\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        machine: 64bit\n        priority: 20\n    - install_keyboard_layout:\n        machine: uefi\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_unencrypted_upload:\n        machine: uefi\n        priority: 51\n    - install_unencrypted_upload:\n        machine: 64bit\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n"
     },
     {
       "group_name": "Qubes OS pull requests",
@@ -10,7 +10,7 @@
     },
     {
       "group_name": "Qubes OS release upgrade",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-release-upgrade-x86_64:\n    distri: qubesos\n    flavor: release-upgrade\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-release-upgrade-x86_64:\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n    - release_upgrade_modified_repo:\n        priority: 10\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-release-upgrade-x86_64:\n    distri: qubesos\n    flavor: release-upgrade\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-release-upgrade-x86_64:\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_default:\n        machine: 64bit\n        priority: 15\n    - install_default:\n        machine: uefi\n        priority: 15\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n    - release_upgrade_modified_repo:\n        priority: 10\n"
     },
     {
       "group_name": "Qubes OS templates",
@@ -206,7 +206,7 @@
       "settings": [
         {
           "key": "ISO_MAXSIZE",
-          "value": "5700372992"
+          "value": "5900372992"
         }
       ],
       "version": "*"
@@ -840,6 +840,10 @@
         {
           "key": "TEST_GENERIC",
           "value": "1"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "local"
         }
       ]
     },
@@ -910,19 +914,6 @@
       ]
     },
     {
-      "name": "install_default_upload",
-      "settings": [
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "all"
-        },
-        {
-          "key": "PUBLISH_HDD_1",
-          "value": "disk_default_%VERSION%_%MACHINE%_%KERNEL_VERSION%.qcow2"
-        }
-      ]
-    },
-    {
       "name": "system_tests_update",
       "settings": [
         {
@@ -948,6 +939,44 @@
         {
           "key": "STORE_HDD_1",
           "value": "disk_unencrypted_updated.qcow2"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "local"
+        }
+      ]
+    },
+    {
+      "name": "install_default",
+      "settings": [
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "all"
+        }
+      ]
+    },
+    {
+      "name": "install_iso_file",
+      "settings": [
+        {
+          "key": "BOOT_MENU",
+          "value": "1"
+        },
+        {
+          "key": "INSTALL_ISO_FILE",
+          "value": "1"
+        },
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "NUMDISKS",
+          "value": "2"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
         },
         {
           "key": "WORKER_CLASS",

@@ -130,7 +130,8 @@ def test_matches(test_name, test_name_pattern, test_title, test_title_pattern):
         return test_name_matches(test_name, test_name_pattern) and \
             test_title_matches(test_title, test_title_pattern)
     except re.error:
-        print("Error: \"{}/{}\" is not a valid regex".format(test_name_pattern, test_title_pattern))
+        raise Exception("Error: \"{}/{}\" is not a valid regex".\
+            format(test_name_pattern, test_title_pattern))
 
 def test_name_matches(test_name, test_name_pattern):
     return re.search(test_name_pattern, test_name)

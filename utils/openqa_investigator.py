@@ -3,6 +3,7 @@ from argparse import ArgumentParser
 import textwrap
 from copy import deepcopy
 import re
+import matplotlib.pyplot as plt
 
 import requests_cache
 requests_cache.install_cache('openqa_cache', backend='sqlite', expire_after=8200)
@@ -80,6 +81,50 @@ def filter_tests_by_error(job, test_suite, error_pattern):
 
     return filtered_job
 
+def plot_group_by_test(jobs, test_suite):
+    plot(jobs, test_suite, lambda test: test.title)
+
+def plot_group_by_template(jobs, test_suite):
+    plot(jobs, test_suite, lambda test: test.name)
+
+def plot(jobs, test_suite, group_by_fn):
+    """Plots test results
+
+    Args:
+        jobs (list): a list of all the JobData.
+        test_suite (str): test suite.
+        group_by_fn (function(TestFailure)): function to group the results by.
+    """
+
+    groups = set()
+    for job in jobs:
+        results = job.get_results()[test_suite]
+        for test in results:
+            groups.add(group_by_fn(test))
+
+    # initialize data
+    data = {}
+    for test in sorted(groups):
+        data[test] = [0]*len(jobs)
+
+    for i, job in enumerate(jobs):
+        results = job.get_results()[test_suite]
+        for test in results:
+            data[group_by_fn(test)][i] += 1
+
+    job_ids = [job.job_id for job in jobs]
+    job_ids_str = list(map(str, job_ids))
+
+    for key in data.keys():
+        plt.xticks(rotation=70)
+        plt.plot(job_ids_str, data[key], label=key, linewidth=2)
+
+    plt.title('Failed tests per job')
+    plt.xlabel('job')
+    plt.ylabel('times test failed')
+    plt.legend()
+    plt.show()
+
 def test_matches(test_name, test_name_pattern, test_title, test_title_pattern):
     try:
         return test_name_matches(test_name, test_name_pattern) and \
@@ -118,6 +163,11 @@ def main():
         help="Last N failed tests"
                 "(e.g.: 100)")
 
+    parser.add_argument(
+        "--output",
+        help="Select output format (markdown/plot)")
+
+    parser.set_defaults(output="report")
     args = parser.parse_args()
 
     try:
@@ -144,6 +194,7 @@ def main():
 
     jobs = get_jobs(args.suite, history_len)
 
+    # apply filters
     if args.test:
         tests_filter = lambda job: filter_tests(job, args.suite,
                                             test_name, test_title)
@@ -154,9 +205,15 @@ def main():
                                                          args.error)
         jobs = map(tests_filter, jobs)
 
-    for job in jobs:
-        print_test_failure(job, args.suite, test_name, test_title)
-
+    # output format
+    if args.output == "report":
+        for job in jobs:
+            print_test_failure(job, args.suite, test_name, test_title)
+    elif args.output == "plot":
+        if not re.match(r'\w+', test_title): # regex test
+            plot_group_by_test(list(jobs), args.suite)
+        else:                                # concrete test
+            plot_group_by_template(list(jobs), args.suite)
 
 if __name__ == '__main__':
     main()

@@ -1,7 +1,6 @@
 from github_reporting import OpenQA, JobData, TestFailure
 from argparse import ArgumentParser
 import textwrap
-from fnmatch import fnmatch
 from copy import deepcopy
 import re
 
@@ -36,7 +35,7 @@ def print_test_failure(job, test_suite, test_name, test_title):
                                                     job.get_job_flavor(),
                                                     job.get_job_start_time()))
     for test_failure in test_failures:
-        if not test_title == test_failure.title: # wildcard title
+        if not test_title == test_failure.title: # regex title
             print("\n### {}".format(test_failure.title))
 
         print("```python")
@@ -82,14 +81,17 @@ def filter_tests_by_error(job, test_suite, error_pattern):
     return filtered_job
 
 def test_matches(test_name, test_name_pattern, test_title, test_title_pattern):
-    return test_name_matches(test_name, test_name_pattern) and \
-           test_title_matches(test_title, test_title_pattern)
+    try:
+        return test_name_matches(test_name, test_name_pattern) and \
+            test_title_matches(test_title, test_title_pattern)
+    except re.error:
+        print("Error: \"{}/{}\" is not a valid regex".format(test_name_pattern, test_title_pattern))
 
 def test_name_matches(test_name, test_name_pattern):
-    return fnmatch(test_name, test_name_pattern)
+    return re.search(test_name_pattern, test_name)
 
 def test_title_matches(test_title, test_title_pattern):
-    return fnmatch(test_title, test_title_pattern)
+    return re.search(test_title_pattern, test_title)
 
 def main():
     parser = ArgumentParser(
@@ -102,7 +104,7 @@ def main():
 
     parser.add_argument(
         "--test",
-        help="Test Case with wildcard support (include \"\")"
+        help="Test Case with regex support (use inside \"\")"
              "(e.g.: \"TC_00_Direct_*/test_000_version)\"")
 
     parser.add_argument(

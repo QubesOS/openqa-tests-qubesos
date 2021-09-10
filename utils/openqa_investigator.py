@@ -11,6 +11,12 @@ requests_cache.install_cache('openqa_cache', backend='sqlite', expire_after=8200
 
 Q_VERSION = "4.1"
 FLAVOR = "pull-requests"
+IGNORED_ERRORS = [
+    "# system-out:",
+    "# Result:",
+    "# wait_serial expected",
+    "0;31m"
+]
 
 def get_jobs(test_suite, history_len):
     """
@@ -86,6 +92,37 @@ def plot_group_by_test(jobs, test_suite):
 
 def plot_group_by_template(jobs, test_suite):
     plot(jobs, test_suite, lambda test: test.name)
+
+def plot_group_by_error(jobs, test_suite):
+
+    def group_by_error(test):
+        if not test.description:
+            return "no error printed"
+
+        desc_lines = test.description.split("\n")
+
+        result = ""
+        max_chars = 40
+
+        # attempt to find the line with the relevant result
+        for line in reversed(desc_lines):
+            if any(map(lambda error: error in line, IGNORED_ERRORS)): # ignore certain
+                continue
+            elif line == "" or re.search("^\s+$", line): # whitespace
+                continue
+            else:
+                if result: # last two lines
+                    result = line[:max_chars] + "..." + result
+                    break
+                else:
+                    result = line[:max_chars] + "..."
+
+        if result == "":
+            return "ignored error"
+
+        return result
+
+    plot(jobs, test_suite, group_by_error)
 
 def plot(jobs, test_suite, group_by_fn):
     """Plots test results
@@ -166,7 +203,7 @@ def main():
 
     parser.add_argument(
         "--output",
-        help="Select output format (markdown/plot)")
+        help="Select output format (markdown/plot_error/plot_templates/plot_tests)")
 
     parser.set_defaults(output="report")
     args = parser.parse_args()
@@ -210,11 +247,12 @@ def main():
     if args.output == "report":
         for job in jobs:
             print_test_failure(job, args.suite, test_name, test_title)
-    elif args.output == "plot":
-        if not re.match(r'\w+', test_title): # regex test
-            plot_group_by_test(list(jobs), args.suite)
-        else:                                # concrete test
-            plot_group_by_template(list(jobs), args.suite)
+    elif args.output == "plot_tests":
+        plot_group_by_test(list(jobs), args.suite)
+    elif args.output == "plot_templates":
+        plot_group_by_template(list(jobs), args.suite)
+    elif args.output == "plot_errors":
+        plot_group_by_error(list(jobs), args.suite)
 
 if __name__ == '__main__':
     main()

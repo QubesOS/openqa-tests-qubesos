@@ -4,6 +4,8 @@ import textwrap
 from copy import deepcopy
 import re
 import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
 
 import requests_cache
 requests_cache.install_cache('openqa_cache', backend='sqlite', expire_after=8200)
@@ -102,7 +104,7 @@ def plot_group_by_error(title, jobs, test_suite):
         desc_lines = test.description.split("\n")
 
         result = ""
-        max_chars = 40
+        max_chars = 22
 
         # attempt to find the line with the relevant result
         for line in reversed(desc_lines):
@@ -122,7 +124,9 @@ def plot_group_by_error(title, jobs, test_suite):
 
         return result
 
-    plot_simple(title, jobs, test_suite, y_fn=group_by_error)
+    plot_strip(title, jobs, test_suite,
+               y_fn=group_by_error,
+               hue_fn=lambda test: test.name)
 
 def plot_simple(title, jobs, test_suite, y_fn):
     """Plots test results with simple plotting where (x=job, y=y_fn)
@@ -170,6 +174,69 @@ def plot_simple(title, jobs, test_suite, y_fn):
         for key in sorted_data.keys():
             plt.xticks(rotation=70)
             plt.plot(job_ids_str, sorted_data[key], label=key, linewidth=2)
+
+    plt.title(title[1])
+    plt.suptitle(title[0])
+    plt.xlabel('job')
+    plt.ylabel('times test failed')
+    plt.legend()
+    plt.show()
+
+def plot_strip(title, jobs, test_suite, y_fn, hue_fn):
+    """ Plots tests's failures along the jobs axis. Good for telling the
+    evolution of a test's failure along time.
+    (x=job, y=y_fn, hue=hue_fn)
+
+               ^ (y_fn)
+      group 1 -|        .       .        . (hue=hue_fn)
+      group 2 -|  ...... .... ...... .....
+      group 3 -|
+      group 4 -|     .  .      .     .   .
+      group 5 -| ..       ....    ..   .
+               +---------------------------> (job)
+
+    Args:
+        title (list): title and subtitle of the test.
+        jobs (list): a list of all the JobData.
+        test_suite (str): test suite.
+        y_fn (function(TestFailure)): function to group the results by.
+        hue_fn (function(TestFailure)): function to color the results by.
+    """
+
+    x_data = []
+    y_data = []
+    z_data = []
+
+    for job in jobs:
+        results = job.get_results()[test_suite]
+        for test in results:
+            x_data.append((str(job.job_id)))
+            y_data.append(y_fn(test))
+            z_data.append(hue_fn(test))
+
+    hue_palette = sns.color_palette("tab20", n_colors=len(set(z_data)))
+    tests_palette = ["#ff6c6b", # alternate through 3 colors to be able to tell
+                     "#fea032", # consecutive Y values appart
+                     "#4fa1ed"]
+
+    df = pd.DataFrame({"x": x_data,
+                       "y": y_data,
+                       "z": pd.Categorical(z_data, ordered=True,
+                                           categories=sorted(set(z_data)))})
+
+    # NOTE: plotting the "hue" significantly slows down the plotting
+    sns.stripplot(x="x", y="y", hue="z", data=df, jitter=0.2, orient="v",
+                  palette=hue_palette)
+    plt.xticks(rotation=70)
+
+    # apply palette and hlines to Y labels so it's easier to identify them
+    axis = plt.gca()
+    axis.yaxis.tick_right()
+    for i, tick in enumerate(axis.get_yticklabels()):
+        color = tests_palette[i%3]
+        tick.set_color(color)
+        tick.set_fontsize(8)
+        plt.axhline(y = i, linewidth=0.3, color = color, linestyle = '-')
 
     plt.title(title[1])
     plt.suptitle(title[0])

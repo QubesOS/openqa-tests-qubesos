@@ -87,13 +87,13 @@ def filter_tests_by_error(job, test_suite, error_pattern):
 
     return filtered_job
 
-def plot_group_by_test(jobs, test_suite):
-    plot(jobs, test_suite, lambda test: test.title)
+def plot_group_by_test(title, jobs, test_suite):
+    plot_simple(title, jobs, test_suite, y_fn=lambda test: test.title)
 
-def plot_group_by_template(jobs, test_suite):
-    plot(jobs, test_suite, lambda test: test.name)
+def plot_group_by_template(title, jobs, test_suite):
+    plot_simple(title, jobs, test_suite, y_fn=lambda test: test.name)
 
-def plot_group_by_error(jobs, test_suite):
+def plot_group_by_error(title, jobs, test_suite):
 
     def group_by_error(test):
         if not test.description:
@@ -122,22 +122,31 @@ def plot_group_by_error(jobs, test_suite):
 
         return result
 
-    plot(jobs, test_suite, group_by_error)
+    plot_simple(title, jobs, test_suite, y_fn=group_by_error)
 
-def plot(jobs, test_suite, group_by_fn):
-    """Plots test results
+def plot_simple(title, jobs, test_suite, y_fn):
+    """Plots test results with simple plotting where (x=job, y=y_fn)
+
+      ^ (y_fn)
+      |        .
+      |       / \
+      |   ___/   \
+      |  /        \       /\
+      | /          \_____/  \___
+      +---------------------------> (job)
 
     Args:
+        title (list): title and subtitle of the test.
         jobs (list): a list of all the JobData.
         test_suite (str): test suite.
-        group_by_fn (function(TestFailure)): function to group the results by.
+        y_fn (function(TestFailure)): function to group the results by.
     """
 
     groups = set()
     for job in jobs:
         results = job.get_results()[test_suite]
         for test in results:
-            groups.add(group_by_fn(test))
+            groups.add(y_fn(test))
 
     # initialize data
     data = {}
@@ -147,16 +156,23 @@ def plot(jobs, test_suite, group_by_fn):
     for i, job in enumerate(jobs):
         results = job.get_results()[test_suite]
         for test in results:
-            data[group_by_fn(test)][i] += 1
+            data[y_fn(test)][i] += 1
 
     job_ids = [job.job_id for job in jobs]
     job_ids_str = list(map(str, job_ids))
 
-    for key in data.keys():
-        plt.xticks(rotation=70)
-        plt.plot(job_ids_str, data[key], label=key, linewidth=2)
+    # sort the data by number of failed tests so it the one with the most
+    # failures shows at the top of the legend
+    sorted_data = dict(sorted(data.items(), key=lambda entry: sum(entry[1]),
+                       reverse=True))
 
-    plt.title('Failed tests per job')
+    with plt.style.context('Solarize_Light2'):
+        for key in sorted_data.keys():
+            plt.xticks(rotation=70)
+            plt.plot(job_ids_str, sorted_data[key], label=key, linewidth=2)
+
+    plt.title(title[1])
+    plt.suptitle(title[0])
     plt.xlabel('job')
     plt.ylabel('times test failed')
     plt.legend()
@@ -228,31 +244,39 @@ def main():
     print("\tLooking for failures of test {}/{}".format(test_name,
                                                         test_title))
     print("\ton the last {} failed tests".format(history_len))
-    print("\nsuite: ", args.suite)
 
     jobs = get_jobs(args.suite, history_len)
+    summary = "- suite: {}".format(args.suite)
+
 
     # apply filters
     if args.test:
         tests_filter = lambda job: filter_tests(job, args.suite,
                                             test_name, test_title)
         jobs = map(tests_filter, jobs)
+        summary += "- tests matching: {}/{}\n".format(test_name, test_title)
 
     if args.error:
         tests_filter = lambda job: filter_tests_by_error(job, args.suite,\
                                                          args.error)
         jobs = map(tests_filter, jobs)
+        summary += "- error matches: {}\n".format(args.error)
 
     # output format
     if args.output == "report":
         for job in jobs:
             print_test_failure(job, args.suite, test_name, test_title)
     elif args.output == "plot_tests":
-        plot_group_by_test(list(jobs), args.suite)
+        title = ["Failure By Test", summary]
+        plot_group_by_test(title, list(jobs), args.suite)
     elif args.output == "plot_templates":
-        plot_group_by_template(list(jobs), args.suite)
+        title = ["Failure By Template", summary]
+        plot_group_by_template(title, list(jobs), args.suite)
     elif args.output == "plot_errors":
-        plot_group_by_error(list(jobs), args.suite)
+        title = ["Failure By Error", summary]
+        plot_group_by_error(title, list(jobs), args.suite)
+    else:
+        print("Error: '{}' is not a valid output format".format(args.output))
 
 if __name__ == '__main__':
     main()

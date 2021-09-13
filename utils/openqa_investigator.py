@@ -114,7 +114,7 @@ def plot_group_by_error(title, jobs, test_suite):
                 continue
             else:
                 if result: # last two lines
-                    result = line[:max_chars] + "..." + result
+                    result = line[:max_chars] + "...\n" + result
                     break
                 else:
                     result = line[:max_chars] + "..."

@@ -632,7 +632,7 @@ class OpenQA:
         for job in data['jobs']:
             jobs.append(job['id'])
 
-        return jobs
+        return sorted(jobs)
 
 def setup_environ(args):
     global name_mapping

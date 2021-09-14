@@ -219,8 +219,13 @@ def plot_strip(title, jobs, test_suite, y_fn, hue_fn):
                      "#fea032", # consecutive Y values appart
                      "#4fa1ed"]
 
-    df = pd.DataFrame({"x": x_data,
+    job_ids = [job.job_id for job in jobs]
+    job_ids_str = list(map(str, job_ids))
+
+    df = pd.DataFrame({# x is categorical to also show job_ids when successful
+                       "x": pd.Categorical(x_data, categories=job_ids_str),
                        "y": y_data,
+                       # z is categorical to order the legend
                        "z": pd.Categorical(z_data, ordered=True,
                                            categories=sorted(set(z_data)))})
 

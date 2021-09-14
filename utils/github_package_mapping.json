@@ -21,6 +21,7 @@
   "qubes-mgmt-salt-dom0-qvm": "mgmt-salt-dom0-qvm",
   "qubes-mgmt-salt-vm-connector": "mgmt-salt",
   "qubes-snapd-helper": "app-linux-snapd-helper",
+  "qubes-usb-proxy": "app-linux-usb-proxy",
   "qubes-utils": "linux-utils",
   "xen-libs": "vmm-xen"
 }

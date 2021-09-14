@@ -26,8 +26,7 @@ def get_jobs(test_suite, history_len):
     """
 
     jobs = OpenQA.get_latest_job_ids(test_suite, version=Q_VERSION,
-                                     history_len=history_len, result="failed",
-                                     flavor=FLAVOR)
+                                     history_len=history_len, flavor=FLAVOR)
 
     for job_id in jobs:
         yield JobData(job_id)

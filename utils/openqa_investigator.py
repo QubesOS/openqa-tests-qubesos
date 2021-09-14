@@ -99,7 +99,7 @@ def plot_group_by_error(title, jobs, test_suite):
 
     def group_by_error(test):
         if not test.description:
-            return "no error printed"
+            return "no error printed\n(probably a native openQA test)"
 
         desc_lines = test.description.split("\n")
 

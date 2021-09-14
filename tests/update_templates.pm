@@ -56,8 +56,15 @@ sub run {
 
     # restart only sys-whonix - for potential whonixcheck run
     # other system VMs will be restarted later anyway (whole system restart)
-    if (get_var("UPDATE_TEMPLATES") =~ /whonix-gw/) {
+    # re-run salt state for whonix too, in case of new Whonix VMs to create
+    # (like - for new whonix version)
+    if (get_var("UPDATE_TEMPLATES") =~ /whonix-gw-(\d+)/) {
+        my $whonix_vers = $1;
         assert_script_run("qvm-shutdown --wait sys-whonix", timeout => 90);
+        assert_script_run("sudo qubesctl top.enable qvm.anon-whonix");
+        assert_script_run("(set -o pipefail; sudo qubesctl state.highstate pillar=\"{'qvm':{'whonix':{'version': $whonix_vers}}}\" 2>&1 | tee qubesctl-whonix.log)", timeout => 1800);
+        upload_logs("qubesctl-whonix.log");
+        assert_script_run("sudo qubesctl top.disable qvm.sys-whonix");
         assert_script_run("qvm-start sys-whonix", timeout => 90);
     }
     if (get_var("UPDATE_TEMPLATES") =~ /fedora-33/) {
@@ -70,6 +77,15 @@ sub run {
 
     type_string("exit\n");
 }
+
+
+sub post_fail_hook {
+    my $self = shift;
+
+    $self->SUPER::post_fail_hook();
+    upload_logs("/home/user/qubesctl-whonix.log", failok =>1);
+    upload_logs('/tmp/qubesctl-upgrade.log', failok => 1);
+};
 
 1;
 

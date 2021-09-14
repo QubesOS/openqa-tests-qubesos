@@ -37,6 +37,8 @@ vm-packages:
       - createrepo_c
 {% elif grains['os'] == 'CentOS' and grains['osmajorrelease'] >= 8 %}
       - createrepo_c
+{% elif grains['os'] == 'Debian' and grains['osmajorrelease'] >= 11 %}
+      - createrepo-c
 {% elif grains['os'] != 'Gentoo' %}
       - createrepo
 {% endif %}

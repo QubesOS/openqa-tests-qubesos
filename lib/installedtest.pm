@@ -99,7 +99,7 @@ sub post_fail_hook {
     script_run "cat /var/log/salt/minion";
     script_run "cat /var/log/libvirt/libxl/libxl-driver.log";
     script_run "tail /var/log/xen/console/guest*-dm.log";
-    script_run "tail -n 30 /var/log/xen/console/guest*.log";
+    script_run "grep -B 50 'Kernel panic' /var/log/xen/console/guest*.log";
     enable_dom0_network_netvm() unless $self->{network_up};
     upload_logs('/var/log/libvirt/libxl/libxl-driver.log');
     $self->save_and_upload_log('journalctl -b', 'journalctl.log', {timeout => 120});

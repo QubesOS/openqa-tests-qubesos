@@ -22,13 +22,21 @@ IGNORED_ERRORS = [
 
 def get_jobs(test_suite, history_len):
     """
-    Gets the historical data of a particular of job failures
+    Gets the historical data of a particular test suite
     """
 
-    jobs = OpenQA.get_latest_job_ids(test_suite, version=Q_VERSION,
-                                     history_len=history_len, flavor=FLAVOR)
+    success_jobs = OpenQA.get_latest_job_ids(test_suite, version=Q_VERSION,
+                                     result="passed",  history_len=history_len,
+                                     flavor=FLAVOR)
 
-    for job_id in jobs:
+    failed_jobs = OpenQA.get_latest_job_ids(test_suite, version=Q_VERSION,
+                                        result="failed",
+                                        history_len=history_len, flavor=FLAVOR)
+
+    job_ids = sorted(success_jobs + failed_jobs)
+    job_ids = job_ids[-history_len:]
+
+    for job_id in job_ids:
         yield JobData(job_id)
 
 def print_test_failure(job, test_suite, test_name, test_title):
@@ -310,12 +318,6 @@ def main():
         except ValueError:
             print("Error: {} is not a valid number".format(args.last))
             exit(1)
-
-
-    print("Summary:")
-    print("\tLooking for failures of test {}/{}".format(test_name,
-                                                        test_title))
-    print("\ton the last {} failed tests".format(history_len))
 
     jobs = get_jobs(args.suite, history_len)
     summary = "- suite: {}".format(args.suite)

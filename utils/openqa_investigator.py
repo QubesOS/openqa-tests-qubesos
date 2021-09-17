@@ -185,8 +185,7 @@ def plot_simple(title, jobs, test_suite, y_fn):
             plt.xticks(rotation=70)
             plt.plot(x_data, y_data[key], label=key, linewidth=2)
 
-    plt.title(title[1])
-    plt.suptitle(title[0])
+    plt.title(title)
     plt.xlabel('job')
     plt.ylabel('times test failed')
     plt.legend()
@@ -253,8 +252,7 @@ def plot_strip(title, jobs, test_suite, y_fn, hue_fn):
         tick.set_fontsize(8)
         plt.axhline(y = i, linewidth=0.3, color = color, linestyle = '-')
 
-    plt.title(title[1])
-    plt.suptitle(title[0])
+    plt.title(title)
     plt.xlabel('job')
     plt.ylabel('times test failed')
     plt.legend()
@@ -343,13 +341,13 @@ def main():
         for job in jobs:
             print_test_failure(job, args.suite, test_name, test_title)
     elif args.output == "plot_tests":
-        title = ["Failure By Test", summary]
+        title = "Failure By Test\n" + summary
         plot_group_by_test(title, list(jobs), args.suite)
     elif args.output == "plot_templates":
-        title = ["Failure By Template", summary]
+        title = "Failure By Template\n" + summary
         plot_group_by_template(title, list(jobs), args.suite)
     elif args.output == "plot_errors":
-        title = ["Failure By Error", summary]
+        title = "Failure By Error\n" + summary
         plot_group_by_error(title, list(jobs), args.suite)
     else:
         print("Error: '{}' is not a valid output format".format(args.output))

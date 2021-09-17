@@ -77,6 +77,15 @@ def filter_tests(job, test_suite, test_name, test_title):
 
     return filtered_job
 
+def filter_jobs_invalid_tests(job, test_suite):
+    """
+    Filter that excludes jobs which don't have valid results
+    """
+    if job.get_results()[test_suite]:
+        return True
+    else:
+        return False
+
 def filter_tests_by_error(job, test_suite, error_pattern):
     """
     Filters through tests that have a certain error message pattern
@@ -153,27 +162,23 @@ def plot_simple(title, jobs, test_suite, y_fn):
         y_fn (function(TestFailure)): function to group the results by.
     """
 
-    valid_jobs = set() # jobs with valid results
     groups = set()
     for job in jobs:
         results = job.get_results()[test_suite]
         for test in results:
             groups.add(y_fn(test))
-            valid_jobs.add(job)
-
-    valid_jobs = sorted(valid_jobs, key=lambda entry: entry.job_id)
 
     # initialize data
     y_data = {}
     for test in sorted(groups):
-        y_data[test] = [0]*len(valid_jobs)
+        y_data[test] = [0]*len(jobs)
 
-    for i, job in enumerate(valid_jobs):
+    for i, job in enumerate(jobs):
         results = job.get_results()[test_suite]
         for test in results:
             y_data[y_fn(test)][i] += 1
 
-    x_data = list(map(lambda job: str(job.job_id), valid_jobs))
+    x_data = list(map(lambda job: str(job.job_id), jobs))
 
     # sort the data by number of failed tests so it the one with the most
     # failures shows at the top of the legend
@@ -335,6 +340,10 @@ def main():
                                                          args.error)
         jobs = map(tests_filter, jobs)
         summary += "- error matches: {}\n".format(args.error)
+
+    # at the end of filtering, remove jobs with only invalid tests
+    jobs_filter = lambda job: filter_jobs_invalid_tests(job, args.suite)
+    jobs = filter(jobs_filter, jobs)
 
     # output format
     if args.output == "report":

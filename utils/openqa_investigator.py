@@ -153,7 +153,7 @@ def plot_simple(title, jobs, test_suite, y_fn):
         y_fn (function(TestFailure)): function to group the results by.
     """
 
-    valid_jobs = set()
+    valid_jobs = set() # jobs with valid results
     groups = set()
     for job in jobs:
         results = job.get_results()[test_suite]
@@ -162,26 +162,29 @@ def plot_simple(title, jobs, test_suite, y_fn):
             valid_jobs.add(job)
 
     # initialize data
+    x_data = []
     y_data = {}
     for test in sorted(groups):
         y_data[test] = [0]*len(valid_jobs)
 
-    x_data = []
     for i, job in enumerate(valid_jobs):
         results = job.get_results()[test_suite]
-        x_data.append(str(job.job_id))
+        x_data.append(job.job_id)
         for test in results:
             y_data[y_fn(test)][i] += 1
 
+    x_data = sorted(x_data)
+    x_data = list(map(str, x_data))
+
     # sort the data by number of failed tests so it the one with the most
     # failures shows at the top of the legend
-    sorted_data = dict(sorted(y_data.items(), key=lambda entry: sum(entry[1]),
+    y_data = dict(sorted(y_data.items(), key=lambda entry: sum(entry[1]),
                        reverse=True))
 
     with plt.style.context('Solarize_Light2'):
-        for key in sorted_data.keys():
+        for key in y_data.keys():
             plt.xticks(rotation=70)
-            plt.plot(list(x_data), sorted_data[key], label=key, linewidth=2)
+            plt.plot(x_data, y_data[key], label=key, linewidth=2)
 
     plt.title(title[1])
     plt.suptitle(title[0])

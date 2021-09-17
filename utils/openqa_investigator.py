@@ -161,20 +161,19 @@ def plot_simple(title, jobs, test_suite, y_fn):
             groups.add(y_fn(test))
             valid_jobs.add(job)
 
+    valid_jobs = sorted(valid_jobs, key=lambda entry: entry.job_id)
+
     # initialize data
-    x_data = []
     y_data = {}
     for test in sorted(groups):
         y_data[test] = [0]*len(valid_jobs)
 
     for i, job in enumerate(valid_jobs):
         results = job.get_results()[test_suite]
-        x_data.append(job.job_id)
         for test in results:
             y_data[y_fn(test)][i] += 1
 
-    x_data = sorted(x_data)
-    x_data = list(map(str, x_data))
+    x_data = list(map(lambda job: str(job.job_id), valid_jobs))
 
     # sort the data by number of failed tests so it the one with the most
     # failures shows at the top of the legend

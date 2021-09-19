@@ -62,7 +62,7 @@ def print_test_failure(job, test_suite, test_name, test_title):
 def filter_valid_job(job):
     return job.is_valid()
 
-def filter_tests(job, test_suite, test_name, test_title):
+def filter_tests_by_name(job, test_suite, test_name, test_title):
     """
     Filters out tests that don't match a particular test pattern
     """
@@ -327,8 +327,8 @@ def main():
 
     # apply filters
     if args.test:
-        tests_filter = lambda job: filter_tests(job, args.suite,
-                                            test_name, test_title)
+        tests_filter = lambda job: filter_tests_by_name(job, args.suite,
+                                                        test_name, test_title)
         jobs = map(tests_filter, jobs)
         summary += "- tests matching: {}/{}\n".format(test_name, test_title)
 

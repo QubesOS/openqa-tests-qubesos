@@ -191,6 +191,26 @@ class JobData:
 
         return self.failures
 
+    def is_valid(self):
+        json_data = self.get_job_details()
+        job_result = json_data['job']['result']
+        if job_result == "success":
+            return True
+        elif job_result == "failed":
+            has_failures = len(self.get_results()[self.job_name]) > 0
+            all_test_groups_ran = True
+
+            for test_group in json_data['job']['testresults']:
+                if test_group['result'] == 'none':
+                    all_test_groups_ran = False
+
+            # FIXME deal with edge-cases where 'system_tests' passes but no
+            # external results are generated https://openqa.qubes-os.org/tests/20425
+
+            return all_test_groups_ran and has_failures
+        else:
+            return False
+
     def get_children_pruned(self):
         data = requests.get(
             "{}/jobs/{}/".format(OPENQA_API, self.job_id)).json()

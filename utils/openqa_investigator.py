@@ -58,6 +58,10 @@ def print_test_failure(job, test_suite, test_name, test_title):
         print(test_failure)
         print("```")
 
+
+def filter_valid_job(job):
+    return job.is_valid()
+
 def filter_tests(job, test_suite, test_name, test_title):
     """
     Filters out tests that don't match a particular test pattern
@@ -76,15 +80,6 @@ def filter_tests(job, test_suite, test_name, test_title):
     filtered_job.failures[job.get_job_name()] = filtered_results
 
     return filtered_job
-
-def filter_jobs_invalid_tests(job, test_suite):
-    """
-    Filter that excludes jobs which don't have valid results
-    """
-    if job.get_results()[test_suite]:
-        return True
-    else:
-        return False
 
 def filter_tests_by_error(job, test_suite, error_pattern):
     """
@@ -327,6 +322,8 @@ def main():
     jobs = get_jobs(args.suite, history_len)
     summary = "- suite: {}".format(args.suite)
 
+    # remove invalid jobs
+    jobs = filter(filter_valid_job, jobs)
 
     # apply filters
     if args.test:
@@ -340,10 +337,6 @@ def main():
                                                          args.error)
         jobs = map(tests_filter, jobs)
         summary += "- error matches: {}\n".format(args.error)
-
-    # at the end of filtering, remove jobs with only invalid tests
-    jobs_filter = lambda job: filter_jobs_invalid_tests(job, args.suite)
-    jobs = filter(jobs_filter, jobs)
 
     # output format
     if args.output == "report":

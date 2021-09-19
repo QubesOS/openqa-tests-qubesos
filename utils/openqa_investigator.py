@@ -125,7 +125,7 @@ def plot_group_by_error(title, jobs, test_suite, outdir):
         desc_lines = test.description.split("\n")
 
         result = ""
-        max_chars = 22
+        max_chars = 40
 
         # attempt to find the line with the relevant result
         for line in reversed(desc_lines):
@@ -166,6 +166,8 @@ def plot_simple(title, jobs, test_suite, outdir, y_fn):
         test_suite (str): test suite.
         y_fn (function(TestFailure)): function to group the results by.
     """
+
+    plt.figure(figsize=(10,7))
 
     groups = set()
     for job in jobs:
@@ -227,6 +229,8 @@ def plot_strip(title, jobs, test_suite, outdir, y_fn, hue_fn):
         y_fn (function(TestFailure)): function to group the results by.
         hue_fn (function(TestFailure)): function to color the results by.
     """
+    plt.figure(figsize=(14,7))
+    plt.subplots_adjust(left = 0.03, right = 0.80)
 
     x_data = []
     y_data = []

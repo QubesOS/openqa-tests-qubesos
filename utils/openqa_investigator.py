@@ -39,24 +39,34 @@ def get_jobs(test_suite, history_len):
     for job_id in job_ids:
         yield JobData(job_id)
 
-def print_test_failure(job, test_suite, test_name, test_title):
+def report_test_failure(job, test_suite, test_name, test_title, outdir):
     """
     Prints the failures of a particular test pattern
     """
 
     result = job.get_results()
     test_failures = result[test_suite]
+    report = ""
 
-    print("\n## Job {} (flavor '{}' from {})".format(job.job_id,
+    if test_failures:
+        report = "\n## Job {} (flavor '{}' from {})".format(job.job_id,
                                                     job.get_job_flavor(),
-                                                    job.get_job_start_time()))
+                                                    job.get_job_start_time())
     for test_failure in test_failures:
         if not test_title == test_failure.title: # regex title
-            print("\n### {}".format(test_failure.title))
+            report += "\n\n### {}".format(test_failure.title)
 
-        print("```python")
-        print(test_failure)
-        print("```")
+        report += "```python"
+        report += str(test_failure)
+        report += "```"
+
+    if outdir:
+        file_path = outdir + "report.md"
+        with open(file_path, 'a') as f:
+            f.write(report)
+        print("report saved at {}".format(file_path))
+    else:
+        print(report)
 
 
 def filter_valid_job(job):
@@ -100,13 +110,13 @@ def filter_tests_by_error(job, test_suite, error_pattern):
 
     return filtered_job
 
-def plot_group_by_test(title, jobs, test_suite):
-    plot_simple(title, jobs, test_suite, y_fn=lambda test: test.title)
+def plot_group_by_test(title, jobs, test_suite, outdir):
+    plot_simple(title, jobs, test_suite, outdir, y_fn=lambda test: test.title)
 
-def plot_group_by_template(title, jobs, test_suite):
-    plot_simple(title, jobs, test_suite, y_fn=lambda test: test.name)
+def plot_group_by_template(title, jobs, test_suite, outdir):
+    plot_simple(title, jobs, test_suite, outdir, y_fn=lambda test: test.name)
 
-def plot_group_by_error(title, jobs, test_suite):
+def plot_group_by_error(title, jobs, test_suite, outdir):
 
     def group_by_error(test):
         if not test.description:
@@ -135,11 +145,11 @@ def plot_group_by_error(title, jobs, test_suite):
 
         return result
 
-    plot_strip(title, jobs, test_suite,
+    plot_strip(title, jobs, test_suite, outdir,
                y_fn=group_by_error,
                hue_fn=lambda test: test.name)
 
-def plot_simple(title, jobs, test_suite, y_fn):
+def plot_simple(title, jobs, test_suite, outdir, y_fn):
     """Plots test results with simple plotting where (x=job, y=y_fn)
 
       ^ (y_fn)
@@ -189,9 +199,15 @@ def plot_simple(title, jobs, test_suite, y_fn):
     plt.xlabel('job')
     plt.ylabel('times test failed')
     plt.legend()
-    plt.show()
 
-def plot_strip(title, jobs, test_suite, y_fn, hue_fn):
+    if outdir:
+        file_path = outdir + "plot.png"
+        plt.savefig(file_path)
+        print("plot saved at {}".format(file_path))
+    else:
+        plt.show()
+
+def plot_strip(title, jobs, test_suite, outdir, y_fn, hue_fn):
     """ Plots tests's failures along the jobs axis. Good for telling the
     evolution of a test's failure along time.
     (x=job, y=y_fn, hue=hue_fn)
@@ -255,8 +271,14 @@ def plot_strip(title, jobs, test_suite, y_fn, hue_fn):
     plt.title(title)
     plt.xlabel('job')
     plt.ylabel('times test failed')
-    plt.legend()
-    plt.show()
+    plt.legend(loc="center left")
+
+    if outdir:
+        file_path = outdir + "plot.png"
+        plt.savefig(file_path)
+        print("plot saved at {}".format(file_path))
+    else:
+        plt.show()
 
 def test_matches(test_name, test_name_pattern, test_title, test_title_pattern):
     try:
@@ -301,6 +323,10 @@ def main():
         "--output",
         help="Select output format (markdown/plot_error/plot_templates/plot_tests)")
 
+    parser.add_argument(
+        "--outdir",
+        help="path to save results")
+
     parser.set_defaults(output="report")
     args = parser.parse_args()
 
@@ -341,16 +367,17 @@ def main():
     # output format
     if args.output == "report":
         for job in jobs:
-            print_test_failure(job, args.suite, test_name, test_title)
+            report_test_failure(job, args.suite, test_name, test_title,
+                                args.outdir)
     elif args.output == "plot_tests":
         title = "Failure By Test\n" + summary
-        plot_group_by_test(title, list(jobs), args.suite)
+        plot_group_by_test(title, list(jobs), args.suite, args.outdir)
     elif args.output == "plot_templates":
         title = "Failure By Template\n" + summary
-        plot_group_by_template(title, list(jobs), args.suite)
+        plot_group_by_template(title, list(jobs), args.suite, args.outdir)
     elif args.output == "plot_errors":
         title = "Failure By Error\n" + summary
-        plot_group_by_error(title, list(jobs), args.suite)
+        plot_group_by_error(title, list(jobs), args.suite, args.outdir)
     else:
         print("Error: '{}' is not a valid output format".format(args.output))
 

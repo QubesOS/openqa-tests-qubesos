@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -xe
+
+search_results=$(curl https://api.github.com/search/issues?q="org:QubesOS+label:openqa-pending+is:open")
+prs=$(echo "$search_results" | jq -r '.items | .[] | .html_url')
+
+BASE_URL="https://github.com/QubesOS/qubes-"
+API_BASE="https://api.github.com/repos/QubesOS/qubes-"
+BUILDER_INSTANCE=$HOME/qubes-builder
+
+components=""
+
+for pr in $prs; do
+    pr_short="${pr#${BASE_URL}}"
+    pr_component="${pr_short%%/*}"
+    pr_number="${pr##*/}"
+
+    base_branch=$(curl "${API_BASE}${pr_component}/pulls/${pr_number}" | jq -r .base.ref)
+    default_branch=$(make -s -C "$BUILDER_INSTANCE" get-var GET_VAR=BRANCH_${pr_component//-/_})
+    [ -z "$default_branch" ] && default_branch=master
+    if [ "$base_branch" != "$default_branch" ]; then
+        echo "PR $pr is not against master, ignoring" >&2
+        continue
+    fi
+
+    make -C "$BUILDER_INSTANCE" COMPONENTS="$pr_component" get-sources
+    git -C "$BUILDER_INSTANCE/qubes-src/${pr_component}" fetch $BASE_URL$pr_component refs/pull/$pr_number/head
+    git -C "$BUILDER_INSTANCE/qubes-src/${pr_component}" merge --no-edit --no-ff FETCH_HEAD || { echo "Merge conflict on $pr"; exit 1; }
+    make -C "$BUILDER_INSTANCE" COMPONENTS="$pr_component" get-sources-extra
+    components="$components $pr_component"
+done
+
+# reorder and deduplicate components, according to canonical order in the example config
+desired_order=$(make -s -C "$BUILDER_INSTANCE" BUILDERCONF=example-configs/qubes-os-master.conf get-var GET_VAR=COMPONENTS)
+components_filter_re="^$(echo $components|sed 's/ /\$\\|^/g')\$"
+echo "components pre: $components"
+components=$(echo $desired_order|tr ' ' '\n'|grep "$components_filter_re"|uniq|xargs echo)
+echo "components post: $components"
+
+echo "override COMPONENTS = $components" >> $BUILDER_INSTANCE/scripts/gitlab-builder.conf

@@ -1,0 +1,6 @@
+Key-Type: default
+Name-Real: Package TEST key
+Expire-Date: 0
+%no-protection
+%commit
+

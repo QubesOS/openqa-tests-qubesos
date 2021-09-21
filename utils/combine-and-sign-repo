@@ -1,0 +1,107 @@
+#!/bin/bash
+
+# combines all repositories from qubes-builder/qubes-packages-mirror-repo (path
+# in $1), into a single structure in output dir ($2)
+# the repositories are signed with key id in $3
+
+indir="$1"
+outdir="$2"
+signkey="$3"
+
+set -ex
+
+handle_rpm_repo() {
+    local sourcedir="$1"
+    local destdir="$2"
+
+    mkdir -p "$destdir/rpm"
+    find "$sourcedir" -name '*.rpm' -exec cp -t "$destdir/rpm" {} +
+    find "$destdir/rpm" -name '*.rpm' -exec rpmsign --key-id="$signkey" --addsign {} +
+    createrepo_c --update "$destdir"
+    gpg --detach-sign --output=- --armor "--local-user=$signkey" \
+        -- "$destdir/repodata/repomd.xml" > "$destdir/repodata/repomd.xml.asc"
+
+}
+
+function calc_sha1() {
+    local f=$1
+    printf ' %s %d %s\n' "$(sha1sum "$f"|cut -d' ' -f 1)" "$(stat -c %s "$f")" "$f"
+}
+function calc_sha256() {
+    local f=$1
+    printf ' %s %d %s\n' "$(sha256sum "$f"|cut -d' ' -f 1)" "$(stat -c %s "$f")" "$f"
+}
+
+handle_deb_repo() {
+    local sourcedir="$1"
+    local destdir="$2"
+    local dist="$3"
+
+    if [ "$dist" = "wheezy" ]; then
+        dist_tag=deb7
+    elif [ "$dist" = "jessie" ]; then
+        dist_tag=deb8
+    elif [ "$dist" = "stretch" ]; then
+        dist_tag=deb9
+    elif [ "$dist" = "buster" ]; then
+        dist_tag=deb10
+    elif [ "$dist" = "bullseye" ]; then
+        dist_tag=deb11
+    else
+        echo "Unknown dist $dist"
+        exit 1
+    fi
+
+    mkdir -p "$destdir/vm/pool"
+    find "$sourcedir" -name "*${dist_tag}*.deb" -exec cp -t "$destdir/vm/pool" {} +
+    pushd "$destdir" || exit
+    mkdir -p "dists/$dist/main/binary-amd64"
+    dpkg-scanpackages --multiversion --arch ".*$dist_tag.*" . > "dists/$dist/main/binary-amd64/Packages"
+    gzip -9c "dists/$dist/main/binary-amd64/Packages" > "dists/$dist/main/binary-amd64/Packages.gz"
+    cat > "dists/$dist/Release" <<EOF
+Label: Test repo
+Suite: $dist
+Codename: $dist
+Date: $(date -u +"%a, %d %b %Y %H:%M:%S %Z")
+Architectures: amd64
+Components: main
+EOF
+    { 
+        pushd "dists/$dist" || exit
+        echo "SHA1:"
+        calc_sha1 main/binary-amd64/Packages
+        echo "SHA256:"
+        calc_sha256 main/binary-amd64/Packages
+        popd || exit
+    } >> "dists/$dist/Release"
+
+    rm -f "dists/$dist/Release.gpg"
+    rm -f "dists/$dist/InRelease"
+    gpg --digest-algo=SHA256 -abs -u "$signkey" \
+        < "dists/$dist/Release" > "dists/$dist/Release.gpg"
+    gpg --digest-algo=SHA256 -a -s --clearsign -u "$signkey" \
+        < "dists/$dist/Release" > "dists/$dist/InRelease"
+    popd || exit
+
+    if [ "$(id -u)" -eq 0 ]; then
+        chown -R --reference="$destdir" "$destdir"
+    fi
+}
+
+mkdir -p "$outdir"
+
+for sourcedir in "$indir"/*; do
+    # skip ordinary files like README
+    [ -d "$sourcedir" ] || continue
+    base=$(basename "$sourcedir")
+    pkgset=${base%%-*}
+    dist=${base#*-}
+    if [ "$pkgset" = "dom0" ]; then
+        handle_rpm_repo "$sourcedir" "$outdir/dom0"
+    elif [[ "${dist}" = "fc"* ]]; then
+        handle_rpm_repo "$sourcedir" "$outdir/vm/$dist"
+    else
+        # not fedora -> debian
+        handle_deb_repo "$sourcedir" "$outdir/vm" "$dist"
+    fi
+done

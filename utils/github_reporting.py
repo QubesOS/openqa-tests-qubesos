@@ -194,7 +194,7 @@ class JobData:
     def is_valid(self):
         json_data = self.get_job_details()
         job_result = json_data['job']['result']
-        if job_result == "success":
+        if job_result == "passed":
             return True
         elif job_result == "failed":
             has_failures = len(self.get_results()[self.job_name]) > 0

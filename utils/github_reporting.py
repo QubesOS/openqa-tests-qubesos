@@ -158,8 +158,18 @@ class JobData:
 
     def get_job_start_time(self):
         json_data = self.get_job_details()
-
         return json_data['job']['t_started']
+
+    def get_job_parent(self):
+        json_data = self.get_job_details()
+        parents = json_data['job']['parents']['Chained']
+        if len(parents) == 0:
+            raise Exception("Job {} has no parents.".format(self.job_id)\
+                            + " This may happen in some older tests.")
+        if len(parents) > 1:
+            raise Exception("Implementation does not support more than one "\
+                            + "parent job.")
+        return parents[0]
 
     def get_job_details(self):
         if self.job_details is None:

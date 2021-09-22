@@ -185,7 +185,7 @@ def plot_simple(title, jobs, test_suite, outdir, y_fn):
         for test in results:
             y_data[y_fn(test)][i] += 1
 
-    x_data = list(map(lambda job: str(job.job_id), jobs))
+    x_data = list(map(lambda job: str(job.get_job_parent()), jobs))
 
     # sort the data by number of failed tests so it the one with the most
     # failures shows at the top of the legend
@@ -198,7 +198,7 @@ def plot_simple(title, jobs, test_suite, outdir, y_fn):
             plt.plot(x_data, y_data[key], label=key, linewidth=2)
 
     plt.title(title)
-    plt.xlabel('job')
+    plt.xlabel('parent job')
     plt.ylabel('times test failed')
     plt.legend()
 

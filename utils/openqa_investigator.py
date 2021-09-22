@@ -39,13 +39,13 @@ def get_jobs(test_suite, history_len):
     for job_id in job_ids:
         yield JobData(job_id)
 
-def report_test_failure(job, test_suite, test_name, test_title, outdir):
+def report_test_failure(job, test_name, test_title, outdir):
     """
     Prints the failures of a particular test pattern
     """
 
     result = job.get_results()
-    test_failures = result[test_suite]
+    test_failures = result[job.get_job_name()]
     report = ""
 
     if test_failures:
@@ -72,12 +72,12 @@ def report_test_failure(job, test_suite, test_name, test_title, outdir):
 def filter_valid_job(job):
     return job.is_valid()
 
-def filter_tests_by_name(job, test_suite, test_name, test_title):
+def filter_tests_by_name(job, test_name, test_title):
     """
     Filters out tests that don't match a particular test pattern
     """
     results = job.get_results()
-    test_failures = results[test_suite]
+    test_failures = results[job.get_job_name()]
 
     filtered_results = []
 
@@ -91,12 +91,12 @@ def filter_tests_by_name(job, test_suite, test_name, test_title):
 
     return filtered_job
 
-def filter_tests_by_error(job, test_suite, error_pattern):
+def filter_tests_by_error(job, error_pattern):
     """
     Filters through tests that have a certain error message pattern
     """
     results = job.get_results()
-    test_failures = results[test_suite]
+    test_failures = results[job.get_job_name()]
 
     filtered_results = []
 
@@ -171,7 +171,7 @@ def plot_simple(title, jobs, test_suite, outdir, y_fn):
 
     groups = set()
     for job in jobs:
-        results = job.get_results()[test_suite]
+        results = job.get_results()[job.get_job_name()]
         for test in results:
             groups.add(y_fn(test))
 
@@ -181,7 +181,7 @@ def plot_simple(title, jobs, test_suite, outdir, y_fn):
         y_data[test] = [0]*len(jobs)
 
     for i, job in enumerate(jobs):
-        results = job.get_results()[test_suite]
+        results = job.get_results()[job.get_job_name()]
         for test in results:
             y_data[y_fn(test)][i] += 1
 
@@ -237,7 +237,7 @@ def plot_strip(title, jobs, test_suite, outdir, y_fn, hue_fn):
     z_data = []
 
     for job in jobs:
-        results = job.get_results()[test_suite]
+        results = job.get_results()[job.job_name]
         for test in results:
             x_data.append((str(job.job_id)))
             y_data.append(y_fn(test))
@@ -357,21 +357,20 @@ def main():
 
     # apply filters
     if args.test:
-        tests_filter = lambda job: filter_tests_by_name(job, args.suite,
-                                                        test_name, test_title)
+        tests_filter = lambda job: filter_tests_by_name(job, test_name,
+                                                        test_title)
         jobs = map(tests_filter, jobs)
         summary += "- tests matching: {}/{}\n".format(test_name, test_title)
 
     if args.error:
-        tests_filter = lambda job: filter_tests_by_error(job, args.suite,\
-                                                         args.error)
+        tests_filter = lambda job: filter_tests_by_error(job, args.error)
         jobs = map(tests_filter, jobs)
         summary += "- error matches: {}\n".format(args.error)
 
     # output format
     if args.output == "report":
         for job in jobs:
-            report_test_failure(job, args.suite, test_name, test_title,
+            report_test_failure(job, test_name, test_title,
                                 args.outdir)
     elif args.output == "plot_tests":
         title = "Failure By Test\n" + summary

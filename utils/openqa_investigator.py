@@ -237,13 +237,44 @@ def group_by_error(test):
 
     return result
 
+def group_by_template(test):
+    # obtain template name according to construction format of
+    # https://github.com/QubesOS/qubes-core-admin/blob/f60334/qubes/tests/__init__.py#L1352
+    # Will catch most common tests.
+    template = test.name.split("_")[-1]
+    template = template.split("-pool")[0] # remove trailing "-pool"
+
+    if re.search(r"^[a-z\-]+\-\d+(\-xfce)?$", template): # [template]-[ver]
+        return template
+
+    msg  = "Test's name '{}' doesn't specify a template.\n".format(test.name)
+    msg += "  The test suite may not include template information in the"
+    msg += " test's name."
+    raise Exception(msg)
+
 def plot_group_by_test(title, jobs, test_suite, outfile=None):
     y_fn = lambda test: test.title
     plot_simple(title, jobs, test_suite, y_fn, outfile)
 
 def plot_group_by_template(title, jobs, test_suite, outfile=None):
-    y_fn = lambda test: test.name
-    plot_simple(title, jobs, test_suite, y_fn, outfile)
+    plot_simple(title, jobs, test_suite, group_by_template, outfile)
+
+    def group_by_template(test):
+        # obtain template name according to construction format of
+        # https://github.com/QubesOS/qubes-core-admin/blob/f60334/qubes/tests/__init__.py#L1352
+        # Will catch most common tests.
+        template = test.name.split("_")[-1]
+        template = template.split("-pool")[0] # remove trailing "-pool"
+
+        if re.search(r"^[a-z\-]+\-\d+(\-xfce)?$", template): # [template]-[ver]
+            return template
+
+        msg  = "Test's name '{}' doesn't specify a template.\n".format(test.name)
+        msg += "  The test suite '{}' may not include".format(test_suite)
+        msg += "template information in the test's name."
+        raise Exception(msg)
+
+    plot_simple(title, jobs, test_suite, group_by_template, outfile)
 
 def plot_group_by_worker(title, jobs, test_suite, outfile):
 
@@ -254,7 +285,7 @@ def plot_group_by_worker(title, jobs, test_suite, outfile):
     plot_simple(title, jobs, test_suite, group_by, outfile)
 
 def plot_group_by_error(title, jobs, test_suite, outfile=None):
-    hue_fn=lambda test: test.name
+    hue_fn=group_by_template
     plot_strip(title, jobs, test_suite, group_by_error, hue_fn, outfile)
 
 def plot_simple(title, jobs, test_suite, y_fn, outfile=None):

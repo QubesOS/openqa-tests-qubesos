@@ -36,6 +36,9 @@ def get_jobs(test_suite, history_len):
     job_ids = sorted(success_jobs + failed_jobs)
     job_ids = job_ids[-history_len:]
 
+    if len(job_ids) == 0:
+        print("ERROR: no jobs found. Wrong test suite name?")
+
     for job_id in job_ids:
         yield JobData(job_id)
 
@@ -49,16 +52,18 @@ def report_test_failure(job, test_name, test_title, outdir):
     report = ""
 
     if test_failures:
-        report = "\n## Job {} (flavor '{}' from {})".format(job.job_id,
+        report = "\n## Job {} (flavor '{}' from {})\n".format(job.job_id,
                                                     job.get_job_flavor(),
                                                     job.get_job_start_time())
     for test_failure in test_failures:
         if not test_title == test_failure.title: # regex title
-            report += "\n\n### {}".format(test_failure.title)
+            report += "\n\n### {}\n".format(test_failure.title)
 
-        report += "```python"
+        report += "```python\n"
         report += str(test_failure)
-        report += "```"
+        report += "\n```\n"
+
+    return report
 
     if outdir:
         file_path = outdir + "report.md"

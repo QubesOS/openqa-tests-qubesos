@@ -115,46 +115,46 @@ def filter_tests_by_error(job, error_pattern):
 
     return filtered_job
 
-def plot_group_by_test(title, jobs, test_suite, outdir):
-    plot_simple(title, jobs, test_suite, outdir, y_fn=lambda test: test.title)
+def group_by_error(test):
+    if not test.description:
+        return "no error printed\n(probably a native openQA test)"
 
-def plot_group_by_template(title, jobs, test_suite, outdir):
-    plot_simple(title, jobs, test_suite, outdir, y_fn=lambda test: test.name)
+    desc_lines = test.description.split("\n")
 
-def plot_group_by_error(title, jobs, test_suite, outdir):
+    result = ""
+    max_chars = 40
 
-    def group_by_error(test):
-        if not test.description:
-            return "no error printed\n(probably a native openQA test)"
-
-        desc_lines = test.description.split("\n")
-
-        result = ""
-        max_chars = 40
-
-        # attempt to find the line with the relevant result
-        for line in reversed(desc_lines):
-            if any(map(lambda error: error in line, IGNORED_ERRORS)): # ignore certain
-                continue
-            elif line == "" or re.search("^\s+$", line): # whitespace
-                continue
+    # attempt to find the line with the relevant result
+    for line in reversed(desc_lines):
+        if any(map(lambda error: error in line, IGNORED_ERRORS)): # ignore certain
+            continue
+        elif line == "" or re.search("^\s+$", line): # whitespace
+            continue
+        else:
+            if result: # last two lines
+                result = line[:max_chars] + ".*\n" + result
+                break
             else:
-                if result: # last two lines
-                    result = line[:max_chars] + "...\n" + result
-                    break
-                else:
-                    result = line[:max_chars] + "..."
+                result = line[:max_chars] + ".*"
 
-        if result == "":
-            return "ignored error"
+    if result == "":
+        return "ignored error"
 
-        return result
+    return result
 
-    plot_strip(title, jobs, test_suite, outdir,
-               y_fn=group_by_error,
-               hue_fn=lambda test: test.name)
+def plot_group_by_test(title, jobs, test_suite, outdir=None):
+    y_fn = lambda test: test.title
+    plot_simple(title, jobs, test_suite, y_fn, outdir)
 
-def plot_simple(title, jobs, test_suite, outdir, y_fn):
+def plot_group_by_template(title, jobs, test_suite, outdir=None):
+    y_fn = lambda test: test.name
+    plot_simple(title, jobs, test_suite, y_fn, outdir)
+
+def plot_group_by_error(title, jobs, test_suite, outdir=None):
+    hue_fn=lambda test: test.name
+    plot_strip(title, jobs, test_suite, group_by_error, hue_fn, outdir)
+
+def plot_simple(title, jobs, test_suite, y_fn, outdir=None):
     """Plots test results with simple plotting where (x=job, y=y_fn)
 
       ^ (y_fn)
@@ -214,7 +214,7 @@ def plot_simple(title, jobs, test_suite, outdir, y_fn):
     else:
         plt.show()
 
-def plot_strip(title, jobs, test_suite, outdir, y_fn, hue_fn):
+def plot_strip(title, jobs, test_suite, y_fn, hue_fn, outdir=None):
     """ Plots tests's failures along the jobs axis. Good for telling the
     evolution of a test's failure along time.
     (x=job, y=y_fn, hue=hue_fn)

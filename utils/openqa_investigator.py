@@ -245,6 +245,14 @@ def plot_group_by_template(title, jobs, test_suite, outfile=None):
     y_fn = lambda test: test.name
     plot_simple(title, jobs, test_suite, y_fn, outfile)
 
+def plot_group_by_worker(title, jobs, test_suite, outfile):
+
+    def group_by(test):
+        job = JobData(test.job_id)
+        return job.get_job_details()['job']['assigned_worker_id']
+
+    plot_simple(title, jobs, test_suite, group_by, outfile)
+
 def plot_group_by_error(title, jobs, test_suite, outfile=None):
     hue_fn=lambda test: test.name
     plot_strip(title, jobs, test_suite, group_by_error, hue_fn, outfile)
@@ -485,6 +493,9 @@ def main():
     elif args.output == "plot_errors":
         title = "Failure By Error\n" + summary
         plot_group_by_error(title, jobs, args.suite, plot_filepath)
+    elif args.output == "plot_worker":
+        title = "Failure By Worker\n" + summary
+        plot_group_by_worker(title, jobs, args.suite, plot_filepath)
 
     elif args.output == "table_tests":
         report += report_table_tests(jobs, args.outdir)

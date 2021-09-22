@@ -142,19 +142,19 @@ def group_by_error(test):
 
     return result
 
-def plot_group_by_test(title, jobs, test_suite, outdir=None):
+def plot_group_by_test(title, jobs, test_suite, outfile=None):
     y_fn = lambda test: test.title
-    plot_simple(title, jobs, test_suite, y_fn, outdir)
+    plot_simple(title, jobs, test_suite, y_fn, outfile)
 
-def plot_group_by_template(title, jobs, test_suite, outdir=None):
+def plot_group_by_template(title, jobs, test_suite, outfile=None):
     y_fn = lambda test: test.name
-    plot_simple(title, jobs, test_suite, y_fn, outdir)
+    plot_simple(title, jobs, test_suite, y_fn, outfile)
 
-def plot_group_by_error(title, jobs, test_suite, outdir=None):
+def plot_group_by_error(title, jobs, test_suite, outfile=None):
     hue_fn=lambda test: test.name
-    plot_strip(title, jobs, test_suite, group_by_error, hue_fn, outdir)
+    plot_strip(title, jobs, test_suite, group_by_error, hue_fn, outfile)
 
-def plot_simple(title, jobs, test_suite, y_fn, outdir=None):
+def plot_simple(title, jobs, test_suite, y_fn, outfile=None):
     """Plots test results with simple plotting where (x=job, y=y_fn)
 
       ^ (y_fn)
@@ -207,14 +207,14 @@ def plot_simple(title, jobs, test_suite, y_fn, outdir=None):
     plt.ylabel('times test failed')
     plt.legend()
 
-    if outdir:
-        file_path = outdir + "plot.png"
+    if outfile:
+        file_path = outfile
         plt.savefig(file_path)
         print("plot saved at {}".format(file_path))
     else:
         plt.show()
 
-def plot_strip(title, jobs, test_suite, y_fn, hue_fn, outdir=None):
+def plot_strip(title, jobs, test_suite, y_fn, hue_fn, outfile=None):
     """ Plots tests's failures along the jobs axis. Good for telling the
     evolution of a test's failure along time.
     (x=job, y=y_fn, hue=hue_fn)
@@ -282,8 +282,8 @@ def plot_strip(title, jobs, test_suite, y_fn, hue_fn, outdir=None):
     plt.ylabel('times test failed')
     plt.legend(loc="center left")
 
-    if outdir:
-        file_path = outdir + "plot.png"
+    if outfile:
+        file_path = outfile
         plt.savefig(file_path)
         print("plot saved at {}".format(file_path))
     else:
@@ -377,17 +377,28 @@ def main():
         for job in jobs:
             report_test_failure(job, test_name, test_title,
                                 args.outdir)
-    elif args.output == "plot_tests":
+
+    jobs = list(jobs)
+    plot_filepath = args.outdir+"plot.png" if args.outdir else None
+    if args.output == "plot_tests":
         title = "Failure By Test\n" + summary
-        plot_group_by_test(title, list(jobs), args.suite, args.outdir)
+        plot_group_by_test(title, jobs, args.suite, plot_filepath)
     elif args.output == "plot_templates":
         title = "Failure By Template\n" + summary
-        plot_group_by_template(title, list(jobs), args.suite, args.outdir)
+        plot_group_by_template(title, jobs, args.suite, plot_filepath)
     elif args.output == "plot_errors":
         title = "Failure By Error\n" + summary
-        plot_group_by_error(title, list(jobs), args.suite, args.outdir)
+        plot_group_by_error(title, jobs, args.suite, plot_filepath)
     else:
         print("Error: '{}' is not a valid output format".format(args.output))
+
+    if args.outdir:
+        file_path = args.outdir + "report.md"
+        with open(file_path, 'w') as f:
+            f.write(report)
+        print("report saved at {}".format(file_path))
+    else:
+        print(report)
 
 if __name__ == '__main__':
     main()

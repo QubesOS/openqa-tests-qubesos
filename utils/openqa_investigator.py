@@ -65,14 +65,109 @@ def report_test_failure(job, test_name, test_title, outdir):
 
     return report
 
-    if outdir:
-        file_path = outdir + "report.md"
-        with open(file_path, 'a') as f:
-            f.write(report)
-        print("report saved at {}".format(file_path))
-    else:
-        print(report)
+def report_summary_tests(jobs, test_suite, outdir=None):
+    report = ""
+    report += report_table_tests(jobs, outdir)
 
+    plot_title = "errors by time"
+    if outdir:
+        plot_filename = "{}_{}.png".format(test_suite, "tests")
+        plot_filepath = "{}/{}".format(outdir, plot_filename)
+        plot_group_by_test(plot_title, jobs, test_suite, plot_filepath)
+        report += "\n\n"
+        report += "![]({})".format(plot_filepath)
+    else:
+        plot_group_by_test(plot_title, jobs, test_suite)
+
+    return report
+
+def report_summary_templates(jobs, test_suite, outdir=None):
+
+    report = ""
+    report += report_table_templates(jobs, outdir)
+
+    plot_title = "errors by time"
+    if outdir:
+        plot_filename = "{}_{}.png".format(test_suite, "tests")
+        plot_filepath = "{}/{}".format(outdir, plot_filename)
+        plot_group_by_template(plot_title, jobs, test_suite, plot_filepath)
+        report += "\n\n"
+        report += "![]({})".format(plot_filepath)
+    else:
+        plot_group_by_template(plot_title, jobs, test_suite)
+
+    return report
+
+def report_summary_errors(jobs, test_suite, outdir=None):
+
+    report = ""
+    report += report_table_errors(jobs, outdir)
+
+    plot_title = "errors by time"
+    if outdir:
+        plot_filename = "{}_{}.png".format(test_suite, "tests")
+        plot_filepath = "{}/{}".format(outdir, plot_filename)
+        plot_group_by_error(plot_title, jobs, test_suite, plot_filepath)
+        report += "\n\n"
+        report += "![]({})".format(plot_filepath)
+    else:
+        plot_group_by_error(plot_title, jobs, test_suite)
+
+    return report
+
+def report_table_tests(jobs, outdir):
+    results = report_get_dict_tests(jobs, outdir)
+    return report_format_table(results, "test name")
+
+def report_table_templates(jobs, outdir):
+    results = report_get_dict_templates(jobs, outdir)
+    return report_format_table(results, "template name")
+
+def report_table_errors(jobs, outdir):
+    results = report_get_dict_errors(jobs, outdir)
+    return report_format_table(results, "error message")
+
+def report_get_dict_tests(jobs, outdir):
+    group_by_fn = lambda test: test.name
+    return report_get_dict(jobs, group_by_fn, outdir)
+
+def report_get_dict_templates(jobs, outdir):
+    group_by_fn = lambda test: test.title
+    return report_get_dict(jobs, group_by_fn, outdir)
+
+def report_get_dict_errors(jobs, outdir):
+    group_by_fn = lambda test: group_by_error(test).replace("\n", "\\n")
+    return report_get_dict(jobs, group_by_fn, outdir)
+
+def report_get_dict(jobs, group_by_fn, outdir):
+    result = {}
+
+    for job in jobs:
+        results = job.get_results()[job.get_job_name()]
+        for test in results:
+            group = group_by_fn(test)
+            if group in result.keys():
+                result[group] += 1
+            else:
+                result[group] = 1
+
+    return result
+
+def report_format_table(dict, title):
+    longest_group_len = max(map(len, dict.keys()))
+    pad = longest_group_len + 1
+    pad_header = " "*(int((pad - len(title))/2))
+    report  = "\n"
+    report += "| count | {}{}{}|\n".format(pad_header, title, pad_header)
+    report += "|-------|-{}|\n".format("-"*pad)
+
+    for group in dict.keys():
+        count = dict[group]
+        count_pad = " "*(6-len(str(count)))
+        group_pad = " "*(pad-len(group))
+        report +="| {}{}| {}{}|\n".format(count, count_pad, group, group_pad)
+
+    return report
 
 def filter_valid_job(job):
     return job.is_valid()
@@ -373,6 +468,7 @@ def main():
         summary += "- error matches: {}\n".format(args.error)
 
     # output format
+    report = ""
     if args.output == "report":
         for job in jobs:
             report_test_failure(job, test_name, test_title,
@@ -389,6 +485,20 @@ def main():
     elif args.output == "plot_errors":
         title = "Failure By Error\n" + summary
         plot_group_by_error(title, jobs, args.suite, plot_filepath)
+
+    elif args.output == "table_tests":
+        report += report_table_tests(jobs, args.outdir)
+    elif args.output == "table_templates":
+        report += report_table_templates(jobs, args.outdir)
+    elif args.output == "table_errors":
+        report += report_table_errors(jobs, args.outdir)
+
+    elif args.output == "summary_tests":
+        report += report_summary_tests(jobs, args.suite, args.outdir)
+    elif args.output == "summary_templates":
+        report += report_summary_templates(jobs, args.suite, args.outdir)
+    elif args.output == "summary_errors":
+        report += report_summary_errors(jobs, args.suite, args.outdir)
     else:
         print("Error: '{}' is not a valid output format".format(args.output))
 

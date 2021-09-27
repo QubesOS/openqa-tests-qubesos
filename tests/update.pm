@@ -49,13 +49,19 @@ sub run {
     assert_script_run("mkdir -p $pillar_dir");
     assert_script_run("printf 'update:\\n  qubes_ver: " . get_var('VERSION') . "\\n' > $pillar_dir/init.sls");
     if (get_var('REPO_1')) {
-        my $repo_url = data_url('REPO_1');
+        my $repo_url;
+        if (get_var('REPO_1') =~ m/^http/) {
+            $repo_url = get_var('REPO_1');
+        } else {
+            $repo_url = data_url('REPO_1');
+        }
         assert_script_run("printf '  repo: $repo_url\\n' >> $pillar_dir/init.sls");
         $repo_url =~ s/\d+\.\d+\.\d+\.\d+/ufyw3cl3nsm7ieg7lp4qtvoexdcbvjnzrfyjvxtpiennvudtcprmnjid.onion/;
         assert_script_run("printf '  repo_onion: $repo_url\\n' >> $pillar_dir/init.sls");
         if (get_var('KEY_1')) {
             my $key_url = get_var('KEY_1');
-            assert_script_run("printf '  key: $key_url\\n' >> $pillar_dir/init.sls");
+            assert_script_run("curl -f $key_url > /srv/salt/update/update-key.asc");
+            assert_script_run("printf '  key: update-key\\n' >> $pillar_dir/init.sls");
         }
     }
     if (get_var('WHONIX_REPO')) {

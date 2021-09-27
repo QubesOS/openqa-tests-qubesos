@@ -12,10 +12,13 @@ import os
 import json
 import time
 import requests
+import zipfile
+import tempfile
 from flask import Flask, request, Response
 
 GITLAB_API = 'https://gitlab.com/api/v4'
 
+TARGET_REPO_DIR = '/var/lib/openqa/factory/repo'
 
 
 # defaults
@@ -86,17 +89,32 @@ def run_test():
     if not check_allowlist(job_details['name'], config['job_allowlist']):
         return respond(200, 'ignoring this job')
 
-    buildid = time.strftime('%Y%m%d%H-4.1')
-    repo_url = job_details['web_url'] + '/artifacts/raw/repo'
-
     req_values = request.get_json()
+
+    buildid = time.strftime('%Y%m%d%H-4.1')
+    # cannot serve repo directly from gitlab, because it refuses connections via Tor :/
+    repo_url = req_values['REPO_JOB'] + '/artifacts/raw/repo'
+    with requests.get(req_values['REPO_JOB'] + '/artifacts/download', stream=True) as r:
+        r.raise_for_status()
+        with tempfile.NamedTemporaryFile() as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                f.write(chunk)
+            f.flush()
+            repo_dir = TARGET_REPO_DIR + '/' + buildid
+            os.mkdir(repo_dir)
+            with zipfile.ZipFile(f.name, 'r') as repo_zip:
+                repo_zip.extractall(repo_dir)
+            # get rid of 'repo' dir nesting
+            for subdir in os.listdir(repo_dir + '/repo'):
+                os.rename(repo_dir + '/repo/' + subdir, repo_dir + '/' + subdir)
+
     values = {}
     values['DISTRI'] = 'qubesos'
     values['VERSION'] = '4.1'
     values['FLAVOR'] = 'pull-requests'
     values['ARCH'] = 'x86_64'
     values['BUILD'] = buildid
-    values['REPO_1'] = repo_url
+    values['REPO_1'] = buildid
     values['KEY_1'] = repo_url + '/key.pub'
     values['UPDATE'] = '1'
     values['GUIVM'] = '1'

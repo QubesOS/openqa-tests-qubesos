@@ -508,14 +508,17 @@ def main():
 
     # output format
     report = ""
+
+    # accumulate jobs for outputs that don't support generators
+    if args.output not in ["report"]:
+        jobs = list(jobs)
+        plot_filepath = args.outdir+"plot.png" if args.outdir else None
+
     if args.output == "report":
         for job in jobs:
-            report_test_failure(job, test_name, test_title,
-                                args.outdir)
-
-    jobs = list(jobs)
-    plot_filepath = args.outdir+"plot.png" if args.outdir else None
-    if args.output == "plot_tests":
+            report += report_test_failure(job, test_name, test_title,
+                                          args.outdir)
+    elif args.output == "plot_tests":
         title = "Failure By Test\n" + summary
         plot_group_by_test(title, jobs, args.suite, plot_filepath)
     elif args.output == "plot_templates":

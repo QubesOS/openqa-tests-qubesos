@@ -39,19 +39,26 @@ sub run {
 
             script_run("qvm-features -D $template fixups-installed");
             script_run("curl $_ > $rpm", timeout => 1500);
-            assert_script_run("sudo rpm -ivh $rpm", timeout => 1500);
-
+            if (check_var('VERSION', '4.0')) {
+                assert_script_run("sudo rpm -ivh $rpm", timeout => 1500);
+            } else {
+                assert_script_run("qvm-template install --nogpgcheck $rpm", timeout => 1500);
+            }
         } else {
             my $action = "upgrade";
-            if (script_run("rpm -q qubes-template-$template") != 0) {
+            if (script_run("qvm-check $template") != 0) {
                 $action = "install";
             }
 
             script_run("qvm-features -D $template fixups-installed");
-            assert_script_run("sudo qubes-dom0-update --clean --enablerepo=qubes-*templates* --action=$action -y qubes-template-$template", timeout => 1500);
+            if (check_var('VERSION', '4.0')) {
+                assert_script_run("sudo qubes-dom0-update --clean --enablerepo=qubes-*templates* --action=$action -y qubes-template-$template", timeout => 1500);
+            } else {
+                assert_script_run("qvm-template $action --enablerepo=qubes-*templates* $template", timeout => 1500);
+            }
         }
     
-        $self->save_and_upload_log("rpm -q qubes-template-$template", "template-$template-version.txt");
+        $self->save_and_upload_log("rpm -q qubes-template-$template || qvm-features $template template-release", "template-$template-version.txt");
     }
 
     # restart only sys-whonix - for potential whonixcheck run

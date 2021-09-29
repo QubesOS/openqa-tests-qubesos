@@ -29,7 +29,7 @@ def maybe_restart_failed_job(job_id, job_details):
        unusual environment. Returns True if the job was restarted"""
     restart = False
     for group in job_details['job']['testresults']:
-        if group['result'] in ('passed', 'canceled'):
+        if group['result'] in ('passed', 'user_cancelled'):
             continue
         if group['name'] not in RESTART_ON_GROUP_FAIL:
             continue

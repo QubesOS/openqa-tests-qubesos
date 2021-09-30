@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "xpos": 594,
+      "ypos": 319,
+      "width": 184,
+      "height": 19,
+      "type": "match"
+    },
+    {
+      "xpos": 871,
+      "ypos": 475,
+      "width": 66,
+      "height": 19,
+      "type": "match",
+      "click_point": {
+        "xpos": 33,
+        "ypos": 9.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "whonix-news"
+  ]
+}

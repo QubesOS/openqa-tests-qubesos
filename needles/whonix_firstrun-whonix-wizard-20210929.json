@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "ypos": 226,
+      "width": 368,
+      "height": 22,
+      "type": "match",
+      "xpos": 243
+    },
+    {
+      "ypos": 559,
+      "width": 76,
+      "height": 21,
+      "xpos": 621,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "whonix-firstrun"
+  ]
+}

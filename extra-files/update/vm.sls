@@ -31,7 +31,7 @@ qubes-update-check.service:
   service.dead: []
 
 {% if grains['os'] == 'Debian' %}
-python-apt:
+python3-apt:
   pkg.installed:
     - reload_modules: True
 {% endif %}
@@ -65,7 +65,7 @@ update-test:
     - name: deb {{ update_repo }}/vm {{ grains['oscodename'] }} main
     - file: /etc/apt/sources.list.d/update-test.list
     - require:
-      - pkg: python-apt
+      - pkg: python3-apt
 {% endif %}
 
 {% endif %}
@@ -85,7 +85,7 @@ repo-testing:
     - name: deb [arch=amd64] http://deb.qubes-os.org/r{{ qubes_ver }}/vm {{ grains['oscodename'] }}-testing main
     - file: /etc/apt/sources.list.d/qubes-r4.list
     - require:
-      - pkg: python-apt
+      - pkg: python3-apt
 {% endif %}
 
 

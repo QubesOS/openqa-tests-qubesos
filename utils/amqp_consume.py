@@ -13,7 +13,7 @@ SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 DEFAULT_PACKAGE_LIST = os.path.join(SCRIPT_DIR, 'github_package_mapping.json')
 DEFAULT_JOBS_COMPARE_TO = '/var/lib/openqa/db/qubes_base_jobs.json'
 
-API_BASE = 'https://openqa.qubes-os.org/api/v1/'
+API_BASE = 'https://openqa.qubes-os.org/api/v1'
 
 args = None
 

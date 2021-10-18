@@ -20,8 +20,9 @@ package utils;
 use strict;
 use base 'Exporter';
 use Exporter;
+use testapi qw(check_screen wait_still_screen assert_screen send_key);
 
-our @EXPORT = qw(us_colemak colemak_us);
+our @EXPORT = qw(us_colemak colemak_us assert_screen_with_keypress);
 
 =head2 us_colemak
 
@@ -55,6 +56,18 @@ sub colemak_us {
     #                                        qwertyuiopasdfghjkl;zxcvbnm
     $input =~ tr/qwertyuiopasdfghjkl;zxcvbnm/qwfpgjluy;arstdhneiozxcvbkm/;
     return $input;
+}
+
+sub assert_screen_with_keypress {
+    my ($tag, $timeout) = @_;
+
+    # occasionally send a key, to disable screensaver
+    my $starttime = time;
+    while (time - $starttime < $timeout) {
+        last if check_screen($tag);
+        send_key('ctrl') if wait_still_screen;
+    }
+    assert_screen($tag);
 }
 
 1;

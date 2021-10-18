@@ -19,7 +19,7 @@ use base "installedtest";
 use strict;
 use testapi;
 use networking;
-use utils qw(us_colemak);
+use utils qw(us_colemak assert_screen_with_keypress);
 
 my $configuring = 0;
 
@@ -102,13 +102,13 @@ sub run {
     if (get_var('INSTALL_TEMPLATES', '') =~ /debian/) {
         $timeout += 1 * 900;
     }
-    assert_screen "firstboot-configuring-salt", $timeout;
-    assert_screen "firstboot-setting-network", 600;
+    assert_screen_with_keypress "firstboot-configuring-salt", $timeout;
+    assert_screen_with_keypress "firstboot-setting-network", 600;
     if ($needs_to_confirm_done) {
-        assert_screen("firstboot-done", 240);
+        assert_screen_with_keypress("firstboot-done", 240);
         send_key "f12";
     } else {
-        assert_screen "login-prompt-user-selected", 300;
+        assert_screen_with_keypress "login-prompt-user-selected", 300;
     }
 
     assert_screen "login-prompt-user-selected", 90;

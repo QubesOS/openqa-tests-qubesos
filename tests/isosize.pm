@@ -20,7 +20,7 @@ sub run {
     my $result = 'ok';
     my $max    = get_var("ISO_MAXSIZE", 0);
     if (!$size || !$max || $size > $max) {
-        $result = 'fail';
+        $result = 'softfail';
     }
     if (!defined $size) {
         diag("iso path invalid: $iso");

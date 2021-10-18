@@ -67,7 +67,8 @@ testfunc() {
     \$cmd_prefix script -e -c "nose2 -v --plugin nose2.plugins.loader.loadtests --plugin nose2.plugins.junitxml -X \$1" tests-\$1.log
     retval=\$?
     sudo systemctl start qubesd
-    python3 convert_junit.py nose2-junit.xml nose2-junit-\$1.xml
+    iconv -f utf8 -t ascii//translit nose2-junit.xml > nose2-junit-tmp.xml
+    python3 convert_junit.py nose2-junit-tmp.xml nose2-junit-\$1.xml
     return \$retval
 }
 ENDFUNC

@@ -56,7 +56,7 @@ sub run {
             $repo_url = data_url('REPO_1');
         }
         assert_script_run("printf '  repo: $repo_url\\n' >> $pillar_dir/init.sls");
-        $repo_url =~ s/\d+\.\d+\.\d+\.\d+/ufyw3cl3nsm7ieg7lp4qtvoexdcbvjnzrfyjvxtpiennvudtcprmnjid.onion/;
+        $repo_url =~ s/\d+\.\d+\.\d+\.\d+/hdticem2xpif64k23bxojo73k6hawzhnarlsuflq72hr4g3lmbh3bjid.onion/;
         assert_script_run("printf '  repo_onion: $repo_url\\n' >> $pillar_dir/init.sls");
         if (get_var('KEY_1')) {
             my $key_url = get_var('KEY_1');

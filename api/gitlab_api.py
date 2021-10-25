@@ -14,19 +14,21 @@ import time
 import requests
 import zipfile
 import tempfile
+import string
 from flask import Flask, request, Response
 
 GITLAB_API = 'https://gitlab.com/api/v4'
 
 TARGET_REPO_DIR = '/var/lib/openqa/factory/repo'
+TARGET_ISO_DIR = '/var/lib/openqa/factory/iso'
 
 
 # defaults
 config_defaults = {
     'owner_allowlist': 'QubesOS',
-    'repo_allowlist': 'qubes-continuous-integration',
+    'repo_allowlist': 'qubes-continuous-integration qubes-installer-qubes-os',
     'job_allowlist': '*',
-    'branch_allowlist': 'master',
+    'branch_allowlist': 'master release4.0',
 }
 
 app = Flask(__name__)
@@ -134,6 +136,54 @@ def run_test():
     values['GUIVM'] = '1'
     values['UPDATE_TEMPLATES'] = 'fedora-34-xfce'
     values['PULL_REQUESTS'] = req_values['PULL_REQUESTS']
+
+    subprocess.check_call([
+        'openqa-cli', 'api', '-X', 'POST',
+        'isos'] + ['='.join(p) for p in values.items()])
+
+    return respond(200, 'done')
+
+@app.route('/api/run_test_iso', methods=['POST'])
+def run_test_iso():
+
+    resp = verify_if_job_allowed()
+    if isinstance(resp, Response):
+        return resp
+    job_details = resp
+
+    version = request.args.get('VERSION')
+    if not all(x in string.digits+'.' for x in version):
+        return respond(400, 'invalid RELEASE')
+
+    buildid = time.strftime('%Y%m%d%H-' + version)
+    iso_name = 'Qubes-' + buildid + '.iso'
+    iso_path = os.path.join(TARGET_ISO_DIR, iso_name)
+    if os.path.exists(iso_path):
+        return respond(403, 'already exists')
+
+    # cannot serve via gitlab artifacts because of 1GB size limit
+    try:
+        with open(iso_path, 'wb') as iso_file:
+            chunk_size = 1024 * 1024  # 1MB
+            while True:
+                chunk = request.stream.read(chunk_size)
+                if not chunk:
+                    break
+                iso_file.write(chunk)
+    except:
+        os.unlink(iso_path)
+        raise
+
+    values = {}
+    values['DISTRI'] = 'qubesos'
+    values['VERSION'] = version
+    values['FLAVOR'] = 'install-iso'
+    values['ARCH'] = 'x86_64'
+    values['BUILD'] = buildid
+    values['ISO'] = iso_name
+    if version == '4.0':
+        values['UEFI_DIRECT'] = '1'
+    values['KERNEL_VERSION'] = request.args.get('KERNEL_VERSION', 'stable')
 
     subprocess.check_call([
         'openqa-cli', 'api', '-X', 'POST',

@@ -58,9 +58,13 @@ def check_allowlist(item, allowlist):
         return True
     return False
 
+def verify_if_job_allowed():
+    """
+    Check if job is allowed to use the API.
 
-@app.route('/api/run_test', methods=['POST'])
-def run_test():
+    Returns either job_details if allowed, or Reponse object if it isn't (to be
+    returned to the client).
+    """
 
     job_token = request.headers.get('JOB-TOKEN')
     if not job_token:
@@ -88,6 +92,16 @@ def run_test():
 
     if not check_allowlist(job_details['name'], config['job_allowlist']):
         return respond(200, 'ignoring this job')
+
+    return job_details
+
+@app.route('/api/run_test', methods=['POST'])
+def run_test():
+
+    resp = verify_if_job_allowed()
+    if isinstance(resp, Response):
+        return resp
+    job_details = resp
 
     req_values = request.get_json()
 

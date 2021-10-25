@@ -105,7 +105,7 @@ sub run {
     type_string("cat >/mnt/iso/grub2/grub.cfg <<EOF\n${grub_cfg}EOF\n", max_interval => 128);
     if (check_var("VERSION", "4.0")) {
         # older grub
-        assert_script_run("sed -i -e 's:multiboot2:multiboot:' -e 's:module2:module' /mnt/iso/grub2/grub.cfg");
+        assert_script_run("sed -i -e 's:multiboot2:multiboot:' -e 's:module2:module:' /mnt/iso/grub2/grub.cfg");
     }
     assert_script_run("sync");
     assert_script_run("umount /mnt/iso");

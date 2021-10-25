@@ -102,6 +102,7 @@ sub run {
     if (get_var('INSTALL_TEMPLATES', '') =~ /debian/) {
         $timeout += 1 * 900;
     }
+    $timeout *= get_var('TIMEOUT_SCALE', 1);
     assert_screen_with_keypress "firstboot-configuring-salt", $timeout;
     assert_screen_with_keypress "firstboot-setting-network", 600;
     if ($needs_to_confirm_done) {

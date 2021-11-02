@@ -6,6 +6,7 @@ import re
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import logging
 
 import requests_cache
 requests_cache.install_cache('openqa_cache', backend='sqlite', expire_after=8200)
@@ -246,11 +247,13 @@ def group_by_template(test):
 
     if re.search(r"^[a-z\-]+\-\d+(\-xfce)?$", template): # [template]-[ver]
         return template
+    else:
+        msg  = "Test's name '{}' doesn't specify a template.\n".format(test.name)
+        msg += "  The test suite may not include template information in the"
+        msg += " test's name."
+        logging.warning(msg)
 
-    msg  = "Test's name '{}' doesn't specify a template.\n".format(test.name)
-    msg += "  The test suite may not include template information in the"
-    msg += " test's name."
-    raise Exception(msg)
+        return "unspecifed template"
 
 def plot_group_by_test(title, jobs, test_suite, outfile=None):
     y_fn = lambda test: test.title

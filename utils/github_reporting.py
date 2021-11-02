@@ -86,8 +86,13 @@ class TestFailure:
 
         if description is None:
             self.description = None
+            self.error_message = None
+        elif "\n" in description.strip():
+            self.description = None
+            self.error_message = description.strip()
         else:
             self.description = description.strip()
+            self.error_message = self.description
 
     def get_test_url(self):
         return "{}/tests/{}#step/{}/{}".format(

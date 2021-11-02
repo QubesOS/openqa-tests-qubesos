@@ -58,10 +58,12 @@ def report_test_failure(job, test_name, test_title, outdir):
                                                     job.get_job_start_time())
     for test_failure in test_failures:
         if not test_title == test_failure.title: # regex title
-            report += "\n\n### {}\n".format(test_failure.title)
-
+            report += "\n\n### [{}/{}]({})\n".format(
+                test_failure.name,
+                test_failure.title,
+                test_failure.get_test_url())
         report += "```python\n"
-        report += str(test_failure)
+        report += str(test_failure.error_message)
         report += "\n```\n"
 
     return report
@@ -202,8 +204,8 @@ def filter_tests_by_error(job, error_pattern):
     filtered_results = []
 
     for test_failure in test_failures:
-        if test_failure.description and \
-            re.search(error_pattern, test_failure.description):
+        if test_failure.error_message and \
+            re.search(error_pattern, test_failure.error_message):
             filtered_results.append(test_failure)
 
     filtered_job = deepcopy(job)
@@ -212,10 +214,10 @@ def filter_tests_by_error(job, error_pattern):
     return filtered_job
 
 def group_by_error(test):
-    if not test.description:
+    if not test.error_message:
         return "no error printed\n(probably a native openQA test)"
 
-    desc_lines = test.description.split("\n")
+    desc_lines = test.error_message.split("\n")
 
     result = ""
     max_chars = 40

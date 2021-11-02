@@ -1,4 +1,4 @@
-from github_reporting import OpenQA, JobData, TestFailure
+from lib.openqa_api import OpenQA, JobData, TestFailure
 from argparse import ArgumentParser
 import textwrap
 from copy import deepcopy

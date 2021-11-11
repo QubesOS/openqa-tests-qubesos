@@ -24,13 +24,14 @@ testapi::set_distribution(qubesdistribution->new());
 
 if (get_var('ISO')) {
     autotest::loadtest "tests/isosize.pm";
-    if (get_var('INSTALL_OVER_EXISTING')) {
-        autotest::loadtest "tests/install_preexisting_system.pm";
-    }
     if (get_var('INSTALL_ISO_FILE')) {
         autotest::loadtest "tests/install_iso_file.pm";
     } else {
         autotest::loadtest "tests/install_startup.pm";
+    }
+    if (get_var('INSTALL_OVER_EXISTING')) {
+        autotest::loadtest "tests/install_preexisting_system.pm";
+        autotest::loadtest "tests/install_startup_2.pm";
     }
     autotest::loadtest "tests/install_welcome.pm";
     if (get_var('KEYBOARD_LAYOUT')) {

@@ -28,8 +28,10 @@ def maybe_restart_failed_job(job_id, job_details):
     """Restart failed job if the failure most likely is caused by openQA
        unusual environment. Returns True if the job was restarted"""
     restart = False
+    if job_details['job']['result'] == 'user_cancelled':
+        return False
     for group in job_details['job']['testresults']:
-        if group['result'] in ('passed', 'user_cancelled'):
+        if group['result'] in ('passed', 'cancelled'):
             continue
         if group['name'] not in RESTART_ON_GROUP_FAIL:
             continue

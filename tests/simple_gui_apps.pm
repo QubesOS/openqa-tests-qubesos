@@ -40,6 +40,8 @@ sub run {
     assert_and_click("vm-settings-app-add");
     assert_and_click("vm-settings-app-evince");
     send_key('end');
+    # let it scroll...
+    sleep(1);
     assert_and_click("vm-settings-app-text-editor");
     assert_and_click("vm-settings-app-add");
     assert_and_click("vm-settings-app-evince");

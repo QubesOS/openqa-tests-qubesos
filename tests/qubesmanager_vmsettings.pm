@@ -209,6 +209,7 @@ sub run {
     # check rename, clone and delete qube
     x11_start_program('qubes-vm-settings work');
     assert_and_click('vm-settings-rename');
+    assert_screen('vm-settings-do-rename');
     type_string('work2');
     assert_and_click('vm-settings-do-rename');
 

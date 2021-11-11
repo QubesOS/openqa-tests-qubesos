@@ -22,6 +22,9 @@ disable-whonix-onion:
     - regex: '^.*dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd'
     - onlyif:
       - test -e /etc/apt/sources.list.d/whonix.list
+
+date -s +5min:
+  cmd.run: []
 {% endif %}
 
 
@@ -132,6 +135,8 @@ update:
 notify-updates:
   cmd.run:
     - name: /usr/lib/qubes/upgrades-status-notify
+    - success_retcodes:
+      - 100
 
 {% if salt['pillar.get']('update:repo', '') and grains['os'] == 'Debian' %}
 # since the repo may not be available at later time, disable it here

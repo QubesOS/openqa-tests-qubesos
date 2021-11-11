@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 597,
+      "ypos": 274,
+      "width": 95,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "RELEASE-4-1",
+    "firefox-multitab-close"
+  ]
+}

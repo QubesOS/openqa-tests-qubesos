@@ -51,7 +51,6 @@ sub setup_user {
     assert_screen 'installer-user';
     if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
         type_string us_colemak('user');
-        $password = us_colemak($password);
     } else {
         type_string 'user';
     }
@@ -59,9 +58,17 @@ sub setup_user {
     if (get_var('VERSION') =~ /^3/) {
         send_key 'tab';
     }
-    type_string $password;
-    send_key 'tab';
-    type_string $password;
+    if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
+        type_string us_colemak($password);
+        send_key 'tab';
+        type_string us_colemak($password);
+    } else {
+        type_string $password;
+        send_key 'tab';
+        type_string $password;
+    }
+    # let the password quality check process it
+    sleep(1);
     send_key 'f12';
     assert_screen 'installer-user-weak-pass';
     send_key 'f12';

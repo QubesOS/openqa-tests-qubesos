@@ -113,8 +113,7 @@ sub run {
     }
 
     assert_screen "login-prompt-user-selected", 90;
-    type_string $password;
-    send_key "ret";
+    $self->handle_login_prompt;
 
     assert_screen "desktop";
     wait_still_screen;

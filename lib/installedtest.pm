@@ -29,6 +29,18 @@ sub new {
     return $self;
 }
 
+sub handle_login_prompt {
+    my ($self) = @_;
+
+    assert_screen "login-prompt-user-selected";
+    if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
+        type_string(us_colemak($password));
+    } else {
+        type_string($password);
+    }
+    send_key "ret";
+}
+
 sub handle_system_startup {
     reset_consoles();
     if (!check_var('UEFI', '1')) {
@@ -55,8 +67,7 @@ sub handle_system_startup {
     }
 
     assert_screen "login-prompt-user-selected", 240;
-    type_string $password;
-    send_key "ret";
+    handle_login_prompt;
 
     assert_screen "desktop";
 
@@ -64,8 +75,6 @@ sub handle_system_startup {
     # login prompt)
     if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
         x11_start_program(us_colemak('setxkbmap us'), valid => 0);
-        # set 'password' back to US layout
-        $password = colemak_us($password);
     } elsif (get_var('LOCALE')) {
         x11_start_program('setxkbmap us', valid => 0);
     }

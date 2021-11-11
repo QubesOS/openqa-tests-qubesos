@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 127,
+      "type": "match",
+      "height": 17,
+      "ypos": 34,
+      "width": 162
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qubes-update-gui"
+  ]
+}

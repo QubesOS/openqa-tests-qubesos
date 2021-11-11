@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 379,
+      "type": "match",
+      "height": 30,
+      "width": 218,
+      "xpos": 367
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qubes-vm-create-launch-settings"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "height": 22,
+      "type": "match",
+      "ypos": 650,
+      "width": 148,
+      "xpos": 505,
+      "click_point": {
+        "xpos": 148,
+        "ypos": 10
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "global-settings-default-dispvms-listing"
+  ]
+}

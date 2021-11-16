@@ -1,6 +1,7 @@
 import requests
 import re
 import json
+import enum
 
 from lib.github_api import GitHubRepo, GitHubIssue, setup_github_environ
 from lib.common import *
@@ -64,22 +65,27 @@ class PackageName:
         return hash((self.package_name, self.version))
 
 
+class TestFailureReason(enum.Enum):
+    SKIPPED = "skipped"
+    ERROR = "error"
+    FAILURE = "failure"
+    UNKNOWN = "unkown"
+    TEST_DIED = "test died"
+    WAIT_SERIAL = "wait serial expected"
+
+    @classmethod
+    def get_invalid_reasons(cls):
+        return [cls.UNKNOWN, cls.TEST_DIED, cls.WAIT_SERIAL]
+
+
 class TestFailure:
     def __init__(self, name, title, description, job_id, test_id):
         self.name = name
         self.title = title
         self.job_id = job_id
         self.test_id = test_id
-
-        if description is None:
-            self.description = None
-            self.error_message = None
-        elif "\n" in description.strip():
-            self.description = None
-            self.error_message = description.strip()
-        else:
-            self.description = description.strip()
-            self.error_message = self.description
+        self.description = description
+        self.parse_description()
 
     def get_test_url(self):
         return "{}/tests/{}#step/{}/{}".format(
@@ -88,11 +94,105 @@ class TestFailure:
     def is_valid(self):
         if self.name != "system_tests":
             return True
-        if not self.description:
+        if self.fail_reason in TestFailureReason.get_invalid_reasons():
             return False
-        if "timed out" in self.description:
+        if self.timed_out:
             return True
         return False
+
+    def parse_description(self):
+
+        def get_relevant_error(max_chars=70):
+            """Returns the error line(s) that best summarises the error (heuristic)
+
+            The idea is to find the last traceback (when chained exceptions) and
+            return the last line. An example bellow shows the relevant line as -->
+
+            >    # test_003_cleanup_destroyed
+            >    # error:
+            >
+            >    Traceback (most recent call last):
+            >    File "/usr/lib/python3.8/site-packages/qubes/tests/integ/dispvm.py", line 94, in test_003_cleanup_destroyed
+            >        self.loop.run_until_complete(asyncio.wait_for(p.wait(), timeout))
+            >    File "/usr/lib64/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+            >        return future.result()
+            >    File "/usr/lib64/python3.8/asyncio/tasks.py", line 501, in wait_for
+            >        raise exceptions.TimeoutError()
+            --> asyncio.exceptions.TimeoutError
+            >
+            >    # system-out:
+
+            :param int max_chars: maximum number of characters in result
+            """
+
+            # find relevant line(s)
+            try:
+                i = len(lines) - 1
+                while re.match("^\s", lines[i]): # non whitespace-starting
+                    i -= 1
+                while not re.match("^\s", lines[i]): # until it finds whitespace
+                    i -= 1
+
+                relev_line_prev = lines[i].strip()
+                relev_line = lines[i+1].strip()
+
+                # show relevant line (truncated if needed) and the previous one if
+                # there is enough space.
+                if len(relev_line) < max_chars - 30:
+                    max_len_prev_line = max_chars -4 -len(relev_line)
+                    return "{}... {}".format(
+                        relev_line_prev[:max_len_prev_line],
+                        relev_line)
+                if len(relev_line) <= max_chars:
+                    return relev_line
+                else:
+                    return relev_line[:max_chars-len("...")] + "..."
+            except IndexError:
+                raise Exception("Failed to extract error from: " + "\n".join(lines))
+
+
+        max_chars=70
+        self.relevant_error = None
+        self.fail_reason = TestFailureReason.UNKNOWN
+        self.fail_error = None
+        self.cleanup_error = None
+        self.timed_out = False
+
+        if not self.description:
+            return
+        else:
+            description = self.description.strip()
+
+        if "timed out" in description:
+            self.timed_out = True
+
+        # non-standard error messages / test descriptions
+        if "# system-out:" not in description:
+            if "# wait_serial expected:" in description:
+                self.fail_reason = TestFailureReason.WAIT_SERIAL
+            if "# Test died: " in description:
+                self.fail_reason = TestFailureReason.TEST_DIED
+
+            first_line = description.split("\n")[0]
+            self.relevant_error = first_line.strip()[:max_chars-3] + "..."
+            self.fail_error = description
+            return
+
+        (self.fail_error, self.cleanup_error)=description.split("# system-out:")
+        lines = self.fail_error.split("\n")
+
+        # test case status https://github.com/os-autoinst/openQA/blob/dae9f4e5/lib/OpenQA/Parser/Format/JUnit.pm#L84
+        if "# error:" in lines[1]:
+            self.fail_reason = TestFailureReason.ERROR
+        elif "# failure:" in lines[1]:
+            self.fail_reason = TestFailureReason.FAILURE
+        elif "# skipped:" in lines[1]:
+            self.fail_reason = TestFailureReason.SKIPPED
+            return
+        else:
+            self.fail_reason = TestFailureReason.UNKNOWN
+            return
+        self.relevant_error = get_relevant_error(max_chars=max_chars)
 
     def __str__(self):
         if not self.title:
@@ -103,8 +203,17 @@ class TestFailure:
         output = "{}: [{}]({})".format(self.name, title,
                                        self.get_test_url())
 
-        if self.description:
-            output += ' (`{}`)'.format(self.description)
+        if self.timed_out and self.cleanup_error:
+            output += " ({} + timeout + cleanup)".format(self.fail_reason.value)
+        elif self.timed_out:
+            output += " ({} + timed out)".format(self.fail_reason.value)
+        elif self.cleanup_error:
+            output += " ({} + cleanup)".format(self.fail_reason.value)
+        else:
+            output += " ({})".format(self.fail_reason.value)
+
+        if self.relevant_error and self.fail_reason!=TestFailureReason.SKIPPED:
+            output += '\n `{}`\n'.format(self.relevant_error)
 
         return output
 

@@ -57,14 +57,18 @@ def report_test_failure(job, test_name, test_title, outdir):
                                                     job.get_job_flavor(),
                                                     job.get_job_start_time())
     for test_failure in test_failures:
-        if not test_title == test_failure.title: # regex title
-            report += "\n\n### [{}/{}]({})\n".format(
-                test_failure.name,
-                test_failure.title,
-                test_failure.get_test_url())
-        report += "```python\n"
-        report += str(test_failure.error_message)
-        report += "\n```\n"
+        report += "### " + str(test_failure)
+        if test_failure.fail_error:
+            report += "\n\n**Failed with the following:**\n"
+            report += "```python\n"
+            report += str(test_failure.fail_error.strip())
+            report += "\n```\n"
+        if test_failure.cleanup_error:
+            report += "**It had cleanup errors:**\n"
+            report += "```python\n"
+            report += str(test_failure.cleanup_error.strip())
+            report += "\n```\n"
+
 
     return report
 
@@ -204,9 +208,12 @@ def filter_tests_by_error(job, error_pattern):
     filtered_results = []
 
     for test_failure in test_failures:
-        if test_failure.error_message and \
-            re.search(error_pattern, test_failure.error_message):
-            filtered_results.append(test_failure)
+        if test_failure.fail_error:
+            if re.search(error_pattern, test_failure.fail_error):
+                filtered_results.append(test_failure)
+        if test_failure.cleanup_error:
+            if re.search(error_pattern, test_failure.cleanup_error):
+                filtered_results.append(test_failure)
 
     filtered_job = deepcopy(job)
     filtered_job.failures[job.get_job_name()] = filtered_results
@@ -214,31 +221,10 @@ def filter_tests_by_error(job, error_pattern):
     return filtered_job
 
 def group_by_error(test):
-    if not test.error_message:
-        return "no error printed\n(probably a native openQA test)"
-
-    desc_lines = test.error_message.split("\n")
-
-    result = ""
-    max_chars = 40
-
-    # attempt to find the line with the relevant result
-    for line in reversed(desc_lines):
-        if any(map(lambda error: error in line, IGNORED_ERRORS)): # ignore certain
-            continue
-        elif line == "" or re.search("^\s+$", line): # whitespace
-            continue
-        else:
-            if result: # last two lines
-                result = line[:max_chars] + ".*\n" + result
-                break
-            else:
-                result = line[:max_chars] + ".*"
-
-    if result == "":
-        return "ignored error"
-
-    return result
+    if test.relevant_error:
+        return test.relevant_error
+    else:
+        return "[empty error message]"
 
 def group_by_template(test):
     # obtain template name according to construction format of

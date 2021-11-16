@@ -469,7 +469,7 @@ def main():
 
     parser.add_argument(
         "--output",
-        help="Select output format (markdown/plot_error/plot_templates/plot_tests)")
+        help="Select output format (report/plot_error/plot_templates/plot_tests)")
 
     parser.add_argument(
         "--outdir",

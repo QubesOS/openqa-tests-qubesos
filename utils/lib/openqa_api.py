@@ -87,8 +87,6 @@ class JobData(Base):
     job_id = Column(Integer, primary_key=True)
     job_name = Column(String)
     parent_job_id = Column(Integer, nullable=True)
-    job_details = None
-    failures = {}
 
     def __init__(self, job_id, job_name=None,
                  time_started=None, parent_job_id=None):

@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 import re
 
 from lib.github_api import setup_github_environ, GitHubIssue
-from lib.openqa_api import setup_openqa_environ, JobData, OpenQA
+from lib.openqa_api import setup_openqa_environ, OpenQA
 from lib.common import ISSUE_TITLE_PREFIX
 
 def setup_environ(args):
@@ -95,10 +95,10 @@ def main():
 
     reference_job = None
     if args.compare_to_job:
-        reference_job = JobData(args.compare_to_job)
+        reference_job = OpenQA.get_job(args.compare_to_job)
 
     for job_id in jobs:
-        job = JobData(job_id)
+        job = OpenQA.get_job(job_id)
         result = job.get_results()
         if job.job_name == 'system_tests_update':
             result.update(job.get_children_results())

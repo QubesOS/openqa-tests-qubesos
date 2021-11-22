@@ -1,8 +1,14 @@
+import sqlalchemy
+from sqlalchemy import Column, Boolean, Integer, String, Enum, ForeignKey
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base, relationship, backref
 import requests
 import requests_cache
 import re
 import json
 import enum
+import logging
 
 from lib.github_api import GitHubRepo, GitHubIssue, setup_github_environ
 from lib.common import *
@@ -14,6 +20,13 @@ OPENQA_API = OPENQA_URL + "/api/v1"
 
 # repo for creating issues for FLAVOR=qubes-whonix jobs
 WHONIX_NOTIFICATION_REPO = "Whonix/updates-status"
+
+# database base classes and session initiation
+Base = declarative_base()
+#engine = create_engine("sqlite:///openqa_db.sqlite")
+engine = create_engine('sqlite:///:memory:')
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 name_mapping = {}
 
@@ -68,19 +81,35 @@ class PackageName:
         return hash((self.package_name, self.version))
 
 
-class JobData:
+class JobData(Base):
+    __tablename__ = 'job_data'
+
+    job_id = Column(Integer, primary_key=True)
+    job_name = Column(String)
+    parent_job_id = Column(Integer, nullable=True)
+    job_details = None
+    failures = {}
+
     def __init__(self, job_id, job_name=None,
-                 time_started=None):
+                 time_started=None, parent_job_id=None):
         self.job_id = job_id
 
         if not job_name:
             job_name = self.get_job_name()
-
         self.job_name = job_name
 
         self.time_started = time_started
-        self.failures = {}
+
+        if parent_job_id:
+            self.parent_job_id = parent_job_id
+        else:
+            self.parent_job_id = self.get_job_parent()
+
         self.job_details = None
+        self.failures = {}
+
+        session.add(self)
+        session.commit()
 
     def check_restarted(self, new_id, new_time_started):
         if new_time_started > self.time_started:
@@ -107,8 +136,9 @@ class JobData:
         json_data = self.get_job_details()
         parents = json_data['job']['parents']['Chained']
         if len(parents) == 0:
-            raise Exception("Job {} has no parents.".format(self.job_id)\
-                            + " This may happen in some older tests.")
+            logging.warn("Job {} has no parents.".format(self.job_id)\
+                         + " This may happen in some older tests.")
+            return None
         if len(parents) > 1:
             raise Exception("Implementation does not support more than one "\
                             + "parent job.")
@@ -135,9 +165,12 @@ class JobData:
                     failure = TestFailure(test_group['name'],
                                           test['display_title'],
                                           test.get('text_data', None),
-                                          self.job_id,
+                                          self,
                                           test['num'])
                     if failure.is_valid():
+                        if not TestFailure.exists_in_db(failure):
+                            session.add(failure)
+                            session.commit()
                         failure_list.append(failure)
 
         self.failures[self.job_name] = failure_list
@@ -178,8 +211,12 @@ class JobData:
             if child_name in results:
                 results[child_name].check_restarted(child, child_started)
             else:
-                results[child_name] = JobData(child, job_name=child_name,
-                                              time_started=child_started)
+                child = session.get(JobData, {"job_id": child})
+                if child is None:
+                    child = JobData(child, job_name=child_name,
+                                                time_started=child_started,
+                                                parent_job_id=self.job_id)
+                results[child_name] = child
 
         return results
 
@@ -428,14 +465,34 @@ class TestFailureReason(enum.Enum):
         return [cls.UNKNOWN, cls.TEST_DIED, cls.WAIT_SERIAL]
 
 
-class TestFailure:
-    def __init__(self, name, title, description, job_id, test_id):
+class TestFailure(Base):
+    __tablename__ = 'test_failures'
+
+    job_id = Column(Integer, ForeignKey('job_data.job_id'), primary_key=True)
+    job = relationship(
+        JobData,
+        backref=backref("test_failures", cascade="delete")
+    )
+    name = Column(String, primary_key=True)
+    title = Column(String, primary_key=True)
+    test_id = Column(Integer, primary_key=True)
+
+    def __init__(self, name, title, description, job, test_id):
         self.name = name
         self.title = title
-        self.job_id = job_id
+        self.job = job
+        self.job_id = job.job_id
         self.test_id = test_id
         self.description = description
         self.parse_description()
+
+    @classmethod
+    def exists_in_db(cls, test_failure):
+        return session.get(TestFailure,
+                {"job_id": test_failure.job_id,
+                 "name": test_failure.name,
+                 "title": test_failure.title,
+                 "test_id": test_failure.test_id})
 
     def get_test_url(self):
         return "{}/tests/{}#step/{}/{}".format(
@@ -578,6 +635,14 @@ class TestFailure:
 
 class OpenQA:
     @staticmethod
+    def get_job(job_id):
+        job = session.get(JobData, {"job_id": job_id})
+        if job is None:
+            return JobData(job_id)
+        else:
+            return job
+
+    @staticmethod
     def get_latest_job_id(job_type='system_tests_update', build=None,
                           version=None):
         return OpenQA.get_latest_job_ids(job_type, build, version, history_len=1)
@@ -620,3 +685,5 @@ def setup_openqa_environ(package_list):
         data = json.load(package_file)
 
     name_mapping = data
+
+    Base.metadata.create_all(bind=session.get_bind())

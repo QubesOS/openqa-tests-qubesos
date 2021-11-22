@@ -1,4 +1,4 @@
-from lib.openqa_api import OpenQA, JobData, TestFailure
+from lib.openqa_api import OpenQA, TestFailure, setup_openqa_environ
 from argparse import ArgumentParser
 import textwrap
 from copy import deepcopy
@@ -37,7 +37,7 @@ def get_jobs(test_suite, history_len):
         print("ERROR: no jobs found. Wrong test suite name?")
 
     for job_id in job_ids:
-        yield JobData(job_id)
+        yield OpenQA.get_job(job_id)
 
 def report_test_failure(job, test_name, test_title, outdir):
     """
@@ -249,7 +249,7 @@ def plot_group_by_template(title, jobs, test_suite, outfile=None):
 def plot_group_by_worker(title, jobs, test_suite, outfile):
 
     def group_by(test):
-        job = JobData(test.job_id)
+        job = OpenQA.get_job(test.job_id)
         return job.get_job_details()['job']['assigned_worker_id']
 
     plot_simple(title, jobs, test_suite, group_by, outfile)
@@ -442,6 +442,8 @@ def main():
 
     parser.set_defaults(output="report")
     args = parser.parse_args()
+
+    setup_openqa_environ("github_package_mapping.json") # remove hardcode
 
     try:
         (test_name, test_title) = args.test.split('/')

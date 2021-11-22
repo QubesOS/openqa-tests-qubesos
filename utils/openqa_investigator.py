@@ -8,10 +8,6 @@ import seaborn as sns
 import pandas as pd
 import logging
 
-import requests_cache
-requests_cache.install_cache('openqa_cache', backend='sqlite', expire_after=8200)
-
-
 Q_VERSION = "4.1"
 FLAVOR = "pull-requests"
 IGNORED_ERRORS = [

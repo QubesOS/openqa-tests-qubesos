@@ -1,10 +1,13 @@
 import requests
+import requests_cache
 import re
 import json
 import enum
 
 from lib.github_api import GitHubRepo, GitHubIssue, setup_github_environ
 from lib.common import *
+
+requests_cache.install_cache('openqa_cache', backend='sqlite', expire_after=8200)
 
 OPENQA_URL = "https://openqa.qubes-os.org"
 OPENQA_API = OPENQA_URL + "/api/v1"

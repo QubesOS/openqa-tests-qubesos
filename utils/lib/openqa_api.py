@@ -82,14 +82,18 @@ class PackageName:
 
 
 class JobData(Base):
-    __tablename__ = 'job_data'
+    __tablename__ = 'job'
 
     job_id = Column(Integer, primary_key=True)
     job_name = Column(String)
-    parent_job_id = Column(Integer, nullable=True)
+    job_type = Column(String(50))
 
-    def __init__(self, job_id, job_name=None,
-                 time_started=None, parent_job_id=None):
+    __mapper_args__ = {
+        'polymorphic_identity':'job',
+        'polymorphic_on': job_type
+    }
+
+    def __init__(self, job_id, job_name=None, time_started=None):
         self.job_id = job_id
 
         if not job_name:
@@ -97,17 +101,24 @@ class JobData(Base):
         self.job_name = job_name
 
         self.time_started = time_started
-
-        if parent_job_id:
-            self.parent_job_id = parent_job_id
-        else:
-            self.parent_job_id = self.get_job_parent()
-
         self.job_details = None
         self.failures = {}
 
         session.add(self)
         session.commit()
+
+    @classmethod
+    def get_parent_job_id(cls, job_id):
+        job_details = requests.get(
+            "{}/jobs/{}/details".format(OPENQA_API, job_id)).json()
+        parents = job_details['job']['parents']['Chained']
+        if len(parents) == 0:
+            return None
+        elif len(parents) == 1:
+            return parents[0]
+        if len(parents) > 1:
+            raise Exception("Implementation does not support more than one "\
+                            + "parent job.")
 
     def check_restarted(self, new_id, new_time_started):
         if new_time_started > self.time_started:
@@ -129,18 +140,6 @@ class JobData(Base):
     def get_job_start_time(self):
         json_data = self.get_job_details()
         return json_data['job']['t_started']
-
-    def get_job_parent(self):
-        json_data = self.get_job_details()
-        parents = json_data['job']['parents']['Chained']
-        if len(parents) == 0:
-            logging.warn("Job {} has no parents.".format(self.job_id)\
-                         + " This may happen in some older tests.")
-            return None
-        if len(parents) > 1:
-            raise Exception("Implementation does not support more than one "\
-                            + "parent job.")
-        return parents[0]
 
     def get_job_details(self):
         if self.job_details is None:
@@ -209,11 +208,11 @@ class JobData(Base):
             if child_name in results:
                 results[child_name].check_restarted(child, child_started)
             else:
-                child = session.get(JobData, {"job_id": child})
+                child = session.get(ChildJob, {"job_id": child})
                 if child is None:
-                    child = JobData(child, job_name=child_name,
-                                                time_started=child_started,
-                                                parent_job_id=self.job_id)
+                    child = ChildJob(child, job_name=child_name,
+                                     parent_job_id=self.job_id,
+                                     time_started=child_started)
                 results[child_name] = child
 
         return results
@@ -449,6 +448,36 @@ class JobData(Base):
     def __str__(self):
         return self.job_name
 
+class OrphanJob(JobData):
+    """Jobs without parents"""
+
+    __tablename__ = "orphan_job"
+    __mapper_args__ = { 'polymorphic_identity':'orphan_job' }
+
+    job_id = Column(ForeignKey('job.job_id'), primary_key=True)
+
+
+class ChildJob(JobData):
+    """Jobs with one parent"""
+
+    __tablename__ = "child_job"
+    __mapper_args__ = { 'polymorphic_identity':'child_job' }
+
+    job_id = Column(Integer, ForeignKey('job.job_id'), primary_key=True)
+    parent_job_id = Column(Integer, ForeignKey(OrphanJob.job_id))
+    parent_job = relationship(
+        OrphanJob, backref=backref("child_job", cascade="delete"),
+        foreign_keys=[parent_job_id]
+    )
+
+    def __init__(self, job_id, parent_job_id, job_name=None, time_started=None):
+        parent_job = session.get(OrphanJob, { "job_id": parent_job_id })
+        if parent_job is None:
+            parent_job = OrphanJob(parent_job_id)
+        self.parent_job = parent_job
+
+        super().__init__(job_id, job_name, time_started)
+
 
 class TestFailureReason(enum.Enum):
     SKIPPED = "skipped"
@@ -466,7 +495,7 @@ class TestFailureReason(enum.Enum):
 class TestFailure(Base):
     __tablename__ = 'test_failures'
 
-    job_id = Column(Integer, ForeignKey('job_data.job_id'), primary_key=True)
+    job_id = Column(Integer, ForeignKey('job.job_id'), primary_key=True)
     job = relationship(
         JobData,
         backref=backref("test_failures", cascade="delete")
@@ -636,9 +665,14 @@ class OpenQA:
     def get_job(job_id):
         job = session.get(JobData, {"job_id": job_id})
         if job is None:
-            return JobData(job_id)
-        else:
-            return job
+            parent_job_id = JobData.get_parent_job_id(job_id)
+            if parent_job_id is None:
+                logging.debug("creating orphan job for " + str(job_id))
+                return OrphanJob(job_id)
+            else:
+                logging.debug("creating child job for " + str(job_id))
+                return ChildJob(job_id, parent_job_id)
+        return job
 
     @staticmethod
     def get_latest_job_id(job_type='system_tests_update', build=None,

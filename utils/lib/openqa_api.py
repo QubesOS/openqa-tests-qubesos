@@ -181,26 +181,6 @@ class JobData(Base):
 
         return self.failures
 
-    def is_valid(self):
-        json_data = self.get_job_details()
-        job_result = json_data['job']['result']
-        if job_result == "passed":
-            return True
-        elif job_result == "failed":
-            has_failures = len(self.get_results()[self.job_name]) > 0
-            all_test_groups_ran = True
-
-            for test_group in json_data['job']['testresults']:
-                if test_group['result'] == 'none':
-                    all_test_groups_ran = False
-
-            # FIXME deal with edge-cases where 'system_tests' passes but no
-            # external results are generated https://openqa.qubes-os.org/tests/20425
-
-            return all_test_groups_ran and has_failures
-        else:
-            return False
-
     def get_children_ids(self):
         json_data = requests.get(self.get_job_api_url(details=False)).json()
         return json_data['job']['children']['Chained']
@@ -422,6 +402,26 @@ class ChildJob(JobData):
             raise Exception("Must provide a parent_job_id or a parent_job")
 
         super().__init__(job_id)
+
+    def is_valid(self):
+        json_data = self.get_job_details()
+        job_result = json_data['job']['result']
+        if job_result == "passed":
+            return True
+        elif job_result == "failed":
+            has_failures = len(self.get_results()[self.job_name]) > 0
+            all_test_groups_ran = True
+
+            for test_group in json_data['job']['testresults']:
+                if test_group['result'] == 'none':
+                    all_test_groups_ran = False
+
+            # FIXME deal with edge-cases where 'system_tests' passes but no
+            # external results are generated https://openqa.qubes-os.org/tests/20425
+
+            return all_test_groups_ran and has_failures
+        else:
+            return False
 
 
 class TestFailureReason(enum.Enum):

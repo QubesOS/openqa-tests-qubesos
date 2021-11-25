@@ -84,26 +84,29 @@ class JobData(Base):
     job_id = Column(Integer, primary_key=True)
     job_name = Column(String)
     job_type = Column(String(50))
-    time_started = Column(String(20))
 
     __mapper_args__ = {
         'polymorphic_identity':'job',
         'polymorphic_on': job_type
     }
 
-    def __init__(self, job_id, job_name=None, time_started=None):
+    def __init__(self, job_id):
         self.job_id = job_id
-
-        if not job_name:
-            job_name = self.get_job_name()
-        self.job_name = job_name
-
-        self.time_started = time_started
+        self.job_name = self.get_job_name()
         self.job_details = None
         self.failures = {}
 
         local_session.add(self)
         local_session.commit()
+
+    @property
+    def clone_id(self):
+        json_data = self.get_job_details()
+        return json_data['job']['clone_id']
+
+    @property
+    def was_restarted(self):
+        return self.clone_id != None
 
     @reconstructor
     def init_on_load(self):
@@ -122,11 +125,6 @@ class JobData(Base):
         if len(parents) > 1:
             raise Exception("Implementation does not support more than one "\
                             + "parent job.")
-
-    def check_restarted(self, new_id, new_time_started):
-        if new_time_started > self.time_started:
-            self.job_id = new_id
-            self.time_started = new_time_started
 
     def get_job_name(self):
         json_data = requests.get(self.get_job_api_url(details=False)).json()
@@ -204,19 +202,11 @@ class JobData(Base):
         results = {}
 
         for child_id in data['job']['children']['Chained']:
-            child_data = requests.get(self.get_job_api_url(
-                details=False, job_id=child_id)).json()
-            child_name = child_data['job']['test']
-            child_started = child_data['job']['t_started'] or '0'
-            if child_name in results:
-                results[child_name].check_restarted(child_id, child_started)
-            else:
-                child = local_session.get(ChildJob, {"job_id": child_id})
-                if child is None:
-                    child = ChildJob(child_id, job_name=child_name,
-                                     parent_job_id=self.job_id,
-                                     time_started=child_started)
-                results[child_name] = child
+            child = local_session.get(ChildJob, {"job_id": child_id})
+            if child is None:
+                child = ChildJob(child_id, parent_job_id=self.job_id)
+            if not child.was_restarted:
+                results[child.job_name] = child
 
         return results
 
@@ -474,13 +464,13 @@ class ChildJob(JobData):
         foreign_keys=[parent_job_id]
     )
 
-    def __init__(self, job_id, parent_job_id, job_name=None, time_started=None):
+    def __init__(self, job_id, parent_job_id):
         parent_job = local_session.get(OrphanJob, { "job_id": parent_job_id })
         if parent_job is None:
             parent_job = OrphanJob(parent_job_id)
         self.parent_job = parent_job
 
-        super().__init__(job_id, job_name, time_started)
+        super().__init__(job_id)
 
 
 class TestFailureReason(enum.Enum):

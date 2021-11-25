@@ -6,11 +6,83 @@ import re
 
 from lib.github_api import setup_github_environ, GitHubIssue
 from lib.openqa_api import setup_openqa_environ, OpenQA
-from lib.common import ISSUE_TITLE_PREFIX
+from lib.common import ISSUE_TITLE_PREFIX, COMMENT_TITLE
 
 def setup_environ(args):
     setup_github_environ(args.auth_token)
     setup_openqa_environ(args.package_list)
+
+def format_results(results, job, reference_job=None):
+    output_string = "{}\n" \
+                    "Complete test suite and dependencies: {}\n" \
+                    "## Failed tests\n".format(COMMENT_TITLE,
+                                                job.get_dependency_url())
+    number_of_failures = 0
+
+    for k in results:
+        if results[k]:
+            output_string += '* ' + str(k) + "\n"
+            for fail in results[k]:
+                output_string += '  * ' + str(fail) + '\n'
+                number_of_failures += 1
+
+    if results.get('system_tests_update', []):
+        output_string += "\nInstalling updates failed, skipping rest of the report!\n"
+        return output_string
+
+    if not number_of_failures:
+        output_string += "No failures!\n"
+
+    if reference_job:
+        output_string += "## New failures\n" \
+                            "Compared to: {}\n".format(
+                            reference_job.get_dependency_url())
+
+        if reference_job.job_name == 'system_tests_update':
+            reference_job_results = reference_job.get_children_results()
+        else:
+            reference_job_results = reference_job.get_results()
+
+        for k in results:
+            current_fails = results[k]
+            old_fails = reference_job_results.get(k, [])
+
+            if not current_fails:
+                continue
+
+            add_to_output = ""
+            for fail in current_fails:
+                if fail in old_fails:
+                    continue
+                add_to_output += '  * ' + str(fail) + '\n'
+
+            if add_to_output:
+                output_string += '* ' + str(k) + "\n"
+                output_string += add_to_output
+
+        output_string += "## Fixed failures\n" \
+                            "Compared to: {}\n".format(
+                            reference_job.get_dependency_url())
+
+        for k in reference_job_results:
+            current_fails = results.get(k, [])
+            old_fails = reference_job_results.get(k, [])
+
+            if not old_fails:
+                continue
+
+            add_to_output = ""
+            for fail in old_fails:
+                if fail in current_fails:
+                    continue
+                add_to_output += '  * ' + str(fail) + '\n'
+
+            if add_to_output:
+                output_string += '* ' + str(k) + "\n"
+                output_string += add_to_output
+
+    return output_string
+
 
 def main():
     parser = ArgumentParser(
@@ -103,7 +175,7 @@ def main():
         if job.job_name == 'system_tests_update':
             result.update(job.get_children_results())
 
-        formatted_result = job.format_results(result, reference_job)
+        formatted_result = format_results(result, job, reference_job)
 
         if args.show_results_only:
             print(formatted_result)

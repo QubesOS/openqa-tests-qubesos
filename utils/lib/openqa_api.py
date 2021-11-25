@@ -477,7 +477,7 @@ class TestFailureReason(enum.Enum):
     SKIPPED = "skipped"
     ERROR = "error"
     FAILURE = "failure"
-    UNKNOWN = "unkown"
+    UNKNOWN = "unknown"
     TEST_DIED = "test died"
     WAIT_SERIAL = "wait serial expected"
 

@@ -96,6 +96,12 @@ class JobData(Base):
         self.job_details = None
         self.failures = {}
 
+        # make sure children exist
+        for child_id in self.get_children_ids():
+            child = local_session.get(ChildJob, { "job_id": child_id })
+            if child is None:
+                child = ChildJob(child_id, parent_job=self)
+
         local_session.add(self)
         local_session.commit()
 
@@ -195,26 +201,35 @@ class JobData(Base):
         else:
             return False
 
+    def get_children_ids(self):
+        json_data = requests.get(self.get_job_api_url(details=False)).json()
+        return json_data['job']['children']['Chained']
+
+    def get_children(self):
+        return local_session.query(ChildJob)\
+                            .filter(ChildJob.parent_job_id == self.job_id)\
+                            .all()
+
     def get_children_pruned(self):
-        data = requests.get(
-            "{}/jobs/{}/".format(OPENQA_API, self.job_id)).json()
+        """Gets children for the job but excludes restarted ones.
+
+        In cases like job 24058 you have children that ran the same test. In
+        that case the job 24060 and 24081 both ran the test suite with the name
+        'system_tests_gui_tools' but the later is a clone the first one.
+        With this method only the last one would be returned in the results.
+        """
 
         results = {}
 
-        for child_id in data['job']['children']['Chained']:
-            child = local_session.get(ChildJob, {"job_id": child_id})
-            if child is None:
-                child = ChildJob(child_id, parent_job_id=self.job_id)
+        for child in self.get_children():
             if not child.was_restarted:
                 results[child.job_name] = child
-
         return results
 
     def get_children_results(self):
-        children_list = self.get_children_pruned()
-
         result = {}
 
+        children_list = self.get_children_pruned()
         for child in children_list.values():
             result[child.job_name] = child.get_results()[child.job_name]
 
@@ -464,11 +479,18 @@ class ChildJob(JobData):
         foreign_keys=[parent_job_id]
     )
 
-    def __init__(self, job_id, parent_job_id):
-        parent_job = local_session.get(OrphanJob, { "job_id": parent_job_id })
-        if parent_job is None:
-            parent_job = OrphanJob(parent_job_id)
-        self.parent_job = parent_job
+    def __init__(self, job_id, parent_job_id=None, parent_job=None):
+
+        if parent_job:
+            self.parent_job = parent_job
+        elif parent_job_id:
+            parent_job = local_session.get(
+                OrphanJob, { "job_id": parent_job_id })
+            if parent_job is None:
+                parent_job = OrphanJob(parent_job_id)
+            self.parent_job = parent_job
+        else:
+            raise Exception("Must provide a parent_job_id or a parent_job")
 
         super().__init__(job_id)
 

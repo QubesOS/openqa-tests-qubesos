@@ -119,8 +119,8 @@ class JobData(Base):
         self.job_details = None
         self.failures = {}
 
-    @classmethod
-    def get_parent_job_id(cls, job_id):
+    @staticmethod
+    def get_parent_job_id(job_id):
         job_details = requests.get(
             "{}/jobs/{}/details".format(OPENQA_API, job_id)).json()
         parents = job_details['job']['parents']['Chained']
@@ -545,8 +545,8 @@ class TestFailure(Base):
             self.has_description = True
             self.parse_description(description)
 
-    @classmethod
-    def exists_in_db(cls, test_failure):
+    @staticmethod
+    def exists_in_db(test_failure):
         return local_session.get(TestFailure,
                 {"job_id": test_failure.job_id,
                  "name": test_failure.name,

@@ -739,7 +739,7 @@ class OpenQA:
 
 def get_db_session(in_memory=True, read_only=False, debug_db=True):
 
-    def flush_block_writes(*args,**kwargs):
+    def block_writes(*args,**kwargs):
         logging.info("Writing to the DB is blocked: database in read-only mode")
         return
 
@@ -768,7 +768,8 @@ def get_db_session(in_memory=True, read_only=False, debug_db=True):
         Session = sessionmaker(bind=db_engine, autoflush=False,
                             autocommit=False)
         session = Session()
-        session.flush = flush_block_writes
+        session.flush = block_writes
+        session.commit = block_writes
     else:
         Session = sessionmaker(bind=db_engine)
         session = Session()

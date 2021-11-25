@@ -1,14 +1,15 @@
 import sqlalchemy
 from sqlalchemy import Column, Boolean, Integer, String, Enum, ForeignKey
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, reconstructor
-from sqlalchemy.orm import declarative_base, relationship, backref
+from sqlalchemy.orm import sessionmaker, scoped_session, reconstructor
+from sqlalchemy.orm import relationship, backref
 import requests
 import requests_cache
 import re
 import json
 import enum
 import logging
+import os
 
 from lib.github_api import GitHubRepo, GitHubIssue, setup_github_environ
 from lib.common import *
@@ -21,12 +22,8 @@ OPENQA_API = OPENQA_URL + "/api/v1"
 # repo for creating issues for FLAVOR=qubes-whonix jobs
 WHONIX_NOTIFICATION_REPO = "Whonix/updates-status"
 
-# database base classes and session initiation
-Base = declarative_base()
-#engine = create_engine("sqlite:///openqa_db.sqlite")
-engine = create_engine('sqlite:///:memory:')
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
+Base = sqlalchemy.orm.declarative_base()
+local_session = None
 
 name_mapping = {}
 
@@ -105,8 +102,8 @@ class JobData(Base):
         self.job_details = None
         self.failures = {}
 
-        session.add(self)
-        session.commit()
+        local_session.add(self)
+        local_session.commit()
 
     @reconstructor
     def init_on_load(self):
@@ -172,8 +169,8 @@ class JobData(Base):
                                           test['num'])
                     if failure.is_valid():
                         if not TestFailure.exists_in_db(failure):
-                            session.add(failure)
-                            session.commit()
+                            local_session.add(failure)
+                            local_session.commit()
                         failure_list.append(failure)
 
         self.failures[self.job_name] = failure_list
@@ -214,7 +211,7 @@ class JobData(Base):
             if child_name in results:
                 results[child_name].check_restarted(child, child_started)
             else:
-                child = session.get(ChildJob, {"job_id": child})
+                child = local_session.get(ChildJob, {"job_id": child})
                 if child is None:
                     child = ChildJob(child, job_name=child_name,
                                      parent_job_id=self.job_id,
@@ -454,6 +451,7 @@ class JobData(Base):
     def __str__(self):
         return self.job_name
 
+
 class OrphanJob(JobData):
     """Jobs without parents"""
 
@@ -477,7 +475,7 @@ class ChildJob(JobData):
     )
 
     def __init__(self, job_id, parent_job_id, job_name=None, time_started=None):
-        parent_job = session.get(OrphanJob, { "job_id": parent_job_id })
+        parent_job = local_session.get(OrphanJob, { "job_id": parent_job_id })
         if parent_job is None:
             parent_job = OrphanJob(parent_job_id)
         self.parent_job = parent_job
@@ -537,7 +535,7 @@ class TestFailure(Base):
 
     @classmethod
     def exists_in_db(cls, test_failure):
-        return session.get(TestFailure,
+        return local_session.get(TestFailure,
                 {"job_id": test_failure.job_id,
                  "name": test_failure.name,
                  "title": test_failure.title,
@@ -679,7 +677,7 @@ class TestFailure(Base):
 class OpenQA:
     @staticmethod
     def get_job(job_id):
-        job = session.get(JobData, {"job_id": job_id})
+        job = local_session.get(JobData, {"job_id": job_id})
         if job is None:
             parent_job_id = JobData.get_parent_job_id(job_id)
             if parent_job_id is None:
@@ -727,11 +725,51 @@ class OpenQA:
 
         return sorted(jobs)
 
-def setup_openqa_environ(package_list):
+def get_db_session(in_memory=True, read_only=False, debug_db=True):
+
+    def flush_block_writes(*args,**kwargs):
+        logging.info("Writing to the DB is blocked: database in read-only mode")
+        return
+
+    if in_memory and read_only:
+        raise Exception("A read-only in-memory database doesn't make sense")
+
+    if in_memory:
+        db_engine = create_engine("sqlite:///:memory:", echo=debug_db)
+        Base.metadata.create_all(db_engine)
+
+    elif not in_memory:
+        db_file = "openqa_db.sqlite"
+        db_engine = create_engine("sqlite:///" + db_file, echo=debug_db)
+
+        if os.path.exists(db_file):
+            logging.info("Connecting to local DB in '{}'".format(db_file))
+        else:
+            if read_only:
+                raise Exception("Local DB does not exist in {}".format(db_file)
+                                + "hence it cannot be set to read_only")
+
+            logging.info("Creating local DB in '{}'".format(db_file))
+            Base.metadata.create_all(db_engine)
+
+    if read_only:
+        Session = sessionmaker(bind=db_engine, autoflush=False,
+                            autocommit=False)
+        session = Session()
+        session.flush = flush_block_writes
+    else:
+        Session = sessionmaker(bind=db_engine)
+        session = Session()
+
+    return session
+
+def setup_openqa_environ(package_list, cache_results=True):
     global name_mapping
     with open(package_list) as package_file:
         data = json.load(package_file)
 
     name_mapping = data
 
-    Base.metadata.create_all(bind=session.get_bind())
+    global local_session
+    local_session = get_db_session_maker(in_memory=not cache_results,
+                                         debug_db=False)

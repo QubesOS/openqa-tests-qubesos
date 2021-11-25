@@ -1,7 +1,7 @@
 import sqlalchemy
 from sqlalchemy import Column, Boolean, Integer, String, Enum, ForeignKey
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, reconstructor
 from sqlalchemy.orm import declarative_base, relationship, backref
 import requests
 import requests_cache
@@ -87,6 +87,7 @@ class JobData(Base):
     job_id = Column(Integer, primary_key=True)
     job_name = Column(String)
     job_type = Column(String(50))
+    time_started = Column(String(20))
 
     __mapper_args__ = {
         'polymorphic_identity':'job',
@@ -106,6 +107,11 @@ class JobData(Base):
 
         session.add(self)
         session.commit()
+
+    @reconstructor
+    def init_on_load(self):
+        self.job_details = None
+        self.failures = {}
 
     @classmethod
     def get_parent_job_id(cls, job_id):

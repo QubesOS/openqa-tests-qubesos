@@ -501,14 +501,20 @@ class TestFailureReason(enum.Enum):
 class TestFailure(Base):
     __tablename__ = 'test_failures'
 
+    name = Column(String, primary_key=True)
+    title = Column(String, primary_key=True)
     job_id = Column(Integer, ForeignKey('job.job_id'), primary_key=True)
     job = relationship(
         JobData,
         backref=backref("test_failures", cascade="delete")
     )
-    name = Column(String, primary_key=True)
-    title = Column(String, primary_key=True)
     test_id = Column(Integer, primary_key=True)
+    fail_reason = Column(Enum(TestFailureReason))
+    relevant_error = Column(String)
+    fail_error = Column(String)
+    cleanup_error = Column(String)
+    timed_out = Column(Boolean)
+    has_description = Column(Boolean)
 
     def __init__(self, name, title, description, job, test_id):
         self.name = name
@@ -516,8 +522,18 @@ class TestFailure(Base):
         self.job = job
         self.job_id = job.job_id
         self.test_id = test_id
-        self.description = description
-        self.parse_description()
+
+        self.fail_reason = TestFailureReason.UNKNOWN
+        self.relevant_error = None
+        self.fail_error = None
+        self.cleanup_error = None
+        self.timed_out = False
+
+        if description is None:
+            self.has_description = False
+        else:
+            self.has_description = True
+            self.parse_description(description)
 
     @classmethod
     def exists_in_db(cls, test_failure):
@@ -540,7 +556,7 @@ class TestFailure(Base):
             return True
         return False
 
-    def parse_description(self):
+    def parse_description(self, description):
 
         def get_relevant_error(max_chars=70):
             """Returns the error line(s) that best summarises the error (heuristic)
@@ -592,16 +608,10 @@ class TestFailure(Base):
 
 
         max_chars=70
-        self.relevant_error = None
-        self.fail_reason = TestFailureReason.UNKNOWN
-        self.fail_error = None
-        self.cleanup_error = None
-        self.timed_out = False
-
-        if not self.description:
+        if not self.has_description:
             return
         else:
-            description = self.description.strip()
+            description = description.strip()
 
         if "timed out" in description:
             self.timed_out = True

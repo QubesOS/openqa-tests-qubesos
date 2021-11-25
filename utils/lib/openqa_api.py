@@ -203,17 +203,17 @@ class JobData(Base):
 
         results = {}
 
-        for child in data['job']['children']['Chained']:
+        for child_id in data['job']['children']['Chained']:
             child_data = requests.get(self.get_job_api_url(
-                details=False, job_id=child)).json()
+                details=False, job_id=child_id)).json()
             child_name = child_data['job']['test']
             child_started = child_data['job']['t_started'] or '0'
             if child_name in results:
-                results[child_name].check_restarted(child, child_started)
+                results[child_name].check_restarted(child_id, child_started)
             else:
-                child = local_session.get(ChildJob, {"job_id": child})
+                child = local_session.get(ChildJob, {"job_id": child_id})
                 if child is None:
-                    child = ChildJob(child, job_name=child_name,
+                    child = ChildJob(child_id, job_name=child_name,
                                      parent_job_id=self.job_id,
                                      time_started=child_started)
                 results[child_name] = child
@@ -771,5 +771,4 @@ def setup_openqa_environ(package_list, cache_results=True):
     name_mapping = data
 
     global local_session
-    local_session = get_db_session_maker(in_memory=not cache_results,
-                                         debug_db=False)
+    local_session = get_db_session(in_memory=not cache_results, debug_db=False)

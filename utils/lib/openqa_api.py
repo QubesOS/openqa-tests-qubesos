@@ -85,6 +85,7 @@ class JobData(Base):
     job_name = Column(String)
     job_type = Column(String(50))
     valid = Column(Boolean)
+    worker = Column(Integer)
 
     __mapper_args__ = {
         'polymorphic_identity':'job',
@@ -95,6 +96,7 @@ class JobData(Base):
         self.job_id = job_id
         self.job_name = self.get_job_name()
         self.job_details = None
+        self.worker = self.get_worker()
         self.failures = {}
 
         # must flush at the beginning to avoid recursion

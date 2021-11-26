@@ -250,12 +250,8 @@ def plot_group_by_template(title, jobs, failures_q, test_suite, outfile=None):
     plot_simple(title, jobs, failures_q, test_suite, group_by_template, outfile)
 
 def plot_group_by_worker(title, jobs, failures_q, test_suite, outfile):
-
-    def group_by(test):
-        job = OpenQA.get_job(test.job_id)
-        return job.get_job_details()['job']['assigned_worker_id']
-
-    plot_simple(title, jobs, failures_q, test_suite, group_by, outfile)
+    y_fn = lambda test: test.job.worker
+    plot_simple(title, jobs, failures_q, test_suite, y_fn, outfile)
 
 def plot_group_by_error(title, jobs, failures_q, test_suite, outfile=None):
     hue_fn=group_by_template
@@ -514,11 +510,10 @@ def main():
     elif args.output == "plot_errors":
         title = "Failure By Error\n"
         plot_group_by_error(title, jobs, failures_q, args.suite, plot_filepath)
-    """
     elif args.output == "plot_worker":
-        title = "Failure By Worker\n" + summary
-        plot_group_by_worker(title, jobs, args.suite, plot_filepath)
-
+        title = "Failure By Worker\n"
+        plot_group_by_worker(title, jobs, failures_q, args.suite, plot_filepath)
+    """
     elif args.output == "table_tests":
         report += report_table_tests(jobs, args.outdir)
     elif args.output == "table_templates":

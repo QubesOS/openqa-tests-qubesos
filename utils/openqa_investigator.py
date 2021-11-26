@@ -47,15 +47,11 @@ def populate_db_latest_jobs(test_suite, history_len):
     for job_id in job_ids:
         jobs += [OpenQA.get_job(job_id)]
 
-def report_test_failure(job, test_name, test_title, outdir):
+def report_test_failure(job, test_failures):
     """
     Prints the failures of a particular test pattern
     """
-
-    result = job.get_results()
-    test_failures = result[job.get_job_name()]
     report = ""
-
     if test_failures:
         report = "\n## Job {} (flavor '{}' from {})\n".format(job.job_id,
                                                     job.get_job_flavor(),
@@ -72,7 +68,6 @@ def report_test_failure(job, test_name, test_title, outdir):
             report += "```python\n"
             report += str(test_failure.cleanup_error.strip())
             report += "\n```\n"
-
 
     return report
 
@@ -471,12 +466,11 @@ def main():
     db = get_db_session()
     populate_db_latest_jobs(args.suite, history_len)
 
-    jobs_q = db.query(JobData)\
+    jobs_query = db.query(JobData)\
             .filter(JobData.valid == True)\
-            .filter(JobData.job_name == args.suite)\
-            .subquery()
-
-    failures_q = db.query(TestFailure).join(jobs_q)
+            .filter(JobData.job_name == args.suite)
+    failures_q = db.query(TestFailure)\
+                   .join(jobs_query.subquery())
 
     # apply filters
     if args.test:
@@ -488,22 +482,17 @@ def main():
         # TODO add error matching the description
         pass
 
-    failures = failures_q.all()
-    print(len(failures))
+    jobs = jobs_query.all()
 
-    """
     # output format
     report = ""
 
-    # accumulate jobs for outputs that don't support generators
-    if args.output not in ["report"]:
-        jobs = list(jobs)
-        plot_filepath = args.outdir+"plot.png" if args.outdir else None
-
     if args.output == "report":
         for job in jobs:
-            report += report_test_failure(job, test_name, test_title,
-                                          args.outdir)
+            test_failures = failures_q\
+                .filter(TestFailure.job_id == job.job_id).all()
+            report += report_test_failure(job, test_failures)
+    """
     elif args.output == "plot_tests":
         title = "Failure By Test\n" + summary
         plot_group_by_test(title, jobs, args.suite, plot_filepath)
@@ -532,6 +521,7 @@ def main():
         report += report_summary_errors(jobs, args.suite, args.outdir)
     else:
         print("Error: '{}' is not a valid output format".format(args.output))
+    """
 
     if args.outdir:
         file_path = args.outdir + "report.md"
@@ -540,7 +530,6 @@ def main():
         print("report saved at {}".format(file_path))
     else:
         print(report)
-    """
 
 
 if __name__ == '__main__':

@@ -1,6 +1,4 @@
 from argparse import ArgumentParser
-import textwrap
-from copy import deepcopy
 import re
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -71,160 +69,6 @@ def report_test_failure(job, test_failures):
 
     return report
 
-def report_summary_tests(jobs, test_suite, outdir=None):
-    report = ""
-    report += report_table_tests(jobs, outdir)
-
-    plot_title = "errors by time"
-    if outdir:
-        plot_filename = "{}_{}.png".format(test_suite, "tests")
-        plot_filepath = "{}/{}".format(outdir, plot_filename)
-        plot_group_by_test(plot_title, jobs, test_suite, plot_filepath)
-        report += "\n\n"
-        report += "![]({})".format(plot_filepath)
-    else:
-        plot_group_by_test(plot_title, jobs, test_suite)
-
-    return report
-
-def report_summary_templates(jobs, test_suite, outdir=None):
-
-    report = ""
-    report += report_table_templates(jobs, outdir)
-
-    plot_title = "errors by time"
-    if outdir:
-        plot_filename = "{}_{}.png".format(test_suite, "tests")
-        plot_filepath = "{}/{}".format(outdir, plot_filename)
-        plot_group_by_template(plot_title, jobs, test_suite, plot_filepath)
-        report += "\n\n"
-        report += "![]({})".format(plot_filepath)
-    else:
-        plot_group_by_template(plot_title, jobs, test_suite)
-
-    return report
-
-def report_summary_errors(jobs, test_suite, outdir=None):
-
-    report = ""
-    report += report_table_errors(jobs, outdir)
-
-    plot_title = "errors by time"
-    if outdir:
-        plot_filename = "{}_{}.png".format(test_suite, "tests")
-        plot_filepath = "{}/{}".format(outdir, plot_filename)
-        plot_group_by_error(plot_title, jobs, test_suite, plot_filepath)
-        report += "\n\n"
-        report += "![]({})".format(plot_filepath)
-    else:
-        plot_group_by_error(plot_title, jobs, test_suite)
-
-    return report
-
-def report_table_tests(jobs, outdir):
-    results = report_get_dict_tests(jobs, outdir)
-    return report_format_table(results, "test name")
-
-def report_table_templates(jobs, outdir):
-    results = report_get_dict_templates(jobs, outdir)
-    return report_format_table(results, "template name")
-
-def report_table_errors(jobs, outdir):
-    results = report_get_dict_errors(jobs, outdir)
-    return report_format_table(results, "error message")
-
-def report_get_dict_tests(jobs, outdir):
-    group_by_fn = lambda test: test.name
-    return report_get_dict(jobs, group_by_fn, outdir)
-
-def report_get_dict_templates(jobs, outdir):
-    group_by_fn = lambda test: test.title
-    return report_get_dict(jobs, group_by_fn, outdir)
-
-def report_get_dict_errors(jobs, outdir):
-    group_by_fn = lambda test: group_by_error(test).replace("\n", "\\n")
-    return report_get_dict(jobs, group_by_fn, outdir)
-
-def report_get_dict(jobs, group_by_fn, outdir):
-    result = {}
-
-    for job in jobs:
-        results = job.get_results()[job.get_job_name()]
-        for test in results:
-            group = group_by_fn(test)
-            if group in result.keys():
-                result[group] += 1
-            else:
-                result[group] = 1
-
-    return result
-
-def report_format_table(dict, title):
-    longest_group_len = max(map(len, dict.keys()))
-    pad = longest_group_len + 1
-    pad_header = " "*(int((pad - len(title))/2))
-    report  = "\n"
-    report += "| count | {}{}{}|\n".format(pad_header, title, pad_header)
-    report += "|-------|-{}|\n".format("-"*pad)
-
-    for group in dict.keys():
-        count = dict[group]
-        count_pad = " "*(6-len(str(count)))
-        group_pad = " "*(pad-len(group))
-        report +="| {}{}| {}{}|\n".format(count, count_pad, group, group_pad)
-
-    return report
-
-def filter_valid_job(job):
-    return job.is_valid()
-
-def filter_tests_by_name(job, test_name, test_title):
-    """
-    Filters out tests that don't match a particular test pattern
-    """
-    results = job.get_results()
-    test_failures = results[job.get_job_name()]
-
-    filtered_results = []
-
-    for test_failure in test_failures:
-        if test_matches(test_failure.name, test_name,\
-                        test_failure.title, test_title):
-            filtered_results.append(test_failure)
-
-    filtered_job = deepcopy(job)
-    filtered_job.failures[job.get_job_name()] = filtered_results
-
-    return filtered_job
-
-def filter_tests_by_error(job, error_pattern):
-    """
-    Filters through tests that have a certain error message pattern
-    """
-    results = job.get_results()
-    test_failures = results[job.get_job_name()]
-
-    filtered_results = []
-
-    for test_failure in test_failures:
-        if test_failure.fail_error:
-            if re.search(error_pattern, test_failure.fail_error):
-                filtered_results.append(test_failure)
-        if test_failure.cleanup_error:
-            if re.search(error_pattern, test_failure.cleanup_error):
-                filtered_results.append(test_failure)
-
-    filtered_job = deepcopy(job)
-    filtered_job.failures[job.get_job_name()] = filtered_results
-
-    return filtered_job
-
-def group_by_error(test):
-    if test.relevant_error:
-        return test.relevant_error
-    else:
-        return "[empty error message]"
-
 def group_by_template(test):
     # obtain template name according to construction format of
     # https://github.com/QubesOS/qubes-core-admin/blob/f60334/qubes/tests/__init__.py#L1352
@@ -242,21 +86,27 @@ def group_by_template(test):
 
         return "unspecifed template"
 
-def plot_group_by_test(title, jobs, failures_q, test_suite, outfile=None):
+def plot_by_test(title, jobs, failures_q, test_suite, outfile=None):
     y_fn = lambda test: test.title
     plot_simple(title, jobs, failures_q, test_suite, y_fn, outfile)
 
-def plot_group_by_template(title, jobs, failures_q, test_suite, outfile=None):
+def plot_by_template(title, jobs, failures_q, test_suite, outfile=None):
     plot_simple(title, jobs, failures_q, test_suite, group_by_template, outfile)
 
-def plot_group_by_worker(title, jobs, failures_q, test_suite, outfile):
+def plot_by_error(title, jobs, failures_q, test_suite, outfile=None):
+
+    def group_by_error(test):
+        if test.relevant_error:
+            return test.relevant_error
+        else:
+            return "[empty error message]"
+
+    plot_strip(title, jobs, failures_q, test_suite, group_by_error,
+               hue_fn=group_by_template, outfile=outfile)
+
+def plot_by_worker(title, jobs, failures_q, test_suite, outfile):
     y_fn = lambda test: test.job.worker
     plot_simple(title, jobs, failures_q, test_suite, y_fn, outfile)
-
-def plot_group_by_error(title, jobs, failures_q, test_suite, outfile=None):
-    hue_fn=group_by_template
-    plot_strip(title, jobs, failures_q, test_suite, group_by_error, hue_fn,
-               outfile)
 
 def plot_simple(title, jobs, failures_q, test_suite, y_fn, outfile=None):
     """Plots test results with simple plotting where (x=job, y=y_fn)
@@ -399,20 +249,6 @@ def plot_strip(title, jobs, failures_q, test_suite, y_fn, hue_fn, outfile=None):
     else:
         plt.show()
 
-def test_matches(test_name, test_name_pattern, test_title, test_title_pattern):
-    try:
-        return test_name_matches(test_name, test_name_pattern) and \
-            test_title_matches(test_title, test_title_pattern)
-    except re.error:
-        raise Exception("Error: \"{}/{}\" is not a valid regex".\
-            format(test_name_pattern, test_title_pattern))
-
-def test_name_matches(test_name, test_name_pattern):
-    return re.search(test_name_pattern, test_name)
-
-def test_title_matches(test_title, test_title_pattern):
-    return re.search(test_title_pattern, test_title)
-
 def main():
     parser = ArgumentParser(
         description="Look for unstable tests")
@@ -502,34 +338,19 @@ def main():
 
     elif args.output == "plot_tests":
         title = "Failure By Test\n"
-        plot_group_by_test(title, jobs, failures_q, args.suite, plot_filepath)
+        plot_by_test(title, jobs, failures_q, args.suite, plot_filepath)
     elif args.output == "plot_templates":
         title = "Failure By Template\n"
-        plot_group_by_template(title, jobs, failures_q, args.suite,
-                               plot_filepath)
+        plot_by_template(title, jobs, failures_q, args.suite, plot_filepath)
     elif args.output == "plot_errors":
         title = "Failure By Error\n"
-        plot_group_by_error(title, jobs, failures_q, args.suite, plot_filepath)
+        plot_by_error(title, jobs, failures_q, args.suite, plot_filepath)
     elif args.output == "plot_worker":
         title = "Failure By Worker\n"
-        plot_group_by_worker(title, jobs, failures_q, args.suite, plot_filepath)
-    """
-    elif args.output == "table_tests":
-        report += report_table_tests(jobs, args.outdir)
-    elif args.output == "table_templates":
-        report += report_table_templates(jobs, args.outdir)
-    elif args.output == "table_errors":
-        report += report_table_errors(jobs, args.outdir)
+        plot_by_worker(title, jobs, failures_q, args.suite, plot_filepath)
 
-    elif args.output == "summary_tests":
-        report += report_summary_tests(jobs, args.suite, args.outdir)
-    elif args.output == "summary_templates":
-        report += report_summary_templates(jobs, args.suite, args.outdir)
-    elif args.output == "summary_errors":
-        report += report_summary_errors(jobs, args.suite, args.outdir)
     else:
         print("Error: '{}' is not a valid output format".format(args.output))
-    """
 
     if args.outdir:
         file_path = args.outdir + "report.md"

@@ -1,4 +1,3 @@
-from lib.openqa_api import OpenQA, TestFailure, setup_openqa_environ
 from argparse import ArgumentParser
 import textwrap
 from copy import deepcopy
@@ -7,6 +6,14 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import logging
+
+from lib.openqa_api import (
+    setup_openqa_environ,
+    get_db_session,
+    OpenQA,
+    JobData,
+    TestFailure
+)
 
 Q_VERSION = "4.1"
 FLAVOR = "pull-requests"
@@ -17,7 +24,7 @@ IGNORED_ERRORS = [
     "0;31m"
 ]
 
-def get_jobs(test_suite, history_len):
+def populate_db_latest_jobs(test_suite, history_len):
     """
     Gets the historical data of a particular test suite
     """
@@ -36,8 +43,9 @@ def get_jobs(test_suite, history_len):
     if len(job_ids) == 0:
         print("ERROR: no jobs found. Wrong test suite name?")
 
+    jobs = []
     for job_id in job_ids:
-        yield OpenQA.get_job(job_id)
+        jobs += [OpenQA.get_job(job_id)]
 
 def report_test_failure(job, test_name, test_title, outdir):
     """
@@ -446,10 +454,10 @@ def main():
     setup_openqa_environ("github_package_mapping.json") # remove hardcode
 
     try:
-        (test_name, test_title) = args.test.split('/')
+        (test_name_regex, test_title_regex) = args.test.split('/')
     except ValueError:
-        test_name = args.test
-        test_title = "*"
+        test_name_regex = args.test
+        test_title_regex = "*"
 
     if not args.last:
         history_len = 100
@@ -460,24 +468,30 @@ def main():
             print("Error: {} is not a valid number".format(args.last))
             exit(1)
 
-    jobs = get_jobs(args.suite, history_len)
-    summary = "- suite: {}".format(args.suite)
+    db = get_db_session()
+    populate_db_latest_jobs(args.suite, history_len)
 
-    # remove invalid jobs
-    jobs = filter(filter_valid_job, jobs)
+    jobs_q = db.query(JobData)\
+            .filter(JobData.valid == True)\
+            .filter(JobData.job_name == args.suite)\
+            .subquery()
+
+    failures_q = db.query(TestFailure).join(jobs_q)
 
     # apply filters
     if args.test:
-        tests_filter = lambda job: filter_tests_by_name(job, test_name,
-                                                        test_title)
-        jobs = map(tests_filter, jobs)
-        summary += "- tests matching: {}/{}\n".format(test_name, test_title)
+        failures_q = failures_q\
+            .filter(TestFailure.name.regexp_match(test_name_regex))\
+            .filter(TestFailure.title.regexp_match(test_title_regex))
 
     if args.error:
-        tests_filter = lambda job: filter_tests_by_error(job, args.error)
-        jobs = map(tests_filter, jobs)
-        summary += "- error matches: {}\n".format(args.error)
+        # TODO add error matching the description
+        pass
 
+    failures = failures_q.all()
+    print(len(failures))
+
+    """
     # output format
     report = ""
 
@@ -526,6 +540,8 @@ def main():
         print("report saved at {}".format(file_path))
     else:
         print(report)
+    """
+
 
 if __name__ == '__main__':
     main()

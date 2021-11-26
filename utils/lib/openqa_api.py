@@ -84,6 +84,7 @@ class JobData(Base):
     job_id = Column(Integer, primary_key=True)
     job_name = Column(String)
     job_type = Column(String(50))
+    valid = Column(Boolean)
 
     __mapper_args__ = {
         'polymorphic_identity':'job',
@@ -108,6 +109,7 @@ class JobData(Base):
             if child is None:
                 child = ChildJob(child_id, parent_job=self)
 
+        self.valid = self.is_valid()
         local_session.commit()
 
     @property
@@ -157,6 +159,10 @@ class JobData(Base):
         if self.job_details is None:
             self.job_details = requests.get(self.get_job_api_url(details=True)).json()
         return self.job_details
+
+    def is_valid(self):
+        # TODO implement method
+        return True
 
     def get_results(self):
         if self.failures:

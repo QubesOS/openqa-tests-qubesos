@@ -80,11 +80,10 @@ def group_by_template(test):
         return template
     else:
         msg  = "Test's name '{}' doesn't specify a template.\n".format(test.name)
-        msg += "  The test suite may not include template information in the"
-        msg += " test's name."
+        msg += "  Assuming default template."
         logging.warning(msg)
 
-        return "unspecifed template"
+        return "default template"
 
 def plot_by_test(title, jobs, failures_q, test_suite, outfile=None):
     y_fn = lambda test: test.title

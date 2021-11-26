@@ -1,7 +1,7 @@
 import sqlalchemy
 from sqlalchemy import Column, Boolean, Integer, String, Enum, ForeignKey
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session, reconstructor
+from sqlalchemy.orm import sessionmaker, reconstructor
 from sqlalchemy.orm import relationship, backref
 import requests
 import requests_cache
@@ -678,7 +678,7 @@ class OpenQA:
 
         return sorted(jobs)
 
-def get_db_session(in_memory=True, read_only=False, debug_db=True):
+def config_db_session(in_memory=True, read_only=False, debug_db=False):
 
     def block_writes(*args,**kwargs):
         logging.info("Writing to the DB is blocked: database in read-only mode")
@@ -717,6 +717,10 @@ def get_db_session(in_memory=True, read_only=False, debug_db=True):
 
     return session
 
+def get_db_session():
+    global local_session
+    return local_session
+
 def setup_openqa_environ(package_list, cache_results=True):
     global name_mapping
     with open(package_list) as package_file:
@@ -725,4 +729,4 @@ def setup_openqa_environ(package_list, cache_results=True):
     name_mapping = data
 
     global local_session
-    local_session = get_db_session(in_memory=not cache_results, debug_db=False)
+    local_session = config_db_session(in_memory=not cache_results, debug_db=True)

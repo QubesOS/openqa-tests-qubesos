@@ -242,26 +242,27 @@ def group_by_template(test):
 
         return "unspecifed template"
 
-def plot_group_by_test(title, jobs, test_suite, outfile=None):
+def plot_group_by_test(title, jobs, failures_q, test_suite, outfile=None):
     y_fn = lambda test: test.title
-    plot_simple(title, jobs, test_suite, y_fn, outfile)
+    plot_simple(title, jobs, failures_q, test_suite, y_fn, outfile)
 
-def plot_group_by_template(title, jobs, test_suite, outfile=None):
-    plot_simple(title, jobs, test_suite, group_by_template, outfile)
+def plot_group_by_template(title, jobs, failures_q, test_suite, outfile=None):
+    plot_simple(title, jobs, failures_q, test_suite, group_by_template, outfile)
 
-def plot_group_by_worker(title, jobs, test_suite, outfile):
+def plot_group_by_worker(title, jobs, failures_q, test_suite, outfile):
 
     def group_by(test):
         job = OpenQA.get_job(test.job_id)
         return job.get_job_details()['job']['assigned_worker_id']
 
-    plot_simple(title, jobs, test_suite, group_by, outfile)
+    plot_simple(title, jobs, failures_q, test_suite, group_by, outfile)
 
-def plot_group_by_error(title, jobs, test_suite, outfile=None):
+def plot_group_by_error(title, jobs, failures_q, test_suite, outfile=None):
     hue_fn=group_by_template
-    plot_strip(title, jobs, test_suite, group_by_error, hue_fn, outfile)
+    plot_strip(title, jobs, failures_q, test_suite, group_by_error, hue_fn,
+               outfile)
 
-def plot_simple(title, jobs, test_suite, y_fn, outfile=None):
+def plot_simple(title, jobs, failures_q, test_suite, y_fn, outfile=None):
     """Plots test results with simple plotting where (x=job, y=y_fn)
 
       ^ (y_fn)
@@ -281,10 +282,16 @@ def plot_simple(title, jobs, test_suite, y_fn, outfile=None):
 
     plt.figure(figsize=(10,7))
 
+    # obtains the tes failures associated with each job
+    results = {}
+    for job in jobs:
+        test_failures = failures_q\
+            .filter(TestFailure.job_id == job.job_id).all()
+        results[job] = test_failures
+
     groups = set()
     for job in jobs:
-        results = job.get_results()[job.get_job_name()]
-        for test in results:
+        for test in results[job]:
             groups.add(y_fn(test))
 
     # initialize data
@@ -293,11 +300,10 @@ def plot_simple(title, jobs, test_suite, y_fn, outfile=None):
         y_data[test] = [0]*len(jobs)
 
     for i, job in enumerate(jobs):
-        results = job.get_results()[job.get_job_name()]
-        for test in results:
+        for test in results[job]:
             y_data[y_fn(test)][i] += 1
 
-    x_data = list(map(lambda job: str(job.get_job_parent()), jobs))
+    x_data = list(map(lambda job: str(job.parent_job_id), jobs))
 
     # sort the data by number of failed tests so it the one with the most
     # failures shows at the top of the legend
@@ -321,7 +327,7 @@ def plot_simple(title, jobs, test_suite, y_fn, outfile=None):
     else:
         plt.show()
 
-def plot_strip(title, jobs, test_suite, y_fn, hue_fn, outfile=None):
+def plot_strip(title, jobs, failures_q, test_suite, y_fn, hue_fn, outfile=None):
     """ Plots tests's failures along the jobs axis. Good for telling the
     evolution of a test's failure along time.
     (x=job, y=y_fn, hue=hue_fn)
@@ -349,8 +355,9 @@ def plot_strip(title, jobs, test_suite, y_fn, hue_fn, outfile=None):
     z_data = []
 
     for job in jobs:
-        results = job.get_results()[job.job_name]
-        for test in results:
+        job_test_failures = failures_q\
+            .filter(TestFailure.job_id == job.job_id).all()
+        for test in job_test_failures:
             x_data += [str(job.job_id)]
             y_data += [y_fn(test)]
             z_data += [hue_fn(test)]
@@ -487,21 +494,27 @@ def main():
     # output format
     report = ""
 
+    if args.output not in ["report"]:
+        jobs = list(jobs)
+        plot_filepath = args.outdir+"plot.png" if args.outdir else None
+
     if args.output == "report":
         for job in jobs:
             test_failures = failures_q\
                 .filter(TestFailure.job_id == job.job_id).all()
             report += report_test_failure(job, test_failures)
-    """
+
     elif args.output == "plot_tests":
-        title = "Failure By Test\n" + summary
-        plot_group_by_test(title, jobs, args.suite, plot_filepath)
+        title = "Failure By Test\n"
+        plot_group_by_test(title, jobs, failures_q, args.suite, plot_filepath)
     elif args.output == "plot_templates":
-        title = "Failure By Template\n" + summary
-        plot_group_by_template(title, jobs, args.suite, plot_filepath)
+        title = "Failure By Template\n"
+        plot_group_by_template(title, jobs, failures_q, args.suite,
+                               plot_filepath)
     elif args.output == "plot_errors":
-        title = "Failure By Error\n" + summary
-        plot_group_by_error(title, jobs, args.suite, plot_filepath)
+        title = "Failure By Error\n"
+        plot_group_by_error(title, jobs, failures_q, args.suite, plot_filepath)
+    """
     elif args.output == "plot_worker":
         title = "Failure By Worker\n" + summary
         plot_group_by_worker(title, jobs, args.suite, plot_filepath)

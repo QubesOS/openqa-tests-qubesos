@@ -96,13 +96,18 @@ class JobData(Base):
         self.job_details = None
         self.failures = {}
 
+        # must flush at the beginning to avoid recursion
+        logging.debug("Flushing {} {} to the database".format(
+            self.job_type, self.job_id))
+        local_session.add(self)
+        local_session.flush()
+
         # make sure children exist
         for child_id in self.get_children_ids():
             child = local_session.get(ChildJob, { "job_id": child_id })
             if child is None:
                 child = ChildJob(child_id, parent_job=self)
 
-        local_session.add(self)
         local_session.commit()
 
     @property
@@ -174,7 +179,7 @@ class JobData(Base):
                     if failure.is_valid():
                         if not TestFailure.exists_in_db(failure):
                             local_session.add(failure)
-                            local_session.commit()
+                            local_session.flush()
                         failure_list.append(failure)
 
         self.failures[self.job_name] = failure_list
@@ -389,6 +394,7 @@ class ChildJob(JobData):
     )
 
     def __init__(self, job_id, parent_job_id=None, parent_job=None):
+        super().__init__(job_id)
 
         if parent_job:
             self.parent_job = parent_job
@@ -623,10 +629,10 @@ class OpenQA:
             parent_job_id = JobData.get_parent_job_id(job_id)
             if parent_job_id is None:
                 logging.debug("creating orphan job for " + str(job_id))
-                return OrphanJob(job_id)
+                job = OrphanJob(job_id)
             else:
                 logging.debug("creating child job for " + str(job_id))
-                return ChildJob(job_id, parent_job_id)
+                job = ChildJob(job_id, parent_job_id)
         return job
 
     @staticmethod

@@ -96,6 +96,7 @@ def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
         "--job-id",
+        type=int,
         help="Update all pull requests related to a given job id")
     group.add_argument(
         '--latest',
@@ -141,6 +142,7 @@ def main():
 
     parser.add_argument(
         '--compare-to-job',
+        type=int,
         help="Provide job id to compare results to."
     )
 

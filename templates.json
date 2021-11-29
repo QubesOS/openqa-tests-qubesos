@@ -227,6 +227,10 @@
         {
           "key": "NOVIDEO",
           "value": "0"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "hdd_download"
         }
       ],
       "version": "*"
@@ -247,6 +251,10 @@
         {
           "key": "NOVIDEO",
           "value": "0"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "hdd_download"
         }
       ],
       "version": "*"
@@ -267,6 +275,10 @@
         {
           "key": "NOVIDEO",
           "value": "0"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "hdd_download"
         }
       ],
       "version": "*"
@@ -319,6 +331,10 @@
         {
           "key": "NOVIDEO",
           "value": "0"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "hdd_download"
         }
       ],
       "version": "*"
@@ -339,6 +355,10 @@
         {
           "key": "NOVIDEO",
           "value": "0"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "hdd_download"
         }
       ],
       "version": "4.0"
@@ -359,6 +379,10 @@
         {
           "key": "NOVIDEO",
           "value": "0"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "hdd_download"
         }
       ],
       "version": "4.1"

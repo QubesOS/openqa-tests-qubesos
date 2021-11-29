@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import logging
+from sqlalchemy import or_
 
 from lib.openqa_api import (
     setup_openqa_environ,
@@ -264,7 +265,7 @@ def main():
 
     parser.add_argument(
         "--error",
-        help="Match only results with a specific error message"
+        help="Match only results with a specific error message regex"
              "(e.g.: \"dogtail.tree.SearchError: descendent of [file chooser\"")
 
     parser.add_argument(
@@ -317,8 +318,9 @@ def main():
             .filter(TestFailure.title.regexp_match(test_title_regex))
 
     if args.error:
-        # TODO add error matching the description
-        pass
+        failures_q = failures_q.filter(or_(
+                TestFailure.fail_error.regexp_match(args.error),
+                TestFailure.cleanup_error.regexp_match(args.error)))
 
     jobs = jobs_query.all()
 

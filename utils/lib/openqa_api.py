@@ -96,7 +96,7 @@ class JobData(Base):
         self.job_id = job_id
         self.job_name = self.get_job_name()
         self.job_details = None
-        self.worker = self.get_worker()
+        self.worker = self.get_job_worker()
         self.failures = {}
 
         # must flush at the beginning to avoid recursion
@@ -156,6 +156,13 @@ class JobData(Base):
     def get_job_start_time(self):
         json_data = self.get_job_details()
         return json_data['job']['t_started']
+
+    def get_job_worker(self):
+        json_data = self.get_job_details()
+        try:
+            return json_data['job']['assigned_worker_id']
+        except KeyError:
+            return -1
 
     def get_job_details(self):
         if self.job_details is None:

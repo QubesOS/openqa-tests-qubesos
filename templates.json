@@ -6,7 +6,7 @@
     },
     {
       "group_name": "Qubes OS pull requests",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-pull-requests-x86_64:\n    distri: qubesos\n    flavor: pull-requests\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-pull-requests-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_backupcompatibility\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - system_tests_gui_interactive:\n        priority: 40\n    - system_tests_guivm_gui_interactive:\n        priority: 40\n    - system_tests_basic_vm_qrexec_gui_xfs\n    - system_tests_basic_vm_qrexec_gui_btrfs\n    - system_tests_basic_vm_qrexec_gui_ext4\n    - system_tests_usbproxy\n    - system_tests_qrexec\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupdispvm\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-pull-requests-x86_64:\n    distri: qubesos\n    flavor: pull-requests\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-pull-requests-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_backupcompatibility\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - system_tests_dispvm\n    - system_tests_devices\n    - system_tests_gui_interactive:\n        priority: 40\n    - system_tests_guivm_gui_interactive:\n        priority: 40\n    - system_tests_basic_vm_qrexec_gui_xfs\n    - system_tests_basic_vm_qrexec_gui_btrfs\n    - system_tests_basic_vm_qrexec_gui_ext4\n    - system_tests_usbproxy\n    - system_tests_qrexec\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupdispvm\n"
     },
     {
       "group_name": "Qubes OS release upgrade",
@@ -18,7 +18,7 @@
     },
     {
       "group_name": "Qubes OS updates",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-4.0-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.0'\n  qubesos-4.1-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.1'\nscenarios:\n  x86_64:\n    qubesos-4.0-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    qubesos-4.1-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_backupdispvm\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_guivm_gui_interactive\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_basic_vm_qrexec_gui_xfs\n    - system_tests_basic_vm_qrexec_gui_btrfs\n    - system_tests_basic_vm_qrexec_gui_ext4\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-4.0-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.0'\n  qubesos-4.1-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.1'\nscenarios:\n  x86_64:\n    qubesos-4.0-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_devices\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    qubesos-4.1-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_backupdispvm\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_guivm_gui_interactive\n    - system_tests_dispvm\n    - system_tests_devices\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_basic_vm_qrexec_gui_xfs\n    - system_tests_basic_vm_qrexec_gui_btrfs\n    - system_tests_basic_vm_qrexec_gui_ext4\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n"
     },
     {
       "group_name": "Qubes-Whonix updates",
@@ -416,19 +416,6 @@
       ]
     },
     {
-      "name": "system_tests_basic_vm_qrexec_gui",
-      "settings": [
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "SYSTEM_TESTS",
-          "value": "qubes.tests.integ.basic qubes.tests.integ.vm_qrexec_gui:14400"
-        }
-      ]
-    },
-    {
       "name": "system_tests_network",
       "settings": [
         {
@@ -442,23 +429,6 @@
         {
           "key": "SYSTEM_TESTS",
           "value": "qubes.tests.integ.network:21600"
-        }
-      ]
-    },
-    {
-      "name": "system_tests_backup",
-      "settings": [
-        {
-          "key": "MAX_JOB_TIME",
-          "value": "25200"
-        },
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "SYSTEM_TESTS",
-          "value": "qubes.tests.integ.backup:25200"
         }
       ]
     },
@@ -493,23 +463,6 @@
         {
           "key": "SYSTEM_TESTS",
           "value": "qubes.tests.extra:18000"
-        }
-      ]
-    },
-    {
-      "name": "system_tests_backupcompatibility",
-      "settings": [
-        {
-          "key": "MAX_JOB_TIME",
-          "value": "14400"
-        },
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "SYSTEM_TESTS",
-          "value": "qubes.tests.integ.backupcompatibility:10800"
         }
       ]
     },
@@ -643,23 +596,6 @@
         {
           "key": "SYSTEM_TESTS",
           "value": "qubes.tests.integ.dom0_update qubes.tests.integ.vm_update"
-        }
-      ]
-    },
-    {
-      "name": "system_tests_backupdispvm",
-      "settings": [
-        {
-          "key": "MAX_JOB_TIME",
-          "value": "14400"
-        },
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "SYSTEM_TESTS",
-          "value": "qubes.tests.integ.backupdispvm:10800"
         }
       ]
     },
@@ -1005,6 +941,97 @@
         {
           "key": "WORKER_CLASS",
           "value": "local"
+        }
+      ]
+    },
+    {
+      "name": "system_tests_dispvm",
+      "settings": [
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.dispvm:9000"
+        }
+      ]
+    },
+    {
+      "name": "system_tests_backup",
+      "settings": [
+        {
+          "key": "MAX_JOB_TIME",
+          "value": "25200"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.backup:25200"
+        }
+      ]
+    },
+    {
+      "name": "system_tests_backupcompatibility",
+      "settings": [
+        {
+          "key": "MAX_JOB_TIME",
+          "value": "14400"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.backupcompatibility:10800"
+        }
+      ]
+    },
+    {
+      "name": "system_tests_backupdispvm",
+      "settings": [
+        {
+          "key": "MAX_JOB_TIME",
+          "value": "14400"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.backupdispvm:10800"
+        }
+      ]
+    },
+    {
+      "name": "system_tests_basic_vm_qrexec_gui",
+      "settings": [
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.basic qubes.tests.integ.vm_qrexec_gui:14400"
+        }
+      ]
+    },
+    {
+      "description": "Devices (block) integration tests",
+      "name": "system_tests_devices",
+      "settings": [
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.devices_block:7200"
         }
       ]
     }

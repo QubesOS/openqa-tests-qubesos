@@ -84,10 +84,15 @@ class TestFailure:
         self.job_id = job_id
         self.test_id = test_id
 
-        if description is None or "\n" in description.strip():
+        if description is None:
             self.description = None
+            self.error_message = None
+        elif "\n" in description.strip():
+            self.description = None
+            self.error_message = description.strip()
         else:
             self.description = description.strip()
+            self.error_message = self.description
 
     def get_test_url(self):
         return "{}/tests/{}#step/{}/{}".format(
@@ -152,6 +157,25 @@ class JobData:
         json_data = self.get_job_details()
         return json_data['job']['settings']['BUILD']
 
+    def get_job_flavor(self):
+        json_data = self.get_job_details()
+        return json_data['job']['settings']['FLAVOR']
+
+    def get_job_start_time(self):
+        json_data = self.get_job_details()
+        return json_data['job']['t_started']
+
+    def get_job_parent(self):
+        json_data = self.get_job_details()
+        parents = json_data['job']['parents']['Chained']
+        if len(parents) == 0:
+            raise Exception("Job {} has no parents.".format(self.job_id)\
+                            + " This may happen in some older tests.")
+        if len(parents) > 1:
+            raise Exception("Implementation does not support more than one "\
+                            + "parent job.")
+        return parents[0]
+
     def get_job_details(self):
         if self.job_details is None:
             self.job_details = requests.get(self.get_job_api_url(details=True)).json()
@@ -181,6 +205,26 @@ class JobData:
         self.failures[self.job_name] = failure_list
 
         return self.failures
+
+    def is_valid(self):
+        json_data = self.get_job_details()
+        job_result = json_data['job']['result']
+        if job_result == "passed":
+            return True
+        elif job_result == "failed":
+            has_failures = len(self.get_results()[self.job_name]) > 0
+            all_test_groups_ran = True
+
+            for test_group in json_data['job']['testresults']:
+                if test_group['result'] == 'none':
+                    all_test_groups_ran = False
+
+            # FIXME deal with edge-cases where 'system_tests' passes but no
+            # external results are generated https://openqa.qubes-os.org/tests/20425
+
+            return all_test_groups_ran and has_failures
+        else:
+            return False
 
     def get_children_pruned(self):
         data = requests.get(
@@ -591,6 +635,11 @@ class OpenQA:
     @staticmethod
     def get_latest_job_id(job_type='system_tests_update', build=None,
                           version=None):
+        return OpenQA.get_latest_job_ids(job_type, build, version, history_len=1)
+
+    @staticmethod
+    def get_latest_job_ids(job_type='system_tests_update', build=None,
+                          version=None, history_len=100, result=None, flavor=None):
         params = []
         if job_type:
             params.append('test={}'.format(job_type))
@@ -598,6 +647,12 @@ class OpenQA:
             params.append('build={}'.format(build))
         if version:
             params.append('version={}'.format(version))
+        if history_len:
+            params.append('limit={}'.format(history_len))
+        if result:
+            params.append('result={}'.format(result))
+        if flavor:
+            params.append('flavor={}'.format(flavor))
 
         if params:
             params_string = '?' + "&".join(params)
@@ -605,15 +660,14 @@ class OpenQA:
             params_string = ''
 
         data = requests.get(
-            OPENQA_API + '/jobs/overview' + params_string).json()
+            OPENQA_API + '/jobs' + params_string).json()
 
-        results = []
+        jobs = []
 
-        for job in data:
-            results.append(job['id'])
+        for job in data['jobs']:
+            jobs.append(job['id'])
 
-        return results
-
+        return sorted(jobs)
 
 def setup_environ(args):
     global name_mapping

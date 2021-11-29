@@ -10,7 +10,7 @@
     },
     {
       "group_name": "Qubes OS release upgrade",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-release-upgrade-x86_64:\n    distri: qubesos\n    flavor: release-upgrade\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-release-upgrade-x86_64:\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_default:\n        machine: 64bit\n        priority: 15\n    - install_default:\n        machine: uefi\n        priority: 15\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n    - release_upgrade_modified_repo:\n        priority: 10\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-release-upgrade-x86_64:\n    distri: qubesos\n    flavor: release-upgrade\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-release-upgrade-x86_64:\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_default:\n        machine: 64bit\n        priority: 15\n    - install_default:\n        machine: uefi\n        priority: 15\n    - install_default_debian:\n        machine: 64bit\n        priority: 15\n    - install_default_debian10:\n        machine: 64bit\n        priority: 15\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_over_existing:\n        machine: uefi\n        priority: 15\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_legacy_ext4:\n        machine: 64bit\n    - install_legacy_ext4:\n        machine: uefi\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n    - install_xfs:\n        machine: 64bit\n        priority: 15\n    - install_xfs:\n        machine: uefi\n        priority: 15\n    - release_upgrade_modified_repo:\n        priority: 10\n"
     },
     {
       "group_name": "Qubes OS templates",
@@ -1032,6 +1032,58 @@
         {
           "key": "SYSTEM_TESTS",
           "value": "qubes.tests.integ.devices_block:7200"
+        }
+      ]
+    },
+    {
+      "description": "legacy standard ext4 partitions",
+      "name": "install_legacy_ext4",
+      "settings": [
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "PARTITIONING",
+          "value": "ext4"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "name": "install_default_debian",
+      "settings": [
+        {
+          "key": "DEFAULT_TEMPLATE",
+          "value": "debian"
+        },
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "all"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "name": "install_default_debian10",
+      "settings": [
+        {
+          "key": "DEFAULT_TEMPLATE",
+          "value": "debian-10"
+        },
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "all debian-10"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
         }
       ]
     }

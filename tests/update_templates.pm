@@ -28,7 +28,14 @@ sub run {
     x11_start_program('xterm');
     curl_via_netvm;
 
-    foreach (split / /, get_var("UPDATE_TEMPLATES")) {
+    my @templates = split / /, get_var("UPDATE_TEMPLATES");
+    foreach (split / /, get_var("INSTALL_TEMPLATES")) {
+        if (m/\d+/) {
+            push @templates, $_;
+        }
+    }
+
+    foreach (@templates) {
         my $template = $_;
         if (($_ =~ /^http/) and ($_ =~ /.rpm$/)) {
             my $rpm = $_;

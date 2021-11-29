@@ -31,7 +31,7 @@ Variables:
  - `UEFI_DIRECT` - UEFI boots directly to Xen, no separate bootloader
 
 Variables used in tests:
- - `INSTALL_TEMPLATES` - space separated list of template groups (`debian`, `whonix`), or `all`
+ - `INSTALL_TEMPLATES` - space separated list of template groups (`debian`, `whonix`), or `all`; can include also specific template versions (`debian-11`) - they they will be installed/reinstalled from online repo after the initial install process
  - `USBVM` - USB VM configuration: `none`, `sys-usb` (default), `sys-net` (combined with Net VM)
  - `KEYBOARD_LAYOUT` - install with non-default keyboard layout; currently only `us-colemak` value is supported
  - `LOCALE` - install with non-default locale; currently only `en_DK.utf8` value is supported

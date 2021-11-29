@@ -66,6 +66,7 @@ sub run {
                 assert_and_click('disable-install-whonix', timeout => 5);
             }
         }
+        # TODO: use DEFAULT_TEMPLATE to choose the default
     }
 
     if (check_var('USBVM', 'none')) {

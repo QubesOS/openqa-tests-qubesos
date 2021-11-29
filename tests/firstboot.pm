@@ -113,17 +113,7 @@ sub run {
     }
 
     assert_screen "login-prompt-user-selected", 90;
-    $self->handle_login_prompt;
-
-    assert_screen "desktop";
-    wait_still_screen;
-
-    # make other tests working
-    if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
-        x11_start_program(us_colemak('setxkbmap us'), valid => 0);
-    } elsif (get_var('LOCALE')) {
-        x11_start_program('setxkbmap us', valid => 0);
-    }
+    $self->init_gui_session;
 }
 
 sub test_flags {

@@ -39,9 +39,26 @@ sub handle_login_prompt {
         type_string($password);
     }
     send_key "ret";
+
+    assert_screen "desktop";
 }
 
+sub restore_keyboard_layout {
+    my ($self) = @_;
+
+    # reset keyboard layout (when we get here, it means it was good at luks and
+    # login prompt)
+    if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
+        x11_start_program(us_colemak('setxkbmap us'), valid => 0);
+    } elsif (get_var('LOCALE')) {
+        x11_start_program('setxkbmap us', valid => 0);
+    }
+}
+
+
 sub handle_system_startup {
+    my ($self) = @_;
+
     reset_consoles();
     if (!check_var('UEFI', '1')) {
         # wait for bootloader to appear
@@ -65,28 +82,31 @@ sub handle_system_startup {
         type_string "lukspass";
         send_key "ret";
     }
+    assert_screen ["login-prompt-user-selected"], 600;
 
-    assert_screen "login-prompt-user-selected", 240;
-    handle_login_prompt;
-
-    assert_screen "desktop";
-
-    # reset keyboard layout (when we get here, it means it was good at luks and
-    # login prompt)
-    if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
-        x11_start_program(us_colemak('setxkbmap us'), valid => 0);
-    } elsif (get_var('LOCALE')) {
-        x11_start_program('setxkbmap us', valid => 0);
-    }
+    $self->init_gui_session;
 
     select_console('root-virtio-terminal');
+    script_run('systemctl is-system-running --wait', timeout => 120);
     assert_script_run "chown $testapi::username /dev/$testapi::serialdev";
+    select_console('x11');
+}
+
+sub init_gui_session {
+    my ($self) = @_;
+
+    assert_screen "login-prompt-user-selected", 240;
+    $self->handle_login_prompt;
+
+    assert_screen("nm-connection-established", 150);
+    assert_screen("no-notifications");
+
+    $self->restore_keyboard_layout;
+
     # disable screensaver
     if (!check_var('KEEP_SCREENLOCKER', '1')) {
-        assert_script_run('killall xscreensaver');
+        x11_start_program('xscreensaver-command -exit', target_match => 'x11');
     }
-    script_run('systemctl is-system-running --wait', timeout => 90);
-    select_console('x11');
     wait_still_screen;
 }
 

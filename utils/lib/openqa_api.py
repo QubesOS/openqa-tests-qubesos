@@ -475,6 +475,7 @@ class TestFailure(Base):
     cleanup_error = Column(String)
     timed_out = Column(Boolean)
     has_description = Column(Boolean)
+    template = Column(String(50))
 
     def __init__(self, name, title, description, job, test_id):
         self.name = name
@@ -488,6 +489,7 @@ class TestFailure(Base):
         self.fail_error = None
         self.cleanup_error = None
         self.timed_out = False
+        self.template = self.guess_template()
 
         if description is None:
             self.has_description = False
@@ -515,6 +517,22 @@ class TestFailure(Base):
         if self.timed_out:
             return True
         return False
+
+    def guess_template(self):
+        # obtain template name according to construction format of
+        # https://github.com/QubesOS/qubes-core-admin/blob/f60334/qubes/tests/__init__.py#L1352
+        # Will catch most common tests.
+        template = self.name.split("_")[-1]
+        template = template.split("-pool")[0] # remove trailing "-pool"
+
+        if re.search(r"^[a-z\-]+\-\d+(\-xfce)?$", template): # [template]-[ver]
+            return template
+        else:
+            msg  = "Test's name '{}' doesn't specify a template.\n"\
+                .format(self.name)
+            msg += "  Assuming default template."
+            logging.warning(msg)
+            return "default"
 
     def parse_description(self, description):
 

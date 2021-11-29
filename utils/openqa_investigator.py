@@ -9,42 +9,17 @@ from sqlalchemy import or_
 from lib.openqa_api import (
     setup_openqa_environ,
     get_db_session,
-    OpenQA,
     JobData,
     TestFailure
 )
+from lib.instability_analysis import get_latest_jobs
 
-Q_VERSION = "4.1"
-FLAVOR = "pull-requests"
 IGNORED_ERRORS = [
     "# system-out:",
     "# Result:",
     "# wait_serial expected",
     "0;31m"
 ]
-
-def populate_db_latest_jobs(test_suite, history_len):
-    """
-    Gets the historical data of a particular test suite
-    """
-
-    success_jobs = OpenQA.get_latest_job_ids(test_suite, version=Q_VERSION,
-                                     result="passed",  history_len=history_len,
-                                     flavor=FLAVOR)
-
-    failed_jobs = OpenQA.get_latest_job_ids(test_suite, version=Q_VERSION,
-                                        result="failed",
-                                        history_len=history_len, flavor=FLAVOR)
-
-    job_ids = sorted(success_jobs + failed_jobs)
-    job_ids = job_ids[-history_len:]
-
-    if len(job_ids) == 0:
-        print("ERROR: no jobs found. Wrong test suite name?")
-
-    jobs = []
-    for job_id in job_ids:
-        jobs += [OpenQA.get_job(job_id)]
 
 def report_test_failure(job, test_failures):
     """
@@ -70,27 +45,12 @@ def report_test_failure(job, test_failures):
 
     return report
 
-def group_by_template(test):
-    # obtain template name according to construction format of
-    # https://github.com/QubesOS/qubes-core-admin/blob/f60334/qubes/tests/__init__.py#L1352
-    # Will catch most common tests.
-    template = test.name.split("_")[-1]
-    template = template.split("-pool")[0] # remove trailing "-pool"
-
-    if re.search(r"^[a-z\-]+\-\d+(\-xfce)?$", template): # [template]-[ver]
-        return template
-    else:
-        msg  = "Test's name '{}' doesn't specify a template.\n".format(test.name)
-        msg += "  Assuming default template."
-        logging.warning(msg)
-
-        return "default template"
-
 def plot_by_test(title, jobs, failures_q, test_suite, outfile=None):
     y_fn = lambda test: test.title
     plot_simple(title, jobs, failures_q, test_suite, y_fn, outfile)
 
 def plot_by_template(title, jobs, failures_q, test_suite, outfile=None):
+    group_by_template = lambda test: test.template
     plot_simple(title, jobs, failures_q, test_suite, group_by_template, outfile)
 
 def plot_by_error(title, jobs, failures_q, test_suite, outfile=None):
@@ -101,6 +61,7 @@ def plot_by_error(title, jobs, failures_q, test_suite, outfile=None):
         else:
             return "[empty error message]"
 
+    group_by_template = lambda test: test.template
     plot_strip(title, jobs, failures_q, test_suite, group_by_error,
                hue_fn=group_by_template, outfile=outfile)
 
@@ -303,7 +264,7 @@ def main():
             exit(1)
 
     db = get_db_session()
-    populate_db_latest_jobs(args.suite, history_len)
+    get_latest_jobs(db, args.suite, history_len)
 
     jobs_query = db.query(JobData)\
             .filter(JobData.valid == True)\

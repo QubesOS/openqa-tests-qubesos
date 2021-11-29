@@ -798,6 +798,10 @@
           "value": "disk_unencrypted_%VERSION%_%MACHINE%_%KERNEL_VERSION%.qcow2"
         },
         {
+          "key": "QEMU_COMPRESS_QCOW2",
+          "value": "0"
+        },
+        {
           "key": "TEST_GENERIC",
           "value": "1"
         },

@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "xpos": 397,
+      "width": 193,
+      "type": "match",
+      "height": 18,
+      "ypos": 352
+    },
+    {
+      "xpos": 316,
+      "width": 127,
+      "ypos": 376,
+      "type": "match",
+      "height": 53
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "fonts damaged on update"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4-0",
+    "desktop-runner"
+  ]
+}

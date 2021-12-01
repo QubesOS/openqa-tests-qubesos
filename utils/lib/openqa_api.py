@@ -156,6 +156,11 @@ class JobData(Base):
         json_data = self.get_job_details()
         return json_data['job']['settings']['FLAVOR']
 
+    def get_job_version(self):
+        """Qubes version of job"""
+        json_data = self.get_job_details()
+        return json_data['job']['settings']['VERSION']
+
     def get_job_start_time(self):
         json_data = self.get_job_details()
         return json_data['job']['t_started']
@@ -316,8 +321,7 @@ class JobData(Base):
         issue_urls = []
 
         for t in templates:
-            issue_name = "{} (r{})".format(
-               t, json_data['job']['settings']['VERSION'])
+            issue_name = "{} (r{})".format(t, self.get_job_version())
             url = repo.get_issues_by_name(issue_name)
             if url:
                 issue_urls.append(url)
@@ -361,7 +365,7 @@ class JobData(Base):
         for p in packages:
             issue_name = "{} v{} (r{})".format(
                 p.package_name, p.version,
-                json_data['job']['settings']['VERSION'])
+                self.get_job_version())
             url = repo.get_issues_by_name(issue_name)
             if url:
                 issue_urls.append(url)
@@ -715,6 +719,7 @@ class OpenQA:
 
         return sorted(jobs)
 
+    @staticmethod
     def get_latest_concluded_job_ids(test_suite, history_len,
                                      version=DEFAULT_Q_VERSION,
                                      flavor=DEFAULT_FLAVOR):
@@ -734,12 +739,41 @@ class OpenQA:
 
         return job_ids
 
+    @staticmethod
     def get_latest_concluded_jobs(test_suite, history_len):
         """
         Gets the historical data of a particular test suite
         """
-        job_ids = get_latest_concluded_job_ids(test_suite, history_len)
-        return get_jobs(job_ids)
+        job_ids = OpenQA.get_latest_concluded_job_ids(test_suite, history_len)
+        return OpenQA.get_jobs(job_ids)
+
+    @staticmethod
+    def get_n_jobs_like(reference_job, n):
+        """Obtains similar n number of concluded valid jobs"""
+        latest_job_id = OpenQA.get_latest_job_id()
+        margin = n * 2 # add margin for invalid jobs
+        max_history_len = latest_job_id - reference_job.job_id + margin
+
+        job_ids = OpenQA.get_latest_concluded_job_ids(
+            test_suite=reference_job.get_job_name(),
+            version=reference_job.get_job_version(),
+            flavor=reference_job.get_job_flavor(),
+            history_len=max_history_len)
+
+        ref_job_index = job_ids.index(reference_job.job_id)
+        potential_job_ids = job_ids[:ref_job_index]
+
+        relevant_jobs = []
+        index = len(potential_job_ids)
+        while len(relevant_jobs) < n:
+            index -= 1
+            job_id = potential_job_ids[index]
+            job = OpenQA.get_job(job_id)
+
+            if job.is_valid():
+                relevant_jobs += [job]
+
+        return relevant_jobs
 
 
 def config_db_session(in_memory=True, read_only=False, debug_db=False):

@@ -266,14 +266,14 @@ def main():
     db = get_db_session()
     OpenQA.get_latest_concluded_job_ids(args.suite, history_len)
 
-    jobs_query = db.query(JobData)\
+    jobs_reversed_query = db.query(JobData)\
             .filter(JobData.valid == True)\
             .filter(JobData.job_name == args.suite)\
             .order_by(JobData.job_id.desc())\
-            .limit(history_len)
+            .limit(history_len) # order_by in order to truncate the limit
 
     failures_q = db.query(TestFailure)\
-                   .join(jobs_query.subquery())
+                   .join(jobs_reversed_query.subquery())
 
     # apply filters
     if args.test:
@@ -286,7 +286,8 @@ def main():
                 TestFailure.fail_error.regexp_match(args.error),
                 TestFailure.cleanup_error.regexp_match(args.error)))
 
-    jobs = jobs_query.all()
+    jobs_reversed = jobs_reversed_query.all()
+    jobs = reversed(jobs_reversed)
 
     # output format
     report = ""

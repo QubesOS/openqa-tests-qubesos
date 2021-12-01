@@ -47,7 +47,8 @@ def report_test_failure(job, test_failures):
 
 def plot_by_test(title, jobs, failures_q, test_suite, outfile=None):
     y_fn = lambda test: test.title
-    plot_simple(title, jobs, failures_q, test_suite, y_fn, outfile)
+    hue_fn = lambda test: test.name
+    plot_strip(title, jobs, failures_q, test_suite, y_fn, hue_fn, outfile)
 
 def plot_by_template(title, jobs, failures_q, test_suite, outfile=None):
     group_by_template = lambda test: test.template

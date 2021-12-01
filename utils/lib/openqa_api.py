@@ -19,6 +19,9 @@ requests_cache.install_cache('openqa_cache', backend='sqlite', expire_after=8200
 OPENQA_URL = "https://openqa.qubes-os.org"
 OPENQA_API = OPENQA_URL + "/api/v1"
 
+DEFAULT_Q_VERSION = "4.1"
+DEFAULT_FLAVOR = "pull-requests"
+
 # repo for creating issues for FLAVOR=qubes-whonix jobs
 WHONIX_NOTIFICATION_REPO = "Whonix/updates-status"
 
@@ -668,10 +671,17 @@ class OpenQA:
                 job = ChildJob(job_id, parent_job_id)
         return job
 
+    def get_jobs(job_ids):
+        jobs = []
+        for job_id in job_ids:
+            jobs += [OpenQA.get_job(job_id)]
+        return jobs
+
     @staticmethod
     def get_latest_job_id(job_type='system_tests_update', build=None,
                           version=None):
-        return OpenQA.get_latest_job_ids(job_type, build, version, history_len=1)
+        jobs = OpenQA.get_latest_job_ids(job_type, build, version, history_len=1)
+        return jobs[0]
 
     @staticmethod
     def get_latest_job_ids(job_type='system_tests_update', build=None,
@@ -704,6 +714,33 @@ class OpenQA:
             jobs.append(job['id'])
 
         return sorted(jobs)
+
+    def get_latest_concluded_job_ids(test_suite, history_len,
+                                     version=DEFAULT_Q_VERSION,
+                                     flavor=DEFAULT_FLAVOR):
+        success_jobs = OpenQA.get_latest_job_ids(test_suite, version=version,
+                            result="passed",  history_len=history_len,
+                            flavor=flavor)
+
+        failed_jobs = OpenQA.get_latest_job_ids(test_suite, version=version,
+                            result="failed",
+                            history_len=history_len, flavor=flavor)
+
+        job_ids = sorted(success_jobs + failed_jobs)
+        job_ids = job_ids[-history_len:]
+
+        if len(job_ids) == 0:
+            print("ERROR: no jobs found. Wrong test suite name?")
+
+        return job_ids
+
+    def get_latest_concluded_jobs(test_suite, history_len):
+        """
+        Gets the historical data of a particular test suite
+        """
+        job_ids = get_latest_concluded_job_ids(test_suite, history_len)
+        return get_jobs(job_ids)
+
 
 def config_db_session(in_memory=True, read_only=False, debug_db=False):
 

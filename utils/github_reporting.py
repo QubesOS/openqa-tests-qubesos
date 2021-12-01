@@ -165,7 +165,7 @@ def main():
         jobs.append(args.job_id)
 
     if args.latest:
-        jobs = OpenQA.get_latest_job_id(args.job_name, args.build, args.version)
+        jobs = [OpenQA.get_latest_job_id(args.job_name, args.build, args.version)]
 
     reference_job = None
     if args.compare_to_job:

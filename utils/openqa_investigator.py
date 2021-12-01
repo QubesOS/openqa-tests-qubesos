@@ -10,9 +10,9 @@ from lib.openqa_api import (
     setup_openqa_environ,
     get_db_session,
     JobData,
-    TestFailure
+    TestFailure,
+    OpenQA
 )
-from lib.instability_analysis import get_latest_jobs
 
 IGNORED_ERRORS = [
     "# system-out:",
@@ -264,7 +264,7 @@ def main():
             exit(1)
 
     db = get_db_session()
-    get_latest_jobs(db, args.suite, history_len)
+    OpenQA.get_latest_concluded_job_ids(args.suite, history_len)
 
     jobs_query = db.query(JobData)\
             .filter(JobData.valid == True)\

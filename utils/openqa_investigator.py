@@ -268,7 +268,10 @@ def main():
 
     jobs_query = db.query(JobData)\
             .filter(JobData.valid == True)\
-            .filter(JobData.job_name == args.suite)
+            .filter(JobData.job_name == args.suite)\
+            .order_by(JobData.job_id.desc())\
+            .limit(history_len)
+
     failures_q = db.query(TestFailure)\
                    .join(jobs_query.subquery())
 

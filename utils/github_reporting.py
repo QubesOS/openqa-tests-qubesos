@@ -6,13 +6,14 @@ import re
 
 from lib.github_api import setup_github_environ, GitHubIssue
 from lib.openqa_api import setup_openqa_environ, OpenQA
+from lib.instability_analysis import report_unstable_tests
 from lib.common import ISSUE_TITLE_PREFIX, COMMENT_TITLE
 
 def setup_environ(args):
     setup_github_environ(args.auth_token)
     setup_openqa_environ(args.package_list)
 
-def format_results(results, job, reference_job=None):
+def format_results(results, job, reference_job=None, instability=False):
     output_string = "{}\n" \
                     "Complete test suite and dependencies: {}\n" \
                     "## Failed tests\n".format(COMMENT_TITLE,
@@ -81,6 +82,15 @@ def format_results(results, job, reference_job=None):
                 output_string += '* ' + str(k) + "\n"
                 output_string += add_to_output
 
+    if instability:
+        # unstable tests - tests that given the same or similar conditions have
+        # different outputs
+        output_string += "## Unstable tests\n"
+        for test_suite in results:
+            if len(results[test_suite]) > 0:
+                example_job = results[test_suite][0].job
+                output_string += '* ' + str(test_suite) + "\n"
+                output_string += report_unstable_tests(example_job)
     return output_string
 
 
@@ -146,6 +156,12 @@ def main():
         help="Provide job id to compare results to."
     )
 
+    parser.add_argument(
+        '--instability',
+        action='store_true',
+        help="Report on test's instability."
+    )
+
     args = parser.parse_args()
 
     if (args.build or args.version) and args.job_id:
@@ -177,7 +193,8 @@ def main():
         if job.job_name == 'system_tests_update':
             result.update(job.get_children_results())
 
-        formatted_result = format_results(result, job, reference_job)
+        formatted_result = format_results(result, job, reference_job,
+                                          args.instability)
 
         if args.show_results_only:
             print(formatted_result)

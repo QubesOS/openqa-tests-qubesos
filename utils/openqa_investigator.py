@@ -265,7 +265,7 @@ def main():
             exit(1)
 
     db = get_db_session()
-    OpenQA.get_latest_concluded_job_ids(args.suite, history_len)
+    OpenQA.get_latest_concluded_jobs(args.suite, history_len)
 
     jobs_reversed_query = db.query(JobData)\
             .filter(JobData.valid == True)\

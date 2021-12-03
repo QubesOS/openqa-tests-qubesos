@@ -32,9 +32,10 @@ class InstabilityAnalysis:
         return False
 
     def report(self, details=False):
-        text = ""
+        text = "<details>\n\n"
         for job_instability in self.unstable_jobs.values():
             text += job_instability.report(details)
+        text += "\n</details>"
         return text
 
 class AbstractInstability:
@@ -136,9 +137,9 @@ class TestInstability(AbstractInstability):
             test_name = self.sample_test_failure.name
             test_title = self.sample_test_failure.title
             if details:
-                text = "  <details><summary>{}/{}</summary>\n"\
+                text = "  <details><summary>{}/{}"\
                     .format(test_name, test_title)
-                text += "  Failed {}/{} times with errors\n\n".format(
+                text += " ({}/{} times with errors)</summary>\n\n".format(
                     len(self.past_failures), len(self.job_ids))
                 for fail in self.past_failures:
                     text += "   - [job {}]({}) `{}`\n".format(
@@ -148,6 +149,8 @@ class TestInstability(AbstractInstability):
                 text += "  </details>\n"
             else:
                 text = "  * {}/{}\n".format(test_name, test_title)
+                text += " ({}/{} times with errors\n\n)".format(
+                    len(self.past_failures), len(self.job_ids))
             return text
         else:
             return ""

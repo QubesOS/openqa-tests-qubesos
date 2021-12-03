@@ -1,10 +1,12 @@
 import sqlalchemy
-from sqlalchemy import Column, Boolean, Integer, String, Enum, ForeignKey
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, reconstructor
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy import (
+    Column, Boolean, Integer, String, Enum, PickleType,
+    ForeignKey, create_engine
+)
+from sqlalchemy.orm import (
+    sessionmaker, reconstructor, relationship, backref
+)
 import requests
-import requests_cache
 import re
 import json
 import enum
@@ -13,8 +15,6 @@ import os
 
 from lib.github_api import GitHubRepo, GitHubIssue, setup_github_environ
 from lib.common import *
-
-requests_cache.install_cache('openqa_cache', backend='sqlite', expire_after=8200)
 
 OPENQA_URL = "https://openqa.qubes-os.org"
 OPENQA_API = OPENQA_URL + "/api/v1"
@@ -87,6 +87,7 @@ class JobData(Base):
     job_id = Column(Integer, primary_key=True)
     job_name = Column(String)
     job_type = Column(String(50))
+    job_details = Column(PickleType) # json
     valid = Column(Boolean)
     worker = Column(Integer)
 
@@ -97,8 +98,8 @@ class JobData(Base):
 
     def __init__(self, job_id):
         self.job_id = job_id
+        self.get_job_details()
         self.job_name = self.get_job_name()
-        self.job_details = None
         self.worker = self.get_job_worker()
         self.failures = {}
 
@@ -131,7 +132,6 @@ class JobData(Base):
 
     @reconstructor
     def init_on_load(self):
-        self.job_details = None
         self.failures = {}
 
     @staticmethod
@@ -148,7 +148,7 @@ class JobData(Base):
                             + "parent job.")
 
     def get_job_name(self):
-        json_data = requests.get(self.get_job_api_url(details=False)).json()
+        json_data = self.get_job_details()
         return json_data['job']['test']
 
     def get_job_build(self):
@@ -213,7 +213,7 @@ class JobData(Base):
         return self.failures
 
     def get_children_ids(self):
-        json_data = requests.get(self.get_job_api_url(details=False)).json()
+        json_data = self.get_job_details()
         return json_data['job']['children']['Chained']
 
     def get_children(self):

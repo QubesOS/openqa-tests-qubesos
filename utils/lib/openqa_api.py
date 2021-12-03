@@ -772,15 +772,13 @@ class OpenQA:
         potential_job_ids = job_ids[:ref_job_index]
 
         relevant_jobs = []
-        index = len(potential_job_ids)
-        while len(relevant_jobs) < n:
-            index -= 1
-            job_id = potential_job_ids[index]
+        for job_id in reversed(potential_job_ids):
             job = OpenQA.get_job(job_id)
 
             if job.is_valid():
-                relevant_jobs += [job]
-
+                relevant_jobs = [job] + relevant_jobs
+            if len(relevant_jobs) >= n:
+                break
         return relevant_jobs
 
 

@@ -115,12 +115,21 @@ class TestInstability(AbstractInstability):
 
     @property
     def is_unstable(self):
-        if len(self.past_failures) > 0:
+        historical_data_len = len(self.job_ids)
+
+        # always succeded
+        if len(self.past_failures) == 0:
+            return False
+
+        # succeded only sometimes
+        elif len(self.past_failures) != historical_data_len:
+            return True
+
+        # never succeeded
+        else:
             errors = [failure.relevant_error for failure in self.past_failures]
             unique_errors = list(set(errors))
-            if len(unique_errors) != 1:
-                return True
-        return False
+            return len(unique_errors) != 1
 
     def report(self, details=False):
         if self.is_unstable:

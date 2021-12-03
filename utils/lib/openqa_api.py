@@ -432,8 +432,6 @@ class ChildJob(JobData):
         else:
             raise Exception("Must provide a parent_job_id or a parent_job")
 
-        super().__init__(job_id)
-
     def is_valid(self):
         json_data = self.get_job_details()
         job_result = json_data['job']['result']

@@ -89,6 +89,7 @@ class JobData(Base):
     job_type = Column(String(50))
     job_details = Column(PickleType) # json
     valid = Column(Boolean)
+    machine = Column(String)
     worker = Column(Integer)
 
     __mapper_args__ = {
@@ -98,9 +99,10 @@ class JobData(Base):
 
     def __init__(self, job_id):
         self.job_id = job_id
-        self.get_job_details()
+        self.job_details = self.get_job_details()
         self.job_name = self.get_job_name()
         self.worker = self.get_job_worker()
+        self.machine = self.get_job_machine()
         self.failures = {}
 
         # must flush at the beginning to avoid recursion
@@ -174,6 +176,11 @@ class JobData(Base):
             return json_data['job']['assigned_worker_id']
         except KeyError:
             return -1
+
+    def get_job_machine(self):
+        """Machine "type": multiple machines can have the same one"""
+        json_data = self.get_job_details()
+        return json_data['job']['settings']['MACHINE']
 
     def get_job_details(self):
         if self.job_details is None:

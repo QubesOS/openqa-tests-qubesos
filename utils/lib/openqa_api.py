@@ -117,6 +117,9 @@ class JobData(Base):
         self.valid = self.is_valid()
         local_session.commit()
 
+    def __hash__(self):
+        return hash((self.job_id,))
+
     @property
     def clone_id(self):
         json_data = self.get_job_details()

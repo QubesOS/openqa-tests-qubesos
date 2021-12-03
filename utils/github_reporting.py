@@ -6,7 +6,7 @@ import re
 
 from lib.github_api import setup_github_environ, GitHubIssue
 from lib.openqa_api import setup_openqa_environ, OpenQA
-from lib.instability_analysis import report_unstable_tests
+from lib.instability_analysis import InstabilityAnalysis
 from lib.common import ISSUE_TITLE_PREFIX, COMMENT_TITLE
 
 def setup_environ(args):
@@ -14,17 +14,22 @@ def setup_environ(args):
     setup_openqa_environ(args.package_list)
 
 def format_results(results, job, reference_job=None, instability=False):
+    if instability:
+        instability_analysis = InstabilityAnalysis(job)
+
     output_string = "{}\n" \
                     "Complete test suite and dependencies: {}\n" \
                     "## Failed tests\n".format(COMMENT_TITLE,
                                                 job.get_dependency_url())
     number_of_failures = 0
-
     for k in results:
         if results[k]:
             output_string += '* ' + str(k) + "\n"
             for fail in results[k]:
-                output_string += '  * ' + str(fail) + '\n'
+                if instability and instability_analysis.is_test_unstable(fail):
+                    output_string += '  * [unstable] ' + str(fail) + '\n'
+                else:
+                    output_string += '  * ' + str(fail) + '\n'
                 number_of_failures += 1
 
     if results.get('system_tests_update', []):
@@ -55,7 +60,10 @@ def format_results(results, job, reference_job=None, instability=False):
             for fail in current_fails:
                 if fail in old_fails:
                     continue
-                add_to_output += '  * ' + str(fail) + '\n'
+                if instability and instability_analysis.is_test_unstable(fail):
+                    output_string += '  * [unstable] ' + str(fail) + '\n'
+                else:
+                    add_to_output += '  * ' + str(fail) + '\n'
 
             if add_to_output:
                 output_string += '* ' + str(k) + "\n"
@@ -83,16 +91,10 @@ def format_results(results, job, reference_job=None, instability=False):
                 output_string += add_to_output
 
     if instability:
-        # unstable tests - tests that given the same or similar conditions have
-        # different outputs
         output_string += "## Unstable tests\n"
-        for test_suite in results:
-            if len(results[test_suite]) > 0:
-                example_job = results[test_suite][0].job
-                output_string += '* ' + str(test_suite) + "\n"
-                output_string += report_unstable_tests(example_job)
-    return output_string
+        output_string += instability_analysis.report(details=True)
 
+    return output_string
 
 def main():
     parser = ArgumentParser(

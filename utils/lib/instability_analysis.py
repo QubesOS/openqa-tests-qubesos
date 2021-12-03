@@ -1,44 +1,145 @@
+from sqlalchemy import select
+
 from lib.openqa_api import (
     OpenQA,
     get_db_session,
-    JobData,
+    ChildJob,
+    OrphanJob,
     TestFailure,
-    ChildJob
 )
-from sqlalchemy import select
 
-def report_unstable_tests(reference_job):
-    if not isinstance(reference_job, ChildJob):
-        raise Exception("unstable reporting only possible with child jobs")
+class InstabilityAnalysis:
+    """Job Instability Analysis"""
 
-    jobs = OpenQA.get_n_jobs_like(reference_job, n=5)
-    job_ids = [job.job_id for job in jobs]
+    def __init__(self, original_job):
+        self.unstable_jobs = {} # JobData -> ChildJobInstability
 
-    db = get_db_session()
-    test_identifiers = db.execute(
-        select(TestFailure.name, TestFailure.title, TestFailure.test_id)\
-        .where(TestFailure.job_id.in_(job_ids))\
-        .group_by(TestFailure.title, TestFailure.name, TestFailure.test_id))
+        jobs = []
+        if isinstance(original_job, OrphanJob):
+            jobs += original_job.get_children()
+        elif isinstance(original_job, ChildJob):
+            jobs += [original_job]
 
-    text = ""
-    for test_identier in test_identifiers:
-        (test_name, test_title, _) = test_identier
-        errors = get_test_errors_in_jobs(db, test_identier, job_ids)
+        for job in jobs:
+            t = ChildJobInstability(job)
+            if t.is_unstable:
+                self.unstable_jobs[job] = t
 
-        if len(errors) > 0:
-            unique_errors = list(set(errors))
-            if len(unique_errors) != 1:
-                text += "  * {}/{}\n".format(test_name, test_title)
-    return text
+    def is_test_unstable(self, sample_test):
+        for job in self.unstable_jobs:
+            if sample_test.job == job:
+                return self.unstable_jobs[job].is_test_unstable(sample_test)
+        return False
 
-def get_test_errors_in_jobs(db, test_identifier, job_ids):
-    (test_name, test_title, test_id) = test_identifier
+    def report(self, details=False):
+        text = ""
+        for job_instability in self.unstable_jobs.values():
+            text += job_instability.report(details)
+        return text
 
-    rows = db.execute(
-                select(TestFailure.relevant_error)
-                .where(TestFailure.job_id.in_(job_ids))\
+class AbstractInstability:
+    @property
+    def is_unstable(self):
+        return False
+
+    def report(self, details=False):
+        return "abstract report"
+
+class ChildJobInstability(AbstractInstability):
+
+    def __init__(self, job):
+        self.unstable_tests = []
+        self.test_instability = []
+        self.job = job
+
+        jobs = OpenQA.get_n_jobs_like(job, n=5)
+        job_ids = [job.job_id for job in jobs]
+
+        db = get_db_session()
+        test_identifiers = db.execute(
+            select(TestFailure.name, TestFailure.title, TestFailure.test_id)\
+            .where(TestFailure.job_id.in_(job_ids))\
+            .group_by(TestFailure.title, TestFailure.name, TestFailure.test_id))
+
+        for (test_name, test_title, test_id) in test_identifiers:
+            sample_test_failure = db.query(TestFailure)\
                 .filter(TestFailure.name == test_name)\
                 .filter(TestFailure.title == test_title)\
-                .filter(TestFailure.test_id == test_id)).all()
+                .filter(TestFailure.test_id == test_id)\
+                .where(TestFailure.job_id.in_(job_ids))\
+                .first()
 
-    return [error for (error,) in rows]
+            t = TestInstability(sample_test_failure, job_ids)
+            if t.is_unstable:
+                self.unstable_tests += [sample_test_failure]
+                self.test_instability += [t]
+
+    @property
+    def is_unstable(self):
+        return len(self.unstable_tests) > 0
+
+    def is_test_unstable(self, test_failure):
+        return test_failure in self.unstable_tests
+
+    def report(self, details=False):
+        if len(self.unstable_tests) == 0:
+            return ""
+
+        text = "* {}\n".format(self.job.job_name)
+        for test_instability in self.test_instability:
+            text += test_instability.report(details)
+        text += "\n"
+        return text
+
+
+class TestInstability(AbstractInstability):
+
+    def __init__(self, sample_test_failure, job_ids):
+        self.job_ids = job_ids
+        self.sample_test_failure = sample_test_failure
+        self.past_failures = self._get_past_failures()
+
+    def _get_past_failures(self):
+        test_name = self.sample_test_failure.name
+        test_title = self.sample_test_failure.title
+        test_id = self.sample_test_failure.test_id
+
+        db = get_db_session()
+        past_failures = db.query(TestFailure)\
+                          .where(TestFailure.job_id.in_(self.job_ids))\
+                          .filter(TestFailure.name == test_name)\
+                          .filter(TestFailure.title == test_title)\
+                          .filter(TestFailure.test_id == test_id)\
+                          .all()
+        return past_failures
+
+    @property
+    def is_unstable(self):
+        if len(self.past_failures) > 0:
+            errors = [failure.relevant_error for failure in self.past_failures]
+            unique_errors = list(set(errors))
+            if len(unique_errors) != 1:
+                return True
+        return False
+
+    def report(self, details=False):
+        if self.is_unstable:
+            test_name = self.sample_test_failure.name
+            test_title = self.sample_test_failure.title
+            if details:
+                text = "  <details><summary>{}/{}</summary>\n"\
+                    .format(test_name, test_title)
+                text += "  Failed {}/{} times with errors\n\n".format(
+                    len(self.past_failures), len(self.job_ids))
+                for fail in self.past_failures:
+                    text += "   - [job {}]({}) `{}`\n".format(
+                        fail.job.job_id,
+                        fail.get_test_url(),
+                        fail.relevant_error)
+                text += "  </details>\n"
+            else:
+                text = "  * {}/{}\n".format(test_name, test_title)
+            return text
+        else:
+            return ""
+

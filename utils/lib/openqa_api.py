@@ -782,42 +782,27 @@ class OpenQA:
         return relevant_jobs
 
 
-def config_db_session(in_memory=True, read_only=False, debug_db=False):
+def config_db_session(in_memory=True, debug_db=False):
 
     def block_writes(*args,**kwargs):
         logging.info("Writing to the DB is blocked: database in read-only mode")
         return
 
-    if in_memory and read_only:
-        raise Exception("A read-only in-memory database doesn't make sense")
-
     if in_memory:
         db_engine = create_engine("sqlite:///:memory:", echo=debug_db)
         Base.metadata.create_all(db_engine)
-
-    elif not in_memory:
+    else:
         db_file = "openqa_db.sqlite"
         db_engine = create_engine("sqlite:///" + db_file, echo=debug_db)
 
         if os.path.exists(db_file):
             logging.info("Connecting to local DB in '{}'".format(db_file))
         else:
-            if read_only:
-                raise Exception("Local DB does not exist in {}".format(db_file)
-                                + "hence it cannot be set to read_only")
-
             logging.info("Creating local DB in '{}'".format(db_file))
             Base.metadata.create_all(db_engine)
 
-    if read_only:
-        Session = sessionmaker(bind=db_engine, autoflush=False,
-                            autocommit=False)
-        session = Session()
-        session.flush = block_writes
-        session.commit = block_writes
-    else:
-        Session = sessionmaker(bind=db_engine)
-        session = Session()
+    Session = sessionmaker(bind=db_engine)
+    session = Session()
 
     return session
 

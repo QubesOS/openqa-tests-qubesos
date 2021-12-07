@@ -11,7 +11,7 @@ from lib.common import ISSUE_TITLE_PREFIX, COMMENT_TITLE
 
 def setup_environ(args):
     setup_github_environ(args.auth_token)
-    setup_openqa_environ(args.package_list)
+    setup_openqa_environ(args.package_list, verbose=args.verbose)
 
 def format_results(results, job, reference_job=None, instability=False):
     if instability:
@@ -120,10 +120,12 @@ def main():
         default="system_tests_update",
         help="Requires --latest. Name of test job. "
              "Default: system_tests_update")
+
     parser.add_argument(
         '--build',
         help="Requires --latest. System build to look for, "
              "for example 4.0-20190801.1.")
+
     parser.add_argument(
         '--version',
         help="Requires --latest. System version to look for, for example 4.1.")
@@ -162,6 +164,12 @@ def main():
         '--instability',
         action='store_true',
         help="Report on test's instability."
+    )
+
+    parser.add_argument(
+        '--verbose',
+        action='store_true',
+        help="Enable debug logging."
     )
 
     args = parser.parse_args()

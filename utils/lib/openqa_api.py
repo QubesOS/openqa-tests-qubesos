@@ -12,6 +12,7 @@ import json
 import enum
 import logging
 import os
+import sys
 
 from lib.github_api import GitHubRepo, GitHubIssue, setup_github_environ
 from lib.common import *
@@ -671,6 +672,7 @@ class TestFailure(Base):
 class OpenQA:
     @staticmethod
     def get_job(job_id):
+        logging.debug("getting job {} ".format(job_id))
         job = local_session.get(JobData, {"job_id": job_id})
         if job is None:
             parent_job_id = JobData.get_parent_job_id(job_id)
@@ -809,7 +811,7 @@ def get_db_session():
     global local_session
     return local_session
 
-def setup_openqa_environ(package_list, cache_results=True):
+def setup_openqa_environ(package_list, cache_results=True, verbose=False):
     global name_mapping
     with open(package_list) as package_file:
         data = json.load(package_file)
@@ -819,3 +821,9 @@ def setup_openqa_environ(package_list, cache_results=True):
     global local_session
     local_session = config_db_session(in_memory=not cache_results,
                                       debug_db=False)
+    if verbose:
+        setup_logging()
+
+def setup_logging():
+    logging.basicConfig(format='%(asctime)s %(name)s: %(message)s')
+    logging.getLogger().setLevel(logging.DEBUG)

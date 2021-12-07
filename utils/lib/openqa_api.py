@@ -543,10 +543,6 @@ class TestFailure(Base):
         if re.search(r"^[a-z\-]+\-\d+(\-xfce)?$", template): # [template]-[ver]
             return template
         else:
-            msg  = "Test's name '{}' doesn't specify a template.\n"\
-                .format(self.name)
-            msg += "  Assuming default template."
-            logging.warning(msg)
             return "default"
 
     def parse_description(self, description):

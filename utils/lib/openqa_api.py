@@ -693,8 +693,9 @@ class OpenQA:
 
     @staticmethod
     def get_latest_job_id(job_type='system_tests_update', build=None,
-                          version=None):
-        jobs = OpenQA.get_latest_job_ids(job_type, build, version, history_len=1)
+                          version=None, flavor=None):
+        jobs = OpenQA.get_latest_job_ids(job_type, build, version,
+                                         history_len=1, flavor=flavor)
         return jobs[0]
 
     @staticmethod
@@ -724,9 +725,12 @@ class OpenQA:
 
         jobs = []
 
-        for job in data['jobs']:
-            jobs.append(job['id'])
-
+        try:
+            for job in data['jobs']:
+                jobs.append(job['id'])
+        except KeyError:
+            # no jobs found
+            pass
         return sorted(jobs)
 
     @staticmethod
@@ -744,19 +748,40 @@ class OpenQA:
         return job_ids
 
     @staticmethod
-    def get_n_jobs_like(reference_job, n):
-        """Obtains similar n number of concluded valid jobs"""
-        latest_job_id = OpenQA.get_latest_job_id()
+    def get_n_jobs_like(reference_job, n, flavor_override=None):
+        """Obtains similar n number of concluded valid jobs
+
+        :param JobData reference_job: job whose params serve as a search base
+        :param str n: number of similar jobs to obtain
+        :param str flavor: overriding flavor
+        """
+        test_suite  = reference_job.get_job_name()
+        version     = reference_job.get_job_version()
+        if flavor_override:
+            flavor = flavor_override
+        else:
+            flavor = reference_job.get_job_flavor()
+
+        latest_job_id = OpenQA.get_latest_job_id(
+            job_type=test_suite, version=version, flavor=flavor)
         margin = n * 2 # add margin for invalid jobs
         max_history_len = latest_job_id - reference_job.job_id + margin
 
         job_ids = OpenQA.get_latest_concluded_job_ids(
-            test_suite=reference_job.get_job_name(),
-            version=reference_job.get_job_version(),
-            flavor=reference_job.get_job_flavor(),
-            history_len=max_history_len)
+                    test_suite, max_history_len, version, flavor)
+        if not job_ids:
+            return []
 
-        ref_job_index = job_ids.index(reference_job.job_id)
+        if reference_job.job_id in job_ids:
+            ref_job_index = job_ids.index(reference_job.job_id)
+        else:
+            # try to find job with closest id (indicating temporal closeness)
+            ref_job_distance = map(
+                lambda job: reference_job.job_id - job.job_id,
+                job_ids)
+            min_ref_job_dist = min(ref_job_distance)
+            ref_job_index = job_ids.index(min_ref_job_dist)
+
         potential_job_ids = job_ids[:ref_job_index]
 
         relevant_jobs = []

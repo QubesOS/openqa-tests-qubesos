@@ -53,7 +53,9 @@ class ChildJobInstability(AbstractInstability):
         self.test_instability = []
         self.job = job
 
-        jobs = OpenQA.get_n_jobs_like(job, n=5)
+        # obtain jobs' stability from the update pool since those don't have
+        # pull requests included (thus more accurate results)
+        jobs = OpenQA.get_n_jobs_like(job, n=5, flavor_override="update")
         job_ids = [job.job_id for job in jobs]
 
         db = get_db_session()

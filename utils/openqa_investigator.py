@@ -170,6 +170,10 @@ def plot_strip(title, jobs, failures_q, test_suite, y_fn, hue_fn, outfile=None):
             y_data += [y_fn(test)]
             z_data += [hue_fn(test)]
 
+    if len(x_data) == 0:
+        print("no failures")
+        return
+
     hue_palette = sns.color_palette("tab20", n_colors=len(set(z_data)))
     tests_palette = ["#ff6c6b", # alternate through 3 colors to be able to tell
                      "#fea032", # consecutive Y values appart

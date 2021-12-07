@@ -14,6 +14,9 @@ from lib.openqa_api import (
     OpenQA
 )
 
+DEFAULT_Q_VERSION = "4.1"
+DEFAULT_FLAVOR = "pull-requests"
+
 IGNORED_ERRORS = [
     "# system-out:",
     "# Result:",
@@ -225,6 +228,18 @@ def main():
              "(e.g.: system_tests_splitgpg)")
 
     parser.add_argument(
+        '--version',
+        default=DEFAULT_Q_VERSION,
+        help="Specify the Qubes version. "
+                "Default: {}".format(DEFAULT_Q_VERSION))
+
+    parser.add_argument(
+        '--flavor',
+        default=DEFAULT_FLAVOR,
+        help="Specify the job's flavor / group. "
+                "Default: {}".format(DEFAULT_FLAVOR))
+
+    parser.add_argument(
         "--test",
         help="Test Case with regex support (use inside \"\")"
              "(e.g.: \"TC_00_Direct_*/test_000_version)\"")
@@ -264,16 +279,24 @@ def main():
     else:
         try:
             history_len = int(args.last)
+            history_len_with_margin = history_len*2 # account for invalid jobs
         except ValueError:
             print("Error: {} is not a valid number".format(args.last))
             exit(1)
 
+    # populate database
     db = get_db_session()
-    OpenQA.get_latest_concluded_jobs(args.suite, history_len)
+    concluded_job_ids = OpenQA.get_latest_concluded_job_ids(
+        args.suite, history_len_with_margin,
+        args.version, args.flavor)
+    OpenQA.get_jobs(concluded_job_ids)
 
     jobs_reversed_query = db.query(JobData)\
             .filter(JobData.valid == True)\
             .filter(JobData.job_name == args.suite)\
+            .filter(JobData.version == args.version)\
+            .filter(JobData.flavor == args.flavor)\
+            .where(JobData.job_id.in_(concluded_job_ids))\
             .order_by(JobData.job_id.desc())\
             .limit(history_len) # order_by in order to truncate the limit
 

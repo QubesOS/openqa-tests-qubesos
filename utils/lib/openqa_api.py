@@ -20,9 +20,6 @@ from lib.common import *
 OPENQA_URL = "https://openqa.qubes-os.org"
 OPENQA_API = OPENQA_URL + "/api/v1"
 
-DEFAULT_Q_VERSION = "4.1"
-DEFAULT_FLAVOR = "pull-requests"
-
 # repo for creating issues for FLAVOR=qubes-whonix jobs
 WHONIX_NOTIFICATION_REPO = "Whonix/updates-status"
 
@@ -92,6 +89,8 @@ class JobData(Base):
     valid = Column(Boolean)
     machine = Column(String)
     worker = Column(Integer)
+    version = Column(Integer)
+    flavor = Column(Integer)
 
     __mapper_args__ = {
         'polymorphic_identity':'job',
@@ -104,6 +103,8 @@ class JobData(Base):
         self.job_name = self.get_job_name()
         self.worker = self.get_job_worker()
         self.machine = self.get_job_machine()
+        self.version = self.get_job_version()
+        self.flavor = self.get_job_flavor()
         self.failures = {}
 
         # must flush at the beginning to avoid recursion
@@ -729,9 +730,7 @@ class OpenQA:
         return sorted(jobs)
 
     @staticmethod
-    def get_latest_concluded_job_ids(test_suite, history_len,
-                                     version=DEFAULT_Q_VERSION,
-                                     flavor=DEFAULT_FLAVOR):
+    def get_latest_concluded_job_ids(test_suite, history_len, version, flavor):
         success_jobs = OpenQA.get_latest_job_ids(test_suite, version=version,
                             result="passed",  history_len=history_len,
                             flavor=flavor)
@@ -747,14 +746,6 @@ class OpenQA:
             print("ERROR: no jobs found. Wrong test suite name?")
 
         return job_ids
-
-    @staticmethod
-    def get_latest_concluded_jobs(test_suite, history_len):
-        """
-        Gets the historical data of a particular test suite
-        """
-        job_ids = OpenQA.get_latest_concluded_job_ids(test_suite, history_len)
-        return OpenQA.get_jobs(job_ids)
 
     @staticmethod
     def get_n_jobs_like(reference_job, n):

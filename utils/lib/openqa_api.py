@@ -785,10 +785,6 @@ class OpenQA:
 
 def config_db_session(in_memory=True, debug_db=False):
 
-    def block_writes(*args,**kwargs):
-        logging.info("Writing to the DB is blocked: database in read-only mode")
-        return
-
     if in_memory:
         db_engine = create_engine("sqlite:///:memory:", echo=debug_db)
         Base.metadata.create_all(db_engine)

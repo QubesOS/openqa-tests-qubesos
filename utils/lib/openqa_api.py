@@ -814,4 +814,5 @@ def setup_openqa_environ(package_list, cache_results=True):
     name_mapping = data
 
     global local_session
-    local_session = config_db_session(in_memory=not cache_results, debug_db=True)
+    local_session = config_db_session(in_memory=not cache_results,
+                                      debug_db=False)

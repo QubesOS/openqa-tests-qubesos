@@ -111,12 +111,6 @@ class JobData(Base):
         local_session.add(self)
         local_session.flush()
 
-        # make sure children exist
-        for child_id in self.get_children_ids():
-            child = local_session.get(ChildJob, { "job_id": child_id })
-            if child is None:
-                child = ChildJob(child_id, parent_job=self)
-
         self.valid = self.is_valid()
         local_session.commit()
 
@@ -410,6 +404,15 @@ class OrphanJob(JobData):
     __mapper_args__ = { 'polymorphic_identity':'orphan_job' }
 
     job_id = Column(ForeignKey('job.job_id'), primary_key=True)
+
+    def __init__(self, job_id):
+        super().__init__(job_id)
+
+        # make sure children exist
+        for child_id in self.get_children_ids():
+            child = local_session.get(ChildJob, { "job_id": child_id })
+            if child is None:
+                child = ChildJob(child_id, parent_job=self)
 
 
 class ChildJob(JobData):

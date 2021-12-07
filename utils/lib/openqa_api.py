@@ -741,10 +741,6 @@ class OpenQA:
 
         job_ids = sorted(success_jobs + failed_jobs)
         job_ids = job_ids[-history_len:]
-
-        if len(job_ids) == 0:
-            print("ERROR: no jobs found. Wrong test suite name?")
-
         return job_ids
 
     @staticmethod

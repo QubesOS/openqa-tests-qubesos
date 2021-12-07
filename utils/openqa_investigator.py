@@ -259,10 +259,17 @@ def main():
         "--outdir",
         help="path to save results")
 
+    parser.add_argument(
+        '--verbose',
+        action='store_true',
+        help="Enable debug logging."
+    )
+
     parser.set_defaults(output="report")
     args = parser.parse_args()
 
-    setup_openqa_environ("github_package_mapping.json") # remove hardcode
+    setup_openqa_environ("github_package_mapping.json", # FIXME remove hardcode
+                         verbose=args.verbose)
 
     try:
         (test_name_regex, test_title_regex) = args.test.split('/')

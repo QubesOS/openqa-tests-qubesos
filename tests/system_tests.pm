@@ -105,6 +105,15 @@ ENDFUNC
         # upload also original xml, if something goes wrong with conversion
         upload_logs("nose2-junit.xml");
         parse_extra_log('JUnit', "nose2-junit-$test.xml");
+
+        # upload per-test logs
+        $test_logs_path = "/tmp/$test/";
+        assert_script_run("mkdir $test_logs_path");
+        assert_script_run("sudo python3 split_logs.py --junit-xml=nose2-junit-$test.xml --outdir=$test_logs_path");
+        my @files = <"$test_logs_path*">;
+        foreach my $file (@files) { upload_logs($file); }
+        assert_script_run("rm -rf $test_logs_path");
+
         # help debugging tests
         unless (script_run "sudo tar czf /tmp/objgraphs-$test.tar.gz /tmp/objgraph-*") {
             upload_logs "/tmp/objgraphs-$test.tar.gz";

@@ -34,6 +34,9 @@ sub run {
         # until https://github.com/nose-devs/nose2/pull/412 gets merged
         assert_script_run("sudo patch /usr/lib/python3*/site-packages/nose2/plugins/junitxml.py /root/extra-files/nose2-junit-xml-log-skip-reason.patch");
     }
+    # until https://github.com/nose-devs/nose2/pull/505 gets merged
+    assert_script_run("sudo patch /usr/lib/python3*/site-packages/nose2/plugins/junitxml.py /root/extra-files/nose2-junit-xml-timestamp.patch");
+
     # don't let logrotate restart qubesd in the middle of the tests
     assert_script_run("sudo systemctl stop crond");
 

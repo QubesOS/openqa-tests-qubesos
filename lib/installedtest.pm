@@ -105,7 +105,7 @@ sub init_gui_session {
 
     # disable screensaver
     if (!check_var('KEEP_SCREENLOCKER', '1')) {
-        x11_start_program('xscreensaver-command -exit', target_match => 'x11');
+        x11_start_program('xscreensaver-command -exit', target_match => 'desktop-clear');
     }
     wait_still_screen;
 }

@@ -23,7 +23,7 @@ use testapi;
 
 sub run {
     x11_start_program('sh -c \'echo -e "timeout:\t0:02:00" > ~/.xscreensaver\'', valid => 0);
-    x11_start_program('xscreensaver-command -restart', valid => 0);
+    x11_start_program('xscreensaver-command -restart', target_match => 'desktop-clear');
     assert_and_click("menu");
     assert_and_click("menu-vm-work");
     assert_and_click("menu-vm-xterm");

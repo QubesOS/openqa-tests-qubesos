@@ -21,7 +21,7 @@ use testapi;
 
 sub run {
     assert_screen("desktop");
-    x11_start_program('xscreensaver-command -exit', valid => 0);
+    x11_start_program('xscreensaver-command -exit', target_match => 'desktop-clear');
 }
 
 sub post_fail_hook {

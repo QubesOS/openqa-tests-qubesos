@@ -55,7 +55,8 @@ def plot_by_test(title, jobs, failures_q, test_suite, outfile=None):
 
 def plot_by_template(title, jobs, failures_q, test_suite, outfile=None):
     group_by_template = lambda test: test.template
-    plot_simple(title, jobs, failures_q, test_suite, group_by_template, outfile)
+    plot_strip(title, jobs, failures_q, test_suite, group_by_template,
+               outfile=outfile)
 
 def plot_by_error(title, jobs, failures_q, test_suite, outfile=None):
 
@@ -70,75 +71,11 @@ def plot_by_error(title, jobs, failures_q, test_suite, outfile=None):
                hue_fn=group_by_template, outfile=outfile)
 
 def plot_by_worker(title, jobs, failures_q, test_suite, outfile):
-    y_fn = lambda test: test.job.worker
-    plot_simple(title, jobs, failures_q, test_suite, y_fn, outfile)
+    y_fn = lambda test: str(test.job.worker)
+    plot_strip(title, jobs, failures_q, test_suite, y_fn, outfile=outfile)
 
-def plot_simple(title, jobs, failures_q, test_suite, y_fn, outfile=None):
-    """Plots test results with simple plotting where (x=job, y=y_fn)
-
-      ^ (y_fn)
-      |        .
-      |       / \
-      |   ___/   \
-      |  /        \       /\
-      | /          \_____/  \___
-      +---------------------------> (job)
-
-    Args:
-        title (list): title and subtitle of the test.
-        jobs (list): a list of all the JobData.
-        test_suite (str): test suite.
-        y_fn (function(TestFailure)): function to group the results by.
-    """
-
-    plt.figure(figsize=(10,7))
-
-    # obtains the tes failures associated with each job
-    results = {}
-    for job in jobs:
-        test_failures = failures_q\
-            .filter(TestFailure.job_id == job.job_id).all()
-        results[job] = test_failures
-
-    groups = set()
-    for job in jobs:
-        for test in results[job]:
-            groups.add(y_fn(test))
-
-    # initialize data
-    y_data = {}
-    for test in sorted(groups):
-        y_data[test] = [0]*len(jobs)
-
-    for i, job in enumerate(jobs):
-        for test in results[job]:
-            y_data[y_fn(test)][i] += 1
-
-    x_data = list(map(lambda job: str(job.parent_job_id), jobs))
-
-    # sort the data by number of failed tests so it the one with the most
-    # failures shows at the top of the legend
-    y_data = dict(sorted(y_data.items(), key=lambda entry: sum(entry[1]),
-                       reverse=True))
-
-    with plt.style.context('Solarize_Light2'):
-        for key in y_data.keys():
-            plt.xticks(rotation=70)
-            plt.plot(x_data, y_data[key], label=key, linewidth=2)
-
-    plt.title(title)
-    plt.xlabel('parent job')
-    plt.ylabel('times test failed')
-    plt.legend()
-
-    if outfile:
-        file_path = outfile
-        plt.savefig(file_path)
-        print("plot saved at {}".format(file_path))
-    else:
-        plt.show()
-
-def plot_strip(title, jobs, failures_q, test_suite, y_fn, hue_fn, outfile=None):
+def plot_strip(title, jobs, failures_q, test_suite, y_fn, hue_fn=None,
+               outfile=None):
     """ Plots tests's failures along the jobs axis. Good for telling the
     evolution of a test's failure along time.
     (x=job, y=y_fn, hue=hue_fn)
@@ -171,26 +108,33 @@ def plot_strip(title, jobs, failures_q, test_suite, y_fn, hue_fn, outfile=None):
         for test in job_test_failures:
             x_data += [str(job.job_id)]
             y_data += [y_fn(test)]
-            z_data += [hue_fn(test)]
+            if hue_fn:
+                z_data += [hue_fn(test)]
 
-    hue_palette = sns.color_palette("tab20", n_colors=len(set(z_data)))
+    dots_palette = sns.color_palette("tab20", n_colors=len(set(z_data)))
     tests_palette = ["#ff6c6b", # alternate through 3 colors to be able to tell
-                     "#fea032", # consecutive Y values appart
+                     "#fea032", # consecutive Y values appar,
                      "#4fa1ed"]
 
     job_ids = [job.job_id for job in jobs]
     job_ids_str = list(map(str, job_ids))
 
-    df = pd.DataFrame({# x is categorical to also show job_ids when successful
-                       "x": pd.Categorical(x_data, categories=job_ids_str),
-                       "y": y_data,
-                       # z is categorical to order the legend
-                       "z": pd.Categorical(z_data, ordered=True,
-                                           categories=sorted(set(z_data)))})
+    data = {}
+    # x is categorical to also show job_ids when successful
+    data["x"] = pd.Categorical(x_data, categories=job_ids_str)
+    data["y"] = y_data
+    if hue_fn:
+        # z is categorical to order the legend
+        data["z"] = pd.Categorical(z_data, ordered=True,
+                                categories=sorted(set(z_data)))
+    df = pd.DataFrame(data)
 
-    # NOTE: plotting the "hue" significantly slows down the plotting
-    sns.stripplot(x="x", y="y", hue="z", data=df, jitter=0.2, orient="v",
-                  palette=hue_palette)
+    if hue_fn:
+        # NOTE: plotting the "hue" significantly slows down the plotting
+        sns.stripplot(x="x", y="y", hue="z", data=df, jitter=0.2, orient="v",
+                  palette=dots_palette)
+    else:
+        sns.stripplot(x="x", y="y", data=df, jitter=0.2, orient="v")
     plt.xticks(rotation=70)
 
     # apply palette and hlines to Y labels so it's easier to identify them

@@ -777,7 +777,7 @@ class OpenQA:
         else:
             # try to find job with closest id (indicating temporal closeness)
             ref_job_distance = map(
-                lambda job: reference_job.job_id - job.job_id,
+                lambda job_id: reference_job.job_id - job_id,
                 job_ids)
             min_ref_job_dist = min(ref_job_distance)
             ref_job_index = job_ids.index(min_ref_job_dist)

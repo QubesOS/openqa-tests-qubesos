@@ -97,6 +97,7 @@ def plot_strip(title, jobs, failures_q, test_suite, y_fn, hue_fn=None,
     """
     plt.figure(figsize=(14,7))
     plt.subplots_adjust(left = 0.03, right = 0.80)
+    alternating_3_color_palette = ["#ff6c6b", "#fea032", "#4fa1ed"]
 
     x_data = []
     y_data = []
@@ -110,11 +111,6 @@ def plot_strip(title, jobs, failures_q, test_suite, y_fn, hue_fn=None,
             y_data += [y_fn(test)]
             if hue_fn:
                 z_data += [hue_fn(test)]
-
-    dots_palette = sns.color_palette("tab20", n_colors=len(set(z_data)))
-    tests_palette = ["#ff6c6b", # alternate through 3 colors to be able to tell
-                     "#fea032", # consecutive Y values appar,
-                     "#4fa1ed"]
 
     job_ids = [job.job_id for job in jobs]
     job_ids_str = list(map(str, job_ids))
@@ -131,17 +127,19 @@ def plot_strip(title, jobs, failures_q, test_suite, y_fn, hue_fn=None,
 
     if hue_fn:
         # NOTE: plotting the "hue" significantly slows down the plotting
+        hue_palette = sns.color_palette("tab20", n_colors=len(set(z_data)))
         sns.stripplot(x="x", y="y", hue="z", data=df, jitter=0.2, orient="v",
-                  palette=dots_palette)
+                  palette=hue_palette)
     else:
-        sns.stripplot(x="x", y="y", data=df, jitter=0.2, orient="v")
+        sns.stripplot(x="x", y="y", hue="y", data=df, jitter=0.2, orient="v",
+                      palette=alternating_3_color_palette)
     plt.xticks(rotation=70)
 
     # apply palette and hlines to Y labels so it's easier to identify them
     axis = plt.gca()
     axis.yaxis.tick_right()
     for i, tick in enumerate(axis.get_yticklabels()):
-        color = tests_palette[i%3]
+        color = alternating_3_color_palette[i%3]
         tick.set_color(color)
         tick.set_fontsize(8)
         plt.axhline(y = i, linewidth=0.3, color = color, linestyle = '-')

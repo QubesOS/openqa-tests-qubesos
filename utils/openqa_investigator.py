@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 import re
+import os
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -210,8 +211,9 @@ def main():
     parser.set_defaults(output="report")
     args = parser.parse_args()
 
-    setup_openqa_environ("github_package_mapping.json", # FIXME remove hardcode
-                         verbose=args.verbose)
+    base_dir = os.path.abspath(os.path.dirname(__file__))
+    mapping_path = os.path.join(base_dir, "github_package_mapping.json")
+    setup_openqa_environ(mapping_path, verbose=args.verbose)
 
     try:
         (test_name_regex, test_title_regex) = args.test.split('/')

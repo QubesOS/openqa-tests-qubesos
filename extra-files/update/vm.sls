@@ -12,7 +12,7 @@
 # https://bugs.debian.org/931566
 'apt-get update --allow-releaseinfo-change':
   cmd.run:
-   - order: 1
+   - order: 2
 {% endif %}
 
 {% if grains['id'].startswith('whonix-') %}
@@ -24,7 +24,8 @@ disable-whonix-onion:
       - test -e /etc/apt/sources.list.d/whonix.list
 
 date -s +5min:
-  cmd.run: []
+  cmd.run:
+   - order: 1
 {% endif %}
 
 

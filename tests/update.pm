@@ -47,7 +47,7 @@ sub run {
     }
     my $pillar_dir = "/srv/pillar/base/update";
     assert_script_run("mkdir -p $pillar_dir");
-    assert_script_run("printf 'update:\\n  qubes_ver: " . get_var('VERSION') . "\\n' > $pillar_dir/init.sls");
+    assert_script_run("printf 'update:\\n  qubes_ver: \"" . get_var('VERSION') . "\"\\n' > $pillar_dir/init.sls");
     if (get_var('REPO_1')) {
         my $repo_url;
         if (get_var('REPO_1') =~ m/^http/) {

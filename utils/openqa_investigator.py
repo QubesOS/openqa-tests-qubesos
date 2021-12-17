@@ -191,6 +191,8 @@ def main():
     parser.add_argument(
         "--last",
         nargs='?',
+        type=int,
+        default=100,
         help="Last N failed tests"
                 "(e.g.: 100)")
 
@@ -221,15 +223,8 @@ def main():
         test_name_regex = args.test
         test_title_regex = "*"
 
-    if not args.last:
-        history_len = 100
-    else:
-        try:
-            history_len = int(args.last)
-            history_len_with_margin = history_len*2 # account for invalid jobs
-        except ValueError:
-            print("Error: {} is not a valid number".format(args.last))
-            exit(1)
+    history_len = args.last
+    history_len_with_margin = history_len*2 # account for invalid jobs
 
     # populate database
     db = get_db_session()

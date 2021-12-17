@@ -44,11 +44,12 @@ sub run {
     sleep(20);
     assert_and_click("vm-settings-ok");
 
+    sleep(5);
     send_key("alt-s");
     sleep(1);
     send_key("e");
 
-    assert_screen "desktop";
+    assert_screen "desktop-clear";
 }
 
 sub post_fail_hook {

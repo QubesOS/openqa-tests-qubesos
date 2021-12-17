@@ -60,9 +60,9 @@ sub run {
 
     # wait for full startup
     sleep(2);
-    send_key("ctrl-q");
+    send_key("ctrl-w");
     wait_still_screen();
-    assert_screen("desktop");
+    assert_screen("desktop-clear");
 }
 
 sub post_fail_hook {

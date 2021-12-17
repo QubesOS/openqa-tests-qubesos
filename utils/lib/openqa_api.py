@@ -775,12 +775,14 @@ class OpenQA:
         if reference_job.job_id in job_ids:
             ref_job_index = job_ids.index(reference_job.job_id)
         else:
-            # try to find job with closest id (indicating temporal closeness)
-            ref_job_distance = map(
-                lambda job_id: reference_job.job_id - job_id,
-                job_ids)
-            min_ref_job_dist = min(ref_job_distance)
-            ref_job_index = job_ids.index(min_ref_job_dist)
+            # try to find job with closest id before the reference job
+            # (indicating temporal closeness)
+            ref_job_distances = map(
+                lambda job_id: reference_job.job_id - job_id, job_ids)
+            ref_job_distances = filter( # remove jobs after reference job
+                lambda distance: distance > 0, ref_job_distances)
+            closest_job_id = reference_job.job_id - min(ref_job_distances)
+            ref_job_index = job_ids.index(closest_job_id)
 
         potential_job_ids = job_ids[:ref_job_index]
 

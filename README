@@ -8,8 +8,11 @@ Example command for posting new ISO for test:
 
 Example command for starting tests of updates in current-testing:
 
-    openqa-client --host https://openqa.qubes-os.org isos post DISTRI=qubesos VERSION=4.0 FLAVOR=update ARCH=x86_64 BUILD=20180224 UEFI_DIRECT=1
+    openqa-client --host https://openqa.qubes-os.org isos post DISTRI=qubesos VERSION=4.0 FLAVOR=update ARCH=x86_64 BUILD=$(date +%Y%m%d%H) UEFI_DIRECT=1
 
+Updates test on R4.1:
+
+    openqa-cli api isos -X post VERSION=4.1 BUILD=$(date +%Y%m%d%H) DISTRI=qubesos ARCH=x86_64 FLAVOR=update UPDATE=1 UPDATE_TEMPLATES=fedora-34-xfce GUIVM=1
 
 Example command for starting tests for a template in templates-*-testing:
 

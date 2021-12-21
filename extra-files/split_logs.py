@@ -63,28 +63,36 @@ def main():
                         help='Where to output the split logs.')
 
     args = parser.parse_args()
-    xml = minidom.parse(args.junit_xml)
-    logs = get_logs(args.xen_logs)
     os.mkdir(args.outdir)
 
-    testcases = xml.getElementsByTagName('testcase')
-    for testcase in testcases:
-        name  = testcase.attributes['classname'].value
-        title = testcase.attributes['name'].value
-        title_short = re.match(r'test_[0-9]*', title).group(0)
+    with open(args.junit_xml, 'r') as f:
+        # split XML since nose2 malformats XML with multiple different root
+        # elements.
+        testsuites_XMLs = re.findall(r"(<testsuite.*?</testsuite>)",
+                                     f.read(), re.DOTALL)
 
-        time = datetime.timedelta(
-            seconds=float(testcase.attributes['time'].value))
-        timestamp_str = testcase.attributes['timestamp'].value
-        start_time = datetime.datetime.fromisoformat(timestamp_str)
-        end_time = start_time + time
+    for testsuite_xml in testsuites_XMLs:
+        xml = minidom.parseString(testsuite_xml)
+        logs = get_logs(args.xen_logs)
 
-        testcase_logs = filter_logs_by_time(logs, start_time, end_time)
-        for log_name in testcase_logs:
-            lines = testcase_logs[log_name]
-            log_filename = "{}.{}.{}".format(name, title_short, log_name)
-            with open(args.outdir + log_filename, 'w') as f:
-                f.writelines(lines)
+        testcases = xml.getElementsByTagName('testcase')
+        for testcase in testcases:
+            name  = testcase.attributes['classname'].value
+            title = testcase.attributes['name'].value
+            title_short = re.match(r'test_[0-9]*', title).group(0)
+
+            time = datetime.timedelta(
+                seconds=float(testcase.attributes['time'].value))
+            timestamp_str = testcase.attributes['timestamp'].value
+            start_time = datetime.datetime.fromisoformat(timestamp_str)
+            end_time = start_time + time
+
+            testcase_logs = filter_logs_by_time(logs, start_time, end_time)
+            for log_name in testcase_logs:
+                lines = testcase_logs[log_name]
+                log_filename = "{}.{}.{}".format(name, title_short, log_name)
+                with open(args.outdir + log_filename, 'w') as f:
+                    f.writelines(lines)
 
 if __name__ == '__main__':
     main()

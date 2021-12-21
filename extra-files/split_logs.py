@@ -24,7 +24,7 @@ import re
 def get_logs(path):
     logs = {} # filename -> lines[]
     for file_name in os.listdir(path):
-        if not log_name.startswith("guest-test-"):
+        if not file_name.startswith("guest-test-"):
             continue
         with open(path + file_name, 'r') as f:
             logs[file_name] = f.readlines()

@@ -77,6 +77,9 @@ def main():
 
         testcases = xml.getElementsByTagName('testcase')
         for testcase in testcases:
+            status = testcase.attributes['status'].value
+            if status in ["success", "skipped"]:
+                continue
             name  = testcase.attributes['classname'].value
             title = testcase.attributes['name'].value
             title_short = re.match(r'test_[0-9]*', title).group(0)

@@ -1,5 +1,5 @@
 diff --git a/nose2/plugins/junitxml.py b/nose2/plugins/junitxml.py
-index c90450e..f814a97 100644
+index c90450e..83d4a42 100644
 --- a/nose2/plugins/junitxml.py
 +++ b/nose2/plugins/junitxml.py
 @@ -21,6 +21,7 @@ import os.path
@@ -19,12 +19,15 @@ index c90450e..f814a97 100644
          testcase.set('time', "%.6f" % self._time())
          testcase.set('classname', classname)
          testcase.set('name', method)
-@@ -177,6 +180,8 @@ class JUnitXmlReporter(events.Plugin):
+@@ -177,6 +180,11 @@ class JUnitXmlReporter(events.Plugin):
              self._start = None
          return 0
 
 +    def _timestamp_to_iso8601(self, timestamp):
-+        return datetime.datetime.utcfromtimestamp(timestamp).isoformat()
++        try:
++            return datetime.datetime.utcfromtimestamp(timestamp).isoformat()
++        except Exception:
++            return datetime.datetime.utcfromtimestamp(0).isoformat()
 
  #
  # xml utility functions

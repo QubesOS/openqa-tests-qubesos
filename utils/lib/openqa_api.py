@@ -797,19 +797,17 @@ class OpenQA:
         return relevant_jobs
 
 
-def config_db_session(in_memory=True, debug_db=False):
-
-    if in_memory:
+def config_db_session(db_path=None, debug_db=False):
+    if db_path is None:
         db_engine = create_engine("sqlite:///:memory:", echo=debug_db)
         Base.metadata.create_all(db_engine)
     else:
-        db_file = "openqa_db.sqlite"
-        db_engine = create_engine("sqlite:///" + db_file, echo=debug_db)
+        db_engine = create_engine("sqlite:///" + db_path, echo=debug_db)
 
-        if os.path.exists(db_file):
-            logging.info("Connecting to local DB in '{}'".format(db_file))
+        if os.path.exists(db_path):
+            logging.info("Connecting to local DB in '{}'".format(db_path))
         else:
-            logging.info("Creating local DB in '{}'".format(db_file))
+            logging.info("Creating local DB in '{}'".format(db_path))
             Base.metadata.create_all(db_engine)
 
     Session = sessionmaker(bind=db_engine)
@@ -821,16 +819,14 @@ def get_db_session():
     global local_session
     return local_session
 
-def setup_openqa_environ(package_list, cache_results=True, verbose=False):
+def setup_openqa_environ(package_list, db_path=None, verbose=False):
     global name_mapping
     with open(package_list) as package_file:
         data = json.load(package_file)
-
     name_mapping = data
 
     global local_session
-    local_session = config_db_session(in_memory=not cache_results,
-                                      debug_db=False)
+    local_session = config_db_session(db_path, debug_db=False)
     if verbose:
         setup_logging()
 

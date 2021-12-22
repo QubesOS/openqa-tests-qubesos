@@ -210,12 +210,19 @@ def main():
         help="Enable debug logging."
     )
 
+    parser.add_argument(
+        '--db-path',
+        default=os.getenv("LOCAL_OPENQA_CACHE_PATH"),
+        help="Local openQA cache for storing and query test results."\
+            "(stored in memory only if not set)"
+    )
+
     parser.set_defaults(output="report")
     args = parser.parse_args()
 
     base_dir = os.path.abspath(os.path.dirname(__file__))
     mapping_path = os.path.join(base_dir, "github_package_mapping.json")
-    setup_openqa_environ(mapping_path, verbose=args.verbose)
+    setup_openqa_environ(mapping_path, args.db_path, verbose=args.verbose)
 
     try:
         (test_name_regex, test_title_regex) = args.test.split('/')

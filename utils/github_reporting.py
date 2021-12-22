@@ -11,7 +11,7 @@ from lib.common import ISSUE_TITLE_PREFIX, COMMENT_TITLE
 
 def setup_environ(args):
     setup_github_environ(args.auth_token)
-    setup_openqa_environ(args.package_list, verbose=args.verbose)
+    setup_openqa_environ(args.package_list, args.db_path, verbose=args.verbose)
 
 def format_results(results, job, reference_job=None, instability=False):
     if instability:
@@ -170,6 +170,13 @@ def main():
         '--verbose',
         action='store_true',
         help="Enable debug logging."
+    )
+
+    parser.add_argument(
+        '--db-path',
+        default=os.getenv("LOCAL_OPENQA_CACHE_PATH"),
+        help="Local openQA cache for storing and query test results."\
+            "(stored in memory only if not set)"
     )
 
     args = parser.parse_args()

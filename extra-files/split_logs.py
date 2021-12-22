@@ -63,7 +63,7 @@ def main():
                         help='Where to output the split logs.')
 
     args = parser.parse_args()
-    os.mkdir(args.outdir)
+    os.makedirs(args.outdir, exist_ok=True)
 
     with open(args.junit_xml, 'r') as f:
         # split XML since nose2 malformats XML with multiple different root

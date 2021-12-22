@@ -213,8 +213,9 @@ def main():
     parser.add_argument(
         '--db-path',
         default=os.getenv("LOCAL_OPENQA_CACHE_PATH"),
-        help="Local openQA cache for storing and query test results."\
-            "(stored in memory only if not set)"
+        help="Local openQA cache for storing and query test results. "\
+            "Can be set via the env variable LOCAL_OPENQA_CACHE_PATH. "\
+            "Stored in memory only if not set. "
     )
 
     parser.set_defaults(output="report")

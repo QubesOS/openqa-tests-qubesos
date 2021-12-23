@@ -3,6 +3,7 @@ import json
 import requests
 from argparse import ArgumentParser
 import re
+import os
 
 from lib.github_api import setup_github_environ, GitHubIssue
 from lib.openqa_api import setup_openqa_environ, OpenQA

@@ -111,10 +111,10 @@ ENDFUNC
         my $test_logs_path = "/tmp/$test/";
         assert_script_run("mkdir $test_logs_path");
         assert_script_run("sudo python3 split_logs.py --junit-xml=nose2-junit-$test.xml --outdir=$test_logs_path");
-        my $files_str = script_output("ls -1 $test_logs_path");
-        my @files = split /\n/, $files_str;
-        foreach my $file (@files) {
-             upload_logs($file);
+        my $files_path_str = script_output("find $test_logs_path -type f");
+        my @files_paths = split /\n/, $files_path_str;
+        foreach my $file_path (@files_paths) {
+             upload_logs($file_path);
         }
         assert_script_run("rm -rf $test_logs_path");
 

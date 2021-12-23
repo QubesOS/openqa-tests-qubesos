@@ -124,6 +124,14 @@ def main():
                                       testcase.attributes['timestamp'].value)\
                                      .replace(tzinfo=datetime.timezone.utc)
             test_end = test_start + time
+
+            # timestamp zero in epoch time is an exception. See:
+            # https://github.com/nose-devs/nose2/pull/505/commits/fdd17f6
+            date_exception = datetime.datetime.utcfromtimestamp(0)\
+                                     .replace(tzinfo=datetime.timezone.utc)
+            if test_start == date_exception:
+                continue
+
             if dom0_timezone is None:
                 dom0_timezone = get_time_offset(test_name, test_title,
                                                 test_start)

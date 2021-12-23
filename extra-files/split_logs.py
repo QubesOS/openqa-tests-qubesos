@@ -18,6 +18,7 @@
 from xml.dom import minidom
 import datetime
 import argparse
+import subprocess
 import os
 import re
 
@@ -30,17 +31,39 @@ def get_logs(path):
             logs[file_name] = f.readlines()
     return logs
 
-def filter_logs_by_time(logs, start_time, end_time):
-    filtered_logs = {} # filename -> lines[]
+def get_timestamp_from_xen_logs(log_line):
     timestamp_re = r'[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}'
+    timestamp_match = re.search(timestamp_re, log_line)
+    if timestamp_match is None:
+        return None
+    else:
+        return datetime.datetime.fromisoformat(
+            timestamp_match.group(0))
+
+def get_timestamp_from_journalctl(log_line):
+    timestamp_re = r'(Jan|Feb|Mar|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'\
+        ' [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}'
+    timestamp_match = re.search(timestamp_re, log_line)
+    if timestamp_match is None:
+        return None
+    else:
+        timestamp_str = timestamp_match.group(0)
+        timestamp = datetime.datetime.strptime(timestamp_str, "%b %d %H:%M:%S")
+
+        # journalctl logs are missing year data, thus we assume the present year
+        # WARNING: may break around the new year!
+        utc_now = datetime.datetime.utcnow()
+        return timestamp.replace(year=utc_now.year)
+
+def filter_logs_by_time(logs, start_time, end_time, dom0_timezone):
+    filtered_logs = {} # filename -> lines[]
 
     def line_in_scope(line):
-        timestamp_match = re.search(timestamp_re, line)
-        if timestamp_match is None:
+        timestamp = get_timestamp_from_xen_logs(line)
+        if timestamp is None:
             return False
         else:
-            timestamp = datetime.datetime.fromisoformat(
-                timestamp_match.group(0))
+            timestamp = timestamp.replace(tzinfo=dom0_timezone)
             return start_time <= timestamp <= end_time
 
     for log in logs:
@@ -50,6 +73,16 @@ def filter_logs_by_time(logs, start_time, end_time):
             filtered_logs[log] = lines_to_keep
 
     return filtered_logs
+
+def get_time_offset(test_name, test_title, utc_timestamp):
+    journalctl_line = subprocess.check_output(
+        "sudo journalctl | grep -m 1 \"{}.{}\"".format(test_name, test_title),
+        shell=True).decode('ascii')
+    journalctl_timestamp = get_timestamp_from_journalctl(journalctl_line)
+
+    # allow comparison between offset-naive and offset-aware datetimes
+    utc_timestamp = utc_timestamp.replace(tzinfo=None)
+    return datetime.timezone(journalctl_timestamp - utc_timestamp)
 
 def main():
     parser = argparse.ArgumentParser(description='Process some integers.')
@@ -70,6 +103,7 @@ def main():
         # elements.
         testsuites_XMLs = re.findall(r"(<testsuite.*?</testsuite>)",
                                      f.read(), re.DOTALL)
+    dom0_timezone = None
 
     for testsuite_xml in testsuites_XMLs:
         xml = minidom.parseString(testsuite_xml)
@@ -79,21 +113,26 @@ def main():
         for testcase in testcases:
             status = testcase.attributes['status'].value
             if status in ["success", "skipped"]:
-                continue
-            name  = testcase.attributes['classname'].value
-            title = testcase.attributes['name'].value
-            title_short = re.match(r'test_[0-9]*', title).group(0)
+               continue
+            test_name  = testcase.attributes['classname'].value
+            test_title = testcase.attributes['name'].value
+            test_title_short = re.match(r'test_[0-9]*', test_title).group(0)
 
             time = datetime.timedelta(
                 seconds=float(testcase.attributes['time'].value))
-            timestamp_str = testcase.attributes['timestamp'].value
-            start_time = datetime.datetime.fromisoformat(timestamp_str)
-            end_time = start_time + time
-
-            testcase_logs = filter_logs_by_time(logs, start_time, end_time)
+            test_start = datetime.datetime.fromisoformat(
+                                      testcase.attributes['timestamp'].value)\
+                                     .replace(tzinfo=datetime.timezone.utc)
+            test_end = test_start + time
+            if dom0_timezone is None:
+                dom0_timezone = get_time_offset(test_name, test_title,
+                                                test_start)
+            testcase_logs = filter_logs_by_time(logs, test_start, test_end,
+                                                dom0_timezone)
             for log_name in testcase_logs:
                 lines = testcase_logs[log_name]
-                log_filename = "{}.{}.{}".format(name, title_short, log_name)
+                log_filename = "{}.{}.{}".format(
+                    test_name, test_title_short, log_name)
                 with open(args.outdir + log_filename, 'w') as f:
                     f.writelines(lines)
 

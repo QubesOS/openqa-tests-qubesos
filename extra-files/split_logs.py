@@ -27,7 +27,7 @@ def get_logs(path):
     for file_name in os.listdir(path):
         if not file_name.startswith("guest-test-"):
             continue
-        with open(path + file_name, 'r') as f:
+        with open(os.path.join(path, file_name), 'r') as f:
             logs[file_name] = f.readlines()
     return logs
 

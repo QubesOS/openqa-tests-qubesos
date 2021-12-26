@@ -22,6 +22,11 @@ from xml.etree import ElementTree
 import sys
 from collections import OrderedDict
 
+def add_timestamp_to_content(testcase, element):
+    timestamp = testcase.get('timestamp')
+    element.text = "# timestamp {}\n{}".format(
+            timestamp, element.text)
+
 def main():
     testcases = OrderedDict()
     xml_root = ElementTree.parse(sys.argv[1]).getroot()
@@ -41,17 +46,22 @@ def main():
         tests = 0
         time = 0.0
         for testcase in testcases[classname]:
+            content_element = None
             if testcase.find('error') is not None:
+                add_timestamp_to_content(testcase, testcase.find('error'))
                 testcase.set('status', 'failure')
                 failures += 1
             elif testcase.find('failure') is not None:
+                add_timestamp_to_content(testcase, testcase.find('failure'))
                 testcase.set('status', 'failure')
                 failures += 1
             elif testcase.find('skipped') is not None:
+                add_timestamp_to_content(testcase, testcase.find('skipped'))
                 testcase.set('status', 'skipped')
                 skipped += 1
             else:
                 testcase.set('status', 'success')
+
             system_err = testcase.find('system-err')
             if system_err is not None and not system_err.text:
                 testcase.remove(system_err)

@@ -1,0 +1,33 @@
+diff --git a/nose2/plugins/junitxml.py b/nose2/plugins/junitxml.py
+index 7b9c4d3..3951414 100644
+--- a/nose2/plugins/junitxml.py
++++ b/nose2/plugins/junitxml.py
+@@ -77,6 +77,7 @@ import os.path
+ import time
+ import re
+ import sys
++import datetime
+ import json
+ from xml.etree import ElementTree as ET
+
+@@ -144,6 +145,8 @@ class JUnitXmlReporter(events.Plugin):
+             method = '%s (%s)' % (method, test_args)
+
+         testcase = ET.SubElement(self.tree, 'testcase')
++        testcase.set('timestamp',
++                     str(self._timestamp_to_iso8601(self._start)))
+         testcase.set('time', "%.6f" % self._time())
+         if not classname:
+             classname = test.__module__
+@@ -261,6 +264,11 @@ class JUnitXmlReporter(events.Plugin):
+             self._start = None
+         return 0
+
++    def _timestamp_to_iso8601(self, timestamp):
++        try:
++            return datetime.datetime.utcfromtimestamp(timestamp).isoformat()
++        except Exception:
++            return datetime.datetime.utcfromtimestamp(0).isoformat()
+
+ #
+ # xml utility functions

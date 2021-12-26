@@ -1,19 +1,23 @@
-from github_reporting import OpenQA, JobData, TestFailure
 from argparse import ArgumentParser
-import textwrap
-from copy import deepcopy
 import re
+import os
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import logging
+from sqlalchemy import or_
 
-import requests_cache
-requests_cache.install_cache('openqa_cache', backend='sqlite', expire_after=8200)
+from lib.openqa_api import (
+    setup_openqa_environ,
+    get_db_session,
+    JobData,
+    TestFailure,
+    OpenQA
+)
 
+DEFAULT_Q_VERSION = "4.1"
+DEFAULT_FLAVOR = "pull-requests"
 
-Q_VERSION = "4.1"
-FLAVOR = "pull-requests"
 IGNORED_ERRORS = [
     "# system-out:",
     "# Result:",
@@ -21,322 +25,58 @@ IGNORED_ERRORS = [
     "0;31m"
 ]
 
-def get_jobs(test_suite, history_len):
-    """
-    Gets the historical data of a particular test suite
-    """
-
-    success_jobs = OpenQA.get_latest_job_ids(test_suite, version=Q_VERSION,
-                                     result="passed",  history_len=history_len,
-                                     flavor=FLAVOR)
-
-    failed_jobs = OpenQA.get_latest_job_ids(test_suite, version=Q_VERSION,
-                                        result="failed",
-                                        history_len=history_len, flavor=FLAVOR)
-
-    job_ids = sorted(success_jobs + failed_jobs)
-    job_ids = job_ids[-history_len:]
-
-    if len(job_ids) == 0:
-        print("ERROR: no jobs found. Wrong test suite name?")
-
-    for job_id in job_ids:
-        yield JobData(job_id)
-
-def report_test_failure(job, test_name, test_title, outdir):
+def report_test_failure(job, test_failures):
     """
     Prints the failures of a particular test pattern
     """
-
-    result = job.get_results()
-    test_failures = result[job.get_job_name()]
     report = ""
-
     if test_failures:
         report = "\n## Job {} (flavor '{}' from {})\n".format(job.job_id,
                                                     job.get_job_flavor(),
                                                     job.get_job_start_time())
     for test_failure in test_failures:
-        if not test_title == test_failure.title: # regex title
-            report += "\n\n### [{}/{}]({})\n".format(
-                test_failure.name,
-                test_failure.title,
-                test_failure.get_test_url())
-        report += "```python\n"
-        report += str(test_failure.error_message)
-        report += "\n```\n"
+        report += "### " + str(test_failure)
+        if test_failure.fail_error:
+            report += "\n\n**Failed with the following:**\n"
+            report += "```python\n"
+            report += str(test_failure.fail_error.strip())
+            report += "\n```\n"
+        if test_failure.cleanup_error:
+            report += "**It had cleanup errors:**\n"
+            report += "```python\n"
+            report += str(test_failure.cleanup_error.strip())
+            report += "\n```\n"
 
     return report
 
-def report_summary_tests(jobs, test_suite, outdir=None):
-    report = ""
-    report += report_table_tests(jobs, outdir)
-
-    plot_title = "errors by time"
-    if outdir:
-        plot_filename = "{}_{}.png".format(test_suite, "tests")
-        plot_filepath = "{}/{}".format(outdir, plot_filename)
-        plot_group_by_test(plot_title, jobs, test_suite, plot_filepath)
-        report += "\n\n"
-        report += "![]({})".format(plot_filepath)
-    else:
-        plot_group_by_test(plot_title, jobs, test_suite)
-
-    return report
-
-def report_summary_templates(jobs, test_suite, outdir=None):
-
-    report = ""
-    report += report_table_templates(jobs, outdir)
-
-    plot_title = "errors by time"
-    if outdir:
-        plot_filename = "{}_{}.png".format(test_suite, "tests")
-        plot_filepath = "{}/{}".format(outdir, plot_filename)
-        plot_group_by_template(plot_title, jobs, test_suite, plot_filepath)
-        report += "\n\n"
-        report += "![]({})".format(plot_filepath)
-    else:
-        plot_group_by_template(plot_title, jobs, test_suite)
-
-    return report
-
-def report_summary_errors(jobs, test_suite, outdir=None):
-
-    report = ""
-    report += report_table_errors(jobs, outdir)
-
-    plot_title = "errors by time"
-    if outdir:
-        plot_filename = "{}_{}.png".format(test_suite, "tests")
-        plot_filepath = "{}/{}".format(outdir, plot_filename)
-        plot_group_by_error(plot_title, jobs, test_suite, plot_filepath)
-        report += "\n\n"
-        report += "![]({})".format(plot_filepath)
-    else:
-        plot_group_by_error(plot_title, jobs, test_suite)
-
-    return report
-
-def report_table_tests(jobs, outdir):
-    results = report_get_dict_tests(jobs, outdir)
-    return report_format_table(results, "test name")
-
-def report_table_templates(jobs, outdir):
-    results = report_get_dict_templates(jobs, outdir)
-    return report_format_table(results, "template name")
-
-def report_table_errors(jobs, outdir):
-    results = report_get_dict_errors(jobs, outdir)
-    return report_format_table(results, "error message")
-
-def report_get_dict_tests(jobs, outdir):
-    group_by_fn = lambda test: test.name
-    return report_get_dict(jobs, group_by_fn, outdir)
-
-def report_get_dict_templates(jobs, outdir):
-    group_by_fn = lambda test: test.title
-    return report_get_dict(jobs, group_by_fn, outdir)
-
-def report_get_dict_errors(jobs, outdir):
-    group_by_fn = lambda test: group_by_error(test).replace("\n", "\\n")
-    return report_get_dict(jobs, group_by_fn, outdir)
-
-def report_get_dict(jobs, group_by_fn, outdir):
-    result = {}
-
-    for job in jobs:
-        results = job.get_results()[job.get_job_name()]
-        for test in results:
-            group = group_by_fn(test)
-            if group in result.keys():
-                result[group] += 1
-            else:
-                result[group] = 1
-
-    return result
-
-def report_format_table(dict, title):
-    longest_group_len = max(map(len, dict.keys()))
-    pad = longest_group_len + 1
-    pad_header = " "*(int((pad - len(title))/2))
-    report  = "\n"
-    report += "| count | {}{}{}|\n".format(pad_header, title, pad_header)
-    report += "|-------|-{}|\n".format("-"*pad)
-
-    for group in dict.keys():
-        count = dict[group]
-        count_pad = " "*(6-len(str(count)))
-        group_pad = " "*(pad-len(group))
-        report +="| {}{}| {}{}|\n".format(count, count_pad, group, group_pad)
-
-    return report
-
-def filter_valid_job(job):
-    return job.is_valid()
-
-def filter_tests_by_name(job, test_name, test_title):
-    """
-    Filters out tests that don't match a particular test pattern
-    """
-    results = job.get_results()
-    test_failures = results[job.get_job_name()]
-
-    filtered_results = []
-
-    for test_failure in test_failures:
-        if test_matches(test_failure.name, test_name,\
-                        test_failure.title, test_title):
-            filtered_results.append(test_failure)
-
-    filtered_job = deepcopy(job)
-    filtered_job.failures[job.get_job_name()] = filtered_results
-
-    return filtered_job
-
-def filter_tests_by_error(job, error_pattern):
-    """
-    Filters through tests that have a certain error message pattern
-    """
-    results = job.get_results()
-    test_failures = results[job.get_job_name()]
-
-    filtered_results = []
-
-    for test_failure in test_failures:
-        if test_failure.error_message and \
-            re.search(error_pattern, test_failure.error_message):
-            filtered_results.append(test_failure)
-
-    filtered_job = deepcopy(job)
-    filtered_job.failures[job.get_job_name()] = filtered_results
-
-    return filtered_job
-
-def group_by_error(test):
-    if not test.error_message:
-        return "no error printed\n(probably a native openQA test)"
-
-    desc_lines = test.error_message.split("\n")
-
-    result = ""
-    max_chars = 40
-
-    # attempt to find the line with the relevant result
-    for line in reversed(desc_lines):
-        if any(map(lambda error: error in line, IGNORED_ERRORS)): # ignore certain
-            continue
-        elif line == "" or re.search("^\s+$", line): # whitespace
-            continue
-        else:
-            if result: # last two lines
-                result = line[:max_chars] + ".*\n" + result
-                break
-            else:
-                result = line[:max_chars] + ".*"
-
-    if result == "":
-        return "ignored error"
-
-    return result
-
-def group_by_template(test):
-    # obtain template name according to construction format of
-    # https://github.com/QubesOS/qubes-core-admin/blob/f60334/qubes/tests/__init__.py#L1352
-    # Will catch most common tests.
-    template = test.name.split("_")[-1]
-    template = template.split("-pool")[0] # remove trailing "-pool"
-
-    if re.search(r"^[a-z\-]+\-\d+(\-xfce)?$", template): # [template]-[ver]
-        return template
-    else:
-        msg  = "Test's name '{}' doesn't specify a template.\n".format(test.name)
-        msg += "  The test suite may not include template information in the"
-        msg += " test's name."
-        logging.warning(msg)
-
-        return "unspecifed template"
-
-def plot_group_by_test(title, jobs, test_suite, outfile=None):
+def plot_by_test(title, jobs, failures_q, test_suite, outfile=None):
     y_fn = lambda test: test.title
-    plot_simple(title, jobs, test_suite, y_fn, outfile)
+    hue_fn = lambda test: test.name
+    plot_strip(title, jobs, failures_q, test_suite, y_fn, hue_fn, outfile)
 
-def plot_group_by_template(title, jobs, test_suite, outfile=None):
-    plot_simple(title, jobs, test_suite, group_by_template, outfile)
+def plot_by_template(title, jobs, failures_q, test_suite, outfile=None):
+    group_by_template = lambda test: test.template
+    plot_strip(title, jobs, failures_q, test_suite, group_by_template,
+               outfile=outfile)
 
-def plot_group_by_worker(title, jobs, test_suite, outfile):
+def plot_by_error(title, jobs, failures_q, test_suite, outfile=None):
 
-    def group_by(test):
-        job = JobData(test.job_id)
-        return job.get_job_details()['job']['assigned_worker_id']
+    def group_by_error(test):
+        if test.relevant_error:
+            return test.relevant_error
+        else:
+            return "[empty error message]"
 
-    plot_simple(title, jobs, test_suite, group_by, outfile)
+    group_by_template = lambda test: test.template
+    plot_strip(title, jobs, failures_q, test_suite, group_by_error,
+               hue_fn=group_by_template, outfile=outfile)
 
-def plot_group_by_error(title, jobs, test_suite, outfile=None):
-    hue_fn=group_by_template
-    plot_strip(title, jobs, test_suite, group_by_error, hue_fn, outfile)
+def plot_by_worker(title, jobs, failures_q, test_suite, outfile):
+    y_fn = lambda test: str(test.job.worker)
+    plot_strip(title, jobs, failures_q, test_suite, y_fn, outfile=outfile)
 
-def plot_simple(title, jobs, test_suite, y_fn, outfile=None):
-    """Plots test results with simple plotting where (x=job, y=y_fn)
-
-      ^ (y_fn)
-      |        .
-      |       / \
-      |   ___/   \
-      |  /        \       /\
-      | /          \_____/  \___
-      +---------------------------> (job)
-
-    Args:
-        title (list): title and subtitle of the test.
-        jobs (list): a list of all the JobData.
-        test_suite (str): test suite.
-        y_fn (function(TestFailure)): function to group the results by.
-    """
-
-    plt.figure(figsize=(10,7))
-
-    groups = set()
-    for job in jobs:
-        results = job.get_results()[job.get_job_name()]
-        for test in results:
-            groups.add(y_fn(test))
-
-    # initialize data
-    y_data = {}
-    for test in sorted(groups):
-        y_data[test] = [0]*len(jobs)
-
-    for i, job in enumerate(jobs):
-        results = job.get_results()[job.get_job_name()]
-        for test in results:
-            y_data[y_fn(test)][i] += 1
-
-    x_data = list(map(lambda job: str(job.get_job_parent()), jobs))
-
-    # sort the data by number of failed tests so it the one with the most
-    # failures shows at the top of the legend
-    y_data = dict(sorted(y_data.items(), key=lambda entry: sum(entry[1]),
-                       reverse=True))
-
-    with plt.style.context('Solarize_Light2'):
-        for key in y_data.keys():
-            plt.xticks(rotation=70)
-            plt.plot(x_data, y_data[key], label=key, linewidth=2)
-
-    plt.title(title)
-    plt.xlabel('parent job')
-    plt.ylabel('times test failed')
-    plt.legend()
-
-    if outfile:
-        file_path = outfile
-        plt.savefig(file_path)
-        print("plot saved at {}".format(file_path))
-    else:
-        plt.show()
-
-def plot_strip(title, jobs, test_suite, y_fn, hue_fn, outfile=None):
+def plot_strip(title, jobs, failures_q, test_suite, y_fn, hue_fn=None,
+               outfile=None):
     """ Plots tests's failures along the jobs axis. Good for telling the
     evolution of a test's failure along time.
     (x=job, y=y_fn, hue=hue_fn)
@@ -358,43 +98,49 @@ def plot_strip(title, jobs, test_suite, y_fn, hue_fn, outfile=None):
     """
     plt.figure(figsize=(14,7))
     plt.subplots_adjust(left = 0.03, right = 0.80)
+    alternating_3_color_palette = ["#ff6c6b", "#fea032", "#4fa1ed"]
 
     x_data = []
     y_data = []
     z_data = []
 
     for job in jobs:
-        results = job.get_results()[job.job_name]
-        for test in results:
+        job_test_failures = failures_q\
+            .filter(TestFailure.job_id == job.job_id).all()
+        for test in job_test_failures:
             x_data += [str(job.job_id)]
             y_data += [y_fn(test)]
-            z_data += [hue_fn(test)]
-
-    hue_palette = sns.color_palette("tab20", n_colors=len(set(z_data)))
-    tests_palette = ["#ff6c6b", # alternate through 3 colors to be able to tell
-                     "#fea032", # consecutive Y values appart
-                     "#4fa1ed"]
+            if hue_fn:
+                z_data += [hue_fn(test)]
 
     job_ids = [job.job_id for job in jobs]
     job_ids_str = list(map(str, job_ids))
 
-    df = pd.DataFrame({# x is categorical to also show job_ids when successful
-                       "x": pd.Categorical(x_data, categories=job_ids_str),
-                       "y": y_data,
-                       # z is categorical to order the legend
-                       "z": pd.Categorical(z_data, ordered=True,
-                                           categories=sorted(set(z_data)))})
+    data = {}
+    # x is categorical to also show job_ids when successful
+    data["x"] = pd.Categorical(x_data, categories=job_ids_str)
+    data["y"] = y_data
+    if hue_fn:
+        # z is categorical to order the legend
+        data["z"] = pd.Categorical(z_data, ordered=True,
+                                categories=sorted(set(z_data)))
+    df = pd.DataFrame(data)
 
-    # NOTE: plotting the "hue" significantly slows down the plotting
-    sns.stripplot(x="x", y="y", hue="z", data=df, jitter=0.2, orient="v",
+    if hue_fn:
+        # NOTE: plotting the "hue" significantly slows down the plotting
+        hue_palette = sns.color_palette("tab20", n_colors=len(set(z_data)))
+        sns.stripplot(x="x", y="y", hue="z", data=df, jitter=0.2, orient="v",
                   palette=hue_palette)
+    else:
+        sns.stripplot(x="x", y="y", hue="y", data=df, jitter=0.2, orient="v",
+                      palette=alternating_3_color_palette)
     plt.xticks(rotation=70)
 
     # apply palette and hlines to Y labels so it's easier to identify them
     axis = plt.gca()
     axis.yaxis.tick_right()
     for i, tick in enumerate(axis.get_yticklabels()):
-        color = tests_palette[i%3]
+        color = alternating_3_color_palette[i%3]
         tick.set_color(color)
         tick.set_fontsize(8)
         plt.axhline(y = i, linewidth=0.3, color = color, linestyle = '-')
@@ -411,20 +157,6 @@ def plot_strip(title, jobs, test_suite, y_fn, hue_fn, outfile=None):
     else:
         plt.show()
 
-def test_matches(test_name, test_name_pattern, test_title, test_title_pattern):
-    try:
-        return test_name_matches(test_name, test_name_pattern) and \
-            test_title_matches(test_title, test_title_pattern)
-    except re.error:
-        raise Exception("Error: \"{}/{}\" is not a valid regex".\
-            format(test_name_pattern, test_title_pattern))
-
-def test_name_matches(test_name, test_name_pattern):
-    return re.search(test_name_pattern, test_name)
-
-def test_title_matches(test_title, test_title_pattern):
-    return re.search(test_title_pattern, test_title)
-
 def main():
     parser = ArgumentParser(
         description="Look for unstable tests")
@@ -435,18 +167,32 @@ def main():
              "(e.g.: system_tests_splitgpg)")
 
     parser.add_argument(
+        '--version',
+        default=DEFAULT_Q_VERSION,
+        help="Specify the Qubes version. "
+                "Default: {}".format(DEFAULT_Q_VERSION))
+
+    parser.add_argument(
+        '--flavor',
+        default=DEFAULT_FLAVOR,
+        help="Specify the job's flavor / group. "
+                "Default: {}".format(DEFAULT_FLAVOR))
+
+    parser.add_argument(
         "--test",
         help="Test Case with regex support (use inside \"\")"
              "(e.g.: \"TC_00_Direct_*/test_000_version)\"")
 
     parser.add_argument(
         "--error",
-        help="Match only results with a specific error message"
+        help="Match only results with a specific error message regex"
              "(e.g.: \"dogtail.tree.SearchError: descendent of [file chooser\"")
 
     parser.add_argument(
         "--last",
         nargs='?',
+        type=int,
+        default=100,
         help="Last N failed tests"
                 "(e.g.: 100)")
 
@@ -458,80 +204,98 @@ def main():
         "--outdir",
         help="path to save results")
 
+    parser.add_argument(
+        '--verbose',
+        action='store_true',
+        help="Enable debug logging."
+    )
+
+    parser.add_argument(
+        '--db-path',
+        default=os.getenv("LOCAL_OPENQA_CACHE_PATH"),
+        help="Local openQA cache for storing and query test results. "\
+            "Can be set via the env variable LOCAL_OPENQA_CACHE_PATH. "\
+            "Stored in memory only if not set. "
+    )
+
     parser.set_defaults(output="report")
     args = parser.parse_args()
 
+    base_dir = os.path.abspath(os.path.dirname(__file__))
+    mapping_path = os.path.join(base_dir, "github_package_mapping.json")
+    setup_openqa_environ(mapping_path, args.db_path, verbose=args.verbose)
+
     try:
-        (test_name, test_title) = args.test.split('/')
+        (test_name_regex, test_title_regex) = args.test.split('/')
     except ValueError:
-        test_name = args.test
-        test_title = "*"
+        test_name_regex = args.test
+        test_title_regex = "*"
 
-    if not args.last:
-        history_len = 100
-    else:
-        try:
-            history_len = int(args.last)
-        except ValueError:
-            print("Error: {} is not a valid number".format(args.last))
-            exit(1)
+    history_len = args.last
+    history_len_with_margin = history_len*2 # account for invalid jobs
 
-    jobs = get_jobs(args.suite, history_len)
-    summary = "- suite: {}".format(args.suite)
+    # populate database
+    db = get_db_session()
+    concluded_job_ids = OpenQA.get_latest_concluded_job_ids(
+        args.suite, history_len_with_margin,
+        args.version, args.flavor)
+    OpenQA.get_jobs(concluded_job_ids)
 
-    # remove invalid jobs
-    jobs = filter(filter_valid_job, jobs)
+    jobs_reversed_query = db.query(JobData)\
+            .filter(JobData.valid == True)\
+            .filter(JobData.job_name == args.suite)\
+            .filter(JobData.version == args.version)\
+            .filter(JobData.flavor == args.flavor)\
+            .where(JobData.job_id.in_(concluded_job_ids))\
+            .order_by(JobData.job_id.desc())\
+            .limit(history_len) # order_by in order to truncate the limit
+
+    failures_q = db.query(TestFailure)\
+                   .join(jobs_reversed_query.subquery())
 
     # apply filters
     if args.test:
-        tests_filter = lambda job: filter_tests_by_name(job, test_name,
-                                                        test_title)
-        jobs = map(tests_filter, jobs)
-        summary += "- tests matching: {}/{}\n".format(test_name, test_title)
+        failures_q = failures_q\
+            .filter(TestFailure.name.regexp_match(test_name_regex))\
+            .filter(TestFailure.title.regexp_match(test_title_regex))
 
     if args.error:
-        tests_filter = lambda job: filter_tests_by_error(job, args.error)
-        jobs = map(tests_filter, jobs)
-        summary += "- error matches: {}\n".format(args.error)
+        failures_q = failures_q.filter(or_(
+                TestFailure.fail_error.regexp_match(args.error),
+                TestFailure.cleanup_error.regexp_match(args.error)))
+
+    jobs_reversed = jobs_reversed_query.all()
+    jobs = reversed(jobs_reversed)
 
     # output format
     report = ""
 
-    # accumulate jobs for outputs that don't support generators
     if args.output not in ["report"]:
         jobs = list(jobs)
         plot_filepath = args.outdir+"plot.png" if args.outdir else None
+        if len(jobs) == 0:
+            print("No jobs found")
+            return
 
     if args.output == "report":
         for job in jobs:
-            report += report_test_failure(job, test_name, test_title,
-                                          args.outdir)
+            test_failures = failures_q\
+                .filter(TestFailure.job_id == job.job_id).all()
+            report += report_test_failure(job, test_failures)
+
     elif args.output == "plot_tests":
-        title = "Failure By Test\n" + summary
-        plot_group_by_test(title, jobs, args.suite, plot_filepath)
+        title = "Failure By Test\n"
+        plot_by_test(title, jobs, failures_q, args.suite, plot_filepath)
     elif args.output == "plot_templates":
-        title = "Failure By Template\n" + summary
-        plot_group_by_template(title, jobs, args.suite, plot_filepath)
+        title = "Failure By Template\n"
+        plot_by_template(title, jobs, failures_q, args.suite, plot_filepath)
     elif args.output == "plot_errors":
-        title = "Failure By Error\n" + summary
-        plot_group_by_error(title, jobs, args.suite, plot_filepath)
+        title = "Failure By Error\n"
+        plot_by_error(title, jobs, failures_q, args.suite, plot_filepath)
     elif args.output == "plot_worker":
-        title = "Failure By Worker\n" + summary
-        plot_group_by_worker(title, jobs, args.suite, plot_filepath)
+        title = "Failure By Worker\n"
+        plot_by_worker(title, jobs, failures_q, args.suite, plot_filepath)
 
-    elif args.output == "table_tests":
-        report += report_table_tests(jobs, args.outdir)
-    elif args.output == "table_templates":
-        report += report_table_templates(jobs, args.outdir)
-    elif args.output == "table_errors":
-        report += report_table_errors(jobs, args.outdir)
-
-    elif args.output == "summary_tests":
-        report += report_summary_tests(jobs, args.suite, args.outdir)
-    elif args.output == "summary_templates":
-        report += report_summary_templates(jobs, args.suite, args.outdir)
-    elif args.output == "summary_errors":
-        report += report_summary_errors(jobs, args.suite, args.outdir)
     else:
         print("Error: '{}' is not a valid output format".format(args.output))
 
@@ -542,6 +306,7 @@ def main():
         print("report saved at {}".format(file_path))
     else:
         print(report)
+
 
 if __name__ == '__main__':
     main()

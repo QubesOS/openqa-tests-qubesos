@@ -79,6 +79,7 @@ def callback_done(ch, method, properties, body):
 
     cmd = ['python3', os.path.join(SCRIPT_DIR, 'github_reporting.py'), '--package-list', args.package_list]
     cmd.extend(['--latest', '--build', job_data['BUILD']])
+    cmd.extend(['--instability',])
 
     if job_data['FLAVOR'] == 'qubes-whonix':
         subprocess.call(cmd)

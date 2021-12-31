@@ -76,7 +76,7 @@ sub login {
     # changes then remove it
     type_string("\n");
     my $login_prompt = wait_serial(qr/login:\s*$|root@.*#\s*$/i);
-    if ($login_prompt =~ /login:/) {
+    if ($login_prompt =~ m/login:\s*$/) {
         type_string("$user\n");
         wait_serial(qr/Password:\s*$/i);
         type_password;

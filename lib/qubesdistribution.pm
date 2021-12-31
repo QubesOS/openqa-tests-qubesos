@@ -36,7 +36,9 @@ sub init {
     $testapi::password = 'userpass';
     $self->init_consoles();
     # testapi::init override $testapi::serialdev and is called later
-    set_var('SERIALDEV', 'hvc0');
+    if (!get_var('SERIALDEV')) {
+        set_var('SERIALDEV', 'hvc0');
+    }
 }
 
 

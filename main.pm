@@ -52,6 +52,9 @@ if (get_var('ISO')) {
         # if a specific template version was requested, add it now
         autotest::loadtest "tests/update_templates.pm";
     }
+    if (check_var('INSTALL_TEMPLATES', 'all') or get_var("INSTALL_TEMPLATES") =~ /whonix/) {
+        autotest::loadtest "tests/whonix_firstrun.pm";
+    }
     # 4.1+ can set default template in firstboot
     if (get_var("DEFAULT_TEMPLATE") && check_var("VERSION", "4.0")) {
         autotest::loadtest "tests/switch_template.pm";
@@ -63,7 +66,6 @@ if (get_var('ISO')) {
     }
     autotest::loadtest "tests/startup_fixup.pm";
     if (get_var('DO_UPDATE')) {
-        autotest::loadtest "tests/whonix_firstrun.pm";
         if (get_var('UPDATE_TEMPLATES')) {
             autotest::loadtest "tests/update_templates.pm";
         }
@@ -81,9 +83,6 @@ if (get_var('ISO')) {
 
 if (check_var('RELEASE_UPGRADE', '1')) {
     autotest::loadtest "tests/startup_fixup.pm";
-    if (check_var('INSTALL_TEMPLATES', 'all') or get_var("INSTALL_TEMPLATES") =~ /whonix/) {
-        autotest::loadtest "tests/whonix_firstrun.pm";
-    }
     autotest::loadtest "tests/release_upgrade.pm";
     autotest::loadtest "tests/startup_fixup_2.pm";
 }

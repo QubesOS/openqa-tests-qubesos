@@ -26,13 +26,17 @@ sub run {
     x11_start_program('qvm-start sys-whonix', valid => 0);
     if (!check_screen(['whonix-connected', 'whonix-firstrun'], 120)) {
         # no firstrun wizard? maybe already accepted - verify it
-        x11_start_program('qvm-run sys-whonix \'whonixcheck --autostart --gui\'', valid => 0);
+        x11_start_program('qvm-run sys-whonix \'whonixcheck --gui\'', valid => 0);
         assert_screen('whonix-connected', timeout => 60);
     }
 
     if (match_has_tag('whonix-connected')) {
         # already configured and connected, wait for notification to disappear
         assert_screen('no-notifications');
+        # this may show up some time after connecting...
+        if (check_screen("whonix-news", timeout => 300)) {
+            assert_and_click("whonix-news");
+        }
         return;
     }
 

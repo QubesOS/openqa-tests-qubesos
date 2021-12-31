@@ -65,7 +65,7 @@ sub assert_screen_with_keypress {
     my $starttime = time;
     while (time - $starttime < $timeout) {
         last if check_screen($tag);
-        send_key('ctrl') if wait_still_screen;
+        send_key('ctrl') if wait_still_screen(7, 15);
     }
     assert_screen($tag);
 }

@@ -22,6 +22,7 @@ use utils qw(us_colemak);
 
 
 sub run {
+    wait_still_screen();
     if (check_var("VERSION", "4.1")) {
         setup_user();
     }

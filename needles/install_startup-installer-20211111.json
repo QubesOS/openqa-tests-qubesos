@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 267,
+      "height": 19,
+      "xpos": 183,
+      "ypos": 109
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "MACHINE-rpi",
+    "RES-1920x1080",
+    "installer"
+  ]
+}

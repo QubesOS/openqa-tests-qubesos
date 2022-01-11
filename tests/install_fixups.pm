@@ -83,6 +83,20 @@ sub run {
     script_run "cat /mnt/sysimage/etc/default/grub $xen_cfg";
     script_run "cat /mnt/sysimage/boot/grub2/grub.cfg /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
 
+    if (open(my $fh, '<', 'kexec_rollback.txt')) {
+        # restore kexec_rollback.txt saved before wiping the disk
+        my $rollback = <$fh>;
+        close($fh);
+        script_run "echo '$rollback' > /mnt/sysimage/boot/kexec_rollback.txt";
+    }
+
+    if (open(my $fh, '<', 'kexec_hotp_counter')) {
+        # restore kexec_rollback.txt saved before wiping the disk
+        my $rollback = <$fh>;
+        close($fh);
+        script_run "echo '$rollback' > /mnt/sysimage/boot/kexec_hotp_counter";
+    }
+
     # log kickstart file
     script_run "cat /mnt/sysimage/root/anaconda-ks.cfg";
 

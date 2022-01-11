@@ -20,6 +20,7 @@ use base 'basetest';
 use strict;
 use testapi;
 use networking;
+use bootloader_setup;
 use utils qw(us_colemak colemak_us);
 
 sub new {
@@ -60,7 +61,9 @@ sub handle_system_startup {
     my ($self) = @_;
 
     reset_consoles();
-    if (!check_var('UEFI', '1')) {
+    if (check_var('HEADS', '1')) {
+        heads_boot_default;
+    } elsif (!check_var('UEFI', '1')) {
         # wait for bootloader to appear
         assert_screen ["bootloader", "luks-prompt", "login-prompt-user-selected"], 90;
 

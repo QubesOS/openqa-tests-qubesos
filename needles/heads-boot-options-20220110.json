@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 403,
+      "ypos": 165,
+      "width": 189,
+      "height": 32,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "heads-boot-options"
+  ]
+}

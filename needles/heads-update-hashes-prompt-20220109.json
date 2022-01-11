@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 230,
+      "ypos": 204,
+      "width": 366,
+      "height": 29,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "heads-update-hashes-prompt"
+  ]
+}

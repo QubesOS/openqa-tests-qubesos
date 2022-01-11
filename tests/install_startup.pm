@@ -57,6 +57,8 @@ sub run {
             # press enter to boot right away
             send_key 'ret';
         }
+    } elsif (check_var('HEADS', '1')) {
+        heads_boot_usb;
     }
 
     # wait for the installer welcome screen to appear

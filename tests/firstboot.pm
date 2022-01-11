@@ -20,13 +20,16 @@ use strict;
 use testapi;
 use networking;
 use utils qw(us_colemak assert_screen_with_keypress);
+use bootloader_setup;
 
 my $configuring = 0;
 
 sub run {
     my ($self) = @_;
 
-    if (!check_var('UEFI', '1')) {
+    if (check_var('HEADS', '1')) {
+        heads_boot_default;
+    } elsif (!check_var('UEFI', '1')) {
         # wait for bootloader to appear
         assert_screen "bootloader", 90;
 

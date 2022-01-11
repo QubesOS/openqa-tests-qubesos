@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 36,
+      "ypos": 320,
+      "width": 323,
+      "height": 20,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "heads-scan-qr"
+  ]
+}

@@ -23,39 +23,41 @@ use bootloader_setup;
 sub run {
     pre_bootmenu_setup();
 
-    if (check_var('UEFI', '1')) {
-        if (check_var('UEFI_DIRECT', '1')) {
-            # grub2-efi can't load xen.efi on OVMF...
-            # default direct xen.efi boot is also broken on OVMF - see below
-            tianocore_select_bootloader();
-            send_key_until_needlematch('tianocore-menu-efi-shell', 'up', 5, 5);
-            send_key 'ret';
-            send_key 'esc';
-            type_string "fs0:\n";
-            # in direct UEFI boot we enable /mapbs workaround, which crashes dom0
-            # under OVMF - choose different boot option than default (qubes-verbose)
-            type_string "EFI\\BOOT\\BOOTX64.efi qubes\n";
+    if (check_var('BACKEND', 'qemu')) {
+        if (check_var('UEFI', '1')) {
+            if (check_var('UEFI_DIRECT', '1')) {
+                # grub2-efi can't load xen.efi on OVMF...
+                # default direct xen.efi boot is also broken on OVMF - see below
+                tianocore_select_bootloader();
+                send_key_until_needlematch('tianocore-menu-efi-shell', 'up', 5, 5);
+                send_key 'ret';
+                send_key 'esc';
+                type_string "fs0:\n";
+                # in direct UEFI boot we enable /mapbs workaround, which crashes dom0
+                # under OVMF - choose different boot option than default (qubes-verbose)
+                type_string "EFI\\BOOT\\BOOTX64.efi qubes\n";
+            } else {
+                assert_screen 'bootloader', 30;
+                send_key 'up';
+                # press enter to boot right away
+                send_key 'ret';
+            }
         } else {
+            # wait for bootloader to appear
             assert_screen 'bootloader', 30;
-            send_key 'up';
+
+            # skip media verification
+            if (check_var('UEFI', '1')) {
+                # maybe one day grub2-efi will work with xen.efi
+                send_key 'down';
+            } else {
+                send_key 'up';
+            }
+
             # press enter to boot right away
             send_key 'ret';
         }
-    } else {
-        # wait for bootloader to appear
-        assert_screen 'bootloader', 30;
-
-        # skip media verification
-        if (check_var('UEFI', '1')) {
-            # maybe one day grub2-efi will work with xen.efi
-            send_key 'down';
-        } else {
-            send_key 'up';
-        }
-
-        # press enter to boot right away
-        send_key 'ret';
-}
+    }
 
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;

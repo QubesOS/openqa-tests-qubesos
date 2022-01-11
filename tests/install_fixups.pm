@@ -37,7 +37,9 @@ sub run {
     type_string "echo '$testapi::password' | passwd --stdin root\n";
     type_string "sed -i -e 's/^rootpw.*/rootpw --plaintext $testapi::password/' /root/anaconda-ks.cfg\n";
     type_string "gpasswd -a $testapi::username \$(stat -c %G /dev/$testapi::serialdev)\n";
-    type_string "systemctl enable serial-getty\@hvc1.service\n";
+    if (check_var('BACKEND', 'qemu')) {
+	type_string "systemctl enable serial-getty\@hvc1.service\n";
+    }
     if (get_var('VERSION') =~ /^3/) {
         # disable e820-host, breaks sys-net on OVMF; core2 don't have nice
         # extensions for that...

@@ -76,6 +76,15 @@ sub handle_system_startup {
         }
     }
 
+    if (check_var('BACKEND', 'generalhw')) {
+        # force plymouth to show on HDMI output too
+        if (!check_screen(["luks-prompt", "login-prompt-user-selected"], 60)) {
+            send_key 'esc';
+            send_key 'esc';
+            sleep 1;
+        }
+    }
+
     # handle both encrypted and unencrypted setups
     assert_screen ["luks-prompt", "login-prompt-user-selected"], 600;
     if (match_has_tag('luks-prompt')) {

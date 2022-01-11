@@ -25,6 +25,11 @@ sub run {
     if (check_var('NUMDISKS', '2')) {
         assert_and_click 'installer-select-disk';
     }
+    if (check_var('BACKEND', 'generalhw')) {
+        # install on real HW is running with kickstart, which makes anaconda
+        # select manual partitioning by default
+        assert_and_click 'installer-partitioning-default';
+    }
     assert_and_click 'installer-done';
     assert_screen 'installer-disk-luks-passphrase';
     type_string 'lukspass';

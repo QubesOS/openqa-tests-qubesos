@@ -24,6 +24,11 @@ sub run {
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;
 
+    # Xorg driver needs few moves to callibrate
+    mouse_set(0, 0);
+    mouse_hide;
+    save_screenshot;
+
     if (check_var('LOCALE', 'en_DK.utf8')) {
         assert_and_click 'installer-language-english-denmark';
     }

@@ -24,10 +24,11 @@ use serial_terminal ();
 use testapi qw(diag check_var get_var set_var
 
     record_info
-
     assert_screen check_screen match_has_tag save_screenshot wait_screen_change wait_still_screen
+    type_string type_password wait_serial send_key send_key_until_needlematch
+    mouse_hide mouse_set
 
-    type_string type_password wait_serial send_key send_key_until_needlematch);
+);
 
 sub init {
     my ($self) = @_;
@@ -48,6 +49,12 @@ sub init_consoles {
 
     if (check_var('BACKEND', 'qemu')) {
         $self->add_console('root-virtio-terminal', 'virtio-terminal', {});
+    } elsif (check_var('BACKEND', 'generalhw')) {
+        # do the same as in openqa-serial script
+        my $hostid = (get_var('GENERAL_HW_SOL_ARGS') =~ m/--hostid=(\d+)/)[0];
+        # don't need password, there is ssh-agent in place
+        $self->add_console('root-virtio-terminal', 'ssh-serial',
+		{ hostname => "test-$hostid.lan", password => "" });
     }
 
     $self->add_console('install-shell',  'tty-console', {tty => 2});
@@ -123,6 +130,12 @@ sub console_selected {
     # locked, display manager is waiting for login, etc.
     #return ensure_unlocked_desktop if $args{tags} =~ /x11/;
     assert_screen($args{tags}, no_wait => 1);
+
+    if (check_var('BACKEND', 'generalhw') and $console =~ m/(x11|installation)/) {
+        # wiggle mouse a bit, for some reason needed...
+        mouse_set(0, 0);
+        mouse_hide;
+    }
 }
 
 sub handle_password_prompt {

@@ -42,6 +42,15 @@ sub run {
         }
     }
 
+    if (check_var('BACKEND', 'generalhw')) {
+        # force plymouth to show on HDMI output too
+        if (!check_screen(["luks-prompt", "firstboot-not-ready"], 60)) {
+            send_key 'esc';
+            send_key 'esc';
+            sleep 1;
+        }
+    }
+
     # handle both encrypted and unencrypted setups
     assert_screen ["luks-prompt", "firstboot-not-ready"], 180;
 
@@ -51,6 +60,12 @@ sub run {
     }
 
     assert_screen "firstboot-not-ready", 90;
+
+    if (check_var('BACKEND', 'generalhw')) {
+        # wiggle mouse a bit, for some reason needed...
+        mouse_set(0, 0);
+        mouse_hide;
+    }
 
     assert_and_click "firstboot-qubes";
 
@@ -71,7 +86,10 @@ sub run {
 
     if (check_var('USBVM', 'none')) {
         # expect checkbox to be enabled by default and disable it
-        assert_and_click('firstboot-qubes-usbvm-enabled', timeout => 5);
+        if (!check_var('BACKEND', 'generalhw')) {
+            # FIXME: make USB HID work with sys-usb out of the box
+            assert_and_click('firstboot-qubes-usbvm-enabled', timeout => 5);
+        }
     } elsif (get_var('USBVM', 'sys-usb') eq 'sys-usb') {
         assert_screen('firstboot-qubes-usbvm-enabled', 5);
     } elsif (check_var('USBVM', 'sys-net')) {
@@ -115,6 +133,11 @@ sub run {
 
     assert_screen "login-prompt-user-selected", 90;
     $self->init_gui_session;
+
+    if (check_var('BACKEND', 'generalhw')) {
+        # wait for the post-setup service to finish
+        sleep 60;
+    }
 }
 
 sub test_flags {

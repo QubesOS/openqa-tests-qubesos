@@ -132,6 +132,8 @@ sub save_and_upload_log {
 sub post_fail_hook {
     my $self = shift;
 
+    sleep(1);
+    save_screenshot;
     select_console('root-virtio-terminal');
     script_run "xl info";
     script_run "xl list";

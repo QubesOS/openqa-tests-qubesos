@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 108,
+      "ypos": 144,
+      "width": 112,
+      "height": 24,
+      "type": "match"
+    },
+    {
+      "xpos": 129,
+      "ypos": 66,
+      "width": 149,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "firefox-bookmarks-bar"
+  ]
+}

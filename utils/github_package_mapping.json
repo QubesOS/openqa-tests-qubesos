@@ -14,6 +14,7 @@
   "qubes-db": "core-qubesdb",
   "qubes-desktop-linux-common": "desktop-linux-common",
   "qubes-desktop-linux-manager": "desktop-linux-manager",
+  "qubes-gpg-split": "app-linux-split-gpg",
   "qubes-gui-agent": "gui-agent-linux",
   "qubes-libvchan-xen": "core-vchan-xen",
   "qubes-manager": "manager",
@@ -23,5 +24,6 @@
   "qubes-snapd-helper": "app-linux-snapd-helper",
   "qubes-usb-proxy": "app-linux-usb-proxy",
   "qubes-utils": "linux-utils",
+  "rpm-oxide": "rpm-oxide",
   "xen-libs": "vmm-xen"
 }

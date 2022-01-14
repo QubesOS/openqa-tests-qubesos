@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 77,
+      "xpos": 6,
+      "type": "match",
+      "height": 19,
+      "width": 104
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "MACHINE-rpi",
+    "install-shell"
+  ]
+}

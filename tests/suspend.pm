@@ -32,6 +32,9 @@ sub run {
     assert_script_run('sudo rtcwake -n -s 30');
     assert_script_run('sudo systemctl suspend');
     sleep(60);
+    if (check_var('BACKEND', 'generalhw')) {
+        power('on');
+    }
     wait_screen_change {
         send_key 'esc';
     };
@@ -51,7 +54,7 @@ sub run {
 
     # resumed and qrexec really works
     assert_script_run('qvm-run -p sys-net true');
-    assert_script_run('qvm-run -p sys-usb true');
+    assert_script_run('! qvm-check sys-usb || qvm-run -p sys-usb true');
     assert_script_run('qvm-run -p sys-firewall true');
 
     # check network

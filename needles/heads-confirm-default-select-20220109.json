@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 71,
+      "ypos": 243,
+      "width": 321,
+      "height": 40,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "heads-confirm-default-select"
+  ]
+}

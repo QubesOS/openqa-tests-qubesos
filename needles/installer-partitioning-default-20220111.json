@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 42,
+      "ypos": 482,
+      "height": 21,
+      "width": 83
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "installer-disk-spoke",
+    "installer-partitioning-default"
+  ]
+}

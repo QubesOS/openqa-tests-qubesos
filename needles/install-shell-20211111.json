@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 19,
+      "type": "match",
+      "width": 91,
+      "ypos": 83,
+      "xpos": 0
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "MACHINE-rpi",
+    "RES-1920x1080",
+    "install-shell"
+  ]
+}

@@ -20,6 +20,7 @@ use base 'basetest';
 use strict;
 use testapi;
 use networking;
+use bootloader_setup;
 use utils qw(us_colemak colemak_us);
 
 sub new {
@@ -60,7 +61,9 @@ sub handle_system_startup {
     my ($self) = @_;
 
     reset_consoles();
-    if (!check_var('UEFI', '1')) {
+    if (check_var('HEADS', '1')) {
+        heads_boot_default;
+    } elsif (!check_var('UEFI', '1')) {
         # wait for bootloader to appear
         assert_screen ["bootloader", "luks-prompt", "login-prompt-user-selected"], 90;
 
@@ -73,6 +76,15 @@ sub handle_system_startup {
             send_key "down";
             send_key "down";
             send_key "ret";
+        }
+    }
+
+    if (check_var('BACKEND', 'generalhw')) {
+        # force plymouth to show on HDMI output too
+        if (!check_screen(["luks-prompt", "login-prompt-user-selected"], 60)) {
+            send_key 'esc';
+            send_key 'esc';
+            sleep 1;
         }
     }
 
@@ -141,6 +153,8 @@ sub save_and_upload_log {
 sub post_fail_hook {
     my $self = shift;
 
+    sleep(1);
+    save_screenshot;
     select_console('root-virtio-terminal');
     script_run "xl info";
     script_run "xl list";

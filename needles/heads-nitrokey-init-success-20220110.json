@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 73,
+      "ypos": 606,
+      "width": 296,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "heads-nitrokey-init-success"
+  ]
+}

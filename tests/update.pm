@@ -108,15 +108,13 @@ sub run {
         $self->handle_system_startup;
     } else {
         # only restart key VMs
+        # keep sys-net running, to not risk breaking logs upload
         script_run('qvm-shutdown --wait sys-whonix');
         script_run('qvm-shutdown --wait sys-firewall');
-        script_run('qvm-shutdown --wait sys-net');
         script_run('qvm-kill sys-whonix');
         script_run('qvm-kill sys-firewall');
-        script_run('qvm-kill sys-net');
-        sleep(5);
-        assert_script_run('qvm-start sys-firewall', timeout => 120);
-        assert_script_run('qvm-start sys-whonix', timeout => 90);
+        assert_script_run('qvm-start sys-firewall', timeout => 90);
+        assert_script_run('if qvm-check sys-whonix; then qvm-start sys-whonix; fi', timeout => 90);
         type_string("exit\n");
         type_string("exit\n");
     }

@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 266,
+      "height": 86,
+      "type": "match",
+      "xpos": 620,
+      "ypos": 127
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-0",
+    "installer-install-hub-user"
+  ]
+}

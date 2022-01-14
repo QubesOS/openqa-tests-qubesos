@@ -64,7 +64,6 @@ if (get_var('ISO')) {
     if (get_var("DEFAULT_TEMPLATE")) {
         autotest::loadtest "tests/switch_template.pm";
     }
-    autotest::loadtest "tests/startup_fixup.pm";
     if (get_var('DO_UPDATE')) {
         if (get_var('UPDATE_TEMPLATES')) {
             autotest::loadtest "tests/update_templates.pm";
@@ -82,9 +81,7 @@ if (get_var('ISO')) {
 }
 
 if (check_var('RELEASE_UPGRADE', '1')) {
-    autotest::loadtest "tests/startup_fixup.pm";
     autotest::loadtest "tests/release_upgrade.pm";
-    autotest::loadtest "tests/startup_fixup_2.pm";
 }
 
 # do not execute same tests before each system tests run

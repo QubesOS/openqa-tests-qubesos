@@ -115,6 +115,7 @@ sub run {
 
     assert_screen "login-prompt-user-selected", 90;
     $self->init_gui_session;
+    $self->usbvm_fixup;
 }
 
 sub test_flags {

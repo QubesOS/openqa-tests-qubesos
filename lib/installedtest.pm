@@ -89,6 +89,27 @@ sub handle_system_startup {
     select_console('root-virtio-terminal');
     script_run('systemctl is-system-running --wait', timeout => 120);
     assert_script_run "chown $testapi::username /dev/$testapi::serialdev";
+
+    # WTF part
+    if (script_run('qvm-check --running sys-net') != 0) {
+        assert_script_run('qvm-pci dt sys-net dom0:00_04.0');
+        assert_script_run('qvm-pci at sys-net dom0:00_04.0 -p -o no-strict-reset=True');
+        assert_script_run('qvm-start sys-net');
+        # don't fail if whonix is not installed
+        script_run('qvm-start sys-whonix', timeout => 90);
+    }
+    select_console('x11');
+}
+
+sub usbvm_fixup {
+    # enable input proxy for USB tablet
+    my ($self) = @_;
+
+    select_console('root-virtio-terminal');
+    assert_script_run('echo sys-usb dom0 allow > /etc/qubes-rpc/policy/qubes.InputTablet');
+    assert_script_run('echo sys-net dom0 allow >> /etc/qubes-rpc/policy/qubes.InputTablet');
+    sleep(5);
+    assert_script_run('lsusb || qvm-run --no-gui -p -u root $(qvm-check -q sys-usb && echo sys-usb || echo sys-net) \'systemctl start qubes-input-sender-tablet@$(basename $(readlink /dev/input/by-id/usb-QEMU_QEMU_USB_Tablet_*-event-mouse))\'', timeout => 60);
     select_console('x11');
 }
 

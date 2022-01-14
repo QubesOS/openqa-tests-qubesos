@@ -22,6 +22,10 @@ import subprocess
 import os
 import re
 
+# format for strptime to use instead of datetime.datetime.fromisoformat()
+ISOFORMAT = '%Y-%m-%dT%H:%M:%S.%f'
+XENLOGFORMAT = '%Y-%m-%d %H:%M:%S'
+
 def get_logs(path):
     logs = {} # filename -> lines[]
     for file_name in os.listdir(path):
@@ -37,8 +41,9 @@ def get_timestamp_from_xen_logs(log_line):
     if timestamp_match is None:
         return None
     else:
-        return datetime.datetime.fromisoformat(
-            timestamp_match.group(0))
+        return datetime.datetime.strptime(
+            timestamp_match.group(0),
+            XENLOGFORMAT)
 
 def get_timestamp_from_journalctl(log_line):
     timestamp_re = r'(Jan|Feb|Mar|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'\
@@ -76,12 +81,12 @@ def filter_logs_by_time(logs, start_time, end_time, dom0_timezone):
 
 def get_time_offset(test_name, test_title, utc_timestamp):
     journalctl_line = subprocess.check_output(
-        "sudo journalctl | grep -m 1 \"{}.{}\"".format(test_name, test_title),
+        "sudo journalctl -r | grep -m 1 \"{}.{}\"".format(test_name, test_title),
         shell=True).decode('ascii')
     journalctl_timestamp = get_timestamp_from_journalctl(journalctl_line)
 
     # allow comparison between offset-naive and offset-aware datetimes
-    utc_timestamp = utc_timestamp.replace(tzinfo=None)
+    utc_timestamp = utc_timestamp.replace(tzinfo=None, microsecond=0)
     return datetime.timezone(journalctl_timestamp - utc_timestamp)
 
 def main():
@@ -120,8 +125,9 @@ def main():
 
             time = datetime.timedelta(
                 seconds=float(testcase.attributes['time'].value))
-            test_start = datetime.datetime.fromisoformat(
-                                      testcase.attributes['timestamp'].value)\
+            test_start = datetime.datetime.strptime(
+                                      testcase.attributes['timestamp'].value,
+                                      ISOFORMAT)\
                                      .replace(tzinfo=datetime.timezone.utc)
             test_end = test_start + time
 

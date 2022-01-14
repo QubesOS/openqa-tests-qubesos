@@ -47,6 +47,8 @@ sub run {
 
     send_key("ctrl-shift-v");
     assert_screen("clipboard-paste-notification");
+    # wait for firefox to fully start
+    check_screen("firefox-bookmarks-bar", timeout => 20);
     assert_and_click("personal-firefox");
     send_key("ctrl-v");
     send_key("ret");

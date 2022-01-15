@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 74,
+      "width": 122,
+      "ypos": 65,
+      "type": "match",
+      "xpos": 671
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-0",
+    "qui-domains-opened",
+    "qui-domains-opened-no-sys-usb"
+  ]
+}

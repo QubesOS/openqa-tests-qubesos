@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "height": 22,
+      "ypos": 23,
+      "width": 235,
+      "xpos": 657,
+      "type": "match"
+    },
+    {
+      "height": 65,
+      "width": 48,
+      "ypos": 28,
+      "xpos": 490,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-0",
+    "qui-devices-dev-opened",
+    "qui-devices-dev-opened-no-sys-usb"
+  ]
+}

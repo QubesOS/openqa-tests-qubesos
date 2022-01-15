@@ -115,7 +115,7 @@ sub heads_boot_default {
     }
     # Default boot
     send_key 'ret';
-    if (check_screen(['heads-no-hashes', 'heads-hash-mismatch'], 5)) {
+    if (check_screen(['heads-no-hashes', 'heads-hash-mismatch'], 10)) {
         send_key 'ret';
         assert_screen('heads-update-hashes-prompt');
         send_key 'ret';
@@ -133,7 +133,7 @@ sub heads_boot_default {
         assert_screen('heads-menu');
         send_key 'ret';
     }
-    if (check_screen(['heads-no-default-set', 'heads-boot-list-changed'], 5)) {
+    if (check_screen(['heads-no-default-set', 'heads-boot-list-changed'], 10)) {
         send_key 'ret';
         assert_screen('heads-boot-menu-list');
         send_key 'ret';

@@ -78,7 +78,7 @@ def callback_done(ch, method, properties, body):
     version = job_details['job']['settings']['VERSION']
 
     cmd = ['python3', os.path.join(SCRIPT_DIR, 'github_reporting.py'), '--package-list', args.package_list]
-    cmd.extend(['--latest', '--build', job_data['BUILD']])
+    cmd.extend(['--latest', '--build', job_data['BUILD'], '--flavor', job_data['FLAVOR']])
     cmd.extend(['--instability',])
 
     if job_data['FLAVOR'] == 'qubes-whonix':
@@ -92,7 +92,7 @@ def callback_done(ch, method, properties, body):
                 if version in base_jobs:
                     base_job = base_jobs[version]
         if base_job:
-            cmd.extend(['--compare-to-job', str(base_job)])
+            cmd.extend(['--compare-to-build', str(base_job)])
         print('Calling: {}'.format(' '.join(cmd)), file=sys.stderr)
         subprocess.call(cmd)
 

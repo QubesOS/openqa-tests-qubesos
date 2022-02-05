@@ -14,14 +14,14 @@ def setup_environ(args):
     setup_github_environ(args.auth_token)
     setup_openqa_environ(args.package_list, args.db_path, verbose=args.verbose)
 
-def format_results(results, job, reference_job=None, instability=False):
+def format_results(results, jobs, reference_jobs=None, instability=False):
     if instability:
-        instability_analysis = InstabilityAnalysis(job)
+        instability_analysis = InstabilityAnalysis(jobs)
 
     output_string = "{}\n" \
                     "Complete test suite and dependencies: {}\n" \
                     "## Failed tests\n".format(COMMENT_TITLE,
-                                                job.get_dependency_url())
+                                                jobs[0].get_build_url())
     number_of_failures = 0
     for k in results:
         if results[k]:
@@ -40,15 +40,14 @@ def format_results(results, job, reference_job=None, instability=False):
     if not number_of_failures:
         output_string += "No failures!\n"
 
-    if reference_job:
+    if reference_jobs:
         output_string += "## New failures\n" \
                             "Compared to: {}\n".format(
-                            reference_job.get_dependency_url())
+                            reference_jobs[0].get_build_url())
 
-        if reference_job.job_name == 'system_tests_update':
-            reference_job_results = reference_job.get_children_results()
-        else:
-            reference_job_results = reference_job.get_results()
+        reference_job_results = {}
+        for job in reference_jobs:
+            reference_job_results.update(job.get_results())
 
         for k in results:
             current_fails = results[k]
@@ -72,7 +71,7 @@ def format_results(results, job, reference_job=None, instability=False):
 
         output_string += "## Fixed failures\n" \
                             "Compared to: {}\n".format(
-                            reference_job.get_dependency_url())
+                            reference_jobs[0].get_dependency_url())
 
         for k in reference_job_results:
             current_fails = results.get(k, [])
@@ -123,6 +122,12 @@ def main():
              "Default: system_tests_update")
 
     parser.add_argument(
+        '--flavor',
+        default="update",
+        help="Requires --latest. Flavor name. "
+             "Default: update")
+
+    parser.add_argument(
         '--build',
         help="Requires --latest. System build to look for, "
              "for example 4.0-20190801.1.")
@@ -156,9 +161,9 @@ def main():
     )
 
     parser.add_argument(
-        '--compare-to-job',
-        type=int,
-        help="Provide job id to compare results to."
+        '--compare-to-build',
+        type=str,
+        help="Provide build id to compare results to (looked up in the same version and 'update' flavor)."
     )
 
     parser.add_argument(
@@ -183,9 +188,9 @@ def main():
 
     args = parser.parse_args()
 
-    if (args.build or args.version) and args.job_id:
+    if (args.build or args.version or args.flavor) and args.job_id:
         parser.error(
-            "Error: --latest required to use --build and --version")
+            "Error: --latest required to use --build, --flavor and --version")
         return
 
     if not args.package_list:
@@ -200,43 +205,51 @@ def main():
         jobs.append(args.job_id)
 
     if args.latest:
-        jobs = [OpenQA.get_latest_job_id(args.job_name, args.build, args.version)]
-
-    reference_job = None
-    if args.compare_to_job:
-        reference_job = OpenQA.get_job(args.compare_to_job)
-
-    for job_id in jobs:
-        job = OpenQA.get_job(job_id)
-        result = job.get_results()
-        if job.job_name == 'system_tests_update':
-            result.update(job.get_children_results())
-
-        formatted_result = format_results(result, job, reference_job,
-                                          args.instability)
-
-        if args.show_results_only:
-            print(formatted_result)
+        jobs = OpenQA.get_jobs_ids_for_build(args.build, args.version, args.flavor)
+        if not jobs:
+            parser.error('No jobs found for build id {}.'.format(args.build))
             return
 
-        prs = job.get_related_github_objects()
+    jobs = [OpenQA.get_job(job_id) for job_id in jobs]
 
-        if args.show_github_issues_only:
-            print(prs)
+    reference_jobs = None
+    if args.compare_to_build:
+        reference_jobs = OpenQA.get_jobs_ids_for_build(args.compare_to_build, args.version, "update")
+        if not reference_jobs:
+            parser.error('No reference jobs found for build id {}.'.format(args.compare_to_build))
             return
+        reference_jobs = [OpenQA.get_job(job_id) for job_id in reference_jobs]
+
+    result = {}
+    prs = set()
+    for job in jobs:
+        result.update(job.get_results())
+
+        prs.update(job.get_related_github_objects())
 
         labels = get_labels_from_results(result)
 
-        if not prs:
-            print("Warning: no related pull requests and issues found.")
-            return
+    formatted_result = format_results(result, jobs, reference_jobs,
+                                      args.instability)
 
-        issue_title = ISSUE_TITLE_PREFIX + job.get_job_build()
-        for pr in prs:
-            issue = GitHubIssue(pr)
-            issue.post_comment(formatted_result, title=issue_title)
-            if args.enable_labels:
-                issue.add_labels(labels)
+    if args.show_results_only:
+        print(formatted_result)
+        return
+
+    if args.show_github_issues_only:
+        print(prs)
+        return
+
+    if not prs:
+        print("Warning: no related pull requests and issues found.")
+        return
+
+    issue_title = ISSUE_TITLE_PREFIX + job.get_job_build()
+    for pr in prs:
+        issue = GitHubIssue(pr)
+        issue.post_comment(formatted_result, title=issue_title)
+        if args.enable_labels:
+            issue.add_labels(labels)
 
 
 if __name__ == '__main__':

@@ -11,14 +11,10 @@ from lib.openqa_api import (
 class InstabilityAnalysis:
     """Job Instability Analysis"""
 
-    def __init__(self, original_job):
+    def __init__(self, original_jobs):
         self.unstable_jobs = {} # JobData -> ChildJobInstability
 
-        jobs = []
-        if isinstance(original_job, OrphanJob):
-            jobs += original_job.get_children()
-        elif isinstance(original_job, ChildJob):
-            jobs += [original_job]
+        jobs = original_jobs
 
         for job in jobs:
             t = ChildJobInstability(job)

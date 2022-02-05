@@ -88,7 +88,7 @@ class ChildJobInstability(AbstractInstability):
         if len(self.unstable_tests) == 0:
             return ""
 
-        text = "* {}\n".format(self.job.job_name)
+        text = "* {}\n".format(self.job.get_job_combined_name())
         for test_instability in self.test_instability:
             text += test_instability.report(details)
         text += "\n"

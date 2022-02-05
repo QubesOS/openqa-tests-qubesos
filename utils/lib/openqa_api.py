@@ -149,6 +149,12 @@ class JobData(Base):
         json_data = self.get_job_details()
         return json_data['job']['test']
 
+    def get_job_combined_name(self):
+        if self.machine == '64bit':
+            return self.job_name
+        else:
+            return self.job_name + '@' + self.machine
+
     def get_job_build(self):
         json_data = self.get_job_details()
         return json_data['job']['settings']['BUILD']
@@ -211,7 +217,7 @@ class JobData(Base):
                             local_session.flush()
                         failure_list.append(failure)
 
-        self.failures[self.job_name] = failure_list
+        self.failures[self.get_job_combined_name()] = failure_list
 
         return self.failures
 
@@ -691,14 +697,14 @@ class OpenQA:
 
     @staticmethod
     def get_latest_job_id(job_type='system_tests_update', build=None,
-                          version=None, flavor=None):
+                          version=None, flavor=None, machine=None):
         jobs = OpenQA.get_latest_job_ids(job_type, build, version,
-                                         history_len=1, flavor=flavor)
+                                         history_len=1, flavor=flavor, machine=machine)
         return jobs[0]
 
     @staticmethod
     def get_latest_job_ids(job_type='system_tests_update', build=None,
-                          version=None, history_len=100, result=None, flavor=None):
+                          version=None, history_len=100, result=None, flavor=None, machine=None):
         params = []
         if job_type:
             params.append('test={}'.format(job_type))
@@ -712,6 +718,8 @@ class OpenQA:
             params.append('result={}'.format(result))
         if flavor:
             params.append('flavor={}'.format(flavor))
+        if machine:
+            params.append('machine={}'.format(machine))
 
         if params:
             params_string = '?' + "&".join(params)
@@ -760,14 +768,14 @@ class OpenQA:
         return sorted(jobs)
 
     @staticmethod
-    def get_latest_concluded_job_ids(test_suite, history_len, version, flavor):
+    def get_latest_concluded_job_ids(test_suite, history_len, version, flavor, machine=None):
         success_jobs = OpenQA.get_latest_job_ids(test_suite, version=version,
                             result="passed",  history_len=history_len,
-                            flavor=flavor)
+                            flavor=flavor, machine=machine)
 
         failed_jobs = OpenQA.get_latest_job_ids(test_suite, version=version,
                             result="failed",
-                            history_len=history_len, flavor=flavor)
+                            history_len=history_len, flavor=flavor, machine=machine)
 
         job_ids = sorted(success_jobs + failed_jobs)
         job_ids = job_ids[-history_len:]
@@ -782,6 +790,10 @@ class OpenQA:
         :param str flavor: overriding flavor
         """
         test_suite  = reference_job.get_job_name()
+        if '@' in test_suite:
+            test_suite, machine = test_suite.rsplit('@', 1)
+        else:
+            test_suite, machine = test_suite, '64bit'
         version     = reference_job.get_job_version()
         if flavor_override:
             flavor = flavor_override
@@ -789,12 +801,12 @@ class OpenQA:
             flavor = reference_job.get_job_flavor()
 
         latest_job_id = OpenQA.get_latest_job_id(
-            job_type=test_suite, version=version, flavor=flavor)
+            job_type=test_suite, version=version, flavor=flavor, machine=machine)
         margin = n * 2 # add margin for invalid jobs
         max_history_len = latest_job_id - reference_job.job_id + margin
 
         job_ids = OpenQA.get_latest_concluded_job_ids(
-                    test_suite, max_history_len, version, flavor)
+                    test_suite, max_history_len, version, flavor, machine=machine)
         if not job_ids:
             return []
 

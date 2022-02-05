@@ -44,7 +44,12 @@ ENDFUNC
         $mouse_action = 'ask';
     } else {
         $qvmpci_cmd = 'qvm-pci ls';
-        $mouse_action = 'allow';
+        # FIXME: system upgraded from R4.0 still has 'allow' here
+        if (check_var('VERSION', '4.0') or check_var('RELEASE_UPGRADE', '1')) {
+            $mouse_action = 'allow';
+        } else {
+            $mouse_action = 'ask';
+        }
     }
 
 

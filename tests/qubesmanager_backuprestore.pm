@@ -25,7 +25,7 @@ sub run {
     select_console('x11');
     assert_screen "desktop";
 
-    prep_backup('dom0');
+    prep_backup('dom0', 1);
     assert_and_click('backup-next', timeout => 5);
 
     # cancel the backup
@@ -37,7 +37,7 @@ sub run {
     assert_screen('desktop', 60);
 
     # retry backup
-    prep_backup('dom0');
+    prep_backup('dom0', 0);
     assert_and_click('backup-next', timeout => 5);
     assert_and_click('backup-finish', timeout => 120);
 
@@ -59,14 +59,22 @@ sub run {
 
 sub prep_backup {
     my $vmname = $_[0];
+    my $bigger = $_[1];
     x11_start_program('qubes-backup');
 
     # move all vms to unavailable
     assert_and_click('backup-deselect-all', timeout => 15);
+    assert_screen('backup-selected-none');
 
     # select only sys-net
     assert_and_click('backup-select-sys-net', timeout => 15);
     assert_and_click('backup-select-sys-net2', timeout => 15);
+
+    # select some template too
+    if ($bigger) {
+        assert_and_click('backup-select-bigger', timeout => 15);
+        assert_and_click('backup-select-sys-net2', timeout => 15);
+    }
 
     # click next
     assert_and_click('backup-next', timeout => 10);

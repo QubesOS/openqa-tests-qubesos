@@ -42,6 +42,9 @@ sub run {
     if (get_var('INSTALL_TEMPLATES', '') =~ /debian/) {
         $timeout += 1 * 240;
     }
+    if (get_var('INSTALL_TEMPLATES', '') =~ /fedora/) {
+        $timeout += 1 * 240;
+    }
     assert_screen 'installer-post-install-tasks', $timeout;
     #assert_and_click 'installer-install-done-reboot', timeout => 600;
     assert_screen 'installer-install-done-reboot', 2200;

@@ -72,6 +72,8 @@ sub run {
 
     assert_and_click "firstboot-qubes";
 
+    assert_screen('firstboot-config');
+
     if (!check_var("VERSION", "4.0")) {
         unless (check_var('INSTALL_TEMPLATES', 'all')) {
             if (index(get_var('INSTALL_TEMPLATES'), 'fedora') == -1) {
@@ -104,7 +106,7 @@ sub run {
     send_key "f12";
 
     my $needs_to_confirm_done = 1;
-    assert_screen(["firstboot-done", "firstboot-in-progress"], 5);
+    assert_screen(["firstboot-done", "firstboot-in-progress"], 10);
     if (match_has_tag("firstboot-done")) {
         send_key "f12";
         $needs_to_confirm_done = 0;

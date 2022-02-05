@@ -30,13 +30,13 @@ sub run {
     if (!check_screen("menu-vm-settings")) {
         # "settings" entry doesn't fit on screen, scroll to it
         send_key("right");
-        send_key_until_needlematch("menu-vm-settings", "up");
+        send_key_until_needlematch("menu-vm-settings", "up", 20, 5);
     }
     assert_and_click("menu-vm-settings");
     assert_and_click("vm-settings-applications", timeout => 60);
     assert_and_click("vm-settings-app-evince");
     send_key('end');
-    send_key_until_needlematch("vm-settings-app-xterm", 'up');
+    send_key_until_needlematch("vm-settings-app-xterm", 'up', 20, 5);
     assert_and_click("vm-settings-app-add");
     assert_and_click("vm-settings-app-evince");
     send_key('end');

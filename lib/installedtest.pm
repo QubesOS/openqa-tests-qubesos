@@ -84,7 +84,7 @@ sub handle_system_startup {
         if (!check_screen(["luks-prompt", "login-prompt-user-selected"], 60)) {
             send_key 'esc';
             send_key 'esc';
-            sleep 1;
+            sleep 5;
         }
     }
 

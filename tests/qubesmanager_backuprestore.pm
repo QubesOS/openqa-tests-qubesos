@@ -29,7 +29,7 @@ sub run {
     assert_and_click('backup-next', timeout => 5);
 
     # cancel the backup
-    assert_and_click('backup-cancel', timeout => 10);
+    assert_and_click('backup-cancel', timeout => 15);
     assert_screen('backup-cancelled', 30);
     send_key('esc');
     send_key('esc');
@@ -93,7 +93,7 @@ sub prep_backup {
     send_key('tab');
     send_key('a');
 
-    assert_and_click('backup-next', timeout => 5);
+    assert_and_click('backup-next', timeout => 10);
     assert_screen('backup-confirmation-screen', 10);
 
 }
@@ -107,7 +107,10 @@ sub do_restore {
     assert_and_click('restore-select', timeout => 15);
     send_key('~');
     send_key('ret');
+    assert_screen('select-file-is-home');
+    assert_and_click('select-file-sort-modified', timeout => 15);
     assert_and_click('restore-select-file', timeout => 15);
+    send_key('end');
 
     send_key('ret');
 

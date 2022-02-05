@@ -40,6 +40,7 @@ sub run {
     # change their template to debian
     assert_and_click('template-select-template', timeout => 20);
     assert_and_click('template-select-debian', timeout => 20);
+    sleep(1);
 
     # clear selection
     assert_and_click('template-clear-selection', timeout => 20);

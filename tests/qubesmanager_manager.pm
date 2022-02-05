@@ -28,24 +28,25 @@ sub run {
     x11_start_program('qubes-qube-manager');
 
     # sort by template
-    assert_and_click('qube-manager-sort-template', timeout => 5);
+    assert_and_click('qube-manager-sort-template');
+    assert_screen('qube-manager-sorted');
 
     # right-click on a non-dom0 vm
-    assert_and_click('qube-manager-vm-rc', button => 'right', timeout => 5);
-    assert_screen('qube-manager-rclicked', 5);
+    assert_and_click('qube-manager-vm-rc', button => 'right');
+    assert_screen('qube-manager-rclicked');
     send_key("esc");
 
     # check if dom0 logs are not empty
-    assert_and_click('qube-manager-dom0-rc', button => 'right', timeout => 5);
+    assert_and_click('qube-manager-dom0-rc', button => 'right');
     if (check_var("VERSION", "4.0")) {
         # Qubes 4.0: logs submenu
         # clicking over this menu is sensitive for mouse movements and
         # unfortunately assert_and_click insists on moving mouse back to the
         # original possition
-        assert_screen('qube-manager-dom0-logs', 5);
+        assert_screen('qube-manager-dom0-logs');
         send_key("up");
         send_key("right");
-        assert_screen('qube-manager-dom0-logs2', 10);
+        assert_screen('qube-manager-dom0-logs2');
         send_key("esc");
         send_key("esc");
     } else {
@@ -56,8 +57,8 @@ sub run {
     }
 
     # exit politely, also checking if menus click
-    assert_and_click('qube-manager-system-open', timeout => 10);
-    assert_and_click('qube-manager-system-exit', timeout => 10);
+    assert_and_click('qube-manager-system-open');
+    assert_and_click('qube-manager-system-exit');
 
 }
 

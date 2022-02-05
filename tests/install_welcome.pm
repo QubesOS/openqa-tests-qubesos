@@ -24,6 +24,9 @@ sub run {
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;
 
+    # wait for resolution change (on generalhw, there is a background process
+    # that calls xrandr shortly after Xorg startup)
+    sleep 3;
     # Xorg driver needs few moves to callibrate
     mouse_set(0, 0);
     mouse_hide;

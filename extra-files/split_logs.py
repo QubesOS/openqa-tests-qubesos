@@ -79,16 +79,6 @@ def filter_logs_by_time(logs, start_time, end_time, dom0_timezone):
 
     return filtered_logs
 
-def get_time_offset(test_name, test_title, utc_timestamp):
-    journalctl_line = subprocess.check_output(
-        "sudo journalctl -r | grep -m 1 \"{}.{}\"".format(test_name, test_title),
-        shell=True).decode('ascii')
-    journalctl_timestamp = get_timestamp_from_journalctl(journalctl_line)
-
-    # allow comparison between offset-naive and offset-aware datetimes
-    utc_timestamp = utc_timestamp.replace(tzinfo=None, microsecond=0)
-    return datetime.timezone(journalctl_timestamp - utc_timestamp)
-
 def main():
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('--junit-xml', required=True,
@@ -108,7 +98,9 @@ def main():
         # elements.
         testsuites_XMLs = re.findall(r"(<testsuite.*?</testsuite>)",
                                      f.read(), re.DOTALL)
-    dom0_timezone = None
+    dom0_timezone = datetime.datetime.now(
+        datetime.timezone(
+            datetime.timedelta(0))).astimezone().tzinfo
 
     for testsuite_xml in testsuites_XMLs:
         xml = minidom.parseString(testsuite_xml)
@@ -138,9 +130,6 @@ def main():
             if test_start == date_exception:
                 continue
 
-            if dom0_timezone is None:
-                dom0_timezone = get_time_offset(test_name, test_title,
-                                                test_start)
             testcase_logs = filter_logs_by_time(logs, test_start, test_end,
                                                 dom0_timezone)
             for log_name in testcase_logs:

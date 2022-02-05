@@ -253,6 +253,11 @@ class JobData(Base):
         url = "{}/tests/{}#dependencies".format(OPENQA_URL, self.job_id)
         return url
 
+    def get_build_url(self):
+        url = "{}/tests/overview?distri=qubesos&version={}&build={}&flavor={}".format(
+            OPENQA_URL, self.get_job_version(), self.get_job_build(), self.get_job_flavor())
+        return url
+
     def get_details_url(self):
         url = "{}/tests/{}#".format(OPENQA_URL, self.job_id)
         return url

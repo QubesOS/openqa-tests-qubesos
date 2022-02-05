@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 85,
+      "type": "match",
+      "height": 15,
+      "width": 46,
+      "ypos": 240
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "vm-settings-app-firefox"
+  ]
+}

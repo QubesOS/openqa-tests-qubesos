@@ -53,10 +53,10 @@ sub run {
         if (get_var('REPO_1') =~ m/^http/) {
             $repo_url = get_var('REPO_1');
         } else {
-            $repo_url = data_url('REPO_1');
+            $repo_url = 'https://openqa.qubes-os.org/assets/repo/' .  get_var('REPO_1');
         }
+        # Same URL now, since it's availabe directly via Tor too
         assert_script_run("printf '  repo: $repo_url\\n' >> $pillar_dir/init.sls");
-        $repo_url =~ s/\d+\.\d+\.\d+\.\d+/hdticem2xpif64k23bxojo73k6hawzhnarlsuflq72hr4g3lmbh3bjid.onion/;
         assert_script_run("printf '  repo_onion: $repo_url\\n' >> $pillar_dir/init.sls");
         if (get_var('KEY_1')) {
             my $key_url = get_var('KEY_1');

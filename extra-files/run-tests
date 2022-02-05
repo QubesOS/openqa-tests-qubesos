@@ -1,0 +1,14 @@
+#!/bin/bash
+
+rm -f nose2-junit.xml
+cmd_prefix=
+if [[ "$1" = "qubes.tests."* ]]; then
+    sudo systemctl stop qubesd
+    cmd_prefix="sudo -E"
+fi
+$cmd_prefix script -e -c "nose2 -v --plugin nose2.plugins.loader.loadtests --plugin nose2.plugins.junitxml -X $*" tests-$1.log
+retval=$?
+sudo systemctl start qubesd
+iconv -f utf8 -t ascii//translit nose2-junit.xml > nose2-junit-tmp.xml
+python3 convert_junit.py nose2-junit-tmp.xml nose2-junit-$1.xml
+exit $retval

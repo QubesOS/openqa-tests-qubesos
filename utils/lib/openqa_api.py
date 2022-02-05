@@ -700,6 +700,8 @@ class OpenQA:
                           version=None, flavor=None, machine=None):
         jobs = OpenQA.get_latest_job_ids(job_type, build, version,
                                          history_len=1, flavor=flavor, machine=machine)
+        if not jobs:
+            return None
         return jobs[0]
 
     @staticmethod
@@ -802,8 +804,10 @@ class OpenQA:
 
         latest_job_id = OpenQA.get_latest_job_id(
             job_type=test_suite, version=version, flavor=flavor, machine=machine)
+        if latest_job_id is None:
+            return []
         margin = n * 2 # add margin for invalid jobs
-        max_history_len = latest_job_id - reference_job.job_id + margin
+        max_history_len = max(latest_job_id - reference_job.job_id, 0) + margin
 
         job_ids = OpenQA.get_latest_concluded_job_ids(
                     test_suite, max_history_len, version, flavor, machine=machine)

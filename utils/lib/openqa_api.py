@@ -732,6 +732,34 @@ class OpenQA:
         return sorted(jobs)
 
     @staticmethod
+    def get_jobs_ids_for_build(build, version, flavor):
+        params = []
+        params.append('build={}'.format(build))
+        params.append('version={}'.format(version))
+        params.append('flavor={}'.format(flavor))
+
+        if params:
+            params_string = '?' + "&".join(params)
+        else:
+            params_string = ''
+
+        data = requests.get(
+            OPENQA_API + '/jobs' + params_string).json()
+
+        jobs = []
+
+        try:
+            for job in data['jobs']:
+                # skip restarted job
+                if job['clone_id']:
+                    continue
+                jobs.append(job['id'])
+        except KeyError:
+            # no jobs found
+            pass
+        return sorted(jobs)
+
+    @staticmethod
     def get_latest_concluded_job_ids(test_suite, history_len, version, flavor):
         success_jobs = OpenQA.get_latest_job_ids(test_suite, version=version,
                             result="passed",  history_len=history_len,

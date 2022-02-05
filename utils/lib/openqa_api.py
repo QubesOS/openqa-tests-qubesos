@@ -388,13 +388,6 @@ class JobData(Base):
 
         return issue_urls
 
-    @staticmethod
-    def get_labels_from_results(results):
-        number_of_failures = sum(len(val) for val in results.values())
-        if number_of_failures:
-            return [LABEL_FAILED]
-        return [LABEL_OK]
-
     def __str__(self):
         return self.job_name
 

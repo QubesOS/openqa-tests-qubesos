@@ -162,6 +162,12 @@ class GitHubIssue:
         if not result.ok:
             print("Warning: failed to add labels to issue.")
 
+def get_labels_from_results(results):
+    number_of_failures = sum(len(val) for val in results.values())
+    if number_of_failures:
+        return [LABEL_FAILED]
+    return [LABEL_OK]
+
 def setup_github_environ(auth_token):
     global github_auth
 

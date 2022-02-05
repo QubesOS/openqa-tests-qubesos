@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 import re
 import os
 
-from lib.github_api import setup_github_environ, GitHubIssue
+from lib.github_api import setup_github_environ, GitHubIssue, get_labels_from_results
 from lib.openqa_api import setup_openqa_environ, OpenQA
 from lib.instability_analysis import InstabilityAnalysis
 from lib.common import ISSUE_TITLE_PREFIX, COMMENT_TITLE
@@ -225,7 +225,7 @@ def main():
             print(prs)
             return
 
-        labels = job.get_labels_from_results(result)
+        labels = get_labels_from_results(result)
 
         if not prs:
             print("Warning: no related pull requests and issues found.")

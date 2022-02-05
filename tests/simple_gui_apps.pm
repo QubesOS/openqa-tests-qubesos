@@ -46,6 +46,11 @@ sub run {
     assert_and_click("vm-settings-app-add");
     assert_and_click("vm-settings-app-evince");
     assert_and_click("vm-settings-app-add");
+    if (check_screen("vm-settings-app-missing-firefox")) {
+        # Debian has different desktop file name, add it again
+        assert_and_click("vm-settings-app-firefox");
+        assert_and_click("vm-settings-app-add");
+    }
     assert_and_click("vm-settings-ok");
     assert_screen("desktop");
 

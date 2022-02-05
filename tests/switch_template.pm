@@ -28,10 +28,40 @@ sub run {
     send_key('alt-f10');
 
     my $new_template = get_var("DEFAULT_TEMPLATE");
+    my $appmenus_funcs;
+    if (check_var("VERSION", "4.0")) {
+        $appmenus_funcs = <<ENDCODE;
+get_appmenus() {
+    cat ".local/share/qubes-appmenus/\$1/whitelisted-appmenus.list"
+}
+set_appmenus() {
+    echo "\$2" > ".local/share/qubes-appmenus/\$1/whitelisted-appmenus.list"
+}
+get_default_appmenus() {
+    cat ".local/share/qubes-appmenus/\$1/vm-whitelisted-appmenus.list"
+}
+ENDCODE
+    } else {
+        $appmenus_funcs = <<ENDCODE;
+get_appmenus() {
+    qvm-features "\$1" menu-items
+}
+set_appmenus() {
+    qvm-features "\$1" menu-items "\$2"
+}
+get_default_appmenus() {
+    qvm-features "\$1" default-menu-items
+}
+ENDCODE
+    }
+
     my $migrate_templates = <<ENDCODE;
+$appmenus_funcs
 switch_template() {
     default_template=\$(qubes-prefs default-template)
     new_template=\$(qvm-ls --raw-data --fields=name|grep ^$new_template|head -1)
+    old_default_appmenus=\$(get_default_appmenus "\$default_template")
+    new_default_appmenus=\$(get_default_appmenus "\$new_template")
     if [ "\$default_template" = "\$new_template" ]; then
         echo "\$new_template is already default template"
         return
@@ -40,6 +70,10 @@ switch_template() {
     for vm in \$not_running; do
         echo "Switching \$vm"
         qvm-prefs "\$vm" template "\$new_template" || return 1
+        if [ "\$(get_appmenus "\$vm")" = "\$old_default_appmenus" ]; then
+            set_appmenus "\$vm" "\$new_default_appmenus"
+            qvm-appmenus --update "\$vm"
+        fi
     done
     running=\$(qvm-ls --raw-data --fields=name,template,state|grep "\$default_template|Running\$"|cut -f 1 -d '|')
     if [ -n "\$running" ]; then

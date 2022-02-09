@@ -78,10 +78,15 @@ def callback_done(ch, method, properties, body):
     version = job_details['job']['settings']['VERSION']
 
     cmd = ['python3', os.path.join(SCRIPT_DIR, 'github_reporting.py'), '--package-list', args.package_list]
-    cmd.extend(['--latest', '--build', job_data['BUILD'], '--flavor', job_data['FLAVOR']])
+    cmd.extend([
+        '--latest',
+        '--build', job_data['BUILD'],
+        '--flavor', job_data['FLAVOR'],
+        '--version', job_data['VERSION']])
     cmd.extend(['--instability',])
 
     if job_data['FLAVOR'] == 'qubes-whonix':
+        print('Calling: {}'.format(' '.join(cmd)), file=sys.stderr)
         subprocess.call(cmd)
 
     elif job_data['FLAVOR'] in ('update', 'pull-requests', 'templates'):

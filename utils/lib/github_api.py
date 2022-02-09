@@ -22,6 +22,9 @@ class GitHubRepo:
             for issue in json_data:
                 if issue['title'] == name:
                     return issue['html_url']
+        # if cache exists and issue wasn't found, don't fetch data again
+        if self.data:
+            return None
 
         url = self.url + 'issues'
         while url:

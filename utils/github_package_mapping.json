@@ -1,8 +1,8 @@
 {
-  "kernel": "linux-kernel",
+  "kernel": ["linux-kernel", "linux-kernel-5-4", "linux-kernel-4-19"],
   "kernel-latest": "linux-kernel",
   "kernel-latest-qubes-vm": "linux-kernel",
-  "kernel-qubes-vm": "linux-kernel",
+  "kernel-qubes-vm": ["linux-kernel", "linux-kernel-5-4", "linux-kernel-4-19"],
   "libvirt-daemon": "core-libvirt",
   "python2-qubesadmin": "core-admin-client",
   "python3-qubesadmin": "core-admin-client",
@@ -25,5 +25,6 @@
   "qubes-usb-proxy": "app-linux-usb-proxy",
   "qubes-utils": "linux-utils",
   "rpm-oxide": "rpm-oxide",
-  "xen-libs": "vmm-xen"
+  "xen-libs": "vmm-xen",
+  "linux-firmware": "linux-firmware"
 }

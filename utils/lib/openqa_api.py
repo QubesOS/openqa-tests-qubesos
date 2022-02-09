@@ -31,7 +31,10 @@ name_mapping = {}
 class PackageName:
     def __init__(self, line):
         self.package_name = None
+        # component names to try
+        self.component_names = []
         self.version = None
+        self.release = None
 
         # meaningful Debian lines starts with 'ii'
         if line.startswith('ii '):
@@ -44,6 +47,7 @@ class PackageName:
 
                 if '-' in raw_version:
                     self.version = raw_version.split('-', maxsplit=1)[0]
+                    self.release = raw_version.split('-', maxsplit=1)[1].split('+', maxsplit=1)[0]
                 elif '+' in raw_version:
                     self.version = raw_version.split('+', maxsplit=1)[0]
                 else:
@@ -57,26 +61,35 @@ class PackageName:
                 package_name = "-".join(line_parts[:-2])
                 if package_name in name_mapping:
                     self.version = line_parts[-2]
+                    self.release = line_parts[-1].split('.', maxsplit=1)[0]
                     self.package_name = name_mapping[package_name]
             except IndexError:
                 # the package name was malformed
                 # and had an insufficient amount of '-'
                 return
+        if isinstance(self.package_name, list):
+            self.component_names = self.package_name
+            self.package_name = self.package_name[0]
+        else:
+            self.component_names = [self.package_name]
 
     def __eq__(self, other):
         return self.package_name == other.package_name \
-               and self.version == other.version
+               and self.version == other.version \
+               and self.release == other.release
 
     def __lt__(self, other):
         if self.package_name == other.package_name:
+            if self.version == other.version:
+                return self.release < other.release
             return self.version < other.version
         return self.package_name < other.package_name
 
     def __str__(self):
-        return "{} v{}".format(self.package_name, self.version)
+        return "{} v{}-{}".format(self.package_name, self.version, self.release)
 
     def __hash__(self):
-        return hash((self.package_name, self.version))
+        return hash((self.package_name, self.version, self.release))
 
 
 class JobData(Base):
@@ -380,12 +393,19 @@ class JobData(Base):
         issue_urls = []
 
         for p in packages:
-            issue_name = "{} v{} (r{})".format(
-                p.package_name, p.version,
-                self.get_job_version())
-            url = repo.get_issues_by_name(issue_name)
-            if url:
-                issue_urls.append(url)
+            for name in p.component_names:
+                issue_name = "{} v{}-{} (r{})".format(
+                    name, p.version, p.release,
+                    self.get_job_version())
+                url = repo.get_issues_by_name(issue_name)
+                if url is None:
+                    issue_name = "{} v{} (r{})".format(
+                        name, p.version,
+                        self.get_job_version())
+                    url = repo.get_issues_by_name(issue_name)
+                if url:
+                    issue_urls.append(url)
+                    break
 
         return issue_urls
 

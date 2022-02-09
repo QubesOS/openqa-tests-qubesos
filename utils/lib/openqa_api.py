@@ -454,7 +454,7 @@ class ChildJob(JobData):
         if job_result == "passed":
             return True
         elif job_result == "failed":
-            has_failures = len(self.get_results()[self.job_name]) > 0
+            has_failures = len(self.get_results()[self.get_job_combined_name()]) > 0
             all_test_groups_ran = True
 
             for test_group in json_data['job']['testresults']:

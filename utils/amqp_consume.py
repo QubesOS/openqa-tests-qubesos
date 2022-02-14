@@ -82,7 +82,7 @@ def callback_done(ch, method, properties, body):
         '--latest',
         '--build', job_data['BUILD'],
         '--flavor', job_data['FLAVOR'],
-        '--version', job_data['VERSION']])
+        '--version', version])
     cmd.extend(['--instability',])
 
     if job_data['FLAVOR'] == 'qubes-whonix':

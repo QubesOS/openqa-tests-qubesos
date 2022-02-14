@@ -19,30 +19,18 @@ def format_results(results, jobs, reference_jobs=None, instability=False):
         instability_analysis = InstabilityAnalysis(jobs)
 
     output_string = "{}\n" \
-                    "Complete test suite and dependencies: {}\n" \
-                    "## Failed tests\n".format(COMMENT_TITLE,
-                                                jobs[0].get_build_url())
-    number_of_failures = 0
-    for k in results:
-        if results[k]:
-            output_string += '* ' + str(k) + "\n"
-            for fail in results[k]:
-                if instability and instability_analysis.is_test_unstable(fail):
-                    output_string += '  * [unstable] ' + str(fail) + '\n'
-                else:
-                    output_string += '  * ' + str(fail) + '\n'
-                number_of_failures += 1
+                    "Complete test suite and dependencies: {}\n".format(
+                        COMMENT_TITLE,
+                        jobs[0].get_build_url())
 
     if results.get('system_tests_update', []):
-        output_string += "\nInstalling updates failed, skipping rest of the report!\n"
+        output_string += "\nInstalling updates failed, skipping the report!\n"
         return output_string
 
-    if not number_of_failures:
-        output_string += "No failures!\n"
-
     if reference_jobs:
-        output_string += "## New failures\n" \
+        output_string += "## New failures{}\n" \
                             "Compared to: {}\n".format(
+                            ", excluding unstable" if instability else "",
                             reference_jobs[0].get_build_url())
 
         reference_job_results = {}
@@ -60,19 +48,39 @@ def format_results(results, jobs, reference_jobs=None, instability=False):
             for fail in current_fails:
                 if fail in old_fails:
                     continue
-                if instability and instability_analysis.is_test_unstable(fail):
-                    output_string += '  * [unstable] ' + str(fail) + '\n'
-                else:
+                if not (instability and instability_analysis.is_test_unstable(fail)):
                     add_to_output += '  * ' + str(fail) + '\n'
 
             if add_to_output:
                 output_string += '* ' + str(k) + "\n"
                 output_string += add_to_output
 
+    output_string +=  "## Failed tests\n"
+    failed_tests_details = ""
+    number_of_failures = 0
+    for k in results:
+        if results[k]:
+            failed_tests_details += '* ' + str(k) + "\n"
+            for fail in results[k]:
+                if instability and instability_analysis.is_test_unstable(fail):
+                    failed_tests_details += '  * [unstable] ' + str(fail) + '\n'
+                else:
+                    failed_tests_details += '  * ' + str(fail) + '\n'
+                number_of_failures += 1
+
+    if not number_of_failures:
+        output_string += "No failures!\n"
+    else:
+        output_string += "<details><summary>{} failures</summary>\n\n{}</details>\n\n".format(
+            number_of_failures, failed_tests_details)
+
+    if reference_jobs:
         output_string += "## Fixed failures\n" \
                             "Compared to: {}\n".format(
                             reference_jobs[0].get_dependency_url())
 
+        number_of_fixed = 0
+        fixed_details = ""
         for k in reference_job_results:
             current_fails = results.get(k, [])
             old_fails = reference_job_results.get(k, [])
@@ -85,10 +93,16 @@ def format_results(results, jobs, reference_jobs=None, instability=False):
                 if fail in current_fails:
                     continue
                 add_to_output += '  * ' + str(fail) + '\n'
+                number_of_fixed += 1
 
             if add_to_output:
-                output_string += '* ' + str(k) + "\n"
-                output_string += add_to_output
+                fixed_details += '* ' + str(k) + "\n"
+                fixed_details += add_to_output
+        if not number_of_fixed:
+            output_string += "Nothing fixed\n"
+        else:
+            output_string += "<details><summary>{} fixed</summary>\n\n{}</details>\n\n".format(
+                number_of_fixed, fixed_details)
 
     if instability:
         output_string += "## Unstable tests\n"

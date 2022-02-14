@@ -43,8 +43,8 @@ sub run {
     assert_and_click('vm-settings-networking-change-none');
 
     # include in backups by default, start on boot
-    assert_and_click('vm-settings-include-in-backup');
     assert_and_click('vm-settings-autostart');
+    assert_and_click('vm-settings-include-in-backup');
     if (check_var('VERSION', '4.0')) {
         # run in debug mode
         send_key('tab');
@@ -74,7 +74,7 @@ sub run {
     type_string('50');
     send_key('ret');
     # check if label was shown
-    assert_screen('vm-settings-warn-mem');
+    assert_and_click('vm-settings-warn-mem');
     # switch to editing memory
     assert_and_click('vm-settings-click-mem');
     send_key('ctrl-a');

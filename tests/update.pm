@@ -80,7 +80,11 @@ sub run {
 
     assert_script_run('systemctl restart qubesd');
     assert_script_run('(set -o pipefail; qubesctl --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log)', timeout => 9000);
-    assert_script_run('(set -o pipefail; qubesctl --max-concurrency=2 --skip-dom0 --templates --show-output state.highstate 2>&1 | tee -a qubesctl-upgrade.log)', timeout => 14400);
+    my $ret = script_run('(set -o pipefail; qubesctl --max-concurrency=2 --skip-dom0 --templates --show-output state.highstate 2>&1 | tee -a qubesctl-upgrade.log)', timeout => 14400);
+    if ($ret != 0) {
+        # make it possible to catch via developer mode
+        assert_screen('UPDATE-FAILED');
+    }
     upload_logs("qubesctl-upgrade.log");
     assert_script_run('tail -1 qubesctl-upgrade.log|grep -v failed');
     assert_script_run('! grep ERROR qubesctl-upgrade.log');

@@ -52,4 +52,4 @@ Variables used in tests:
  - `KEEP_SCREENLOCKER` - do not disable xscreensaver (or whatever screenlocker is there)
  - `PARTITIONING` - partition layout ('standard', 'xfs', 'btrfs', 'default', 'unencrypted'); on install - set via installer options, later - created manually on sdb, and all templates are migrated there
  - `HEADS` - when set to `1`, the test will handle Heads boot menu. Currently relevant only with `BACKEND=generalhw`. It's supposed to be sed in "machine" definition.
- - `RELEASE_UPGRADE_URL` - relevant for release-upgrade flavor, download scripts from specific URL, like: `https://raw.githubusercontent.com/marmarek/qubes-dist-upgrade/<branch-name>`
+ - `RELEASE_UPGRADE_REPO` - relevant for release-upgrade flavor, download scripts from specific URL, like: `https://raw.githubusercontent.com/marmarek/qubes-dist-upgrade/<branch-name>`

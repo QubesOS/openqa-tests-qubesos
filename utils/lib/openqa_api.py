@@ -52,7 +52,6 @@ class PackageName:
                     self.version = raw_version.split('+', maxsplit=1)[0]
                 else:
                     self.version = raw_version
-                return
 
         # Fedora lines have no spaces
         if ' ' not in line:

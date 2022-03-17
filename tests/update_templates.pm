@@ -64,6 +64,13 @@ sub run {
                 assert_script_run("qvm-template $action --enablerepo=qubes-*templates* $template", timeout => 1500);
             }
         }
+        # unlock the screen, if screenlocker engaged
+        if (check_screen("screenlocker-blank")) {
+            send_key('ctrl');
+            assert_screen('xscreensaver-prompt', timeout=>5);
+            type_password();
+            send_key('ret');
+        }
     
         $self->save_and_upload_log("(rpm -q qubes-template-$template || qvm-features $template template-release)", "template-$template-version.txt");
     }

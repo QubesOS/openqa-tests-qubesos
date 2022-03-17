@@ -133,8 +133,8 @@ def run_test():
     values['REPO_1'] = buildid
     values['KEY_1'] = repo_url + '/key.pub'
     values['UPDATE'] = '1'
-    values['GUIVM'] = '1'
-    values['UPDATE_TEMPLATES'] = 'fedora-34-xfce'
+    #values['GUIVM'] = '1'
+    #values['UPDATE_TEMPLATES'] = 'fedora-34-xfce'
     values['PULL_REQUESTS'] = req_values['PULL_REQUESTS']
 
     subprocess.check_call([

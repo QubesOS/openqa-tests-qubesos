@@ -84,6 +84,16 @@ if (check_var('RELEASE_UPGRADE', '1')) {
     autotest::loadtest "tests/release_upgrade.pm";
 }
 
+if (get_var('DO_GUIVM')) {
+    if (get_var('UPDATE_TEMPLATES')) {
+        autotest::loadtest "tests/update_templates.pm";
+        autotest::loadtest "tests/update_post_templates.pm";
+    }
+    if (get_var('GUIVM')) {
+        autotest::loadtest "tests/update_guivm.pm";
+    }
+}
+
 # do not execute same tests before each system tests run
 if (check_var('TEST_GENERIC', '1') and
         (!get_var('DO_UPDATE') or check_var('RESTART_AFTER_UPDATE', '1'))) {
@@ -92,7 +102,6 @@ if (check_var('TEST_GENERIC', '1') and
 }
 
 if (check_var('TEST_GUIVM', '1')) {
-    die "GUIVM not configured" if !check_var('GUIVM', '1');
     autotest::loadtest "tests/guivm_startup.pm";
     autotest::loadtest "tests/guivm_manager.pm";
 }

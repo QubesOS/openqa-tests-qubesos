@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 107,
+      "width": 254,
+      "type": "match",
+      "xpos": 77,
+      "height": 34
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "heads-usb-boot-list"
+  ]
+}

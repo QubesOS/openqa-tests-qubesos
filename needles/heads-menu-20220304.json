@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "ypos": 113,
+      "width": 201,
+      "type": "match",
+      "height": 33,
+      "xpos": 559
+    },
+    {
+      "type": "match",
+      "xpos": 240,
+      "height": 26,
+      "ypos": 185,
+      "width": 161
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "heads-menu"
+  ]
+}

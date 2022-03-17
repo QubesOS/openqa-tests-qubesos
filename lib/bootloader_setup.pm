@@ -63,8 +63,13 @@ sub tianocore_select_bootloader {
 }
 
 sub heads_boot_usb {
-    assert_screen(['heads-menu', 'heads-no-boot']);
-    if (match_has_tag('heads-no-boot')) {
+    assert_screen(['heads-menu', 'heads-no-boot', 'heads-no-os']);
+    if (match_has_tag('heads-no-os')) {
+        send_key 'down';
+        send_key 'down';
+        send_key 'ret';
+        assert_screen('heads-menu');
+    } elsif (match_has_tag('heads-no-boot')) {
         send_key 'right';
         send_key 'ret';
         assert_screen('heads-menu');
@@ -80,8 +85,16 @@ sub heads_boot_usb {
     # select USB boot
     send_key 'down';
     send_key 'ret';
-    assert_screen('heads-usb-boot-options');
+    assert_screen(['heads-usb-boot-options', 'heads-usb-boot-list']);
+    my $tries = 7;
+    # scroll to the right option, with misleadingly named needle heads-usb-boot-options
+    while ($tries > 0 and !check_screen('heads-usb-boot-options')) {
+        send_key 'down';
+        sleep 3;
+        $tries--;
+    }
     # boot the default, ISO post-processing already disabled media check
+    assert_screen('heads-usb-boot-options');
     send_key 'ret';
 }
 
@@ -95,15 +108,22 @@ sub heads_generate_hotp {
     send_key 'ret';
     assert_screen('heads-hotp-options');
     send_key 'ret';
-    assert_screen('heads-generate-hotp-confirm');
-    send_key 'ret';
-    assert_screen('heads-scan-qr');
+    assert_screen(['heads-generate-hotp-confirm', 'heads-scan-qr']);
+    if (match_has_tag('heads-generate-hotp-confirm')) {
+        send_key 'ret';
+        assert_screen('heads-scan-qr');
+    }
     send_key 'ret';
     assert_screen('heads-admin-pin-prompt');
     type_string '12345678';
     send_key 'ret';
     assert_screen('heads-nitrokey-init-success');
     send_key 'ret';
+    assert_screen('heads-menu');
+    # click refresh
+    send_key 'down';
+    send_key 'ret';
+    sleep 3;
     assert_screen('heads-menu');
     die "HOTP verification failed" if match_has_tag('heads-menu-hotp-fail');
 }
@@ -117,9 +137,11 @@ sub heads_boot_default {
     send_key 'ret';
     if (check_screen(['heads-no-hashes', 'heads-hash-mismatch'], 10)) {
         send_key 'ret';
-        assert_screen('heads-update-hashes-prompt');
-        send_key 'ret';
-        assert_screen('heads-gpg-card-prompt');
+        assert_screen(['heads-update-hashes-prompt', 'heads-gpg-card-prompt']);
+        if (match_has_tag('heads-update-hashes-prompt')) {
+            send_key 'ret';
+            assert_screen('heads-gpg-card-prompt');
+        }
         send_key 'ret';
         assert_screen(['heads-gpg-card-pin-prompt', 'heads-tpm-owner-prompt']);
         if (match_has_tag('heads-tpm-owner-prompt')) {
@@ -130,7 +152,8 @@ sub heads_boot_default {
         }
         type_string '123456';
         send_key 'ret';
-        assert_screen('heads-menu');
+    }
+    if (check_screen('heads-menu', 10)) {
         send_key 'ret';
     }
     if (check_screen(['heads-no-default-set', 'heads-boot-list-changed'], 10)) {

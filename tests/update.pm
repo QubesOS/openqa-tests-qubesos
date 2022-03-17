@@ -74,10 +74,6 @@ sub run {
         assert_script_run('qubesctl top.enable system-tests');
     }
 
-    # HACK until new image is created:
-    script_run "sed -i -e 's:loglvl=all:loglvl=all spec-ctrl=no:' /boot/grub2/grub.cfg";
-    script_run "sed -i -e 's:loglvl=all:loglvl=all spec-ctrl=no:' /etc/default/grub";
-
     assert_script_run('systemctl restart qubesd');
     assert_script_run('(set -o pipefail; qubesctl --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log)', timeout => 9000);
     my $ret = script_run('(set -o pipefail; qubesctl --max-concurrency=2 --skip-dom0 --templates --show-output state.highstate 2>&1 | tee -a qubesctl-upgrade.log)', timeout => 14400);

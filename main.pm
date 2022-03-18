@@ -114,6 +114,10 @@ if (get_var("WHONIXCHECK")) {
     autotest::loadtest "tests/whonixcheck.pm";
 }
 
+if (get_var("WHONIX_INTERACTIVE")) {
+    autotest::loadtest "tests/whonix_torbrowser.pm";
+}
+
 if (get_var('SYSTEM_TESTS')) {
     if (check_var('SYSTEM_TESTS', 'qubesmanager.tests')) {
         autotest::loadtest "tests/system_tests_prepare_manager.pm";

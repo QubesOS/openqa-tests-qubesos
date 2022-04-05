@@ -14,9 +14,34 @@ def setup_environ(args):
     setup_github_environ(args.auth_token)
     setup_openqa_environ(args.package_list, args.db_path, verbose=args.verbose)
 
-def format_results(results, jobs, reference_jobs=None, instability=False):
-    if instability:
-        instability_analysis = InstabilityAnalysis(jobs)
+def fill_results_context(results, jobs, reference_jobs=None, instability_analysis=None):
+    if reference_jobs:
+        reference_job_results = {}
+        for job in reference_jobs:
+            reference_job_results.update(job.get_results())
+
+        for k in results:
+            current_fails = results[k]
+            old_fails = reference_job_results.get(k, [])
+
+            for fail in old_fails:
+                if fail in current_fails:
+                    continue
+                fail.fixed = True
+                current_fails.append(fail)
+
+            for fail in current_fails:
+                if fail not in old_fails:
+                    fail.regression = True
+
+    if instability_analysis is not None:
+        for k in results.values():
+            for fail in k:
+                if instability_analysis.is_test_unstable(fail):
+                    fail.unstable = True
+
+
+def format_results(results, jobs, reference_jobs=None, instability_analysis=None):
 
     output_string = "{}\n" \
                     "Complete test suite and dependencies: {}\n".format(
@@ -30,25 +55,14 @@ def format_results(results, jobs, reference_jobs=None, instability=False):
     if reference_jobs:
         output_string += "## New failures{}\n" \
                             "Compared to: {}\n".format(
-                            ", excluding unstable" if instability else "",
+                            ", excluding unstable" if instability_analysis else "",
                             reference_jobs[0].get_build_url())
 
-        reference_job_results = {}
-        for job in reference_jobs:
-            reference_job_results.update(job.get_results())
-
         for k in results:
-            current_fails = results[k]
-            old_fails = reference_job_results.get(k, [])
-
-            if not current_fails:
-                continue
-
+            fails = results[k]
             add_to_output = ""
-            for fail in current_fails:
-                if fail in old_fails:
-                    continue
-                if not (instability and instability_analysis.is_test_unstable(fail)):
+            for fail in fails:
+                if fail.regression and not fail.unstable:
                     add_to_output += '  * ' + str(fail) + '\n'
 
             if add_to_output:
@@ -62,7 +76,7 @@ def format_results(results, jobs, reference_jobs=None, instability=False):
         if results[k]:
             failed_tests_details += '* ' + str(k) + "\n"
             for fail in results[k]:
-                if instability and instability_analysis.is_test_unstable(fail):
+                if fail.unstable:
                     failed_tests_details += '  * [unstable] ' + str(fail) + '\n'
                 else:
                     failed_tests_details += '  * ' + str(fail) + '\n'
@@ -81,19 +95,14 @@ def format_results(results, jobs, reference_jobs=None, instability=False):
 
         number_of_fixed = 0
         fixed_details = ""
-        for k in reference_job_results:
-            current_fails = results.get(k, [])
-            old_fails = reference_job_results.get(k, [])
-
-            if not old_fails:
-                continue
+        for k in results:
+            fails = results.get(k, [])
 
             add_to_output = ""
-            for fail in old_fails:
-                if fail in current_fails:
-                    continue
-                add_to_output += '  * ' + str(fail) + '\n'
-                number_of_fixed += 1
+            for fail in fails:
+                if fail.fixed:
+                    add_to_output += '  * ' + str(fail) + '\n'
+                    number_of_fixed += 1
 
             if add_to_output:
                 fixed_details += '* ' + str(k) + "\n"
@@ -104,7 +113,7 @@ def format_results(results, jobs, reference_jobs=None, instability=False):
             output_string += "<details><summary>{} fixed</summary>\n\n{}</details>\n\n".format(
                 number_of_fixed, fixed_details)
 
-    if instability:
+    if instability_analysis:
         output_string += "## Unstable tests\n"
         output_string += instability_analysis.report(details=True)
 
@@ -243,8 +252,15 @@ def main():
 
         labels = get_labels_from_results(result)
 
+    if args.instability:
+        instability_analysis = InstabilityAnalysis(jobs)
+    else:
+        instability_analysis = None
+
+    fill_results_context(result, jobs, reference_jobs, instability_analysis)
+
     formatted_result = format_results(result, jobs, reference_jobs,
-                                      args.instability)
+                                      instability_analysis)
 
     if args.show_results_only:
         print(formatted_result)

@@ -540,6 +540,12 @@ class TestFailure(Base):
             self.has_description = True
             self.parse_description(description)
 
+        # intentionally not stored in DB, makes sense only in a context
+        self.unstable = False
+        self.regression = False
+        # a past failure that was fixed now
+        self.fixed = False
+
     @staticmethod
     def exists_in_db(test_failure):
         return local_session.get(TestFailure,

@@ -250,8 +250,6 @@ def main():
 
         prs.update(job.get_related_github_objects())
 
-        labels = get_labels_from_results(result)
-
     if args.instability:
         instability_analysis = InstabilityAnalysis(jobs)
     else:
@@ -262,8 +260,11 @@ def main():
     formatted_result = format_results(result, jobs, reference_jobs,
                                       instability_analysis)
 
+    labels = get_labels_from_results(result)
+
     if args.show_results_only:
         print(formatted_result)
+        print("Would label it with: {!r}".format(labels))
         return
 
     if args.show_github_issues_only:

@@ -165,9 +165,11 @@ class GitHubIssue:
         if not result.ok:
             print("Warning: failed to add labels to issue.")
 
-def get_labels_from_results(results):
-    number_of_failures = sum(len(val) for val in results.values())
-    if number_of_failures:
+def get_labels_from_results(results, only_regressions=True, ignore_unstable=True):
+    failures = [fail for fails in results.values() for fail in fails
+                if (fail.regression or not only_regressions)
+                and (not fail.unstable or not ignore_unstable)]
+    if failures:
         return [LABEL_FAILED]
     return [LABEL_OK]
 

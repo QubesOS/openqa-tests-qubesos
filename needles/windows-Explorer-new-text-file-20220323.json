@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 369,
+      "ypos": 606,
+      "width": 117,
+      "height": 20,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN10",
+    "windows-Explorer-new-text-file"
+  ]
+}

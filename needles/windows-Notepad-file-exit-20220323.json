@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 199,
+      "ypos": 432,
+      "width": 87,
+      "height": 23,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN10",
+    "windows-Notepad-file-exit"
+  ]
+}

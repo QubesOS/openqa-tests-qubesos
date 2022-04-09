@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 616,
+      "ypos": 488,
+      "width": 74,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN10",
+    "RELEASE-4-1",
+    "file-copy-prompt-confirm"
+  ]
+}

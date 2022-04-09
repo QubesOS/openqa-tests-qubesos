@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 164,
+      "ypos": 339,
+      "width": 92,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN10",
+    "windows-Explorer-Documents"
+  ]
+}

@@ -20,9 +20,9 @@ package utils;
 use strict;
 use base 'Exporter';
 use Exporter;
-use testapi qw(check_screen wait_still_screen assert_screen send_key);
+use testapi qw(check_screen wait_still_screen assert_screen send_key mouse_set);
 
-our @EXPORT = qw(us_colemak colemak_us assert_screen_with_keypress);
+our @EXPORT = qw(us_colemak colemak_us assert_screen_with_keypress move_to_lastmatch);
 
 =head2 us_colemak
 
@@ -69,6 +69,46 @@ sub assert_screen_with_keypress {
     }
     assert_screen($tag);
 }
+
+sub _calculate_clickpoint {
+    my ($needle_to_use, $needle_area, $click_point) = @_;
+    # If there is no needle area defined, take it from the needle itself.
+    if (!$needle_area) {
+        $needle_area = $needle_to_use->{area}->[-1];
+    }
+    # If there is no clickpoint defined, or if it has been specifically defined as "center"
+    # then calculate the click point as a central point of the specified area.
+    if (!$click_point || $click_point eq 'center') {
+        $click_point = {
+            xpos => $needle_area->{w} / 2,
+            ypos => $needle_area->{h} / 2,
+        };
+    }
+    # Use the click point coordinates (which are relative numbers inside of the area)
+    # to calculate the absolute click point position.
+    my $x = int($needle_area->{x} + $click_point->{xpos});
+    my $y = int($needle_area->{y} + $click_point->{ypos});
+    return $x, $y;
+}
+
+sub move_to_lastmatch {
+    return unless $testapi::last_matched_needle;
+
+    # determine click coordinates from the last area which has those explicitly specified
+    my $relevant_area;
+    my $relative_click_point;
+    for my $area (reverse @{$testapi::last_matched_needle->{area}}) {
+        next unless ($relative_click_point = $area->{click_point});
+        $relevant_area = $area;
+        last;
+    }
+
+    # Calculate the absolute click point.
+    my ($x, $y) = _calculate_clickpoint($testapi::last_matched_needle, $relevant_area, $relative_click_point);
+    bmwqemu::diag("clicking at $x/$y");
+    mouse_set($x, $y);
+}
+
 
 1;
 # vim: sw=4 et ts=4:

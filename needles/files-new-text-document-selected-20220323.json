@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 242,
+      "ypos": 188,
+      "width": 160,
+      "height": 74,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "RELEASE-4-1",
+    "files-new-text-document-selected"
+  ]
+}

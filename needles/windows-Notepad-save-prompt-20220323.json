@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 339,
+      "ypos": 338,
+      "width": 250,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN10",
+    "windows-Notepad-save-prompt"
+  ]
+}

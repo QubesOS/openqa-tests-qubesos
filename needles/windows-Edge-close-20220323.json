@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 981,
+      "ypos": 60,
+      "width": 37,
+      "height": 23,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN10",
+    "windows-Edge-close"
+  ]
+}

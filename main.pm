@@ -134,6 +134,14 @@ if (get_var('TEST_GUI_INTERACTIVE')) {
     autotest::loadtest "tests/gui_keyboard_layout.pm";
 }
 
+if (get_var("WINDOWS_VERSION")) {
+    autotest::loadtest "tests/windows_install.pm";
+}
+
+if (get_var("TEST_WINDOWS_GUI_INTERACTIVE")) {
+    autotest::loadtest "tests/windows_clipboard_and_filecopy.pm";
+}
+
 if (get_var("GUI_TESTS")) {
         autotest::loadtest "tests/qui_widgets_clipboard.pm";
         autotest::loadtest "tests/qui_widgets_devices.pm";

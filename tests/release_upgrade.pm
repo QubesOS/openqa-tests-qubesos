@@ -66,6 +66,22 @@ sub run {
 
     assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --setup-efi-grub' release-upgrade.log", timeout => 3600);
 
+    if (0) {
+        # manually "do" assert_script_run, to support interaction
+        type_string("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --convert-luks' release-upgrade.log");
+        type_string("; echo marker-\$?- > /dev/$testapi::serialdev\n");
+        # up to 2 LUKS partitions (rootfs, swap), then wait for the thing to end
+        my $res;
+        for my $iter (1 .. 3) {
+            $res = wait_serial(qr/marker-\d+-/, timeout => 10);
+            last if $res;
+            type_string("lukspass");
+            send_key('ret');
+        }
+        die "'qubes-dist-upgrade --assumeyes --convert-luks' timed out" if (!defined $res);
+        die "'qubes-dist-upgrade --assumeyes --convert-luks' failed" if (($res =~ /marker-(\d+)-/)[0] != 0);
+    }
+
     # install qubesteststub module for updated python version
     assert_script_run("sudo sh -c 'cd /root/extra-files; python3 ./setup.py install'");
 

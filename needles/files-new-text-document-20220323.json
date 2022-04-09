@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 232,
+      "ypos": 189,
+      "width": 170,
+      "height": 73,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN10",
+    "RELEASE-4-1",
+    "files-new-text-document"
+  ]
+}

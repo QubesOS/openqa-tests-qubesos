@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 722,
+      "ypos": 60,
+      "width": 272,
+      "height": 35,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "ENV-WIN10",
+    "clipboard-copy-notification"
+  ]
+}

@@ -48,6 +48,9 @@ Variables used in tests:
  - `UPDATE` - install updates in dom0 and all templates
  - `QUBES_TEST_EXTRA_INCLUDE`, `QUBES_TEST_EXTRA_EXCLUDE` - passed directly to the test environment
  - `TEST_GUI_INTERACTIVE` - simple GUI interactive tests (start application from menu etc)
+ - `TEST_WINDOWS_GUI_INTERACTIVE` - simple GUI interactive tests for Windows with QWT installed
+ - `WINDOWS_VERSION` - create Windows VM of specific version and install QWT inside (argument as for qvm-create-windows-qube)
+ - `QWT_DOWNLOAD` - download specific QWT build (can be URL to iso or rpm file); otherwise qubes-windows-tools dom0 packages is installed from standard repositories
  - `GUIVM` - create GUI VM
  - `KEEP_SCREENLOCKER` - do not disable xscreensaver (or whatever screenlocker is there)
  - `PARTITIONING` - partition layout ('standard', 'xfs', 'btrfs', 'default', 'unencrypted'); on install - set via installer options, later - created manually on sdb, and all templates are migrated there

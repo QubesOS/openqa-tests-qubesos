@@ -131,6 +131,9 @@ sub do_restore {
 
     send_key('a');
 
+    # wait for app to register passphrase
+    sleep(1);
+
     assert_and_click('restore-next', timeout => 15);
 
     assert_and_click('restore-select-all', timeout => 15);

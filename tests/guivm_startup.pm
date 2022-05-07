@@ -47,7 +47,7 @@ sub run {
 
     # FIXME: make it packaged, rc.local or such
     select_console('root-virtio-terminal');
-    assert_script_run("echo -e '$testapi::password\n$testapi::password' | qvm-run -p -u root sys-gui 'passwd --stdin user'");
+    assert_script_run("echo -e '$testapi::password\n$testapi::password' | qvm-run --nogui -p -u root sys-gui 'passwd --stdin user'");
     select_console('x11');
 
     # for some reason, at the very first GUIVM start, the panel fails to load the icons

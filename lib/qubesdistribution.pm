@@ -40,6 +40,7 @@ sub init {
     if (!get_var('SERIALDEV')) {
         set_var('SERIALDEV', 'hvc0');
     }
+    $self->{script_run_die_on_timeout} = 1;
 }
 
 

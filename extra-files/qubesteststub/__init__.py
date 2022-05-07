@@ -32,7 +32,7 @@ class DefaultPV(qubes.ext.Extension):
                 missing.discard(dev.ident.replace('_', ':'))
             for dev in missing:
                 ass = DeviceAssignment(vm.app.domains[0], dev.replace(':', '_'),
-                        options={'no-strict-reset': True},
+                        options={'no-strict-reset': 'True'},
                         persistent=True)
                 yield from vm.devices['pci'].attach(ass)
 

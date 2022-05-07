@@ -9,6 +9,8 @@
   "qubes-core-admin-client": "core-admin-client",
   "qubes-core-agent": "core-agent-linux",
   "qubes-core-dom0": "core-admin",
+  "qubes-gui-dom0": "gui-daemon",
+  "qubes-gui-agent": "gui-agent-linux",
   "qubes-core-dom0-linux": "core-admin-linux",
   "qubes-qrexec-libs": "core-qrexec",
   "qubes-db": "core-qubesdb",

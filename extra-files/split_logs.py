@@ -31,18 +31,18 @@ def get_logs(path):
     for file_name in os.listdir(path):
         if not file_name.startswith("guest-test-"):
             continue
-        with open(os.path.join(path, file_name), 'r') as f:
+        with open(os.path.join(path, file_name), 'rb') as f:
             logs[file_name] = f.readlines()
     return logs
 
 def get_timestamp_from_xen_logs(log_line):
-    timestamp_re = r'[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}'
+    timestamp_re = rb'[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}'
     timestamp_match = re.search(timestamp_re, log_line)
     if timestamp_match is None:
         return None
     else:
         return datetime.datetime.strptime(
-            timestamp_match.group(0),
+            timestamp_match.group(0).decode(),
             XENLOGFORMAT)
 
 def get_timestamp_from_journalctl(log_line):
@@ -136,7 +136,7 @@ def main():
                 lines = testcase_logs[log_name]
                 log_filename = "{}.{}.{}".format(
                     test_name, test_title_short, log_name)
-                with open(args.outdir + log_filename, 'w') as f:
+                with open(args.outdir + log_filename, 'wb') as f:
                     f.writelines(lines)
 
 if __name__ == '__main__':

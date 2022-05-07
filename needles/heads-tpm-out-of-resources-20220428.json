@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 30,
+      "ypos": 129,
+      "width": 310,
+      "height": 15,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "heads-tpm-out-of-resources"
+  ]
+}

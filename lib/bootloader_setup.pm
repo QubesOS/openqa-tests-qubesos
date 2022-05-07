@@ -101,6 +101,9 @@ sub heads_boot_usb {
 }
 
 sub heads_generate_hotp {
+    my (%args) = @_;
+    $args{reset_tpm} //= 0;
+
     # regerenerate HOTP secret
     send_key 'down';
     send_key 'down';
@@ -109,7 +112,22 @@ sub heads_generate_hotp {
     send_key 'down';
     send_key 'ret';
     assert_screen('heads-hotp-options');
-    send_key 'ret';
+    if ($args{reset_tpm}) {
+        send_key 'down';
+        send_key 'ret';
+        assert_screen('heads-tpm-reset-confirm');
+        send_key 'ret';
+        assert_screen('heads-new-tpm-owner-prompt');
+        type_string '12345678';
+        send_key 'ret';
+        type_string '12345678';
+        send_key 'ret';
+        assert_screen('heads-tpm-owner-prompt');
+        type_string '12345678';
+        send_key 'ret';
+    } else {
+        send_key 'ret';
+    }
     assert_screen(['heads-generate-hotp-confirm', 'heads-scan-qr']);
     if (match_has_tag('heads-generate-hotp-confirm')) {
         send_key 'ret';
@@ -122,16 +140,18 @@ sub heads_generate_hotp {
     assert_screen('heads-nitrokey-init-success');
     send_key 'ret';
     assert_screen('heads-menu');
-    # click refresh
-    send_key 'down';
-    send_key 'ret';
-    sleep 3;
-    assert_screen('heads-menu');
+    if (match_has_tag('heads-menu-hotp-fail')) {
+        # click refresh
+        send_key 'down';
+        send_key 'ret';
+        sleep 5;
+        assert_screen('heads-menu');
+    }
     die "HOTP verification failed" if match_has_tag('heads-menu-hotp-fail');
 }
 
 sub heads_boot_default {
-    assert_screen('heads-menu', 45);
+    assert_screen('heads-menu', 60);
     if (match_has_tag('heads-menu-hotp-fail')) {
         heads_generate_hotp;
     }
@@ -150,7 +170,16 @@ sub heads_boot_default {
             # kexec_rollback.txt does not exist; creating new TPM counter
             type_string '12345678';
             send_key 'ret';
-            assert_screen('heads-gpg-card-pin-prompt');
+            assert_screen(['heads-gpg-card-pin-prompt', 'heads-tpm-out-of-resources', 'heads-fail-hashes-sign']);
+            if (match_has_tag('heads-tpm-out-of-resources') or match_has_tag('heads-fail-hashes-sign')) {
+                # need reset TPM to cleanup old counters
+                send_key 'ret';
+                assert_screen('heads-menu');
+                heads_generate_hotp(reset_tpm => 1);
+                # then try again
+                heads_boot_default();
+                return;
+            }
         }
         type_string '123456';
         send_key 'ret';

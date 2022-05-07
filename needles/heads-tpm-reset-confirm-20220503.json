@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 409,
+      "ypos": 256,
+      "width": 175,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "heads-tpm-reset-confirm"
+  ]
+}

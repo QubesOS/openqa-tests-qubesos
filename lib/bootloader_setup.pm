@@ -81,6 +81,7 @@ sub heads_boot_usb {
     assert_screen('heads-options');
     # select boot menu
     send_key 'ret';
+    sleep(10);
     assert_screen('heads-boot-options');
     # select USB boot
     send_key 'down';
@@ -89,8 +90,9 @@ sub heads_boot_usb {
     my $tries = 7;
     # scroll to the right option, with misleadingly named needle heads-usb-boot-options
     while ($tries > 0 and !check_screen('heads-usb-boot-options')) {
-        send_key 'down';
-        sleep 3;
+        wait_screen_change {
+            send_key 'down';
+        };
         $tries--;
     }
     # boot the default, ISO post-processing already disabled media check

@@ -36,7 +36,7 @@ sub run {
     assert_screen 'installer-custom-partitioning';
     # TODO: this may be language dependent
     send_key 'alt-n';
-    send_key_until_needlematch('install-custom-type-btrfs', 'up', 5, 1);
+    send_key_until_needlematch('install-custom-type-btrfs', 'up', 5, 2);
     send_key 'shift-tab';
     send_key 'ret';
     save_screenshot;

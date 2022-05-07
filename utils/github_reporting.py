@@ -74,8 +74,12 @@ def format_results(results, jobs, reference_jobs=None, instability_analysis=None
     number_of_failures = 0
     for k in results:
         if results[k]:
+            if all(f.fixed for f in results[k]):
+                continue
             failed_tests_details += '* ' + str(k) + "\n"
             for fail in results[k]:
+                if fail.fixed:
+                    continue
                 if fail.unstable:
                     failed_tests_details += '  * [unstable] ' + str(fail) + '\n'
                 else:

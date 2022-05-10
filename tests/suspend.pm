@@ -40,7 +40,7 @@ sub run {
         send_key 'esc';
     };
     send_key('esc');
-    sleep(10);
+    assert_screen('xscreensaver-prompt');
     # unlock screen
     type_string($password);
     send_key('ret');

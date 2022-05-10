@@ -93,7 +93,7 @@ sub run {
     }
 
     if (get_var("UPDATE_TEMPLATES") =~ /fedora-34/) {
-        assert_script_run("qvm-prefs default-mgmt-dvm template fedora-34");
+        assert_script_run("qvm-check fedora-35 && qvm-prefs default-mgmt-dvm template fedora-35 || qvm-prefs default-mgmt-dvm template fedora-34");
     }
 
     type_string("exit\n");

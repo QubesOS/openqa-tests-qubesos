@@ -1,0 +1,27 @@
+{
+  "area": [
+    {
+      "ypos": 65,
+      "width": 188,
+      "type": "match",
+      "xpos": 117,
+      "height": 20
+    },
+    {
+      "ypos": 736,
+      "click_point": {
+        "xpos": 38,
+        "ypos": 31
+      },
+      "xpos": 824,
+      "width": 92,
+      "type": "match",
+      "height": 32
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-0",
+    "whonix-news"
+  ]
+}

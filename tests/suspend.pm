@@ -28,7 +28,6 @@ sub run {
     x11_start_program('xterm');
     curl_via_netvm;
 
-    script_run('qvm-run -u root --nogui -p -- sys-net sh -c \'for dev in $(ls /sys/class/net); do echo $dev; ethtool -s $dev wol g; done\'');
     assert_script_run('sudo dmesg -n 8');
     assert_script_run('sudo rtcwake -n -s 30');
     assert_script_run('sudo systemctl suspend');

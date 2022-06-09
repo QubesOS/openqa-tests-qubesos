@@ -40,7 +40,7 @@ sub run {
     assert_and_click("menu");
     assert_and_click("menu-vm-personal");
     assert_and_click("menu-vm-firefox");
-    assert_screen("personal-firefox", timeout => 90);
+    assert_screen("personal-firefox", timeout => 120);
 
     # wait for full startup
     sleep(2);
@@ -52,9 +52,9 @@ sub run {
     assert_and_click("personal-firefox");
     send_key("ctrl-v");
     send_key("ret");
-    assert_screen("qubes-website");
+    assert_screen("qubes-website", timeout => 45);
     send_key("ctrl-q");
-    if (check_screen("firefox-multitab-close", timeout => 8)) {
+    if (check_screen("firefox-multitab-close", timeout => 20)) {
         assert_and_click("firefox-multitab-close");
     }
     wait_still_screen();

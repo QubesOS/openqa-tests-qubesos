@@ -44,7 +44,9 @@ sub run {
     assert_and_click("windows-Explorer-empty", button => 'right');
     assert_and_click("windows-Explorer-new");
     assert_and_click("windows-Explorer-new-text-file");
-    assert_screen("windows-Explorer-new-name-edit");
+    if (check_screen("windows-Explorer-new-name-edit", timeout => 20)) {
+        send_key("ret");
+    }
     assert_and_click("windows-Explorer-new-text-file-created", timeout => 60, dclick => 1);
     assert_screen("windows-Notepad");
     

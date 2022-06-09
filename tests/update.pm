@@ -76,7 +76,21 @@ sub run {
 
     assert_script_run('systemctl restart qubesd');
     assert_script_run('(set -o pipefail; qubesctl --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log)', timeout => 9000);
-    my $ret = script_run('(set -o pipefail; qubesctl --max-concurrency=1 --skip-dom0 --templates --show-output state.highstate 2>&1 | tee -a qubesctl-upgrade.log)', timeout => 14400);
+    if (check_var('KERNEL_VERSION', 'latest')) {
+        assert_script_run('qubes-dom0-update -y kernel-latest kernel-latest-qubes-vm', timeout => 600);
+        my $latest_kernel = script_output('ls -1v /var/lib/qubes/vm-kernels|grep "^[0-9]" |tail -1');
+        assert_script_run("qubes-prefs default-kernel $latest_kernel");
+    }
+    my $targets="--templates";
+    if (get_var('TEST_TEMPLATES')) {
+        $targets = '--targets=' . get_var('TEST_TEMPLATES');
+        $targets =~ s/ /,/g;
+    }
+    if (check_var('FLAVOR', 'kernel')) {
+        # disable custom repo for VMs - it is empty
+        assert_script_run("sed -i -e '/  repo/d' $pillar_dir/init.sls");
+    }
+    my $ret = script_run("(set -o pipefail; qubesctl --max-concurrency=1 --skip-dom0 $targets --show-output state.highstate 2>&1 | tee -a qubesctl-upgrade.log)", timeout => 14400);
     if ($ret != 0) {
         # make it possible to catch via developer mode
         assert_screen('UPDATE-FAILED');

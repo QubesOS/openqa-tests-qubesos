@@ -58,3 +58,4 @@ Variables used in tests:
  - `RELEASE_UPGRADE_REPO` - relevant for release-upgrade flavor, download scripts from specific URL, like: `https://raw.githubusercontent.com/marmarek/qubes-dist-upgrade/<branch-name>`
  - `WHONIXCHECK` - run whonixcheck / systemcheck on all Whonix-related VMs (including templates)
  - `WHONIX_INTERACTIVE` - run interactive tests on Whonix-related VMs (mostly anon-whonix)
+ - `KERNEL_VERSION` - which kernel flavor should be used - currently supported value is 'latest', which will switch to kernel-latest and kernel-latest-qubes-vm during update

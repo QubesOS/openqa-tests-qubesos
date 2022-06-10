@@ -6,6 +6,7 @@ After=network.target
 User=geekotest
 Group=www
 WorkingDirectory=/var/lib/openqa/tests/qubesos/api
+EnvironmentFile=-/etc/default/gitlab-api
 ExecStartPre=!/bin/mkdir -p /var/run/gitlab-api
 ExecStartPre=!/bin/chown geekotest /var/run/gitlab-api
 ExecStart=/usr/sbin/uwsgi --ini gitlab-api.ini

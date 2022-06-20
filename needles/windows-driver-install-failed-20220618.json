@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 569,
+      "ypos": 684,
+      "width": 271,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "windows-driver-install-failed"
+  ]
+}

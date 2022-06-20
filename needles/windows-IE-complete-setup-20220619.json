@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 251,
+      "ypos": 207,
+      "width": 226,
+      "height": 31,
+      "type": "match"
+    },
+    {
+      "xpos": 224,
+      "ypos": 425,
+      "width": 156,
+      "height": 21,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "windows-IE-complete-setup"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "xpos": 434,
+      "height": 28,
+      "width": 77,
+      "click_point": {
+        "xpos": 46.5,
+        "ypos": 14
+      },
+      "ypos": 284,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "windows-Explorer-new-name-edit"
+  ]
+}

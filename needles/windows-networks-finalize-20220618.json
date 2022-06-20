@@ -1,0 +1,27 @@
+{
+  "area": [
+    {
+      "xpos": 238,
+      "ypos": 208,
+      "width": 201,
+      "height": 28,
+      "type": "match"
+    },
+    {
+      "xpos": 741,
+      "ypos": 612,
+      "width": 66,
+      "height": 29,
+      "type": "match",
+      "click_point": {
+        "xpos": 33,
+        "ypos": 14.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "windows-networks-finalize"
+  ]
+}

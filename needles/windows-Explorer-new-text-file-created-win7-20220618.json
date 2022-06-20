@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 284,
+      "xpos": 302,
+      "height": 29,
+      "width": 53
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "windows-Explorer-new-text-file-created"
+  ]
+}

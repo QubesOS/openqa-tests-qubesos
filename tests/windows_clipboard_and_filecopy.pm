@@ -20,6 +20,52 @@ use strict;
 use testapi;
 use utils;
 
+sub open_website_paste_edge {
+    assert_and_click("menu-vm-windows-Edge");
+
+    if (check_screen("windows-Edge-complete-setup", timeout => 60)) {
+        click_lastmatch();
+        assert_and_click("windows-Edge-complete-setup-confirm");
+        assert_and_click("windows-Edge-no-signin");
+    } else {
+        assert_and_click("windows-Edge-setup-no-import");
+        assert_and_click("windows-Edge-no-profiling");
+        assert_and_click("windows-Edge-complete-setup-confirm");
+    }
+
+    send_key("ctrl-shift-v");
+    assert_screen("clipboard-paste-notification");
+
+    assert_and_click("windows-Edge-address-bar");
+    send_key("ctrl-a");
+    send_key("ctrl-v");
+    send_key("ret");
+
+    assert_screen("qubes-website");
+    assert_and_click("windows-Edge-close");
+}
+
+sub open_website_paste_ie {
+    assert_and_click("menu-vm-windows-IE");
+
+    if (check_screen("windows-IE-complete-setup", timeout => 60)) {
+        # click on "Your current settings"
+        click_lastmatch();
+        assert_and_click("windows-IE-complete-setup-confirm");
+    }
+
+    assert_and_click("windows-IE-address-bar");
+    send_key("ctrl-shift-v");
+    assert_screen("clipboard-paste-notification");
+
+    send_key("ctrl-a");
+    send_key("ctrl-v");
+    send_key("ret");
+
+    assert_screen("qubes-website");
+    assert_and_click("windows-IE-close");
+}
+
 
 sub run {
     select_console('x11');
@@ -35,6 +81,9 @@ sub run {
     assert_and_click("menu-vm-windows-Explorer");
     assert_screen("windows-Explorer", timeout => 90);
 
+    # TODO: win7 shows this before opening Explorer, and then it's _below_
+    # Explorer window; furthermore, win7 requires confirmation
+    # (windows-networks-finalize needle)
     if (check_screen("windows-networks-prompt", timeout => 20)) {
         click_lastmatch();
         sleep(5);
@@ -105,40 +154,25 @@ sub run {
     send_key("ctrl-c");
     send_key("ctrl-shift-c");
     assert_screen("clipboard-copy-notification");
-
-    assert_and_click("menu");
-    assert_and_click("menu-vm-windows-test");
-    #assert_screen("menu-vm-windows-scroll-down");
-    #move_to_lastmatch();
-    #sleep(5);
-    assert_and_click("menu-vm-windows-Edge");
-
     # close the text editor
     send_key("ctrl-q");
     assert_screen("files-new-text-document-selected");
     # and "Files" too
     send_key("ctrl-q");
 
-    if (check_screen("windows-Edge-complete-setup", timeout => 60)) {
-        click_lastmatch();
-        assert_and_click("windows-Edge-complete-setup-confirm");
-        assert_and_click("windows-Edge-no-signin");
+
+    assert_and_click("menu");
+    assert_and_click("menu-vm-windows-test");
+    #assert_screen("menu-vm-windows-scroll-down");
+    #move_to_lastmatch();
+    #sleep(5);
+    if (check_screen("menu-vm-windows-Edge", timeout => 30)) {
+        open_website_paste_edge;
+    } elsif (check_screen("menu-vm-windows-IE", timeout => 30)) {
+        open_website_paste_ie;
     } else {
-        assert_and_click("windows-Edge-setup-no-import");
-        assert_and_click("windows-Edge-no-profiling");
-        assert_and_click("windows-Edge-complete-setup-confirm");
+        die "no browser found in windows-test";
     }
-
-    send_key("ctrl-shift-v");
-    assert_screen("clipboard-paste-notification");
-
-    assert_and_click("windows-Edge-address-bar");
-    send_key("ctrl-a");
-    send_key("ctrl-v");
-    send_key("ret");
-
-    assert_screen("qubes-website");
-    assert_and_click("windows-Edge-close");
 
     send_key("meta");
     assert_and_click("windows-menu-power");

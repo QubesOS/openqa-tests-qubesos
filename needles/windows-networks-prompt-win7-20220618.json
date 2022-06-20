@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 240,
+      "height": 28,
+      "width": 239,
+      "type": "match",
+      "ypos": 205
+    },
+    {
+      "width": 112,
+      "height": 19,
+      "xpos": 309,
+      "ypos": 299,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "windows-networks-prompt"
+  ]
+}

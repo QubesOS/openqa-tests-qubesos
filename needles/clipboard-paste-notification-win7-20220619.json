@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 78,
+      "width": 267,
+      "height": 33,
+      "xpos": 727
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "RELEASE-4-1",
+    "clipboard-paste-notification"
+  ]
+}

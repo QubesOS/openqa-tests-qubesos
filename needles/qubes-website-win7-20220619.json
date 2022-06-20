@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 337,
+      "type": "match",
+      "xpos": 124,
+      "height": 129,
+      "width": 626
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "ENV-WIN7-IE",
+    "qubes-website"
+  ]
+}

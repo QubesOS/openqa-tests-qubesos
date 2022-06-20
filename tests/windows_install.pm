@@ -60,7 +60,7 @@ sub run {
     assert_script_run("qvm-prefs windows-mgmt netvm ''");
 
     my $answers_file = "$windows_version.xml";
-    $answers_file = 'win10x64-pro.xml' if ($windows_version == "win10x64");
+    $answers_file = 'win10x64-pro.xml' if ($windows_version eq "win10x64");
 
     assert_script_run("sudo sed -i -e 's:memory 1024:memory 2048:' /usr/bin/qvm-create-windows-qube");
 

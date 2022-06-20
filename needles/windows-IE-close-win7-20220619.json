@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 795,
+      "ypos": 98,
+      "width": 34,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "windows-IE-close"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 485,
+      "ypos": 521,
+      "width": 118,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "menu-vm-windows-IE"
+  ]
+}

@@ -75,7 +75,7 @@ sub run {
     }
 
     assert_script_run('systemctl restart qubesd');
-    assert_script_run('(set -o pipefail; qubesctl --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log)', timeout => 9000);
+    assert_script_run('(set -o pipefail; qubesctl --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log; ret=$?; qvm-run --nogui -- sys-usb qubes-input-trigger --all; exit $ret)', timeout => 9000);
     if (check_var('KERNEL_VERSION', 'latest')) {
         assert_script_run('qubes-dom0-update -y kernel-latest kernel-latest-qubes-vm', timeout => 600);
         my $latest_kernel = script_output('ls -1v /var/lib/qubes/vm-kernels|grep "^[0-9]" |tail -1');

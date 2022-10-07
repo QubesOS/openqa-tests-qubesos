@@ -35,7 +35,7 @@ sub run {
     assert_and_click('qui-devices-open', timeout => 20);
 
     # open a device
-    send_key('up');
+    send_key('down');
     assert_screen('qui-devices-dev-opened', timeout => 20);
 
     # close the widget

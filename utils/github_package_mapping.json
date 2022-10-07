@@ -16,6 +16,7 @@
   "qubes-db": "core-qubesdb",
   "qubes-desktop-linux-common": "desktop-linux-common",
   "qubes-desktop-linux-manager": "desktop-linux-manager",
+  "qubes-desktop-xfce4-xfwm4": "xfwm4",
   "qubes-gpg-split": "app-linux-split-gpg",
   "qubes-gui-agent": "gui-agent-linux",
   "qubes-libvchan-xen": "core-vchan-xen",

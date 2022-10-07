@@ -64,10 +64,15 @@ sub run {
 
     assert_script_run("sudo sed -i -e 's:memory 1024:memory 2048:' /usr/bin/qvm-create-windows-qube");
 
+    my $extra_opts = "";
+    $extra_opts .= "--seamless" if ( $windows_version eq "win7x64-ultimate" );
+
     # point for interactive pause
     check_screen('NO-MATCH');
 
-    assert_script_run("qvm-create-windows-qube -i $windows_version.iso -a $answers_file windows-test", timeout => 7200);
+    assert_script_run("qvm-create-windows-qube $extra_opts -i $windows_version.iso -a $answers_file windows-test", timeout => 7200);
+
+    sleep(5);
 
     # enable networking
     assert_script_run("qvm-prefs -D windows-test netvm");

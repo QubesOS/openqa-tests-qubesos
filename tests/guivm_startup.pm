@@ -52,6 +52,8 @@ sub run {
 
     # for some reason, at the very first GUIVM start, the panel fails to load the icons
     x11_start_program('xfce4-panel --restart', valid=>0);
+    wait_still_screen();
+    assert_screen('x11');
 
 }
 

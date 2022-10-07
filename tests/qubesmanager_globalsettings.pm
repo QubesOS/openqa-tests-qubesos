@@ -40,8 +40,8 @@ sub run {
     # disable checking for updates for all qubes
     assert_and_click('global-settings-disable-all');
     assert_and_click('global-settings-confirm');
-    my $timeout = 10;
-    while (check_screen('global-settings-confirm')) {
+    $timeout = 10;
+    while (check_screen('global-settings-confirm-no-button')) {
         if (!$timeout--) {
             die "confirmation dialog hasn't closed";
         }

@@ -62,9 +62,8 @@ sub run {
 
     # close the text editor too
     send_key("ctrl-q");
-    assert_screen("text-editor-save-prompt");
     # close without saving
-    send_key("alt-w");
+    assert_and_click("text-editor-save-prompt");
     assert_screen("desktop");
 }
 

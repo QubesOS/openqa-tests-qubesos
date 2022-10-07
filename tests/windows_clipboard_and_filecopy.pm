@@ -78,18 +78,32 @@ sub run {
     move_to_lastmatch();
     sleep(10);
     mouse_hide();
+    sleep(1);
     assert_and_click("menu-vm-windows-Explorer");
-    assert_screen("windows-Explorer", timeout => 90);
 
-    # TODO: win7 shows this before opening Explorer, and then it's _below_
-    # Explorer window; furthermore, win7 requires confirmation
-    # (windows-networks-finalize needle)
+    # FIXME: win7 shows it here; disabled because windows-networks-finalize
+    # races against Explorer; the prompt will remain open, in the background
+    #if (check_screen("windows-networks-prompt", timeout => 90)) {
+    #    click_lastmatch();
+    #    if (match_has_tag("ENV-WIN7")) {
+    #        assert_and_click("windows-networks-finalize");
+    #    }
+    #    sleep(5);
+    #}
+    assert_screen(["windows-Explorer", "windows-Explorer-inactive"], timeout => 90);
+
+    # win10 shows this prompt after launching Explorer
     if (check_screen("windows-networks-prompt", timeout => 20)) {
         click_lastmatch();
+        if (match_has_tag("ENV-WIN7")) {
+            assert_and_click("windows-networks-finalize", timeout => 90);
+        }
         sleep(5);
     }
+    assert_screen("windows-Explorer", timeout => 90);
 
-    assert_and_click("windows-Explorer-Documents");
+    # increased timeout, because it may wait for the network setting to finalize
+    assert_and_click("windows-Explorer-Documents", timeout => 60);
     assert_and_click("windows-Explorer-empty", button => 'right');
     assert_and_click("windows-Explorer-new");
     assert_and_click("windows-Explorer-new-text-file");
@@ -98,7 +112,7 @@ sub run {
     }
     assert_and_click("windows-Explorer-new-text-file-created", timeout => 60, dclick => 1);
     assert_screen("windows-Notepad");
-    
+
     type_string("https://www.qubes-os.org/\n");
     send_key("ctrl-a");
     send_key("ctrl-c");

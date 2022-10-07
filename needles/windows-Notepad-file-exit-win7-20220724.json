@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 118,
+      "type": "match",
+      "ypos": 299,
+      "height": 20,
+      "width": 87
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "windows-Notepad-file-exit"
+  ]
+}

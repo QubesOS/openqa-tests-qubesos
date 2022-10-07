@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 176,
+      "height": 19,
+      "ypos": 76,
+      "type": "match",
+      "xpos": 416
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "windows-Explorer-inactive"
+  ]
+}

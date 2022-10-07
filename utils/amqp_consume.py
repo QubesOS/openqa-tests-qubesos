@@ -89,9 +89,9 @@ def callback_done(ch, method, properties, body):
         print('Calling: {}'.format(' '.join(cmd)), file=sys.stderr)
         subprocess.call(cmd)
 
-    elif job_data['FLAVOR'] in ('update', 'pull-requests', 'templates'):
+    elif job_data['FLAVOR'] in ('update', 'pull-requests', 'templates', 'kernel'):
         base_job = None
-        if os.path.exists(args.jobs_compare_to):
+        if os.path.exists(args.jobs_compare_to) and job_data['FLAVOR'] != 'kernel':
             with open(args.jobs_compare_to) as f:
                 base_jobs = json.loads(f.read())
                 if version in base_jobs:

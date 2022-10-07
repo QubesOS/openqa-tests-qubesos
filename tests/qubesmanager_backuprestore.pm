@@ -153,7 +153,6 @@ sub do_restore {
 
 sub post_fail_hook {
     my ($self) = @_;
-    select_console('x11');
     if (!check_screen('desktop', 5)) {
         send_key('alt-f4');
     }

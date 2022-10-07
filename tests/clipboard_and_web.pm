@@ -33,6 +33,7 @@ sub run {
     type_string("https://www.qubes-os.org/\n");
     send_key("ctrl-a");
     send_key("ctrl-c");
+    sleep(1);
     send_key("ctrl-shift-c");
     assert_screen("clipboard-copy-notification");
 

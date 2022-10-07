@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 126,
+      "height": 16,
+      "xpos": 128,
+      "type": "match",
+      "ypos": 373
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-1",
+    "vm-settings-app-evince"
+  ]
+}

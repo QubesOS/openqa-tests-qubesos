@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 439,
+      "type": "match",
+      "ypos": 318,
+      "height": 16,
+      "width": 178
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "global-settings-confirm-no-button"
+  ]
+}

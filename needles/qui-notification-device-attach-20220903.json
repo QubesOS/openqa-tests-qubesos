@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 753,
+      "width": 135,
+      "height": 20,
+      "ypos": 136
+    },
+    {
+      "type": "match",
+      "xpos": 753,
+      "ypos": 157,
+      "height": 19,
+      "width": 70
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "half-transparent notification"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "qui-notification-device-attach"
+  ]
+}

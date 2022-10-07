@@ -56,6 +56,8 @@ sub init_consoles {
         # don't need password, there is ssh-agent in place
         $self->add_console('root-virtio-terminal', 'ssh-serial',
 		{ hostname => "test-$hostid.lan", password => "" });
+        $self->add_console('root-ssh-wifi', 'ssh-serial',
+		{ hostname => "192.168.0.100", password => "" });
     }
 
     $self->add_console('install-shell',  'tty-console', {tty => 2});

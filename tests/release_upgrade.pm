@@ -83,13 +83,18 @@ sub run {
     }
 
     # install qubesteststub module for updated python version
-    assert_script_run("sudo sh -c 'cd /root/extra-files; python3 ./setup.py install'");
+    if (check_var("BACKEND", "qemu")) {
+        assert_script_run("sudo sh -c 'cd /root/extra-files; python3 ./setup.py install'");
+    }
 
     set_var('VERSION', '4.1');
     if (check_var('UEFI_DIRECT', '1')) {
         # apply changes to grub, since /etc/default/grub wasn't present during
         # initial install_fixups.pm call
-        my $extra_xen_opts = 'loglvl=all guest_loglvl=all spec-ctrl=no';
+        my $extra_xen_opts = 'loglvl=all guest_loglvl=all';
+        if (check_var("BACKEND", "qemu")) {
+            $extra_xen_opts .= ' spec-ctrl=no';
+        }
         if (!script_run("grep 'GRUB_CMDLINE_XEN_DEFAULT.*console=' /etc/default/grub")) {
             script_run "sudo sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /etc/default/grub";
         } else {
@@ -100,7 +105,10 @@ sub run {
         } else {
             script_run "sudo sed -i -e 's:multiboot.*:\\0 console=vga,com1 $extra_xen_opts:' /boot/efi/EFI/qubes/grub.cfg";
         }
-        my $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:\0 console=hvc0 console=tty0 qubes.enable_insecure_pv_passthrough:g\'';
+        my $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:console=hvc0 console=tty0:g\'';
+        if (check_var("BACKEND", "qemu")) {
+            $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:console=hvc0 console=tty0 qubes.enable_insecure_pv_passthrough:g\'';
+        }
         script_run "sudo $sed_enable_dom0_console_log /boot/efi/EFI/qubes/grub.cfg";
         script_run "sudo $sed_enable_dom0_console_log /etc/default/grub";
         set_var('UEFI_DIRECT', '');

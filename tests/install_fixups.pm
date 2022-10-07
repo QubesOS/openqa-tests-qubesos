@@ -24,21 +24,27 @@ sub run {
     my ($self) = @_;
 
     select_console('root-virtio-terminal');
-    # include only absolutely necessary files to make the archive small, to be typed
-    open EXTRA_TARBALL, "tar cz -C " . testapi::get_required_var('CASEDIR') .
-        " extra-files/qubesteststub/__init__.py extra-files/setup.py" .
-        "|base64|" or die "failed to create tarball";
-    my $tarball = do { local $/; <EXTRA_TARBALL> };
-    close(EXTRA_TARBALL);
-    assert_script_run("echo '$tarball' | base64 -d | tar xz -C /mnt/sysimage/root");
     type_string "chroot /mnt/sysimage\n";
-    type_string "cd /root/extra-files\n";
-    type_string "python3 ./setup.py install\n";
-    type_string "echo '$testapi::password' | passwd --stdin root\n";
-    type_string "sed -i -e 's/^rootpw.*/rootpw --plaintext $testapi::password/' /root/anaconda-ks.cfg\n";
-    type_string "gpasswd -a $testapi::username \$(stat -c %G /dev/$testapi::serialdev)\n";
+    # command echo
+    wait_serial("chroot");
+    # prompt
+    wait_serial("root");
+    if (check_var("BACKEND", "qemu")) {
+        # include only absolutely necessary files to make the archive small, to be typed
+        open EXTRA_TARBALL, "tar cz -C " . testapi::get_required_var('CASEDIR') .
+            " extra-files/qubesteststub/__init__.py extra-files/setup.py" .
+            "|base64|" or die "failed to create tarball";
+        my $tarball = do { local $/; <EXTRA_TARBALL> };
+        close(EXTRA_TARBALL);
+        assert_script_run("echo '$tarball' | base64 -d | tar xz -C /root");
+        assert_script_run("cd /root/extra-files");
+        assert_script_run("python3 ./setup.py install");
+    }
+    assert_script_run("echo '$testapi::password' | passwd --stdin root");
+    assert_script_run("sed -i -e 's/^rootpw.*/rootpw --plaintext $testapi::password/' /root/anaconda-ks.cfg");
+    script_run("gpasswd -a $testapi::username \$(stat -c %G /dev/$testapi::serialdev)");
     if (check_var('BACKEND', 'qemu')) {
-	type_string "systemctl enable serial-getty\@hvc1.service\n";
+        assert_script_run("systemctl enable serial-getty\@hvc1.service");
     }
     if (get_var('VERSION') =~ /^3/) {
         # disable e820-host, breaks sys-net on OVMF; core2 don't have nice
@@ -49,7 +55,15 @@ sub run {
         type_string "sed -ie '$sed_expr' $core2_path\n";
     }
     type_string "exit\n";
-    my $extra_xen_opts = 'loglvl=all guest_loglvl=all spec-ctrl=no';
+    # command echo
+    wait_serial("exit");
+    # prompt
+    wait_serial("root");
+    # when changing here, update release_upgrade.pm too
+    my $extra_xen_opts = 'loglvl=all guest_loglvl=all';
+    if (check_var("BACKEND", "qemu")) {
+        $extra_xen_opts .= ' spec-ctrl=no';
+    }
     script_run "sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /mnt/sysimage/boot/grub2/grub.cfg";
     script_run "sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
     script_run "sed -i -e 's:\\\${xen_rm_opts}::' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
@@ -86,7 +100,10 @@ sub run {
     }
 
     # when changing here, update release_upgrade.pm too
-    my $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:console=hvc0 console=tty0 qubes.enable_insecure_pv_passthrough:g\'';
+    my $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:console=hvc0 console=tty0:g\'';
+    if (check_var("BACKEND", "qemu")) {
+        $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:console=hvc0 console=tty0 qubes.enable_insecure_pv_passthrough:g\'';
+    }
     script_run "$sed_enable_dom0_console_log $xen_cfg";
     script_run "$sed_enable_dom0_console_log /mnt/sysimage/boot/grub2/grub.cfg";
     script_run "$sed_enable_dom0_console_log /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";

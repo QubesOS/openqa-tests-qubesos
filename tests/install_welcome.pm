@@ -41,7 +41,11 @@ sub run {
         assert_and_click 'installer-prerelease';
     }
     if (check_screen 'installer-unsupported-hardware', 10) {
-        assert_and_click 'installer-unsupported-hardware';
+        if (check_var("BACKEND", "qemu")) {
+            assert_and_click 'installer-unsupported-hardware';
+        } else {
+            die "Unexpected 'unsupported hardware' message";
+        }
     }
     assert_screen 'installer-main-hub';
 }

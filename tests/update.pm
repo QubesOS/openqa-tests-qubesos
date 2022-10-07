@@ -37,9 +37,11 @@ sub run {
     save_tmp_file('extra-files.tar.gz.b64', $tarball);
 
     assert_script_run("curl " . autoinst_url('/files/extra-files.tar.gz.b64') . " | base64 -d | tar xz -C /root");
-    type_string "cd /root/extra-files\n";
-    type_string "python3 ./setup.py install\n";
-    type_string "cd -\n";
+    if (check_var("BACKEND", "qemu")) {
+        type_string "cd /root/extra-files\n";
+        type_string "python3 ./setup.py install\n";
+        type_string "cd -\n";
+    }
 
     if (get_var("UPDATE")) {
         assert_script_run('cp -a /root/extra-files/update /srv/salt/');

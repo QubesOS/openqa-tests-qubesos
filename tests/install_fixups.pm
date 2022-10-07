@@ -64,6 +64,10 @@ sub run {
     if (check_var("BACKEND", "qemu")) {
         $extra_xen_opts .= ' spec-ctrl=no';
     }
+    if (check_var("MACHINE", "hw7")) {
+        # not really AMT, but LPSS on PCI bus 0
+        $extra_xen_opts .= ' com1=115200,8n1,amt';
+    }
     script_run "sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /mnt/sysimage/boot/grub2/grub.cfg";
     script_run "sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
     script_run "sed -i -e 's:\\\${xen_rm_opts}::' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
@@ -125,6 +129,12 @@ sub run {
         my $rollback = <$fh>;
         close($fh);
         script_run "echo '$rollback' > /mnt/sysimage/boot/kexec_hotp_counter";
+    }
+
+    if (check_var("MACHINE", "hw7")) {
+        # broken RTC? battery dead?
+        script_run("date -s @" . time());
+        script_run("hwclock -w");
     }
 
     # log kickstart file

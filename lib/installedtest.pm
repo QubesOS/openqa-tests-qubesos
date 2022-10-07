@@ -112,6 +112,13 @@ sub handle_system_startup {
     script_run('systemctl is-system-running --wait', timeout => 120);
     assert_script_run "chown $testapi::username /dev/$testapi::serialdev";
 
+    ## HACK (RTC looks to be running off the main battery, which is disconnected)
+    if (check_var("MACHINE", "hw7")) {
+        assert_script_run("date -s @" . time());
+        assert_script_run("hwclock -w");
+        assert_script_run("qvm-run --nogui -u root sys-firewall qvm-sync-clock");
+    }
+
     # WTF part
     if (script_run('qvm-check --running sys-net') != 0) {
         assert_script_run('qvm-pci dt sys-net dom0:00_04.0');

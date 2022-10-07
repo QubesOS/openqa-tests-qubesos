@@ -21,6 +21,7 @@ use strict;
 use testapi;
 use networking;
 use bootloader_setup;
+use serial_terminal;
 use utils qw(us_colemak colemak_us);
 
 sub new {
@@ -98,7 +99,7 @@ sub handle_system_startup {
 
     $self->init_gui_session;
 
-    select_console('root-virtio-terminal');
+    select_root_console();
     script_run('systemctl is-system-running --wait', timeout => 120);
     assert_script_run "chown $testapi::username /dev/$testapi::serialdev";
 
@@ -117,7 +118,7 @@ sub usbvm_fixup {
     # enable input proxy for USB tablet
     my ($self) = @_;
 
-    select_console('root-virtio-terminal');
+    select_root_console();
     if (check_var("VERSION", "4.1") and !check_var("BACKEND", "qemu")) {
         # fixup for USBVM with USB keyboard present - do it for R4.1 only -
         # R4.2 should allow it out of the box
@@ -134,13 +135,36 @@ sub usbvm_fixup {
     select_console('x11');
 }
 
+sub connect_wifi {
+    my ($self) = @_;
+
+    if (!check_screen("nm-applet-connected-wifi", 60)) {
+        my $wifi_password = get_required_var("WIFI_PASSWORD");
+        my $wifi_needle = "nm-applet-wifi-" . get_var("WIFI_NAME");
+        assert_and_click("nm-applet");
+        # for some reason, NM almost always put the closest network in the
+        # "more networks" submenu...
+        assert_and_click("nm-applet-more-networks");
+        assert_and_click($wifi_needle);
+        assert_and_click("nm-applet-wifi-password");
+        type_string($wifi_password, secret => 1);
+        send_key('ret');
+    }
+    # now use wifi to connect to the target
+    set_var('WIFI_CONNECTED', '1');
+}
+
 sub init_gui_session {
     my ($self) = @_;
 
     assert_screen "login-prompt-user-selected", 240;
     $self->handle_login_prompt;
 
-    assert_screen("nm-connection-established", 150);
+    if (check_var("CONNECT_WIFI", "1")) {
+        $self->connect_wifi;
+    } else {
+        assert_screen("nm-connection-established", 150);
+    }
     assert_screen("no-notifications");
 
     $self->restore_keyboard_layout;
@@ -164,7 +188,7 @@ sub post_fail_hook {
 
     sleep(1);
     save_screenshot;
-    select_console('root-virtio-terminal');
+    select_root_console();
     script_run "xl info";
     script_run "xl list";
     script_run "xl dmesg";

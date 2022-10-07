@@ -20,7 +20,7 @@ BEGIN {
       add_serial_console
       get_login_message
       login
-      select_virtio_console
+      select_root_console
       serial_term_prompt
     );
 }
@@ -89,22 +89,25 @@ sub login {
     assert_script_run('echo Logged into $(tty)', timeout => $bmwqemu::default_timeout, result_title => 'vconsole_login');
 }
 
-=head2 select_virtio_console
+=head2 select_root_console
 
-   select_virtio_console();
+   select_root_console();
 
-Helper to select console 'root-virtio-terminal' or 'root-console'.
+Helper to select console 'root-virtio-terminal' 'root-ssh-wifi', or 'root-console'.
 =cut
 # TODO: Move here optional init with add_serial_console($console);
-sub select_virtio_console {
+sub select_root_console {
     my $is_virtio = get_var('VIRTIO_CONSOLE');
 
-    if ($is_virtio && !get_var('S390_ZKVM')) {
+    if (check_var("WIFI_CONNECTED", "1")) {
+        select_console('root-ssh-wifi');
+        return 1;
+    } else {
         select_console('root-virtio-terminal');
         return 1;
     }
 
-    bmwqemu::fctwarn("Cannot use virtio console on s390 on ZKVM") if $is_virtio;
+    # XXX: unused for now
     select_console('root-console');
     return 0;
 }

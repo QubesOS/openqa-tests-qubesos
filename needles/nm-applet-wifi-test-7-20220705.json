@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 336,
+      "ypos": 298,
+      "width": 77,
+      "height": 17,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw7",
+    "ENV-VERSION-4-1",
+    "nm-applet-wifi-test-7"
+  ]
+}

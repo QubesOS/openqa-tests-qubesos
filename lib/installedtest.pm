@@ -103,6 +103,14 @@ sub handle_system_startup {
     script_run('systemctl is-system-running --wait', timeout => 120);
     assert_script_run "chown $testapi::username /dev/$testapi::serialdev";
 
+    ## HACK (RTC looks to be running off the main battery, which is disconnected)
+    if (check_var("MACHINE", "hw7")) {
+        assert_script_run("date -s @" . time());
+        assert_script_run("hwclock -w");
+        assert_script_run("qvm-run --nogui -u root sys-firewall qvm-sync-clock");
+        assert_script_run("qvm-run --nogui -u root sys-whonix qvm-sync-clock");
+    }
+
     # WTF part
     if (script_run('qvm-check --running sys-net') != 0) {
         assert_script_run('qvm-pci dt sys-net dom0:00_04.0');
@@ -112,6 +120,19 @@ sub handle_system_startup {
         script_run('qvm-start sys-whonix', timeout => 90);
     }
     select_console('x11');
+
+    # there is a good chance time jump activated xscreenlocker
+    if (check_var("MACHINE", "hw7") and check_var("KEEP_SCREENLOCKER", "1")) {
+        if (check_screen(["screenlocker-blank", "xscreensaver-prompt"], 25)) {
+            send_key('ctrl');
+            assert_screen('xscreensaver-prompt', timeout=>5);
+            type_password();
+            send_key('ret');
+            sleep(1);
+            mouse_hide();
+            assert_screen("desktop");
+        }
+    }
 }
 
 sub usbvm_fixup {

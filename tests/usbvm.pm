@@ -26,7 +26,7 @@ sub run {
 
     assert_screen "desktop";
 
-    select_console('root-virtio-terminal');
+    $self->select_root_console();
 
     if (get_var('VERSION') =~ /^3/) {
         my $qvmpci_wrapper = <<ENDFUNC;

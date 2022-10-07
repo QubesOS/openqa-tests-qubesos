@@ -22,6 +22,8 @@ use testapi;
 
 
 sub run {
+    my ($self) @_;
+
     # open global-settings
     select_console('x11');
     assert_screen "desktop";
@@ -46,7 +48,7 @@ sub run {
     assert_screen "desktop";
 
     # turn off work domain
-    select_console('root-virtio-terminal');
+    $self->select_root_console();
     script_run('qvm-shutdown --wait work', 200);
     select_console('x11');
 }

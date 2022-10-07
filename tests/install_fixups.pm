@@ -23,7 +23,7 @@ use serial_terminal qw(add_serial_console);
 sub run {
     my ($self) = @_;
 
-    select_console('root-virtio-terminal');
+    $self->select_root_console();
     type_string "chroot /mnt/sysimage\n";
     # command echo
     wait_serial("chroot");

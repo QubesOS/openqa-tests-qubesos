@@ -30,7 +30,7 @@ Uses 'qwertya' string, as 'y' and 'a' positions differ in some layout (us, de, f
 
 =cut
 sub test_file_touch {
-    my ($guivm) = @_;
+    my ($self, $guivm) = @_;
     # touch a file with input from gui domain and then from target vm
     x11_start_program('touch e1qwertya', valid => 0);
     x11_start_program('qvmrun work xterm', target_match => ['work-xterm', 'work-xterm-inactive'], match_timeout => 90);
@@ -42,7 +42,7 @@ sub test_file_touch {
     save_screenshot;
     type_string("exit\n");
     sleep 1;
-    select_console('root-virtio-terminal');
+    $self->select_root_console();
     assert_script_run('set -x');
     if ($guivm eq 'dom0') {
         assert_script_run('test "$(cd ~user;ls e1*)" = "$(qvm-run -p work \'ls e1*\')"');
@@ -56,31 +56,33 @@ sub test_file_touch {
 }
 
 sub test_layout {
-    my ($guivm) = @_;
+    my ($self, $guivm) = @_;
 
     # set keyboard layout before VM start
     record_info('Layout: de', 'Switching keyboard layout before VM start');
     x11_start_program('setxkbmap de', valid => 0);
     sleep 1;
 
-    test_file_touch($guivm);
+    test_file_touch($self, $guivm);
 
     record_info('Layout: us', 'Switching keyboard layout after VM start');
     x11_start_program('setxkbmap us', valid => 0);
     sleep 1;
 
     if (!check_var('VERSION', '4.0')) {
-        test_file_touch($guivm);
+        test_file_touch($self, $guivm);
     }
 }
 
 sub run {
+    my ($self) = @_;
+
     # assert clean initial state
     select_console('x11');
 
     assert_screen "desktop";
 
-    select_console('root-virtio-terminal');
+    $self->select_root_console();
     # '-' is in different place on 'de' keyboard, make a symlink to avoid it
     my $templates = script_output('qvm-ls --raw-data --fields name,klass');
     my $guivm = script_output('qubes-prefs default-guivm 2>/dev/null || echo dom0');
@@ -98,13 +100,13 @@ sub run {
         s/\|.*//;
         my $template = $_;
 
-        select_console('root-virtio-terminal');
+        $self->select_root_console();
         assert_script_run("qvm-shutdown --wait work");
         record_info($template, "Switching work qube to $template");
         assert_script_run("qvm-prefs work template $template");
         select_console('x11');
 
-        test_layout($guivm);
+        test_layout($self, $guivm);
     }
     select_console('x11');
 }

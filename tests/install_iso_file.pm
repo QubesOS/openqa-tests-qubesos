@@ -61,6 +61,8 @@ menuentry 'Qubes installation' {
 END
 
 sub run {
+    my ($self) = @_;
+
     if (check_var('UEFI', '1')) {
         die "UEFI not supported by this test";
     }
@@ -76,7 +78,7 @@ sub run {
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;
 
-    select_console('root-virtio-terminal');
+    $self->select_root_console();
 
     if (!check_var("VERSION", "4.0")) {
         # enable network to download grub pkg

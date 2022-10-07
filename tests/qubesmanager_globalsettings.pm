@@ -22,6 +22,8 @@ use testapi;
 
 
 sub run {
+    my ($self) = @_;
+
     # open global-settings
     select_console('x11');
     assert_screen "desktop";
@@ -70,7 +72,7 @@ sub run {
     x11_start_program('qubes-global-settings');
     assert_and_click('global-settings-cancel');
 
-    select_console('root-virtio-terminal');
+    $self->select_root_console();
     assert_script_run('qubes-prefs default-kernel $(ls -v /var/lib/qubes/vm-kernels|tail -1|tee /dev/stderr)', 20);
     select_console('x11');
 }

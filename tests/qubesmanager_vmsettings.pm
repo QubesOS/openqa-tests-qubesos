@@ -220,7 +220,7 @@ sub run {
     type_string('work3');
     assert_and_click('vm-settings-do-clone');
 
-    assert_and_click('vm-settings-clone-successful', 200);
+    assert_and_click('vm-settings-clone-successful', timeout => 200);
     sleep(1);
     assert_and_click('vm-settings-cancel');
 

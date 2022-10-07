@@ -18,6 +18,7 @@
 use base "installedtest";
 use strict;
 use testapi;
+use serial_terminal;
 
 =head2
 
@@ -42,7 +43,7 @@ sub test_file_touch {
     save_screenshot;
     type_string("exit\n");
     sleep 1;
-    select_console('root-virtio-terminal');
+    select_root_console();
     assert_script_run('set -x');
     if ($guivm eq 'dom0') {
         assert_script_run('test "$(cd ~user;ls e1*)" = "$(qvm-run -p work \'ls e1*\')"');
@@ -80,7 +81,7 @@ sub run {
 
     assert_screen "desktop";
 
-    select_console('root-virtio-terminal');
+    select_root_console();
     # '-' is in different place on 'de' keyboard, make a symlink to avoid it
     my $templates = script_output('qvm-ls --raw-data --fields name,klass');
     my $guivm = script_output('qubes-prefs default-guivm 2>/dev/null || echo dom0');
@@ -98,7 +99,7 @@ sub run {
         s/\|.*//;
         my $template = $_;
 
-        select_console('root-virtio-terminal');
+        select_root_console();
         assert_script_run("qvm-shutdown --wait work");
         record_info($template, "Switching work qube to $template");
         assert_script_run("qvm-prefs work template $template");

@@ -19,6 +19,7 @@
 use base "installedtest";
 use strict;
 use testapi;
+use serial_terminal;
 
 
 sub run {
@@ -46,7 +47,7 @@ sub run {
     assert_screen "desktop";
 
     # turn off work domain
-    select_console('root-virtio-terminal');
+    select_root_console();
     script_run('qvm-shutdown --wait work', 200);
     select_console('x11');
 }

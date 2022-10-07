@@ -19,6 +19,7 @@
 use base "installedtest";
 use strict;
 use testapi;
+use serial_terminal;
 
 
 sub run {
@@ -70,7 +71,7 @@ sub run {
     x11_start_program('qubes-global-settings');
     assert_and_click('global-settings-cancel');
 
-    select_console('root-virtio-terminal');
+    select_root_console();
     assert_script_run('qubes-prefs default-kernel $(ls -v /var/lib/qubes/vm-kernels|tail -1|tee /dev/stderr)', 20);
     select_console('x11');
 }

@@ -19,6 +19,7 @@
 use base "installedtest";
 use strict;
 use testapi;
+use serial_terminal;
 
 
 sub run {
@@ -43,7 +44,7 @@ sub run {
 
     # check for one of the guises of the scrollbar bug
     # run a new vm
-    select_console('root-virtio-terminal');
+    select_root_console();
     assert_script_run('qvm-start work', 200);
     select_console('x11');
     # check if its not scrolling
@@ -53,7 +54,7 @@ sub run {
     # close the widget
     send_key('esc');
     send_key('esc');
-    select_console('root-virtio-terminal');
+    select_root_console();
     script_run('qvm-shutdown --wait work', 200);
     select_console('x11');
 
@@ -65,7 +66,7 @@ sub post_fail_hook {
     select_console('x11');
     send_key('esc');
     save_screenshot;
-    select_console('root-virtio-terminal');
+    select_root_console();
     script_run('cat /var/log/xen/console/guest-work.log');
     script_run('cat /var/log/xen/console/guest-sys-net.log');
     $self->SUPER::post_fail_hook;

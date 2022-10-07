@@ -18,12 +18,12 @@
 use base "basetest";
 use strict;
 use testapi;
-use serial_terminal qw(add_serial_console);
+use serial_terminal qw(add_serial_console select_root_console);
 
 sub run {
     my ($self) = @_;
 
-    select_console('root-virtio-terminal');
+    select_root_console();
     type_string "chroot /mnt/sysimage\n";
     # command echo
     wait_serial("chroot");

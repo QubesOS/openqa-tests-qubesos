@@ -19,6 +19,7 @@
 use base "installedtest";
 use strict;
 use testapi;
+use serial_terminal;
 
 
 sub run {
@@ -28,7 +29,7 @@ sub run {
 
     # make sure there's something to update
 
-    select_console('root-virtio-terminal');
+    select_root_console();
     script_run('qvm-features --unset `qubes-prefs default-template` updates-available;qvm-features `qubes-prefs default-template` updates-available 1;qvm-features dom0 updates-available 1');
     select_console('x11');
 

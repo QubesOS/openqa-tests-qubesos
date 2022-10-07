@@ -18,6 +18,7 @@
 use base "installedtest";
 use strict;
 use testapi;
+use serial_terminal;
 
 
 sub run {
@@ -46,7 +47,7 @@ sub run {
     assert_screen("desktop", timeout => 90);
 
     # FIXME: make it packaged, rc.local or such
-    select_console('root-virtio-terminal');
+    select_root_console();
     assert_script_run("echo -e '$testapi::password\n$testapi::password' | qvm-run --nogui -p -u root sys-gui 'passwd --stdin user'");
     select_console('x11');
 

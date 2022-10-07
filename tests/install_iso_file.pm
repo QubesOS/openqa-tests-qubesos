@@ -19,6 +19,7 @@ use base 'basetest';
 use strict;
 use testapi;
 use bootloader_setup;
+use serial_terminal;
 
 # /usr/bin/rpm is not included in the anaconda image :(
 my $rpm_install = <<END;
@@ -76,7 +77,7 @@ sub run {
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;
 
-    select_console('root-virtio-terminal');
+    select_root_console();
 
     if (!check_var("VERSION", "4.0")) {
         # enable network to download grub pkg

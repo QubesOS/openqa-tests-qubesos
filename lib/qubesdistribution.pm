@@ -174,7 +174,7 @@ sub set_standard_prompt {
         type_string "prompt $prompt_sign\n";
     }
     elsif ($os_type eq 'linux') {
-        type_string "which tput 2>&1 && PS1=\"\\\[\$(tput bold 2; tput setaf 1)\\\]$prompt_sign\\\[\$(tput sgr0)\\\] \"\n";
+        type_string("which tput 2>&1 && PS1=\"\\\[\$(tput bold 2; tput setaf 1)\\\]$prompt_sign\\\[\$(tput sgr0)\\\] \"\n", max_interval => 100);
     }
 }
 

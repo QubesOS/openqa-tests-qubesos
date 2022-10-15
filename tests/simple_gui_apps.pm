@@ -36,6 +36,7 @@ sub run {
     assert_and_click("vm-settings-applications", timeout => 60);
     assert_and_click("vm-settings-app-evince");
     send_key('end');
+    check_screen("vm-settings-app-xterm", timeout => 5);
     send_key_until_needlematch("vm-settings-app-xterm", 'up', 20, 5);
     assert_and_click("vm-settings-app-add");
     assert_and_click("vm-settings-app-evince");

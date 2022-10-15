@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 105,
+      "height": 25,
+      "ypos": 290,
+      "xpos": 542
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "windows-Explorer-empty"
+  ]
+}

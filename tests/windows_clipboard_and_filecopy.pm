@@ -102,6 +102,10 @@ sub run {
     }
     assert_screen("windows-Explorer", timeout => 90);
 
+    if (check_screen("gui-warning-large-window")) {
+        assert_and_click("gui-warning-large-window");
+    }
+
     # increased timeout, because it may wait for the network setting to finalize
     assert_and_click("windows-Explorer-Documents", timeout => 60);
     assert_and_click("windows-Explorer-empty", button => 'right');

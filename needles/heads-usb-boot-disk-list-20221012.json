@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 78,
+      "ypos": 250,
+      "width": 228,
+      "height": 29,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw6",
+    "heads-usb-boot-disk-list"
+  ]
+}

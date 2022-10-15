@@ -86,7 +86,11 @@ sub heads_boot_usb {
     # select USB boot
     send_key 'down';
     send_key 'ret';
-    assert_screen(['heads-usb-boot-options', 'heads-usb-boot-list']);
+    assert_screen(['heads-usb-boot-options', 'heads-usb-boot-list', 'heads-usb-boot-disk-list']);
+    if (match_has_tag('heads-usb-boot-disk-list')) {
+        send_key 'ret';
+        assert_screen(['heads-usb-boot-options', 'heads-usb-boot-list']);
+    }
     my $tries = 7;
     # scroll to the right option, with misleadingly named needle heads-usb-boot-options
     while ($tries > 0 and !check_screen('heads-usb-boot-options')) {

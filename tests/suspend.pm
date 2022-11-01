@@ -64,7 +64,10 @@ sub run {
     # if whonix is there, extra checks
     if (script_run('qvm-check sys-whonix') == 0) {
         assert_script_run('set -o pipefail');
-        my $ret = script_run("qvm-run -ap sys-whonix 'LC_ALL=C whonixcheck --verbose --leak-tests --cli' | tee whonixcheck-sys-whonix.log", 500);
+        my $ret = script_run("qvm-run -ap sys-whonix 'LC_ALL=C whonixcheck --verbose --leak-tests --cli' | tee whonixcheck-sys-whonix.log", timeout => 500, die_on_timeout => 0);
+        if (!defined($ret)) {
+            send_key('ctrl-c');
+        }
         upload_logs("whonixcheck-sys-whonix.log");
         if ($ret != 0) {
             record_info('fail', "Whonixcheck for sys-whonix failed", result => 'fail');

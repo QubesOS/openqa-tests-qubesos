@@ -35,10 +35,11 @@ sub run {
     if (check_var('BACKEND', 'generalhw')) {
         power('on');
     }
+    sleep(15);
     wait_screen_change {
-        send_key 'esc';
+        send_key 'ctrl';
     };
-    send_key('esc');
+    send_key('ctrl');
     assert_screen('xscreensaver-prompt');
     # unlock screen
     type_string($password);

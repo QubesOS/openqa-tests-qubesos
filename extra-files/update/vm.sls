@@ -81,12 +81,12 @@ repo-testing:
     - disabled: False
 {% if grains['os'] == 'Fedora' %}
     - name: qubes-testing
-    - baseurl: http://yum.qubes-os.org/r{{ qubes_ver }}/current-testing/vm/fc{{ grains['osrelease'] }}
+    - baseurl: https://yum.qubes-os.org/r{{ qubes_ver }}/current-testing/vm/fc{{ grains['osrelease'] }}
 {% elif grains['os'] == 'CentOS' %}
     - name: qubes-testing
-    - baseurl: http://yum.qubes-os.org/r{{ qubes_ver }}/current-testing/vm/centos{{ grains['osrelease'] }}
+    - baseurl: https://yum.qubes-os.org/r{{ qubes_ver }}/current-testing/vm/centos{{ grains['osrelease'] }}
 {% elif grains['os'] == 'Debian' %}
-    - name: deb [arch=amd64] http://deb.qubes-os.org/r{{ qubes_ver }}/vm {{ grains['oscodename'] }}-testing main
+    - name: deb [arch=amd64] https://deb.qubes-os.org/r{{ qubes_ver }}/vm {{ grains['oscodename'] }}-testing main
     - file: /etc/apt/sources.list.d/qubes-r4.list
     - require:
       - pkg: python3-apt
@@ -98,7 +98,7 @@ repo-testing:
 
 /etc/apt/sources.list.d/qubes-r4.list:
   file.append:
-    - text: deb [arch=amd64] http://deb.qubes-os.org/r{{ qubes_ver }}/vm {{ grains['oscodename'] }}-testing main
+    - text: deb [arch=amd64] https://deb.qubes-os.org/r{{ qubes_ver }}/vm {{ grains['oscodename'] }}-testing main
 
 {% endif %}
 

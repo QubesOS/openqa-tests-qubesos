@@ -107,7 +107,8 @@ sub run {
     script_run('rm -f /srv/salt/_tops/base/*');
 
     # log package versions
-    $self->save_and_upload_log('rpm -qa qubes-template-*', 'template-versions.txt');
+    my $list_tpls_cmd = 'qvm-template list --installed --machine-readable | awk -F\'|\' \'{ print "qubes-template-" $2 "-" gensub("0:", "", 1, $3) }\'';
+    $self->save_and_upload_log("(rpm -qa qubes-template-*; $list_tpls_cmd)", 'template-versions.txt');
     $self->save_and_upload_log('rpm -qa', 'dom0-packages.txt');
     my $templates = script_output('qvm-ls --raw-data --fields name,klass');
     foreach (split /\n/, $templates) {

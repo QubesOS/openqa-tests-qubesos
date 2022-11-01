@@ -72,7 +72,7 @@ sub run {
             send_key('ret');
         }
     
-        $self->save_and_upload_log("(rpm -q qubes-template-$template || qvm-features $template template-release)", "template-$template-version.txt");
+        $self->save_and_upload_log("(qvm-features $template template-release || rpm -q qubes-template-$template)", "template-$template-version.txt");
     }
 
     # restart only sys-whonix - for potential whonixcheck run

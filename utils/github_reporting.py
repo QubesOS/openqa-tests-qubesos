@@ -241,7 +241,10 @@ def main():
 
     reference_jobs = None
     if args.compare_to_build:
-        reference_jobs = OpenQA.get_jobs_ids_for_build(args.compare_to_build, args.version, "update")
+        base_flavor = "update"
+        if args.flavor in ("kernel",):
+            base_flavor = args.flavor
+        reference_jobs = OpenQA.get_jobs_ids_for_build(args.compare_to_build, args.version, base_flavor)
         if not reference_jobs:
             parser.error('No reference jobs found for build id {}.'.format(args.compare_to_build))
             return

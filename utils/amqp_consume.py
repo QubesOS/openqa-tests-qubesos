@@ -91,10 +91,13 @@ def callback_done(ch, method, properties, body):
 
     elif job_data['FLAVOR'] in ('update', 'pull-requests', 'templates', 'kernel'):
         base_job = None
-        if os.path.exists(args.jobs_compare_to) and job_data['FLAVOR'] != 'kernel':
+        if os.path.exists(args.jobs_compare_to):
             with open(args.jobs_compare_to) as f:
                 base_jobs = json.loads(f.read())
-                if version in base_jobs:
+                base_job_key = "{}-{}".format(version, job_data['FLAVOR'])
+                if base_job_key in base_jobs:
+                    base_job = base_jobs[base_job_key]
+                elif version in base_jobs:
                     base_job = base_jobs[version]
         if base_job:
             cmd.extend(['--compare-to-build', str(base_job)])

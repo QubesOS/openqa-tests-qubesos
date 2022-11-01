@@ -56,14 +56,11 @@ if (get_var('ISO')) {
         autotest::loadtest "tests/whonix_firstrun.pm";
     }
     # 4.1+ can set default template in firstboot
-    if (get_var("DEFAULT_TEMPLATE") && check_var("VERSION", "4.0")) {
+    if (get_var("DEFAULT_TEMPLATE") and check_var("VERSION", "4.0")) {
         autotest::loadtest "tests/switch_template.pm";
     }
 } else {
     autotest::loadtest "tests/startup.pm";
-    if (get_var("DEFAULT_TEMPLATE")) {
-        autotest::loadtest "tests/switch_template.pm";
-    }
     if (get_var('DO_UPDATE')) {
         if (get_var('UPDATE_TEMPLATES')) {
             autotest::loadtest "tests/update_templates.pm";
@@ -74,6 +71,9 @@ if (get_var('ISO')) {
         if (get_var('GUIVM')) {
             autotest::loadtest "tests/update_guivm.pm";
         }
+    }
+    if (get_var("DEFAULT_TEMPLATE")) {
+        autotest::loadtest "tests/switch_template.pm";
     }
     if (get_var('PARTITIONING')) {
         autotest::loadtest "tests/switch_pool.pm";

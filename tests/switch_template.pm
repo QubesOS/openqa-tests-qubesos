@@ -66,6 +66,19 @@ switch_template() {
         echo "\$new_template is already default template"
         return
     fi
+    dvm_tpls=\$(qvm-ls --raw-data --fields=name,template,template_for_dispvms|grep "\$default_template|True\$"|cut -f 1 -d '|')
+    for dvmtpl in \$dvm_tpls; do
+        running=\$(qvm-ls --raw-data --fields=name,template,state|grep "\$dvmtpl|Running\$"|cut -f 1 -d '|')
+        if [ -n "\$running" ]; then
+            echo "Shutting down" \$running
+            qvm-shutdown --force --wait \$running
+            qvm-prefs "\$dvmtpl" template "\$new_template" || return 1
+            echo "Starting up" \$running
+            qvm-start --skip-if-running \$running || return 1
+        else
+            qvm-prefs "\$dvmtpl" template "\$new_template" || return 1
+        fi
+    done
     not_running=\$(qvm-ls --raw-data --fields=name,template,state|grep "\$default_template|Halted\$"|cut -f 1 -d '|')
     for vm in \$not_running; do
         echo "Switching \$vm"

@@ -68,6 +68,9 @@ if (get_var('ISO')) {
         if (get_var('UPDATE') || get_var('SALT_SYSTEM_TESTS')) {
             autotest::loadtest "tests/update.pm";
         }
+        if (get_var("SELINUX_TEMPLATES")) {
+            autotest::loadtest "tests/selinux_install.pm";
+        }
         if (get_var('GUIVM')) {
             autotest::loadtest "tests/update_guivm.pm";
         }

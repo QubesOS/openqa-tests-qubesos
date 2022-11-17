@@ -61,7 +61,7 @@ sub run {
             if (check_var('VERSION', '4.0')) {
                 assert_script_run("sudo qubes-dom0-update --clean --enablerepo=qubes-*templates* --action=$action -y qubes-template-$template", timeout => 1500);
             } else {
-                assert_script_run("qvm-template $action --enablerepo=qubes-*templates* $template", timeout => 1500);
+                assert_script_run("qvm-template $action --enablerepo=qubes-*templates* $template", timeout => 1800);
             }
         }
         # unlock the screen, if screenlocker engaged

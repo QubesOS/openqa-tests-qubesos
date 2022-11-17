@@ -30,5 +30,6 @@
   "rpm-oxide": "rpm-oxide",
   "xen-libs": "vmm-xen",
   "xen-hvm-stubdom-linux": "vmm-xen-stubdom-linux",
-  "linux-firmware": "linux-firmware"
+  "linux-firmware": "linux-firmware",
+  "scrypt": "linux-scrypt"
 }

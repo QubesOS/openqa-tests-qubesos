@@ -55,9 +55,9 @@ sub init_consoles {
         my $hostid = (get_var('GENERAL_HW_SOL_ARGS') =~ m/--hostid=(\d+)/)[0];
         # don't need password, there is ssh-agent in place
         $self->add_console('root-virtio-terminal', 'ssh-serial',
-		{ hostname => "test-$hostid.lan", password => "" });
+		{ hostname => "test-$hostid.lan", password => "", use_ssh_agent => 1 });
         $self->add_console('root-ssh-wifi', 'ssh-serial',
-		{ hostname => "192.168.0.100", password => "" });
+		{ hostname => "192.168.0.100", password => "", use_ssh_agent => 1 });
     }
 
     $self->add_console('install-shell',  'tty-console', {tty => 2});

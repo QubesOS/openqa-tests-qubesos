@@ -140,6 +140,9 @@ sub run {
     # log kickstart file
     script_run "cat /mnt/sysimage/root/anaconda-ks.cfg";
 
+    # log efi boot order
+    script_run "efibootmgr -v";
+
     # improve logging
     script_run "echo 'XENCONSOLED_ARGS=--timestamp=all' >> /mnt/sysimage/etc/sysconfig/xencommons";
 

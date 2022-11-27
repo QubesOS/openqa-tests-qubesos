@@ -157,6 +157,8 @@ def run_test():
 
     req_values = request.get_json()
 
+    print(repr(req_values))
+
     buildid = time.strftime('%Y%m%d%H-4.1')
     # cannot serve repo directly from gitlab, because it refuses connections via Tor :/
     repo_url = req_values['REPO_JOB'] + '/artifacts/raw/repo'
@@ -186,6 +188,8 @@ def run_test():
     #values['GUIVM'] = '1'
     #values['UPDATE_TEMPLATES'] = 'fedora-34-xfce'
     values['PULL_REQUESTS'] = req_values['PULL_REQUESTS']
+    if 'SELINUX_TEMPLATES' in req_values:
+        values['SELINUX_TEMPLATES'] = req_values['SELINUX_TEMPLATES']
 
     subprocess.check_call([
         'openqa-cli', 'api', '-X', 'POST',

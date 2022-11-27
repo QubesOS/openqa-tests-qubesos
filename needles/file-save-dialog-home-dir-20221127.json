@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 214,
+      "ypos": 249,
+      "width": 64,
+      "height": 35,
+      "type": "match"
+    },
+    {
+      "xpos": 264,
+      "ypos": 201,
+      "width": 58,
+      "height": 36,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "file-save-dialog-home-dir"
+  ]
+}

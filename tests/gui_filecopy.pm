@@ -1,0 +1,91 @@
+# The Qubes OS Project, https://www.qubes-os.org/
+#
+# Copyright (C) 2022 Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+use base "installedtest";
+use strict;
+use testapi;
+
+
+sub run {
+    select_console('x11');
+    assert_screen "desktop";
+
+    # try to start "Text Editor" (gedit)
+    assert_and_click("menu");
+    assert_and_click("menu-vm-work");
+    assert_and_click("menu-vm-text-editor");
+    assert_screen("work-text-editor", timeout => 90);
+
+    type_string("https://www.qubes-os.org/\n");
+    send_key("ctrl-s");
+    assert_screen("file-save-dialog-home-dir");
+    type_string("test.txt");
+    send_key("ret");
+    sleep(1);
+    # close editor
+    send_key("ctrl-q");
+
+    assert_and_click("menu");
+    assert_and_click("menu-vm-work");
+    assert_and_click("menu-vm-Files");
+
+    # copy to another VM
+    assert_and_click("files-test-file", button => "right");
+    assert_and_click("files-move-to-other");
+    assert_screen("file-copy-prompt");
+    type_string("personal");
+    assert_and_click("file-copy-prompt-confirm");
+
+    # verify, and then open in DispVM
+    assert_and_click("menu");
+    assert_and_click("menu-vm-personal");
+    assert_and_click("menu-vm-Files");
+    assert_screen("personal-files", timeout => 90);
+    assert_and_click("files-qubesincoming", dclick => 1);
+    assert_and_click("files-work", dclick => 1);
+    assert_and_click("files-test-file", button => "right");
+    assert_and_click("files-open-in-dispvm");
+    assert_screen("disp-text-editor", timeout => 90);
+    # verify content
+    assert_screen("text-editor-qubes-url");
+    send_key("ctrl-q");
+    wait_still_screen();
+
+    # then files in personal
+    assert_screen_and_click("personal-files");
+    send_key("ctrl-q");
+    wait_still_screen();
+
+    # and in work
+    assert_screen_and_click("work-files");
+    send_key("ctrl-q");
+    wait_still_screen();
+
+    assert_screen("desktop");
+}
+
+sub post_fail_hook {
+    my ($self) = @_;
+    save_screenshot;
+    $self->SUPER::post_fail_hook;
+
+};
+
+1;
+
+# vim: set sw=4 et:
+

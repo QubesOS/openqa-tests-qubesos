@@ -131,6 +131,7 @@ if (get_var('SYSTEM_TESTS')) {
 if (get_var('TEST_GUI_INTERACTIVE')) {
     autotest::loadtest "tests/simple_gui_apps.pm";
     autotest::loadtest "tests/clipboard_and_web.pm";
+    autotest::loadtest "tests/gui_filecopy.pm";
     autotest::loadtest "tests/screenlocker_idle_watch.pm";
     autotest::loadtest "tests/screenlocker_leaks.pm";
     autotest::loadtest "tests/screenlocker_disable.pm";

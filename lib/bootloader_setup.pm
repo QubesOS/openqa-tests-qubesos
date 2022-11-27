@@ -63,7 +63,7 @@ sub tianocore_select_bootloader {
 }
 
 sub heads_boot_usb {
-    assert_screen(['heads-menu', 'heads-no-boot', 'heads-no-os']);
+    assert_screen(['heads-menu', 'heads-no-boot', 'heads-no-os'], timeout => 45);
     if (match_has_tag('heads-no-os')) {
         send_key 'down';
         send_key 'down';

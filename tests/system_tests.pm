@@ -100,6 +100,7 @@ ENDFUNC
         send_key('esc');
         send_key('ctrl-c');
         send_key('ret');
+        sleep(2);
         x11_start_program('xdotool search --class ^xterm windowfocus', valid => 0);
 
         upload_logs("tests-$test.log");

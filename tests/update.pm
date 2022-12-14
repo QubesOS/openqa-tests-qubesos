@@ -92,11 +92,7 @@ sub run {
         # disable custom repo for VMs - it is empty
         assert_script_run("sed -i -e '/  repo/d' $pillar_dir/init.sls");
     }
-    my $ret = script_run("(set -o pipefail; qubesctl --max-concurrency=1 --skip-dom0 $targets --show-output state.highstate 2>&1 | tee -a qubesctl-upgrade.log)", timeout => 14400);
-    if ($ret != 0) {
-        # make it possible to catch via developer mode
-        assert_screen('UPDATE-FAILED');
-    }
+    assert_script_run("(set -o pipefail; qubesctl --max-concurrency=1 --skip-dom0 $targets --show-output state.highstate 2>&1 | tee -a qubesctl-upgrade.log)", timeout => 14400);
     upload_logs("qubesctl-upgrade.log");
     assert_script_run('tail -1 qubesctl-upgrade.log|grep -v failed');
     assert_script_run('! grep ERROR qubesctl-upgrade.log');

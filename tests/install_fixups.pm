@@ -57,20 +57,26 @@ sub run {
     if (check_var("BACKEND", "qemu")) {
         $extra_xen_opts .= ' spec-ctrl=no';
     }
+    my $serial_console = "com1";
     if (check_var("MACHINE", "hw7")) {
         # not really AMT, but LPSS on PCI bus 0
         $extra_xen_opts .= ' com1=115200,8n1,amt';
+    } elsif (check_var("MACHINE", "hw2")) {
+        $extra_xen_opts .= ' com1=115200,8n1';
+    } elsif (check_var("MACHINE", "hw8")) {
+        $extra_xen_opts .= ' dbgp=xhci@pci00:14.0,share=yes';
+        $serial_console = "xhci";
     }
-    script_run "sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /mnt/sysimage/boot/grub2/grub.cfg";
-    script_run "sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
+    script_run "sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /mnt/sysimage/boot/grub2/grub.cfg";
+    script_run "sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
     script_run "sed -i -e 's:\\\${xen_rm_opts}::' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
     my $xen_cfg = '/mnt/sysimage/boot/efi/EFI/qubes/xen.cfg';
     if (!script_run("grep console= $xen_cfg")) {
-        script_run "sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' $xen_cfg";
+        script_run "sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' $xen_cfg";
     } else {
-        script_run "sed -i -e 's:^options=:options=console=vga,com1 $extra_xen_opts :' $xen_cfg";
+        script_run "sed -i -e 's/^options=/options=console=vga,$serial_console $extra_xen_opts /' $xen_cfg";
     }
-    script_run "sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /mnt/sysimage/etc/default/grub";
+    script_run "sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /mnt/sysimage/etc/default/grub";
 
     if (get_var('VERSION') eq '4.0') {
         # need to use explicit UUID to override (empty) options from /etc/crypttab,
@@ -117,12 +123,6 @@ sub run {
         my $rollback = <$fh>;
         close($fh);
         script_run "echo '$rollback' > /mnt/sysimage/boot/kexec_hotp_counter";
-    }
-
-    if (check_var("MACHINE", "hw7")) {
-        # broken RTC? battery dead?
-        script_run("date -s @" . time());
-        script_run("hwclock -w");
     }
 
     # log kickstart file

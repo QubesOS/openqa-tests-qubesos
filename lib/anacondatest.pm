@@ -43,8 +43,10 @@ sub post_fail_hook {
 
     save_screenshot;
     select_console('install-shell');
-    # during installation Xen doesn't have console=com1
-    $testapi::serialdev = 'ttyS0';
+    if (check_var("BACKEND", "qemu")) {
+        # during installation Xen doesn't have console=com1
+        $testapi::serialdev = 'ttyS0';
+    }
     if (!$self->{network_up}) {
         enable_dom0_network_no_netvm();
         $self->{network_up} = 1;
@@ -75,6 +77,7 @@ sub post_fail_hook {
     unless (script_run "tar czf /tmp/var_log.tar.gz /var/log") {
         upload_logs "/tmp/var_log.tar.gz";
     }
+    script_run "ls -l /tmp";
 
     # Upload anaconda core dump, if there is one
     unless (script_run "ls /tmp/anaconda.core.* && tar czf /tmp/anaconda.core.tar.gz /tmp/anaconda.core.*") {

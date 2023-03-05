@@ -197,6 +197,9 @@ sub init_gui_session {
     }
     assert_screen("no-notifications");
 
+    # XXX wait some time for other VMs to start
+    sleep(60);
+
     $self->restore_keyboard_layout;
 
     # disable screensaver

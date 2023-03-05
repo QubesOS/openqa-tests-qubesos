@@ -95,6 +95,14 @@ sub run {
         type_string("systemctl start anaconda-shell\@hvc1\n");
         select_console('installation', await_console=>0);
     }
+
+    if (check_var("MACHINE", "hw7")) {
+        select_root_console();
+        # broken RTC? battery dead?
+        script_run("date -s @" . time());
+        script_run("hwclock -w");
+        select_console('installation', await_console=>0);
+    }
 }
 
 sub test_flags {

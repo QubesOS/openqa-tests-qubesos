@@ -45,6 +45,11 @@ sub run {
     type_string($password);
     send_key('ret');
     sleep(10);
+
+    # stupid workaround for "ttyAMA ttyAMA1: 1 input overrun(s)" on RPi side
+    if (check_var("MACHINE", "hw2")) {
+        type_string("xl debug-key h;sleep 0.2;xl debug-key h;xl debug-key h\n");
+    }
     
     # now verify if everything is right
     assert_script_run('true');

@@ -92,18 +92,28 @@ sub run {
         # apply changes to grub, since /etc/default/grub wasn't present during
         # initial install_fixups.pm call
         my $extra_xen_opts = 'loglvl=all guest_loglvl=all';
+        my $serial_console = "com1";
         if (check_var("BACKEND", "qemu")) {
             $extra_xen_opts .= ' spec-ctrl=no';
         }
+        if (check_var("MACHINE", "hw7")) {
+            # not really AMT, but LPSS on PCI bus 0
+            $extra_xen_opts .= ' com1=115200,8n1,amt';
+        } elsif (check_var("MACHINE", "hw2")) {
+            $extra_xen_opts .= ' com1=115200,8n1';
+        } elsif (check_var("MACHINE", "hw8")) {
+            $extra_xen_opts .= ' dbgp=xhci@pci00:14.0,share=yes';
+            $serial_console = "xhci";
+        }
         if (!script_run("grep 'GRUB_CMDLINE_XEN_DEFAULT.*console=' /etc/default/grub")) {
-            script_run "sudo sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /etc/default/grub";
+            script_run "sudo sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /etc/default/grub";
         } else {
-            script_run "sudo sed -i -e 's:GRUB_CMDLINE_XEN_DEFAULT=\":\\0console=vga,com1 $extra_xen_opts :' /etc/default/grub";
+            script_run "sudo sed -i -e 's/GRUB_CMDLINE_XEN_DEFAULT=\"/\\0console=vga,$serial_console $extra_xen_opts /' /etc/default/grub";
         }
         if (!script_run("grep 'multiboot.*console=' /boot/efi/EFI/qubes/grub.cfg")) {
-            script_run "sudo sed -i -e 's:console=none:console=vga,com1 $extra_xen_opts:' /boot/efi/EFI/qubes/grub.cfg";
+            script_run "sudo sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /boot/efi/EFI/qubes/grub.cfg";
         } else {
-            script_run "sudo sed -i -e 's:multiboot.*:\\0 console=vga,com1 $extra_xen_opts:' /boot/efi/EFI/qubes/grub.cfg";
+            script_run "sudo sed -i -e 's/multiboot.*/\\0 console=vga,$serial_console $extra_xen_opts/' /boot/efi/EFI/qubes/grub.cfg";
         }
         my $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:console=hvc0 console=tty0:g\'';
         if (check_var("BACKEND", "qemu")) {

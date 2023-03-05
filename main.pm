@@ -162,6 +162,12 @@ if (get_var("GUI_TESTS")) {
         autotest::loadtest "tests/qubesmanager_vmsettings.pm";
 }
 
+if (get_var('TEST_GUI_INTERACTIVE')) {
+    # collect logs from some successful test that is scheduled on all hw*
+    # workers
+    autotest::loadtest "tests/collect_logs.pm";
+}
+
 if (get_var("STORE_HDD_1") || get_var("PUBLISH_HDD_1")) {
     autotest::loadtest "tests/shutdown.pm";
 }

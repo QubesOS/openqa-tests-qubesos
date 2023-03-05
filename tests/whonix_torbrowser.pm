@@ -29,14 +29,17 @@ sub run {
     assert_and_click("menu-vm-anon-whonix");
     assert_and_click("menu-tor-browser");
 
-    assert_screen("anon-whonix-tor-browser", timeout => 90);
+    assert_screen("anon-whonix-tor-browser", timeout => 120);
     # wait for full startup
     sleep(2);
     assert_and_click("tor-browser-address-bar");
     type_string("https://check.torproject.org/");
     send_key("ret");
-    assert_screen("tor-browser-ipcheck-ok");
+    assert_screen("tor-browser-ipcheck-ok", timeout => 45);
     send_key("ctrl-q");
+    if (check_screen("torbrowser-multitab-close", timeout => 20)) {
+        assert_and_click("torbrowser-multitab-close");
+    }
     wait_still_screen();
     assert_screen("desktop-clear");
 }

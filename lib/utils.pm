@@ -64,8 +64,8 @@ sub assert_screen_with_keypress {
     # occasionally send a key, to disable screensaver
     my $starttime = time;
     while (time - $starttime < $timeout) {
-        last if check_screen($tag);
-        send_key('ctrl') if wait_still_screen(7, 15);
+        last if check_screen($tag, timeout => 15);
+        send_key('ctrl');
     }
     assert_screen($tag);
 }

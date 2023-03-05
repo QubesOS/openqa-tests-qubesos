@@ -2,11 +2,11 @@
   "JobGroups": [
     {
       "group_name": "Qubes OS",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-4.0-install-iso-x86_64:\n    distri: qubesos\n    flavor: install-iso\n    version: '4.0'\n  qubesos-4.1-install-iso-x86_64:\n    distri: qubesos\n    flavor: install-iso\n    version: '4.1'\nscenarios:\n  x86_64:\n    qubesos-4.0-install-iso-x86_64:\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_default:\n        machine: 64bit\n        priority: 15\n    - install_default:\n        machine: uefi\n        priority: 15\n    - install_iso_file:\n        machine: 64bit\n        priority: 15\n    - install_over_existing:\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_xfs:\n        machine: 64bit\n        priority: 20\n    - install_xfs:\n        machine: uefi\n        priority: 20\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        machine: 64bit\n        priority: 20\n    - install_keyboard_layout:\n        machine: uefi\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_unencrypted_upload:\n        machine: uefi\n        priority: 51\n    - install_unencrypted_upload:\n        machine: 64bit\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n    - install_default:\n        machine: hw5\n    - install_btrfs:\n        machine: hw5\n    qubesos-4.1-install-iso-x86_64:\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_usb:\n        machine: uefi\n        priority: 10\n    - install_usb:\n        machine: 64bit\n        priority: 10\n    - install_default:\n        machine: 64bit\n        priority: 15\n    - install_default:\n        machine: uefi\n        priority: 15\n    - install_iso_file:\n        machine: 64bit\n        priority: 15\n    - install_over_existing:\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_xfs:\n        machine: 64bit\n        priority: 20\n    - install_xfs:\n        machine: uefi\n        priority: 20\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        machine: 64bit\n        priority: 20\n    - install_keyboard_layout:\n        machine: uefi\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_unencrypted_upload:\n        machine: uefi\n        priority: 51\n    - install_unencrypted_upload:\n        machine: 64bit\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n    - install_default:\n        machine: hw1\n    - install_btrfs:\n        machine: hw1\n          \n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-4.0-install-iso-x86_64:\n    distri: qubesos\n    flavor: install-iso\n    version: '4.0'\n  qubesos-4.1-install-iso-x86_64:\n    distri: qubesos\n    flavor: install-iso\n    version: '4.1'\n  qubesos-4.2-install-iso-x86_64:\n    distri: qubesos\n    flavor: install-iso\n    version: '4.2'\nscenarios:\n  x86_64:\n    qubesos-4.0-install-iso-x86_64:\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_default:\n        machine: 64bit\n        priority: 15\n    - install_default:\n        machine: uefi\n        priority: 15\n    - install_iso_file:\n        machine: 64bit\n        priority: 15\n    - install_over_existing:\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_xfs:\n        machine: 64bit\n        priority: 20\n    - install_xfs:\n        machine: uefi\n        priority: 20\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        machine: 64bit\n        priority: 20\n    - install_keyboard_layout:\n        machine: uefi\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_unencrypted_upload:\n        machine: uefi\n        priority: 51\n    - install_unencrypted_upload:\n        machine: 64bit\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n    - install_default:\n        machine: hw5\n    - install_btrfs:\n        machine: hw5\n    qubesos-4.1-install-iso-x86_64:\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_minimal_kernel_latest:\n        machine: uefi\n        testsuite: install_minimal\n        priority: 10\n        settings:\n          KERNEL_VERSION: latest\n    - install_usb:\n        machine: uefi\n        priority: 10\n    - install_usb:\n        machine: 64bit\n        priority: 10\n    - install_default:\n        machine: 64bit\n        priority: 15\n    - install_default:\n        machine: uefi\n        priority: 15\n    - install_iso_file:\n        machine: 64bit\n        priority: 15\n    - install_over_existing:\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_xfs:\n        machine: 64bit\n        priority: 20\n    - install_xfs:\n        machine: uefi\n        priority: 20\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        machine: 64bit\n        priority: 20\n    - install_keyboard_layout:\n        machine: uefi\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_unencrypted_upload:\n        machine: 64bit\n    - install_unencrypted_upload_kernel_latest:\n        testsuite: install_unencrypted_upload\n        machine: 64bit\n        settings:\n          KERNEL_VERSION: latest\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n    - install_nvme_kernel_latest:\n        machine: 64bit\n        testsuite: install_nvme\n        priority: 10\n        settings:\n          KERNEL_VERSION: latest\n    - install_nvme_kernel_latest:\n        machine: uefi\n        testsuite: install_nvme\n        priority: 10\n        settings:\n          KERNEL_VERSION: latest\n    - install_default:\n        machine: hw1\n    - install_default_kernel_latest:\n        machine: hw7\n        testsuite: install_default\n        settings:\n          KERNEL_VERSION: latest\n    - install_btrfs:\n        machine: hw1\n    - install_default:\n        machine: hw6\n        priority: 10\n    qubesos-4.2-install-iso-x86_64:\n    - install_minimal:\n        machine: mac\n        priority: 40\n    - install_minimal:\n        machine: uefi\n        priority: 10\n    - install_minimal:\n        machine: 64bit\n        priority: 10\n    - install_minimal_kernel_latest:\n        machine: uefi\n        testsuite: install_minimal\n        priority: 10\n        settings:\n          KERNEL_VERSION: latest\n    - install_usb:\n        machine: uefi\n        priority: 10\n    - install_usb:\n        machine: 64bit\n        priority: 10\n    - install_default:\n        machine: 64bit\n        priority: 15\n    - install_default:\n        machine: uefi\n        priority: 15\n    - install_iso_file:\n        machine: 64bit\n        priority: 15\n    - install_over_existing:\n        priority: 15\n    - install_btrfs:\n        machine: uefi\n        priority: 15\n    - install_btrfs:\n        machine: 64bit\n        priority: 15\n    - install_xfs:\n        machine: 64bit\n        priority: 20\n    - install_xfs:\n        machine: uefi\n        priority: 20\n    - install_usbvm_combined:\n        priority: 10\n    - install_no_usbvm:\n        priority: 10\n    - install_keyboard_layout:\n        machine: 64bit\n        priority: 20\n    - install_keyboard_layout:\n        machine: uefi\n        priority: 20\n    - install_locale:\n        priority: 20\n    - install_unencrypted_upload:\n        machine: 64bit\n    - install_unencrypted_upload_kernel_latest:\n        machine: 64bit\n        testsuite: install_unencrypted_upload\n        settings:\n          KERNEL_VERSION: latest\n    - install_nvme:\n        machine: 64bit\n        priority: 10\n    - install_nvme:\n        machine: uefi\n        priority: 10\n    - install_nvme_kernel_latest:\n        machine: 64bit\n        testsuite: install_nvme\n        priority: 10\n        settings:\n          KERNEL_VERSION: latest\n    - install_nvme_kernel_latest:\n        machine: uefi\n        testsuite: install_nvme\n        priority: 10\n        settings:\n          KERNEL_VERSION: latest\n    - install_default:\n        machine: hw1\n    - install_default:\n        machine: hw6\n    - install_default_kernel_latest:\n        machine: hw7\n        testsuite: install_default\n        settings:\n          KERNEL_VERSION: latest\n    - install_btrfs:\n        machine: hw1\n"
     },
     {
       "group_name": "Qubes OS pull requests",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-pull-requests-x86_64:\n    distri: qubesos\n    flavor: pull-requests\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-pull-requests-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_backupcompatibility\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - system_tests_dispvm\n    - system_tests_devices\n    - system_tests_gui_interactive:\n        priority: 40\n    - system_tests_guivm_gui_interactive:\n        priority: 40\n    - system_tests_basic_vm_qrexec_gui_xfs\n    - system_tests_basic_vm_qrexec_gui_btrfs\n    - system_tests_basic_vm_qrexec_gui_ext4\n    - system_tests_usbproxy\n    - system_tests_qrexec\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupdispvm\n    - install_default_upload:\n        machine: hw1\n        priority: 5\n        settings:\n          ISO: Qubes-%VERSION%-stable.iso\n          USBVM: \"none\"\n          HDD_1: \"\"\n    - system_tests_update:\n        machine: hw1\n        priority: 10\n        settings:\n          START_DIRECTLY_AFTER_TEST: install_default_upload\n          HDD_1: disk_default_%VERSION%_%MACHINE%.qcow2\n          WORKER_CLASS: hw1\n    - system_tests_basic_vm_qrexec_gui:\n        machine: hw1\n    - system_tests_gui_interactive:\n        machine: hw1\n#    - system_tests_guivm_gui_interactive:\n#        machine: hw1\n    - system_tests_whonix:\n        machine: hw1\n        priority: 40\n    - system_tests_gui_tools:\n        machine: hw1\n        priority: 40\n    - system_tests_suspend:\n        machine: hw1\n        priority: 40\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-pull-requests-x86_64:\n    distri: qubesos\n    flavor: pull-requests\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-pull-requests-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_backupcompatibility\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - system_tests_dispvm\n    - system_tests_devices\n    - system_tests_gui_interactive:\n        priority: 40\n    - system_tests_guivm_gui_interactive:\n        priority: 40\n    - system_tests_basic_vm_qrexec_gui_xfs\n    - system_tests_basic_vm_qrexec_gui_btrfs\n    - system_tests_basic_vm_qrexec_gui_ext4\n    - system_tests_usbproxy\n    - system_tests_qrexec\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupdispvm\n    - install_default_upload:\n        machine: hw1\n        priority: 5\n        settings:\n          ISO: Qubes-%VERSION%-stable.iso\n          HDD_1: \"\"\n    - system_tests_update:\n        machine: hw1\n        priority: 10\n        settings:\n          START_DIRECTLY_AFTER_TEST: install_default_upload\n          HDD_1: disk_default_%VERSION%_%MACHINE%.qcow2\n          WORKER_CLASS: hw1\n    - system_tests_basic_vm_qrexec_gui:\n        machine: hw1\n    - system_tests_gui_interactive:\n        machine: hw1\n#    - system_tests_guivm_gui_interactive:\n#        machine: hw1\n    - system_tests_whonix:\n        machine: hw1\n        priority: 40\n    - system_tests_qwt_win10:\n        machine: hw1\n        priority: 40\n    - system_tests_qwt_win7:\n        machine: hw1\n        priority: 40\n    - system_tests_gui_tools:\n        machine: hw1\n        priority: 40\n    - system_tests_suspend:\n        machine: hw1\n        priority: 40\n"
     },
     {
       "group_name": "Qubes OS release upgrade",
@@ -14,15 +14,19 @@
     },
     {
       "group_name": "Qubes OS templates",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-templates-x86_64:\n    distri: qubesos\n    flavor: templates\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-templates-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    - system_tests_extra\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix\n    - system_tests_splitgpg\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-templates-x86_64:\n    distri: qubesos\n    flavor: templates\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-templates-x86_64:\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backup\n    - system_tests_pvgrub_salt_storage\n    # this tests only default template, so setting DEFAULT_TEMPLATE is expected\n    - system_tests_gui_interactive\n    - system_tests_extra\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix\n    - system_tests_splitgpg\n"
     },
     {
       "group_name": "Qubes OS updates",
-      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-4.0-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.0'\n  qubesos-4.1-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.1'\nscenarios:\n  x86_64:\n    qubesos-4.0-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_devices\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - install_default_upload:\n        machine: hw5\n        priority: 5\n        settings:\n          ISO: Qubes-%VERSION%-stable.iso\n          USBVM: \"none\"\n          HDD_1: \"\"\n    - system_tests_update:\n        machine: hw5\n        priority: 10\n        settings:\n          START_DIRECTLY_AFTER_TEST: install_default_upload\n          HDD_1: disk_default_%VERSION%_%MACHINE%.qcow2\n          WORKER_CLASS: hw5\n    - system_tests_basic_vm_qrexec_gui:\n        machine: hw5\n    - system_tests_gui_interactive:\n        machine: hw5\n    - system_tests_whonix:\n        machine: hw5\n        priority: 40\n    - system_tests_gui_tools:\n        machine: hw5\n        priority: 40\n    - system_tests_suspend:\n        machine: hw5\n        priority: 40\n    qubesos-4.1-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_backupdispvm\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_guivm_gui_interactive\n    - system_tests_dispvm\n    - system_tests_devices\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_basic_vm_qrexec_gui_xfs\n    - system_tests_basic_vm_qrexec_gui_btrfs\n    - system_tests_basic_vm_qrexec_gui_ext4\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - install_default_upload:\n        machine: hw1\n        priority: 5\n        settings:\n          ISO: Qubes-%VERSION%-stable.iso\n          USBVM: \"none\"\n          HDD_1: \"\"\n    - system_tests_update:\n        machine: hw1\n        priority: 10\n        settings:\n          START_DIRECTLY_AFTER_TEST: install_default_upload\n          HDD_1: disk_default_%VERSION%_%MACHINE%.qcow2\n          WORKER_CLASS: hw1\n    - system_tests_basic_vm_qrexec_gui:\n        machine: hw1\n    - system_tests_gui_interactive:\n        machine: hw1\n#    - system_tests_guivm_gui_interactive:\n#        machine: hw1\n    - system_tests_qwt_win10:\n        machine: hw1\n        priority: 40\n    - system_tests_whonix:\n        machine: hw1\n        priority: 40\n    - system_tests_gui_tools:\n        machine: hw1\n        priority: 40\n    - system_tests_suspend:\n        machine: hw1\n        priority: 40\n"
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-4.0-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.0'\n  qubesos-4.1-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.1'\n  qubesos-4.2-update-x86_64:\n    distri: qubesos\n    flavor: update\n    version: '4.2'\nscenarios:\n  x86_64:\n    qubesos-4.0-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_devices\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - install_default_upload:\n        machine: hw5\n        priority: 5\n        settings:\n          ISO: Qubes-%VERSION%-stable.iso\n          HDD_1: \"\"\n    - system_tests_update:\n        machine: hw5\n        priority: 10\n        settings:\n          START_DIRECTLY_AFTER_TEST: install_default_upload\n          HDD_1: disk_default_%VERSION%_%MACHINE%.qcow2\n          WORKER_CLASS: hw5\n    - system_tests_basic_vm_qrexec_gui:\n        machine: hw5\n    - system_tests_gui_interactive:\n        machine: hw5\n    - system_tests_whonix:\n        machine: hw5\n        priority: 40\n    - system_tests_gui_tools:\n        machine: hw5\n        priority: 40\n    - system_tests_suspend:\n        machine: hw5\n        priority: 40\n    qubesos-4.1-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_backupdispvm\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_guivm_gui_interactive\n    - system_tests_dispvm\n    - system_tests_devices\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_basic_vm_qrexec_gui_xfs\n    - system_tests_basic_vm_qrexec_gui_btrfs\n    - system_tests_basic_vm_qrexec_gui_ext4\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - install_default_upload:\n        machine: hw1\n        priority: 5\n        settings:\n          ISO: Qubes-%VERSION%-stable.iso\n          HDD_1: \"\"\n    - system_tests_update:\n        machine: hw1\n        priority: 10\n        settings:\n          START_DIRECTLY_AFTER_TEST: install_default_upload\n          HDD_1: disk_default_%VERSION%_%MACHINE%.qcow2\n          WORKER_CLASS: hw1\n    - system_tests_basic_vm_qrexec_gui:\n        machine: hw1\n    - system_tests_gui_interactive:\n        machine: hw1\n#    - system_tests_guivm_gui_interactive:\n#        machine: hw1\n    - system_tests_qwt_win10:\n        machine: hw1\n        priority: 40\n    - system_tests_qwt_win7:\n        machine: hw1\n        priority: 40\n    - system_tests_whonix:\n        machine: hw1\n        priority: 40\n    - system_tests_gui_tools:\n        machine: hw1\n        priority: 40\n    - system_tests_suspend:\n        machine: hw1\n        priority: 40\n    qubesos-4.2-update-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_basic_vm_qrexec_gui\n    - system_tests_backup\n    - system_tests_backupdispvm\n    - system_tests_qrexec\n    - system_tests_pvgrub_salt_storage\n    - system_tests_gui_interactive\n    - system_tests_guivm_gui_interactive\n    - system_tests_dispvm\n    - system_tests_devices\n    - system_tests_network\n    - system_tests_network_ipv6\n    - system_tests_network_updates\n    - system_tests_backupcompatibility\n    - system_tests_basic_vm_qrexec_gui_xfs\n    - system_tests_basic_vm_qrexec_gui_btrfs\n    - system_tests_basic_vm_qrexec_gui_ext4\n    - system_tests_extra\n    - system_tests_usbproxy\n    - system_tests_whonix:\n        priority: 40\n    - system_tests_gui_tools:\n        priority: 40\n    - system_tests_manager\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_splitgpg\n    - install_default_upload:\n        machine: hw1\n        priority: 5\n        settings:\n          ISO: Qubes-%VERSION%-stable.iso\n          HDD_1: \"\"\n    - system_tests_update:\n        machine: hw1\n        priority: 10\n        settings:\n          START_DIRECTLY_AFTER_TEST: install_default_upload\n          HDD_1: disk_default_%VERSION%_%MACHINE%.qcow2\n          WORKER_CLASS: hw1\n    - system_tests_basic_vm_qrexec_gui:\n        machine: hw1\n    - system_tests_gui_interactive:\n        machine: hw1\n#    - system_tests_guivm_gui_interactive:\n#        machine: hw1\n    - system_tests_qwt_win10:\n        machine: hw1\n        priority: 40\n    - system_tests_qwt_win7:\n        machine: hw1\n        priority: 40\n    - system_tests_whonix:\n        machine: hw1\n        priority: 40\n    - system_tests_gui_tools:\n        machine: hw1\n        priority: 40\n    - system_tests_suspend:\n        machine: hw1\n        priority: 40\n"
     },
     {
       "group_name": "Qubes-Whonix updates",
       "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-qubes-whonix-x86_64:\n    distri: qubesos\n    flavor: qubes-whonix\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-qubes-whonix-x86_64:\n    - system_tests_update:\n        priority: 10\n    - system_tests_whonix\n    - system_tests_suspend\n"
+    },
+    {
+      "group_name": "Xen/Linux",
+      "template": "defaults:\n  x86_64:\n    machine: 64bit\n    priority: 50\nproducts:\n  qubesos-*-kernel-x86_64:\n    distri: qubesos\n    flavor: kernel\n    version: '*'\nscenarios:\n  x86_64:\n    qubesos-*-kernel-x86_64:\n    - system_tests_network\n    - system_tests_update:\n        priority: 10\n    - system_tests_suspend:\n        priority: 40\n    - system_tests_gui_interactive:\n        priority: 40\n    - system_tests_guivm_gui_interactive:\n        priority: 40\n    - system_tests_network_updates\n    - install_default_upload:\n        machine: hw1\n        priority: 5\n        settings:\n          ISO: Qubes-%VERSION%-stable.iso\n          HDD_1: \"\"\n    - system_tests_update:\n        machine: hw1\n        priority: 10\n        settings:\n          START_DIRECTLY_AFTER_TEST: install_default_upload\n          HDD_1: disk_default_%VERSION%_%MACHINE%.qcow2\n          WORKER_CLASS: hw1\n    - system_tests_basic_vm_qrexec_gui:\n        machine: hw1\n    - system_tests_gui_interactive:\n        machine: hw1\n#    - system_tests_guivm_gui_interactive:\n#        machine: hw1\n    - system_tests_gui_tools:\n        machine: hw1\n        priority: 40\n    - system_tests_suspend:\n        machine: hw1\n        priority: 40\n    - install_default_upload:\n        machine: hw6\n        priority: 5\n        settings:\n          ISO: Qubes-%VERSION%-stable.iso\n          HDD_1: \"\"\n    - system_tests_update:\n        machine: hw6\n        priority: 10\n        settings:\n          START_DIRECTLY_AFTER_TEST: install_default_upload\n          HDD_1: disk_default_%VERSION%_%MACHINE%.qcow2\n          WORKER_CLASS: hw6\n    - system_tests_basic_vm_qrexec_gui:\n        machine: hw6\n    - system_tests_gui_interactive:\n        machine: hw6\n#    - system_tests_guivm_gui_interactive:\n#        machine: hw6\n    - system_tests_gui_tools:\n        machine: hw6\n        priority: 40\n    - system_tests_suspend:\n        machine: hw6\n        priority: 40\n    - install_default_upload:\n        machine: hw7\n        priority: 5\n        settings:\n          ISO: Qubes-%VERSION%-stable.iso\n          HDD_1: \"\"\n    - system_tests_update:\n        machine: hw7\n        priority: 10\n        settings:\n          START_DIRECTLY_AFTER_TEST: install_default_upload\n          HDD_1: disk_default_%VERSION%_%MACHINE%.qcow2\n          WORKER_CLASS: hw7\n    - system_tests_basic_vm_qrexec_gui:\n        machine: hw7\n    - system_tests_gui_interactive:\n        machine: hw7\n#    - system_tests_guivm_gui_interactive:\n#        machine: hw7\n    - system_tests_gui_tools:\n        machine: hw7\n        priority: 40\n    - system_tests_suspend:\n        machine: hw7\n        priority: 40\n    - install_default_upload:\n        machine: hw2\n        priority: 5\n        settings:\n          ISO: Qubes-%VERSION%-stable.iso\n          HDD_1: \"\"\n    - system_tests_update:\n        machine: hw2\n        priority: 10\n        settings:\n          START_DIRECTLY_AFTER_TEST: install_default_upload\n          HDD_1: disk_default_%VERSION%_%MACHINE%.qcow2\n          WORKER_CLASS: hw2\n    - system_tests_basic_vm_qrexec_gui:\n        machine: hw2\n    - system_tests_gui_interactive:\n        machine: hw2\n#    - system_tests_guivm_gui_interactive:\n#        machine: hw2\n    - system_tests_gui_tools:\n        machine: hw2\n        priority: 40\n    - system_tests_suspend:\n        machine: hw2\n        priority: 40\n"
     },
     {
       "group_name": "qubesos-update",
@@ -42,6 +46,10 @@
         {
           "key": "HDDSIZEGB",
           "value": "80"
+        },
+        {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
         },
         {
           "key": "NICMODEL",
@@ -206,6 +214,10 @@
           "value": "hw1"
         },
         {
+          "key": "KERNEL_VERSION",
+          "value": "latest"
+        },
+        {
           "key": "NUMDISKS",
           "value": "1"
         },
@@ -216,10 +228,6 @@
         {
           "key": "UEFI",
           "value": "1"
-        },
-        {
-          "key": "USBVM",
-          "value": "none"
         }
       ]
     },
@@ -268,10 +276,102 @@
         {
           "key": "SERIALDEV",
           "value": "ttyS0"
+        }
+      ]
+    },
+    {
+      "backend": "generalhw",
+      "name": "hw7",
+      "settings": [
+        {
+          "key": "+WORKER_CLASS",
+          "value": "hw7"
         },
         {
-          "key": "USBVM",
-          "value": "none"
+          "key": "CONNECT_WIFI",
+          "value": "1"
+        },
+        {
+          "key": "NUMDISKS",
+          "value": "1"
+        },
+        {
+          "key": "SERIALDEV",
+          "value": "hvc0"
+        },
+        {
+          "key": "UEFI",
+          "value": "1"
+        },
+        {
+          "key": "USBBOOT",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "backend": "generalhw",
+      "name": "hw2",
+      "settings": [
+        {
+          "key": "+WORKER_CLASS",
+          "value": "hw2"
+        },
+        {
+          "key": "NUMDISKS",
+          "value": "1"
+        },
+        {
+          "key": "SERIALDEV",
+          "value": "hvc0"
+        },
+        {
+          "key": "UEFI",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "backend": "generalhw",
+      "name": "hw8",
+      "settings": [
+        {
+          "key": "+WORKER_CLASS",
+          "value": "hw8"
+        },
+        {
+          "key": "NUMDISKS",
+          "value": "1"
+        },
+        {
+          "key": "SERIALDEV",
+          "value": "hvc0"
+        },
+        {
+          "key": "UEFI",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "backend": "generalhw",
+      "name": "hw9",
+      "settings": [
+        {
+          "key": "NUMDISKS",
+          "value": "1"
+        },
+        {
+          "key": "SERIALDEV",
+          "value": "ttyS0"
+        },
+        {
+          "key": "UEFI",
+          "value": "1"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "hw9"
         }
       ]
     }
@@ -285,6 +385,10 @@
         {
           "key": "ISO_MAXSIZE",
           "value": "5900372992"
+        },
+        {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
         }
       ],
       "version": "*"
@@ -297,6 +401,10 @@
         {
           "key": "HDD_1",
           "value": "disk_unencrypted_updated.qcow2"
+        },
+        {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
         },
         {
           "key": "MAX_JOB_TIME",
@@ -323,6 +431,10 @@
           "value": "disk_unencrypted_updated.qcow2"
         },
         {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
+        },
+        {
           "key": "MAX_JOB_TIME",
           "value": "21600"
         },
@@ -347,6 +459,10 @@
           "value": "disk_unencrypted_updated.qcow2"
         },
         {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
+        },
+        {
           "key": "MAX_JOB_TIME",
           "value": "21600"
         },
@@ -369,6 +485,10 @@
         {
           "key": "ISO_MAXSIZE",
           "value": "5700372992"
+        },
+        {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
         },
         {
           "key": "MAX_JOB_TIME",
@@ -403,6 +523,10 @@
           "value": "disk_unencrypted_updated.qcow2"
         },
         {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
+        },
+        {
           "key": "MAX_JOB_TIME",
           "value": "21600"
         },
@@ -427,6 +551,10 @@
           "value": "disk_unencrypted_updated.qcow2"
         },
         {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
+        },
+        {
           "key": "MAX_JOB_TIME",
           "value": "21600"
         },
@@ -451,6 +579,10 @@
           "value": "disk_unencrypted_updated.qcow2"
         },
         {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
+        },
+        {
           "key": "MAX_JOB_TIME",
           "value": "21600"
         },
@@ -473,6 +605,10 @@
         {
           "key": "ISO_MAXSIZE",
           "value": "5900372992"
+        },
+        {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
         }
       ],
       "version": "4.0"
@@ -485,12 +621,173 @@
         {
           "key": "ISO_MAXSIZE",
           "value": "6900372992"
+        },
+        {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
         }
       ],
       "version": "4.1"
+    },
+    {
+      "arch": "x86_64",
+      "distri": "qubesos",
+      "flavor": "kernel",
+      "settings": [
+        {
+          "key": "HDD_1",
+          "value": "disk_unencrypted_updated.qcow2"
+        },
+        {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
+        },
+        {
+          "key": "MAX_JOB_TIME",
+          "value": "21600"
+        },
+        {
+          "key": "NOVIDEO",
+          "value": "0"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "hdd_download"
+        }
+      ],
+      "version": "*"
+    },
+    {
+      "arch": "x86_64",
+      "distri": "qubesos",
+      "flavor": "install-iso",
+      "settings": [
+        {
+          "key": "ISO_MAXSIZE",
+          "value": "6900372992"
+        },
+        {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
+        }
+      ],
+      "version": "4.2"
+    },
+    {
+      "arch": "x86_64",
+      "distri": "qubesos",
+      "flavor": "update",
+      "settings": [
+        {
+          "key": "HDD_1",
+          "value": "disk_unencrypted_updated.qcow2"
+        },
+        {
+          "key": "KERNEL_VERSION",
+          "value": "stable"
+        },
+        {
+          "key": "MAX_JOB_TIME",
+          "value": "21600"
+        },
+        {
+          "key": "NOVIDEO",
+          "value": "0"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "hdd_download"
+        }
+      ],
+      "version": "4.2"
     }
   ],
   "TestSuites": [
+    {
+      "name": "install_minimal",
+      "settings": [
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "name": "install_over_existing",
+      "settings": [
+        {
+          "key": "BOOT_MENU",
+          "value": "1"
+        },
+        {
+          "key": "INSTALL_OVER_EXISTING",
+          "value": "1"
+        },
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "name": "install_btrfs",
+      "settings": [
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "PARTITIONING",
+          "value": "btrfs"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "name": "install_usbvm_combined",
+      "settings": [
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        },
+        {
+          "key": "USBVM",
+          "value": "sys-net"
+        }
+      ]
+    },
+    {
+      "name": "install_no_usbvm",
+      "settings": [
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        },
+        {
+          "key": "USBVM",
+          "value": "none"
+        }
+      ]
+    },
     {
       "name": "install_keyboard_layout",
       "settings": [
@@ -518,6 +815,61 @@
       ]
     },
     {
+      "name": "install_default",
+      "settings": [
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "all"
+        }
+      ]
+    },
+    {
+      "name": "install_unencrypted_upload",
+      "settings": [
+        {
+          "key": "HDDSIZEGB",
+          "value": "80"
+        },
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "all"
+        },
+        {
+          "key": "PARTITIONING",
+          "value": "unencrypted"
+        },
+        {
+          "key": "PUBLISH_HDD_1",
+          "value": "disk_unencrypted_%VERSION%_%MACHINE%_%KERNEL_VERSION%.qcow2"
+        },
+        {
+          "key": "QEMU_COMPRESS_QCOW2",
+          "value": "0"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "local"
+        }
+      ]
+    },
+    {
+      "name": "system_tests_basic_vm_qrexec_gui",
+      "settings": [
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.basic qubes.tests.integ.vm_qrexec_gui:14400"
+        }
+      ]
+    },
+    {
       "name": "system_tests_network",
       "settings": [
         {
@@ -531,6 +883,23 @@
         {
           "key": "SYSTEM_TESTS",
           "value": "qubes.tests.integ.network:21600"
+        }
+      ]
+    },
+    {
+      "name": "system_tests_backup",
+      "settings": [
+        {
+          "key": "MAX_JOB_TIME",
+          "value": "25200"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.backup:25200"
         }
       ]
     },
@@ -569,6 +938,69 @@
       ]
     },
     {
+      "name": "system_tests_backupcompatibility",
+      "settings": [
+        {
+          "key": "MAX_JOB_TIME",
+          "value": "14400"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.backupcompatibility:10800"
+        }
+      ]
+    },
+    {
+      "name": "system_tests_update",
+      "settings": [
+        {
+          "key": "DO_UPDATE",
+          "value": "1"
+        },
+        {
+          "key": "HDD_1",
+          "value": "disk_unencrypted_%VERSION%_%MACHINE%_%KERNEL_VERSION%.qcow2"
+        },
+        {
+          "key": "QEMU_COMPRESS_QCOW2",
+          "value": "0"
+        },
+        {
+          "key": "SALT_SYSTEM_TESTS",
+          "value": "1"
+        },
+        {
+          "key": "STORE_HDD_1",
+          "value": "disk_unencrypted_updated.qcow2"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "local"
+        }
+      ]
+    },
+    {
+      "name": "system_tests_whonix",
+      "settings": [
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "WHONIXCHECK",
+          "value": "1"
+        },
+        {
+          "key": "WHONIX_INTERACTIVE",
+          "value": "1"
+        }
+      ]
+    },
+    {
       "name": "system_tests_gui_tools",
       "settings": [
         {
@@ -595,6 +1027,27 @@
       ]
     },
     {
+      "name": "system_tests_suspend",
+      "settings": [
+        {
+          "key": "KEEP_SCREENLOCKER",
+          "value": "1"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        },
+        {
+          "key": "TEST_SUSPEND",
+          "value": "1"
+        }
+      ]
+    },
+    {
       "name": "system_tests_splitgpg",
       "settings": [
         {
@@ -608,6 +1061,73 @@
         {
           "key": "SYSTEM_TESTS",
           "value": "qubes.tests.extra:10800"
+        }
+      ]
+    },
+    {
+      "name": "install_nvme",
+      "settings": [
+        {
+          "key": "HDDMODEL",
+          "value": "nvme"
+        },
+        {
+          "key": "INSTALL_TEMPLATES",
+          "value": "fedora"
+        },
+        {
+          "key": "TEST_GENERIC",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "name": "system_tests_gui_interactive",
+      "settings": [
+        {
+          "key": "KEEP_SCREENLOCKER",
+          "value": "1"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "TEST_GUI_INTERACTIVE",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "name": "system_tests_guivm_gui_interactive",
+      "settings": [
+        {
+          "key": "DO_GUIVM",
+          "value": "1"
+        },
+        {
+          "key": "GUIVM",
+          "value": "1"
+        },
+        {
+          "key": "SALT_SYSTEM_TESTS",
+          "value": "1"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "TEST_GUIVM",
+          "value": "1"
+        },
+        {
+          "key": "TEST_GUI_INTERACTIVE",
+          "value": "1"
+        },
+        {
+          "key": "UPDATE_TEMPLATES",
+          "value": "fedora-36-xfce"
         }
       ]
     },
@@ -672,6 +1192,40 @@
       ]
     },
     {
+      "name": "system_tests_network_updates",
+      "settings": [
+        {
+          "key": "MAX_JOB_TIME",
+          "value": "23400"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.dom0_update:7200 qubes.tests.integ.vm_update:7200"
+        }
+      ]
+    },
+    {
+      "name": "system_tests_backupdispvm",
+      "settings": [
+        {
+          "key": "MAX_JOB_TIME",
+          "value": "14400"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "SYSTEM_TESTS",
+          "value": "qubes.tests.integ.backupdispvm:10800"
+        }
+      ]
+    },
+    {
       "description": "Install with XFS partitioning",
       "name": "install_xfs",
       "settings": [
@@ -686,212 +1240,6 @@
         {
           "key": "TEST_GENERIC",
           "value": "1"
-        }
-      ]
-    },
-    {
-      "name": "system_tests_suspend",
-      "settings": [
-        {
-          "key": "KEEP_SCREENLOCKER",
-          "value": "1"
-        },
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "TEST_GENERIC",
-          "value": "1"
-        },
-        {
-          "key": "TEST_SUSPEND",
-          "value": "1"
-        }
-      ]
-    },
-    {
-      "name": "system_tests_gui_interactive",
-      "settings": [
-        {
-          "key": "KEEP_SCREENLOCKER",
-          "value": "1"
-        },
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "TEST_GUI_INTERACTIVE",
-          "value": "1"
-        }
-      ]
-    },
-    {
-      "name": "system_tests_guivm_gui_interactive",
-      "settings": [
-        {
-          "key": "DO_GUIVM",
-          "value": "1"
-        },
-        {
-          "key": "GUIVM",
-          "value": "1"
-        },
-        {
-          "key": "SALT_SYSTEM_TESTS",
-          "value": "1"
-        },
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "TEST_GUIVM",
-          "value": "1"
-        },
-        {
-          "key": "TEST_GUI_INTERACTIVE",
-          "value": "1"
-        },
-        {
-          "key": "UPDATE_TEMPLATES",
-          "value": "fedora-34-xfce"
-        }
-      ]
-    },
-    {
-      "name": "install_minimal",
-      "settings": [
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "fedora"
-        },
-        {
-          "key": "TEST_GENERIC",
-          "value": "1"
-        }
-      ]
-    },
-    {
-      "name": "install_no_usbvm",
-      "settings": [
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "fedora"
-        },
-        {
-          "key": "TEST_GENERIC",
-          "value": "1"
-        },
-        {
-          "key": "USBVM",
-          "value": "none"
-        }
-      ]
-    },
-    {
-      "name": "install_nvme",
-      "settings": [
-        {
-          "key": "HDDMODEL",
-          "value": "nvme"
-        },
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "fedora"
-        },
-        {
-          "key": "TEST_GENERIC",
-          "value": "1"
-        }
-      ]
-    },
-    {
-      "name": "install_over_existing",
-      "settings": [
-        {
-          "key": "BOOT_MENU",
-          "value": "1"
-        },
-        {
-          "key": "INSTALL_OVER_EXISTING",
-          "value": "1"
-        },
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "fedora"
-        },
-        {
-          "key": "TEST_GENERIC",
-          "value": "1"
-        }
-      ]
-    },
-    {
-      "name": "install_usbvm_combined",
-      "settings": [
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "fedora"
-        },
-        {
-          "key": "TEST_GENERIC",
-          "value": "1"
-        },
-        {
-          "key": "USBVM",
-          "value": "sys-net"
-        }
-      ]
-    },
-    {
-      "name": "install_btrfs",
-      "settings": [
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "fedora"
-        },
-        {
-          "key": "PARTITIONING",
-          "value": "btrfs"
-        },
-        {
-          "key": "TEST_GENERIC",
-          "value": "1"
-        }
-      ]
-    },
-    {
-      "name": "install_unencrypted_upload",
-      "settings": [
-        {
-          "key": "HDDSIZEGB",
-          "value": "80"
-        },
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "all"
-        },
-        {
-          "key": "PARTITIONING",
-          "value": "unencrypted"
-        },
-        {
-          "key": "PUBLISH_HDD_1",
-          "value": "disk_unencrypted_%VERSION%_%MACHINE%_%KERNEL_VERSION%.qcow2"
-        },
-        {
-          "key": "QEMU_COMPRESS_QCOW2",
-          "value": "0"
-        },
-        {
-          "key": "TEST_GENERIC",
-          "value": "1"
-        },
-        {
-          "key": "WORKER_CLASS",
-          "value": "local"
         }
       ]
     },
@@ -962,48 +1310,6 @@
       ]
     },
     {
-      "name": "system_tests_update",
-      "settings": [
-        {
-          "key": "DO_UPDATE",
-          "value": "1"
-        },
-        {
-          "key": "HDD_1",
-          "value": "disk_unencrypted_%VERSION%_%MACHINE%_%KERNEL_VERSION%.qcow2"
-        },
-        {
-          "key": "KERNEL_VERSION",
-          "value": "stable"
-        },
-        {
-          "key": "QEMU_COMPRESS_QCOW2",
-          "value": "0"
-        },
-        {
-          "key": "SALT_SYSTEM_TESTS",
-          "value": "1"
-        },
-        {
-          "key": "STORE_HDD_1",
-          "value": "disk_unencrypted_updated.qcow2"
-        },
-        {
-          "key": "WORKER_CLASS",
-          "value": "local"
-        }
-      ]
-    },
-    {
-      "name": "install_default",
-      "settings": [
-        {
-          "key": "INSTALL_TEMPLATES",
-          "value": "all"
-        }
-      ]
-    },
-    {
       "name": "install_iso_file",
       "settings": [
         {
@@ -1042,70 +1348,6 @@
         {
           "key": "SYSTEM_TESTS",
           "value": "qubes.tests.integ.dispvm:9000"
-        }
-      ]
-    },
-    {
-      "name": "system_tests_backup",
-      "settings": [
-        {
-          "key": "MAX_JOB_TIME",
-          "value": "25200"
-        },
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "SYSTEM_TESTS",
-          "value": "qubes.tests.integ.backup:25200"
-        }
-      ]
-    },
-    {
-      "name": "system_tests_backupcompatibility",
-      "settings": [
-        {
-          "key": "MAX_JOB_TIME",
-          "value": "14400"
-        },
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "SYSTEM_TESTS",
-          "value": "qubes.tests.integ.backupcompatibility:10800"
-        }
-      ]
-    },
-    {
-      "name": "system_tests_backupdispvm",
-      "settings": [
-        {
-          "key": "MAX_JOB_TIME",
-          "value": "14400"
-        },
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "SYSTEM_TESTS",
-          "value": "qubes.tests.integ.backupdispvm:10800"
-        }
-      ]
-    },
-    {
-      "name": "system_tests_basic_vm_qrexec_gui",
-      "settings": [
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "SYSTEM_TESTS",
-          "value": "qubes.tests.integ.basic qubes.tests.integ.vm_qrexec_gui:14400"
         }
       ]
     },
@@ -1176,23 +1418,6 @@
       ]
     },
     {
-      "name": "system_tests_network_updates",
-      "settings": [
-        {
-          "key": "MAX_JOB_TIME",
-          "value": "23400"
-        },
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "SYSTEM_TESTS",
-          "value": "qubes.tests.integ.dom0_update:5400 qubes.tests.integ.vm_update"
-        }
-      ]
-    },
-    {
       "description": "Default installation, preserve disk for further tests",
       "name": "install_default_upload",
       "settings": [
@@ -1241,23 +1466,6 @@
       ]
     },
     {
-      "name": "system_tests_whonix",
-      "settings": [
-        {
-          "key": "START_AFTER_TEST",
-          "value": "system_tests_update"
-        },
-        {
-          "key": "WHONIXCHECK",
-          "value": "1"
-        },
-        {
-          "key": "WHONIX_INTERACTIVE",
-          "value": "1"
-        }
-      ]
-    },
-    {
       "description": "QWT test on Windows 10",
       "name": "system_tests_qwt_win10",
       "settings": [
@@ -1276,6 +1484,28 @@
         {
           "key": "WINDOWS_VERSION",
           "value": "win10x64"
+        }
+      ]
+    },
+    {
+      "description": "QWT test on Windows 7",
+      "name": "system_tests_qwt_win7",
+      "settings": [
+        {
+          "key": "ASSET_1",
+          "value": "win7x64-ultimate.iso"
+        },
+        {
+          "key": "START_AFTER_TEST",
+          "value": "system_tests_update"
+        },
+        {
+          "key": "TEST_WINDOWS_GUI_INTERACTIVE",
+          "value": "1"
+        },
+        {
+          "key": "WINDOWS_VERSION",
+          "value": "win7x64-ultimate"
         }
       ]
     }

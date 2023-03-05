@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 184,
+      "xpos": 412,
+      "height": 26,
+      "type": "match",
+      "ypos": 163
+    },
+    {
+      "width": 13,
+      "xpos": 796,
+      "ypos": 164,
+      "type": "match",
+      "height": 23
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "qubes-vm-create-exit"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 78,
+      "xpos": 145,
+      "height": 18,
+      "type": "match",
+      "ypos": 206
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "menu-vm-personal",
+    "menu-vm-personal-running",
+    "new-menu"
+  ]
+}

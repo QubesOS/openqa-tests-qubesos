@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 16,
+      "type": "match",
+      "ypos": 513,
+      "width": 79,
+      "xpos": 645
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "global-settings-clockvms-listed"
+  ]
+}

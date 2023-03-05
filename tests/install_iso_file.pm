@@ -48,6 +48,7 @@ def cb(reason, amount, total, key_data, client_data):
 t.run(cb, None)
 END
 
+# TODO: get cmdline based on original grub.cfg
 my $grub_cfg = <<END;
 set timeout=3
 set default=0
@@ -55,9 +56,9 @@ set default=0
 menuentry 'Qubes installation' {
     set isofile='(hd0,msdos1)/qubes.iso'
     loopback loop \\\$isofile
-    multiboot2 (loop)/isolinux/xen.gz no-real-mode
-    module2 (loop)/isolinux/vmlinuz inst.stage2=hd:LABEL=\$VOLID findiso=/dev/disk/by-uuid/\$DISK_UUID/qubes.iso iso-scan/filename=/qubes.iso
-    module2 --nounzip (loop)/isolinux/initrd.img
+    multiboot2 (loop)/images/pxeboot/xen.gz no-real-mode
+    module2 (loop)/images/pxeboot/vmlinuz inst.repo=hd:LABEL=\$VOLID findiso=/dev/disk/by-uuid/\$DISK_UUID/qubes.iso iso-scan/filename=/qubes.iso
+    module2 --nounzip (loop)/images/pxeboot/initrd.img
 }
 END
 
@@ -76,6 +77,13 @@ sub run {
 
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;
+
+    if (check_var("BACKEND", "qemu")) {
+        # get console on hvc1 too
+        select_console('install-shell');
+        type_string("systemctl start anaconda-shell\@hvc1\n");
+        select_console('installation', await_console=>0);
+    }
 
     select_root_console();
 
@@ -124,6 +132,13 @@ sub run {
 
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;
+
+    if (check_var("BACKEND", "qemu")) {
+        # get console on hvc1 too
+        select_console('install-shell');
+        type_string("systemctl start anaconda-shell\@hvc1\n");
+        select_console('installation', await_console=>0);
+    }
 }
 
 sub test_flags {

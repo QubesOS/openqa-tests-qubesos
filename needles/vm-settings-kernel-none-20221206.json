@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 59,
+      "type": "match",
+      "xpos": 518,
+      "ypos": 269,
+      "height": 24
+    },
+    {
+      "height": 20,
+      "ypos": 248,
+      "xpos": 613,
+      "width": 130,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "vm-settings-kernel-none"
+  ]
+}

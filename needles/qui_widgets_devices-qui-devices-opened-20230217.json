@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "xpos": 558,
+      "width": 208,
+      "height": 80,
+      "type": "match",
+      "ypos": 62
+    }
+  ],
+  "properties": [
+    {
+      "value": "unexpected block device",
+      "name": "workaround"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "qui-devices-opened"
+  ]
+}

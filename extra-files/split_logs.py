@@ -23,7 +23,8 @@ import os
 import re
 
 # format for strptime to use instead of datetime.datetime.fromisoformat()
-ISOFORMAT = '%Y-%m-%dT%H:%M:%S.%f'
+ISOFORMAT_NS = '%Y-%m-%dT%H:%M:%S.%f'
+ISOFORMAT = '%Y-%m-%dT%H:%M:%S'
 XENLOGFORMAT = '%Y-%m-%d %H:%M:%S'
 
 def get_logs(path):
@@ -117,10 +118,9 @@ def main():
 
             time = datetime.timedelta(
                 seconds=float(testcase.attributes['time'].value))
-            test_start = datetime.datetime.strptime(
-                                      testcase.attributes['timestamp'].value,
-                                      ISOFORMAT)\
-                                     .replace(tzinfo=datetime.timezone.utc)
+            test_start = datetime.datetime.fromisoformat(
+                    testcase.attributes['timestamp'].value
+            ).replace(tzinfo=datetime.timezone.utc)
             test_end = test_start + time
 
             # timestamp zero in epoch time is an exception. See:

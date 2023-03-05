@@ -25,6 +25,10 @@ sub run {
     select_console('x11');
     assert_screen "desktop";
 
+    # workaround for GTK+ setting too large window under XFCE
+    x11_start_program("gsettings set org.gtk.Settings.FileChooser window-size '(800, 600)'", valid => 0);
+    x11_start_program("gsettings set org.gtk.Settings.FileChooser window-position '(50, 50)'", valid => 0);
+
     prep_backup('dom0', 1);
     assert_and_click('backup-next', timeout => 5);
 

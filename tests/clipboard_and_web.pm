@@ -27,6 +27,7 @@ sub run {
     # try to start "Text Editor" (gedit)
     assert_and_click("menu");
     assert_and_click("menu-vm-work");
+    wait_still_screen();
     assert_and_click("menu-vm-text-editor");
     assert_screen("work-text-editor", timeout => 90);
 
@@ -40,6 +41,7 @@ sub run {
     # try to start "Firefox" in personal
     assert_and_click("menu");
     assert_and_click("menu-vm-personal");
+    wait_still_screen();
     assert_and_click("menu-vm-firefox");
     assert_screen("personal-firefox", timeout => 120);
 

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 267,
+      "xpos": 736,
+      "ypos": 56,
+      "type": "match",
+      "height": 48
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "RELEASE-4-1",
+    "clipboard-paste-notification"
+  ]
+}

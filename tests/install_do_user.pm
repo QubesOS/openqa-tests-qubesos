@@ -23,12 +23,12 @@ use utils qw(us_colemak);
 
 sub run {
     wait_still_screen();
-    if (check_var("VERSION", "4.1")) {
+    if (!check_var("VERSION", "4.0")) {
         setup_user();
     }
     assert_screen 'installer-main-ready';
     send_key 'f12';
-    if (!check_var("VERSION", "4.1")) {
+    if (check_var("VERSION", "4.0")) {
         setup_user();
     }
 
@@ -59,7 +59,7 @@ sub setup_user {
         type_string 'user';
     }
     send_key 'tab';
-    if (get_var('VERSION') =~ /^3/) {
+    if (get_var('VERSION') =~ /^3|4\.2/) {
         send_key 'tab';
     }
     if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {

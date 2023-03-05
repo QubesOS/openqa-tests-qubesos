@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 368,
+      "height": 55,
+      "width": 128,
+      "xpos": 276
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN7",
+    "RELEASE-4-1",
+    "files-windows-test"
+  ]
+}

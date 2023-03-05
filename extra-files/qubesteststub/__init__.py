@@ -10,15 +10,14 @@ from qubes.devices import DeviceAssignment
 class DefaultPV(qubes.ext.Extension):
 
     @qubes.ext.handler('domain-pre-start')
-    @asyncio.coroutine
-    def on_domain_pre_start(self, vm, event, **kwargs):
+    async def on_domain_pre_start(self, vm, event, **kwargs):
         # on Xen 4.13 PCI passthrough on PV requires IOMMU too
         pv_passthrough_available = (self.xeninfo['xen_minor'] < 13 or 
             'qubes.enable_insecure_pv_passthrough' in self.dom0_cmdline)
         if 'hvm_directio' not in self.physinfo['virt_caps'] and not pv_passthrough_available:
             if vm.name in ('sys-net', 'sys-usb'):
                 for ass in list(vm.devices['pci'].assignments()):
-                    yield from vm.devices['pci'].detach(ass)
+                    await vm.devices['pci'].detach(ass)
         elif 'hvm_directio' in self.physinfo['virt_caps'] or pv_passthrough_available:
             # IOMMU is available, (re)attach devices
             if vm.name == 'sys-net':
@@ -34,7 +33,7 @@ class DefaultPV(qubes.ext.Extension):
                 ass = DeviceAssignment(vm.app.domains[0], dev.replace(':', '_'),
                         options={'no-strict-reset': 'True'},
                         persistent=True)
-                yield from vm.devices['pci'].attach(ass)
+                await vm.devices['pci'].attach(ass)
 
         if len(vm.devices['pci'].persistent()):
             # IOMMU missing
@@ -44,16 +43,15 @@ class DefaultPV(qubes.ext.Extension):
             vm.features['pci-e820-host'] = False
 
     @qubes.ext.handler('domain-start')
-    @asyncio.coroutine
-    def on_domain_start(self, vm, event, **kwargs):
+    async def on_domain_start(self, vm, event, **kwargs):
         if vm.name == 'sys-net' and not len(vm.devices['pci'].persistent()):
             for dev in self.netdevs:
                 subprocess.call('echo 0000:{} > /sys/bus/pci/drivers/pciback/unbind'.format(dev), shell=True)
                 subprocess.call('echo 0000:{} > /sys/bus/pci/drivers/e1000e/bind'.format(dev), shell=True)
             # wait for udev and co
-            yield from asyncio.sleep(1)
+            await asyncio.sleep(1)
             subprocess.call('udevadm settle', shell=True)
-            yield from asyncio.sleep(1)
+            await asyncio.sleep(1)
             iface = subprocess.check_output('ls /sys/class/net|grep ^en', shell=True).decode()
             iface = iface.strip()
             subprocess.call('brctl addbr xenbr0', shell=True)
@@ -76,11 +74,6 @@ class DefaultPV(qubes.ext.Extension):
             qubes.vm.qubesvm.QubesVM.virt_mode._default = 'pv'
             qubes.vm.qubesvm.QubesVM.virt_mode._default_function = None
             qubes.vm.qubesvm.QubesVM.virt_mode._setter = lambda _self, _prop, _value: 'pv'
-        else:
-            # nested SVM has problems with SMP guests...
-            qubes.vm.qubesvm.QubesVM.vcpus._default_function = (lambda _self:
-                2 if _self.kernel and _self.kernel.startswith('4')
-                      and _self.kernel.split('.') >= ['4', '15'] else 1)
 
         self.netdevs = []
         self.usbdevs = []
@@ -104,14 +97,13 @@ class DefaultPV(qubes.ext.Extension):
         self.dom0_cmdline = pathlib.Path('/proc/cmdline').read_bytes().decode()
 
     @qubes.ext.handler('features-request')
-    @asyncio.coroutine
-    def on_features_request(self, vm, event, untrusted_features):
+    async def on_features_request(self, vm, event, untrusted_features):
         if vm.klass != 'TemplateVM':
             return
         if not vm.features.get('fixups-installed', False):
             # nested virtualization confuses systemd
             dropin = '/etc/systemd/system/xendriverdomain.service.d'
-            yield from vm.run_for_stdio('mkdir -p {dropin} && echo -e "[Unit]\\nConditionVirtualization=" > {dropin}/30_openqa.conf'.format(dropin=dropin), user='root')
+            await vm.run_for_stdio('mkdir -p {dropin} && echo -e "[Unit]\\nConditionVirtualization=" > {dropin}/30_openqa.conf'.format(dropin=dropin), user='root')
             vm.features['fixups-installed'] = True
 
     @qubes.ext.handler('domain-start-failed')

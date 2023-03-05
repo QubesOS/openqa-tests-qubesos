@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 34,
+      "ypos": 625,
+      "width": 29,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "installer-disk-partition-add"
+  ]
+}

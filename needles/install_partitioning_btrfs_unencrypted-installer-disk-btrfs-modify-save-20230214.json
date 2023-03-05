@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 654,
+      "ypos": 545,
+      "width": 60,
+      "height": 20,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "installer-disk-btrfs-modify-save"
+  ]
+}

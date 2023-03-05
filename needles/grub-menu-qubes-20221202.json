@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 311,
+      "ypos": 239,
+      "width": 241,
+      "height": 26,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "grub-menu-qubes"
+  ]
+}

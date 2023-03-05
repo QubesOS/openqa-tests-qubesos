@@ -15,6 +15,10 @@ dom0-packages:
       - python3-nose2
       - python3-objgraph
       - patch
+{% if grains['osrelease'] == '4.2' %}
+      - xinput
+{% endif %}
+      - openssl
 
 haveged:
   service.running:

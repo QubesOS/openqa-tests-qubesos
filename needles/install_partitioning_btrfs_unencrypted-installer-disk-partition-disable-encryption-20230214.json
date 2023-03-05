@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 686,
+      "ypos": 307,
+      "width": 71,
+      "height": 26,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "installer-disk-partition-disable-encryption"
+  ]
+}

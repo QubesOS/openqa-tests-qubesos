@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 863,
+      "width": 84,
+      "height": 19,
+      "type": "match",
+      "ypos": 33
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "login-prompt-session-type-gui-domains"
+  ]
+}

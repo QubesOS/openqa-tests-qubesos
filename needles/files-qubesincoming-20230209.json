@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 633,
+      "type": "match",
+      "height": 27,
+      "xpos": 170,
+      "width": 127
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-fedora-37",
+    "RELEASE-4-1",
+    "files-qubesincoming"
+  ]
+}

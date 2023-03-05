@@ -47,7 +47,7 @@ sub run {
 
     if (check_var('BACKEND', 'generalhw')) {
         # force plymouth to show on HDMI output too
-        if (!check_screen(["luks-prompt", "firstboot-not-ready"], 60)) {
+        if (!check_screen(["luks-prompt", "firstboot-not-ready"], 90)) {
             send_key 'esc';
             send_key 'esc';
             sleep 1;
@@ -99,6 +99,10 @@ sub run {
         }
     } elsif (get_var('USBVM', 'sys-usb') eq 'sys-usb') {
         assert_screen('firstboot-qubes-usbvm-enabled', 5);
+        if (check_var('BACKEND', 'generalhw')) {
+            assert_screen('firstboot-qubes-usb-keyboard-allowed');
+            assert_and_click('firstboot-qubes-usb-mouse-allow');
+        }
     } elsif (check_var('USBVM', 'sys-net')) {
         assert_screen('firstboot-qubes-usbvm-enabled', 5);
         assert_and_click('firstboot-qubes-usbvm-combine', timeout => 5);

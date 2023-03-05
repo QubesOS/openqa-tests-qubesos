@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 42,
+      "ypos": 164,
+      "width": 82,
+      "height": 13,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "installer-disk-btrfs-root-selected"
+  ]
+}

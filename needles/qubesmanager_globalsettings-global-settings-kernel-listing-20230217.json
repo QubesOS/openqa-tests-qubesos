@@ -1,0 +1,27 @@
+{
+  "area": [
+    {
+      "xpos": 502,
+      "width": 112,
+      "type": "match",
+      "height": 26,
+      "ypos": 169,
+      "click_point": {
+        "xpos": 212,
+        "ypos": 14
+      }
+    },
+    {
+      "ypos": 176,
+      "type": "match",
+      "height": 16,
+      "xpos": 768,
+      "width": 92
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "global-settings-kernel-listing"
+  ]
+}

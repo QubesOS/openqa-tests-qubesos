@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 109,
+      "width": 167,
+      "height": 15,
+      "type": "match",
+      "ypos": 389
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "vm-settings-allow-dispvms"
+  ]
+}

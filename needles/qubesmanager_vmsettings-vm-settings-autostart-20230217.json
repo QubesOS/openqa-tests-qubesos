@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 308,
+      "type": "match",
+      "height": 20,
+      "xpos": 112,
+      "width": 186
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "vm-settings-autostart"
+  ]
+}

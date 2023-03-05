@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 46,
+      "width": 79,
+      "height": 23,
+      "type": "match",
+      "ypos": 668
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "global-settings-enable-all"
+  ]
+}

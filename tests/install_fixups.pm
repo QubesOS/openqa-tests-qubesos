@@ -46,14 +46,7 @@ sub run {
     if (check_var('BACKEND', 'qemu')) {
         assert_script_run("systemctl enable serial-getty\@hvc1.service");
     }
-    if (get_var('VERSION') =~ /^3/) {
-        # disable e820-host, breaks sys-net on OVMF; core2 don't have nice
-        # extensions for that...
-        # "pci_e820_host": {"default": True}
-        my $sed_expr = "s#\\(pci_e820_host.*default.*\\) True#\\1 False#";
-        my $core2_path = '/usr/lib64/python2.7/site-packages/qubes/modules/000QubesVm.py';
-        type_string "sed -ie '$sed_expr' $core2_path\n";
-    }
+    assert_script_run("echo 'KERNEL==\"hvc*|ttyS*\", GROUP=\"qubes\", MODE=\"0660\"' > /etc/udev/rules.d/90-openqa.rules");
     type_string "exit\n";
     # command echo
     wait_serial("exit");
@@ -90,16 +83,11 @@ sub run {
         script_run "$sed_enable_discard /mnt/sysimage/etc/default/grub";
     }
 
-    if (check_var("VERSION", "4.1") and !check_var("BACKEND", "qemu")) {
-        # force USBVM even with USB keyboard present - do it for R4.1 only -
-        # R4.2 should allow it out of the box
-        my $ks_addon_path = "/usr/share/anaconda/addons/org_qubes_os_initial_setup/ks/qubes.py";
-        my $sed_mock_keyboard_check = 'sed -i -e \'s:^def usb_keyboard_present.*:\0\n    return False:\'';
-        script_run "$sed_mock_keyboard_check /mnt/sysimage$ks_addon_path";
-
+    if (!check_var("BACKEND", "qemu")) {
+        # allow USB tablet, not only mouse
         my $policy_path = "/etc/qubes/policy.d/30-openqa.policy";
-        script_run "echo 'qubes.InputKeyboard * sys-usb dom0 allow' > /mnt/sysimage$policy_path";
-        script_run "echo 'qubes.InputMouse * sys-usb dom0 allow' >> /mnt/sysimage$policy_path";
+        #script_run "echo 'qubes.InputKeyboard * sys-usb dom0 allow' > /mnt/sysimage$policy_path";
+        #script_run "echo 'qubes.InputMouse * sys-usb dom0 allow' >> /mnt/sysimage$policy_path";
         script_run "echo 'qubes.InputTablet * sys-usb dom0 allow' >> /mnt/sysimage$policy_path";
     }
 
@@ -142,6 +130,8 @@ sub run {
 
     # log efi boot order
     script_run "efibootmgr -v";
+
+    script_run "tail -n 30 /tmp/ks-*.log";
 
     # improve logging
     script_run "echo 'XENCONSOLED_ARGS=--timestamp=all' >> /mnt/sysimage/etc/sysconfig/xencommons";

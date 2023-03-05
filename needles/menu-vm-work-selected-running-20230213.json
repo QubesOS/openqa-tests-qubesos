@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "ypos": 376,
+      "type": "match",
+      "height": 28,
+      "width": 70,
+      "xpos": 115
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "menu-vm-work",
+    "menu-vm-work-running",
+    "menu-vm-work-selected",
+    "new-menu"
+  ]
+}

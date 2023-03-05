@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 56,
+      "xpos": 646,
+      "type": "match",
+      "ypos": 732,
+      "height": 23
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "global-settings-default-dispvms-listed"
+  ]
+}

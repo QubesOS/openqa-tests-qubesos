@@ -65,9 +65,11 @@ sub enable_dom0_network_netvm {
         # there is netvm, connect network through it
         assert_script_run('xl network-attach 0 ip=10.137.99.1 script=/etc/xen/scripts/vif-route-qubes backend=sys-net');
         sleep(2);
-        assert_script_run('ip a a 10.137.99.1/24 dev eth0');
-        assert_script_run('ip l s eth0 up');
-        assert_script_run('ip r a default dev eth0');
+        assert_script_run('dev=$(ls /sys/class/net|head -1)');
+        assert_script_run('ip a a 10.137.99.1/24 dev $dev');
+        assert_script_run('ip l s $dev up');
+        assert_script_run('ip r a default dev $dev');
+        assert_script_run('rm -f /etc/resolv.conf');
         assert_script_run('echo -e "nameserver 10.139.1.1\nnameserver 10.139.1.2" > /etc/resolv.conf');
         assert_script_run('qubesdb-write -d sys-net /qubes-firewall/10.137.99.1/policy accept');
         # commit

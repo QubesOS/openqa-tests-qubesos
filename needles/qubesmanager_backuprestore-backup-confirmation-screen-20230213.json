@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 147,
+      "width": 281,
+      "type": "match",
+      "ypos": 74,
+      "height": 20
+    },
+    {
+      "type": "match",
+      "height": 18,
+      "ypos": 172,
+      "width": 74,
+      "xpos": 225
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "backup-confirmation-screen"
+  ]
+}

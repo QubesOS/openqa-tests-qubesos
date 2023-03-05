@@ -27,12 +27,14 @@ sub run {
     # try to start "Text Editor" (gedit)
     assert_and_click("menu");
     assert_and_click("menu-vm-work");
+    wait_still_screen();
     assert_and_click("menu-vm-text-editor");
     assert_screen("work-text-editor", timeout => 90);
 
     type_string("https://www.qubes-os.org/\n");
     send_key("ctrl-s");
     assert_screen("file-save-dialog-home-dir");
+    send_key("ctrl-a");
     type_string("test.txt");
     send_key("ret");
     sleep(1);
@@ -45,6 +47,15 @@ sub run {
 
     # copy to another VM
     assert_and_click("files-test-file", button => "right");
+    # GTK is stupid and loads stylesheet _after_ showing the widget; it means
+    # things will move around
+    wait_still_screen();
+    if (!check_screen("files-move-to-other", timeout => 5)) {
+        # SUT has low resolution, if the menu doesn't fit, it gets a scrollbar - in
+        # that case, try scrolling
+        send_key("up");
+        wait_still_screen();
+    }
     assert_and_click("files-move-to-other");
     assert_screen("file-copy-prompt");
     type_string("personal");
@@ -53,11 +64,21 @@ sub run {
     # verify, and then open in DispVM
     assert_and_click("menu");
     assert_and_click("menu-vm-personal");
+    wait_still_screen();
     assert_and_click("menu-vm-Files");
     assert_screen("personal-files", timeout => 90);
     assert_and_click("files-qubesincoming", dclick => 1);
     assert_and_click("files-work", dclick => 1);
     assert_and_click("files-test-file", button => "right");
+    # GTK is stupid and loads stylesheet _after_ showing the widget; it means
+    # things will move around
+    wait_still_screen();
+    if (!check_screen("files-open-in-dispvm", timeout => 5)) {
+        # SUT has low resolution, if the menu doesn't fit, it gets a scrollbar - in
+        # that case, try scrolling
+        send_key("up");
+        wait_still_screen();
+    }
     assert_and_click("files-open-in-dispvm");
     assert_screen("disp-text-editor", timeout => 90);
     # verify content
@@ -66,12 +87,12 @@ sub run {
     wait_still_screen();
 
     # then files in personal
-    assert_screen_and_click("personal-files");
+    assert_and_click("personal-files");
     send_key("ctrl-q");
     wait_still_screen();
 
     # and in work
-    assert_screen_and_click("work-files");
+    assert_and_click("work-files");
     send_key("ctrl-q");
     wait_still_screen();
 

@@ -39,7 +39,7 @@ sub run {
     assert_script_run("curl " . autoinst_url('/files/extra-files.tar.gz.b64') . " | base64 -d | tar xz -C /root");
     if (check_var("BACKEND", "qemu")) {
         type_string "cd /root/extra-files\n";
-        type_string "python3 ./setup.py install\n";
+        type_string "python3 ./setup.py install --prefix=/usr\n";
         type_string "cd -\n";
     }
 

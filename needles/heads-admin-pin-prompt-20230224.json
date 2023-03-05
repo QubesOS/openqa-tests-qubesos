@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "ypos": 460,
+      "type": "match",
+      "height": 21,
+      "xpos": 175,
+      "width": 84
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "missing colon"
+    }
+  ],
+  "tags": [
+    "ENV-HEADS",
+    "heads-admin-pin-prompt"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "height": 29,
+      "type": "match",
+      "ypos": 644,
+      "width": 99,
+      "xpos": 852
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "wrong logo position: https://gitlab.freedesktop.org/plymouth/plymouth/-/issues/205"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "luks-prompt"
+  ]
+}

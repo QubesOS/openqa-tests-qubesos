@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 27,
+      "type": "match",
+      "ypos": 602,
+      "width": 370,
+      "xpos": 11
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "global-settings-vm-update"
+  ]
+}

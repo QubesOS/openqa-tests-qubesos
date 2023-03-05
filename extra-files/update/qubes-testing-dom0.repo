@@ -1,17 +1,17 @@
 [qubes-testing]
 name = Qubes updates testing
 baseurl = http://yum.qubes-os.org/r{{grains['osrelease']}}/current-testing/dom0/{{basedist}}
-gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-qubes-4-primary
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-qubes-{{grains['osrelease']}}-primary
 gpgcheck = 1
 
 [templates-itl-testing]
 name = Qubes templates-itl testing
 baseurl = http://yum.qubes-os.org/r{{grains['osrelease']}}/templates-itl-testing
-gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-qubes-4-primary
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-qubes-{{grains['osrelease']}}-primary
 gpgcheck = 1
 
 [templates-community-testing]
 name = Qubes templates-community testing
 baseurl = http://yum.qubes-os.org/r{{grains['osrelease']}}/templates-community-testing
-gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-qubes-4-templates-community
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-qubes-{{grains['osrelease']}}-templates-community
 gpgcheck = 1

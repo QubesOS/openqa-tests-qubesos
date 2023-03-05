@@ -1,0 +1,31 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 107,
+      "height": 34,
+      "width": 254,
+      "xpos": 77
+    },
+    {
+      "ypos": 318,
+      "type": "match",
+      "height": 29,
+      "xpos": 717,
+      "width": 142
+    },
+    {
+      "type": "match",
+      "height": 27,
+      "ypos": 320,
+      "width": 124,
+      "xpos": 273
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-VERSION-4-2",
+    "heads-usb-boot-options"
+  ]
+}

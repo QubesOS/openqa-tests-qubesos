@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 25,
+      "type": "match",
+      "ypos": 3,
+      "width": 23,
+      "xpos": 827
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw7",
+    "ENV-VERSION-4-2",
+    "nm-applet"
+  ]
+}

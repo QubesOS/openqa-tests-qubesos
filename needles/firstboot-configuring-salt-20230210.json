@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 183,
+      "width": 187,
+      "type": "match",
+      "ypos": 356,
+      "height": 28
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "firstboot-configuring-salt"
+  ]
+}

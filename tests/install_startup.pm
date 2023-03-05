@@ -19,6 +19,7 @@ use base 'basetest';
 use strict;
 use testapi;
 use bootloader_setup;
+use serial_terminal qw(select_root_console);
 
 sub run {
     pre_bootmenu_setup();
@@ -63,6 +64,13 @@ sub run {
 
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;
+
+    if (check_var("BACKEND", "qemu")) {
+        # get console on hvc1 too
+        select_console('install-shell');
+        type_string("systemctl start anaconda-shell\@hvc1\n");
+        select_console('installation', await_console=>0);
+    }
 }
 
 sub test_flags {

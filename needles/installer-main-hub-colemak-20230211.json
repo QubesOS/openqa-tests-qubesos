@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 38,
+      "ypos": 205,
+      "xpos": 243,
+      "width": 148
+    },
+    {
+      "width": 113,
+      "xpos": 784,
+      "type": "match",
+      "height": 24,
+      "ypos": 55
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "installer-main-hub-colemak"
+  ]
+}

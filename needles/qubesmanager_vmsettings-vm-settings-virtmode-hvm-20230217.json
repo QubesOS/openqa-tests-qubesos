@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 489,
+      "height": 19,
+      "width": 50,
+      "xpos": 502
+    },
+    {
+      "xpos": 558,
+      "width": 62,
+      "type": "match",
+      "ypos": 540,
+      "height": 22
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "vm-settings-virtmode-hvm"
+  ]
+}

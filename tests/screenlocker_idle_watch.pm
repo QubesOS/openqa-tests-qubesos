@@ -46,6 +46,7 @@ sub run {
     assert_screen('work-xterm');
     type_string("exit\n");
 
+    mouse_hide();
     assert_screen("desktop");
 }
 

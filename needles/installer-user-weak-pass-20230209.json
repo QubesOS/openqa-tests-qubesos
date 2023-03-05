@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 18,
+      "ypos": 8,
+      "xpos": 5,
+      "width": 113
+    },
+    {
+      "height": 20,
+      "type": "match",
+      "ypos": 742,
+      "xpos": 34,
+      "width": 290
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "missing branding - background and logo"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "installer-user-weak-pass"
+  ]
+}

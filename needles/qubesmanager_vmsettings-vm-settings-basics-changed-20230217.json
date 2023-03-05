@@ -1,0 +1,37 @@
+{
+  "area": [
+    {
+      "height": 27,
+      "type": "match",
+      "ypos": 178,
+      "width": 167,
+      "xpos": 109
+    },
+    {
+      "xpos": 104,
+      "width": 228,
+      "type": "match",
+      "ypos": 212,
+      "height": 32
+    },
+    {
+      "width": 574,
+      "xpos": 111,
+      "type": "match",
+      "height": 57,
+      "ypos": 274
+    },
+    {
+      "type": "match",
+      "height": 36,
+      "ypos": 139,
+      "xpos": 760,
+      "width": 129
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "vm-settings-basics-changed"
+  ]
+}

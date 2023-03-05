@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 106,
+      "xpos": 896,
+      "type": "match",
+      "ypos": 81,
+      "height": 21
+    },
+    {
+      "xpos": 856,
+      "width": 127,
+      "type": "match",
+      "height": 22,
+      "ypos": 61
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "qui-notifications-domain-start"
+  ]
+}

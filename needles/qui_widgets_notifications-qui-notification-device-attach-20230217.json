@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "width": 135,
+      "xpos": 723,
+      "height": 21,
+      "type": "match",
+      "ypos": 84
+    },
+    {
+      "ypos": 62,
+      "type": "match",
+      "height": 19,
+      "xpos": 720,
+      "width": 123
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "unexpected block device"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "qui-notification-device-attach"
+  ]
+}

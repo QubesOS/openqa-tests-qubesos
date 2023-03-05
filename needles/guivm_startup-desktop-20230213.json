@@ -1,0 +1,30 @@
+{
+  "area": [
+    {
+      "height": 92,
+      "type": "match",
+      "ypos": 415,
+      "width": 288,
+      "xpos": 383
+    },
+    {
+      "ypos": 1,
+      "type": "match",
+      "height": 31,
+      "width": 34,
+      "xpos": 1
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "wrong menu button"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "desktop",
+    "desktop-clear",
+    "x11"
+  ]
+}

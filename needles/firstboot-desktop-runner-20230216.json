@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 393,
+      "width": 193,
+      "ypos": 339,
+      "type": "match",
+      "height": 18
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "desktop-runner"
+  ]
+}

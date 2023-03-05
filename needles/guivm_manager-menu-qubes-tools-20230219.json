@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 10,
+      "ypos": 201,
+      "width": 36,
+      "height": 34,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "menu-qubes-tools",
+    "new-menu"
+  ]
+}

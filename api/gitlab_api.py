@@ -159,7 +159,8 @@ def run_test():
 
     print(repr(req_values))
 
-    buildid = time.strftime('%Y%m%d%H-4.1')
+    version = req_values.get('VERSION') or '4.2'
+    buildid = time.strftime('%Y%m%d%H-') + version
     # cannot serve repo directly from gitlab, because it refuses connections via Tor :/
     repo_url = req_values['REPO_JOB'] + '/artifacts/raw/repo'
     with requests.get(req_values['REPO_JOB'] + '/artifacts/download', stream=True) as r:
@@ -178,7 +179,7 @@ def run_test():
 
     values = {}
     values['DISTRI'] = 'qubesos'
-    values['VERSION'] = '4.1'
+    values['VERSION'] = version
     values['FLAVOR'] = 'pull-requests'
     values['ARCH'] = 'x86_64'
     values['BUILD'] = buildid
@@ -230,7 +231,8 @@ def run_test_pr(comment_details):
     if not repo_job:
         return respond(404, "build not found")
 
-    buildid = time.strftime('%Y%m%d%H-4.1')
+    version = '4.2'
+    buildid = time.strftime('%Y%m%d%H-') + version
     # cannot serve repo directly from gitlab, because it refuses connections via Tor :/
     repo_url = repo_job + '/artifacts/raw/repo'
     with requests.get(repo_job + '/artifacts/download', stream=True) as r:
@@ -249,7 +251,7 @@ def run_test_pr(comment_details):
 
     values = {}
     values['DISTRI'] = 'qubesos'
-    values['VERSION'] = '4.1'
+    values['VERSION'] = version
     if pr_details['base']['repo']['name'] in ('qubes-linux-kernel', 'qubes-vmm-xen'):
         values['FLAVOR'] = 'kernel'
         if pr_details['base']['ref'] == 'master':

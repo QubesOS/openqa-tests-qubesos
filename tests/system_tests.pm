@@ -36,7 +36,7 @@ sub run {
         assert_script_run("sudo patch /usr/lib/python3*/site-packages/nose2/plugins/junitxml.py /root/extra-files/nose2-junit-xml-log-skip-reason.patch");
         # until https://github.com/nose-devs/nose2/pull/505 gets merged
         assert_script_run("sudo patch /usr/lib/python3*/site-packages/nose2/plugins/junitxml.py /root/extra-files/nose2-junit-xml-timestamp.r4.0.patch");
-    } else {
+    } elsif (check_var("VERSION", "4.1")) {
         # until https://github.com/nose-devs/nose2/pull/505 gets merged
         assert_script_run("sudo patch /usr/lib/python3*/site-packages/nose2/plugins/junitxml.py /root/extra-files/nose2-junit-xml-timestamp.r4.1.patch");
     }
@@ -124,8 +124,8 @@ ENDFUNC
             upload_logs "/tmp/objgraphs-$test.tar.gz";
             script_run "sudo rm -f /tmp/objgraph-*";
         }
-        if (script_run('pidof -x qvm-start-gui || pidof -x qvm-start-daemon')) {
-            record_soft_failure('qvm-start-gui crashed');
+        if (script_run('pidof -x qvm-start-daemon')) {
+            record_soft_failure('qvm-start-daemon crashed');
         }
     }
     if ($failed) {

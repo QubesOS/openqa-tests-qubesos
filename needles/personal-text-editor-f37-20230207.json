@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "ypos": 224,
+      "type": "match",
+      "height": 18,
+      "xpos": 844,
+      "width": 79
+    },
+    {
+      "ypos": 253,
+      "type": "match",
+      "height": 36,
+      "width": 63,
+      "xpos": 338
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-fedora-37",
+    "RELEASE-4-1",
+    "personal-text-editor"
+  ]
+}

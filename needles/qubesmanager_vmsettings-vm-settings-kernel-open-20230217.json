@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "click_point": {
+        "ypos": 17.5,
+        "xpos": 124
+      },
+      "width": 146,
+      "xpos": 494,
+      "ypos": 273,
+      "type": "match",
+      "height": 35
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "vm-settings-kernel-open"
+  ]
+}

@@ -49,6 +49,9 @@ sub run {
 
     assert_script_run("./install.sh", timeout => 1800);
 
+    # temporary patch until https://github.com/elliotkillick/qvm-create-windows-qube/pull/58 get merged
+    assert_script_run("sudo sed -i -e 's:\"R4.1\":\\0|\"R4.2\":' /usr/bin/qvm-create-windows-qube");
+
     assert_script_run("qvm-prefs -D windows-mgmt netvm");
 
     if (get_var("ASSET_1")) {

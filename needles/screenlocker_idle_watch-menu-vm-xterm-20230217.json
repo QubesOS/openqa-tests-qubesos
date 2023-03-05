@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 20,
+      "type": "match",
+      "ypos": 331,
+      "width": 48,
+      "xpos": 408
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "menu-vm-xterm",
+    "new-menu"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 316,
+      "height": 18,
+      "width": 58,
+      "xpos": 157
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "manager-vm-settings"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 260,
+      "ypos": 371,
+      "width": 167,
+      "height": 76,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-fedora-37",
+    "RELEASE-4-1",
+    "files-new-text-document-selected"
+  ]
+}

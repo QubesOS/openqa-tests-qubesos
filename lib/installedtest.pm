@@ -42,7 +42,7 @@ sub handle_login_prompt {
     }
     send_key "ret";
 
-    assert_screen "desktop";
+    assert_screen("desktop", timeout => 60);
 }
 
 sub restore_keyboard_layout {
@@ -76,6 +76,13 @@ sub handle_system_startup {
             send_key "down";
             send_key "down";
             send_key "down";
+            send_key "ret";
+        }
+    }
+
+    if (check_screen(["luks-prompt", "grub-menu-qubes"], 60)) {
+        # start default entry, don't wait for the timeout (or lack of it)
+        if (match_has_tag("grub-menu-qubes")) {
             send_key "ret";
         }
     }
@@ -140,7 +147,7 @@ sub usbvm_fixup {
     my ($self) = @_;
 
     select_root_console();
-    if (check_var("VERSION", "4.1") and !check_var("BACKEND", "qemu")) {
+    if ((check_var("VERSION", "4.1") or check_var("VERSION", "4.2")) and !check_var("BACKEND", "qemu")) {
         # fixup for USBVM with USB keyboard present - do it for R4.1 only -
         # R4.2 should allow it out of the box
         my $sed_usb = "sed -i -e 's:rd.qubes.hide_all_usb:usbcore.authorized_default=0:'";
@@ -166,6 +173,8 @@ sub connect_wifi {
         # for some reason, NM almost always put the closest network in the
         # "more networks" submenu...
         assert_and_click("nm-applet-more-networks");
+        # wait for scan to complete and list to stabilize
+        sleep(5);
         assert_and_click($wifi_needle);
         assert_and_click("nm-applet-wifi-password");
         type_string($wifi_password, secret => 1);
@@ -192,7 +201,7 @@ sub init_gui_session {
 
     # disable screensaver
     if (!check_var('KEEP_SCREENLOCKER', '1')) {
-        x11_start_program('xscreensaver-command -exit', target_match => 'desktop-clear');
+        x11_start_program('xscreensaver-command -exit', valid => 0);
     }
     wait_still_screen;
 }

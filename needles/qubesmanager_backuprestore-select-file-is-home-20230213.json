@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 26,
+      "type": "match",
+      "ypos": 88,
+      "xpos": 191,
+      "width": 60
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "select-file-is-home"
+  ]
+}

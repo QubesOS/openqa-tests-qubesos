@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 4,
+      "height": 24,
+      "xpos": 5,
+      "width": 190
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "missing branding - background and logo"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "installer-custom-partitioning"
+  ]
+}

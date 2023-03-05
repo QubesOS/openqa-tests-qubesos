@@ -43,6 +43,14 @@ sub run {
         assert_script_run("(set -o pipefail; qubesctl --skip-dom0 --show-output --targets=$_ state.highstate 2>&1 | tee qubesctl-update.log)", timeout => 9000);
         # unlock the screen, if screenlocker engaged
         if (check_screen("screenlocker-blank")) {
+            # workaround for DPMS emulation issues under KVM
+            send_key('ctrl-alt-f2');
+            sleep(2);
+            send_key('ctrl-alt-f1');
+            sleep(2);
+        }
+        # unlock the screen, if screenlocker engaged
+        if (check_screen("screenlocker-blank")) {
             send_key('ctrl');
             assert_screen('xscreensaver-prompt', timeout=>5);
             type_password();

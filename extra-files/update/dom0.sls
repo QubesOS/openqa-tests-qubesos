@@ -28,6 +28,12 @@
     - context:
         basedist: {{basedist}}
 
+/etc/qubes/repo-templates/qubes-templates-testing.repo:
+  file.managed:
+    - order: 10
+    - source: salt://update/qubes-templates-testing.repo
+    - template: jinja
+
 /etc/pki/rpm-gpg/update-test:
   file.managed:
     - order: 11

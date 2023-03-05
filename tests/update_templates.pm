@@ -66,6 +66,15 @@ sub run {
         }
         # unlock the screen, if screenlocker engaged
         if (check_screen("screenlocker-blank")) {
+            # workaround for DPMS emulation issues under KVM
+            send_key('ctrl');
+            send_key('ctrl-alt-f2');
+            sleep(2);
+            send_key('ctrl-alt-f1');
+            sleep(2);
+        }
+        # unlock the screen, if screenlocker engaged
+        if (check_screen("screenlocker-blank")) {
             send_key('ctrl');
             assert_screen('xscreensaver-prompt', timeout=>5);
             type_password();

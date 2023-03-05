@@ -32,7 +32,7 @@ config_defaults = {
     'repo_blocklist': None,
     'job_allowlist': '*',
     'user_allowlist': None,
-    'branch_allowlist': 'master release4.0',
+    'branch_allowlist': 'master release4.0 release4.1 main',
     'github_webhook_key': None,
 }
 
@@ -142,7 +142,7 @@ def get_job_from_pr(pr_details):
         for job in r.json():
             if job['status'] != 'success':
                 continue
-            if job['name'] != 'publish:repo':
+            if 'publish:repo' not in job['name']:
                 continue
             return job['web_url']
     return None
@@ -191,6 +191,8 @@ def run_test():
     values['PULL_REQUESTS'] = req_values['PULL_REQUESTS']
     if 'SELINUX_TEMPLATES' in req_values:
         values['SELINUX_TEMPLATES'] = req_values['SELINUX_TEMPLATES']
+    if 'TEST_TEMPLATES' in req_values:
+        values['TEST_TEMPLATES'] = req_values['TEST_TEMPLATES']
 
     subprocess.check_call([
         'openqa-cli', 'api', '-X', 'POST',
@@ -254,7 +256,7 @@ def run_test_pr(comment_details):
     values['VERSION'] = version
     if pr_details['base']['repo']['name'] in ('qubes-linux-kernel', 'qubes-vmm-xen'):
         values['FLAVOR'] = 'kernel'
-        if pr_details['base']['ref'] == 'master':
+        if pr_details['base']['ref'] in ('master', 'main'):
             values['KERNEL_VERSION'] = 'latest'
         else:
             values['KERNEL_VERSION'] = 'stable'

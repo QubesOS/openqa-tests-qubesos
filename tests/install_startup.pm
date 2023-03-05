@@ -39,7 +39,16 @@ sub run {
                 type_string "EFI\\BOOT\\BOOTX64.efi qubes\n";
             } else {
                 assert_screen 'bootloader', 30;
-                send_key 'up';
+                if (check_var('KERNEL_VERSION', 'latest')) {
+                    # verbose
+                    send_key 'down';
+                    # rescue
+                    send_key 'down';
+                    # kernel latest
+                    send_key 'down';
+                } else {
+                    send_key 'up';
+                }
                 # press enter to boot right away
                 send_key 'ret';
             }
@@ -48,9 +57,24 @@ sub run {
             assert_screen 'bootloader', 30;
 
             # skip media verification
-            if (check_var('UEFI', '1')) {
-                # maybe one day grub2-efi will work with xen.efi
-                send_key 'down';
+            if (check_var('KERNEL_VERSION', 'latest')) {
+                if (check_var('VERSION', '4.1')) {
+                    # isolinux menu
+                    # troubleshooting
+                    send_key 'down';
+                    send_key 'ret';
+                    assert_screen 'bootloader-troubleshooting';
+                    # kernel latest
+                    send_key 'down';
+                } else {
+                    # grub menu
+                    # verbose
+                    send_key 'down';
+                    # rescue
+                    send_key 'down';
+                    # kernel latest
+                    send_key 'down';
+                }
             } else {
                 send_key 'up';
             }

@@ -81,6 +81,12 @@ ENDCODE
     chop($migrate_templates);
     assert_script_run($migrate_templates);
 
+    if (get_var("TEST_TEMPLATES")) {
+        my $test_templates = get_var("TEST_TEMPLATES");
+        $test_templates =~ s/([^ ]+)/\1-pool/g;
+        set_var("TEST_TEMPLATES", $test_templates);
+    }
+
     assert_script_run('qvm-shutdown --all --wait');
 
     assert_script_run('migrate_templates', timeout => 1800);

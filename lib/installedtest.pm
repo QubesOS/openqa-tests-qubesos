@@ -166,9 +166,12 @@ sub connect_wifi {
         # for some reason, NM almost always put the closest network in the
         # "more networks" submenu...
         assert_and_click("nm-applet-more-networks");
-        # wait for scan to complete and list to stabilize
-        sleep(5);
         assert_and_click($wifi_needle);
+        # network list refresh can hit just before clicking, retry in that case
+        if (!check_screen("nm-applet-wifi-password", 8)) {
+            assert_and_click("nm-applet-more-networks");
+            assert_and_click($wifi_needle);
+        }
         assert_and_click("nm-applet-wifi-password");
         type_string($wifi_password, secret => 1);
         send_key('ret');

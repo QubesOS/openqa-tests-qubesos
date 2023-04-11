@@ -48,11 +48,18 @@ sub run {
 
     # FIXME: make it packaged, rc.local or such
     select_root_console();
-    assert_script_run("echo -e '$testapi::password\n$testapi::password' | qvm-run --nogui -p -u root sys-gui 'passwd --stdin user'");
+    if (check_var("VERSION", "4.1")) {
+        assert_script_run("echo -e '$testapi::password\n$testapi::password' | qvm-run --nogui -p -u root sys-gui 'passwd --stdin user'");
+    } else {
+        # 'passwd' is not installed by default...
+        assert_script_run("echo '$testapi::password' | qvm-run --nogui -p -u root sys-gui 'hash=\$(openssl passwd -6 -stdin) && sed -i \"s,^user:[^:]*,user:\$hash,\" /etc/shadow'");
+    }
     select_console('x11');
 
     # for some reason, at the very first GUIVM start, the panel fails to load the icons
-    x11_start_program('xfce4-panel --restart', valid=>0);
+    if (check_var("VERSION", "4.1")) {
+        x11_start_program('xfce4-panel --restart', valid=>0);
+    }
     wait_still_screen();
     assert_screen('x11');
 

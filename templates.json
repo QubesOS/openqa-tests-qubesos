@@ -374,6 +374,28 @@
           "value": "hw9"
         }
       ]
+    },
+    {
+      "backend": "generalhw",
+      "name": "hw10",
+      "settings": [
+        {
+          "key": "NUMDISKS",
+          "value": "1"
+        },
+        {
+          "key": "SERIALDEV",
+          "value": "ttyS0"
+        },
+        {
+          "key": "UEFI",
+          "value": "1"
+        },
+        {
+          "key": "WORKER_CLASS",
+          "value": "hw10"
+        }
+      ]
     }
   ],
   "Products": [

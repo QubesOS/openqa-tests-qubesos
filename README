@@ -59,3 +59,5 @@ Variables used in tests:
  - `WHONIXCHECK` - run whonixcheck / systemcheck on all Whonix-related VMs (including templates)
  - `WHONIX_INTERACTIVE` - run interactive tests on Whonix-related VMs (mostly anon-whonix)
  - `KERNEL_VERSION` - which kernel flavor should be used - currently supported value is 'latest', which will switch to kernel-latest and kernel-latest-qubes-vm during update
+ - `PIPEWIRE` - when set to `1`, VMs are set to use pipewire instead of
+   pulseaudio, including switching native pulseaudio to pipewire-pulse.

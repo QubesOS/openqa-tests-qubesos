@@ -97,6 +97,10 @@ if (get_var('DO_GUIVM')) {
     }
 }
 
+if (get_var('PIPEWIRE')) {
+    autotest::loadtest "tests/pipewire_install.pm";
+}
+
 # do not execute same tests before each system tests run
 if (check_var('TEST_GENERIC', '1') and
         (!get_var('DO_UPDATE') or check_var('RESTART_AFTER_UPDATE', '1'))) {

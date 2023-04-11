@@ -35,6 +35,7 @@ sub enable_dom0_network_no_netvm {
     assert_script_run('ip l s $dev up');
     assert_script_run('ip a a 10.0.2.15/24 dev $dev');
     assert_script_run('ip r a default via 10.0.2.2');
+    assert_script_run('rm -f /etc/resolv.conf');
     assert_script_run('echo "nameserver 10.0.2.3" > /etc/resolv.conf');
     script_run('ip a; ip r');
 }

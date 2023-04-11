@@ -144,6 +144,7 @@ if (get_var("WINDOWS_VERSION")) {
 
 if (get_var("TEST_WINDOWS_GUI_INTERACTIVE")) {
     autotest::loadtest "tests/windows_clipboard_and_filecopy.pm";
+    autotest::loadtest "tests/suspend_windows.pm";
 }
 
 if (get_var("GUI_TESTS")) {

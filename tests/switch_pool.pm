@@ -53,6 +53,17 @@ sub run {
         assert_script_run('mkdir -p /var/lib/qubes-pool');
         assert_script_run('mount /var/lib/qubes-pool');
         assert_script_run('qvm-pool add --option dir_path=/var/lib/qubes-pool pool-test file-reflink');
+    } elsif (get_var('PARTITIONING') eq 'zfs') {
+        assert_script_run('curl https://zfsonlinux.org/fedora/zfs-release-2-2.fc$(rpm --eval "%{fedora}").noarch.rpm > zfs-release.rpm');
+        assert_script_run('dnf install -y ./zfs-release.rpm');
+        assert_script_run('sed -i "s/\\\\\\$releasever/$(rpm --eval "%{fedora}")/" /etc/yum.repos.d/zfs.repo');
+        assert_script_run('rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-openzfs');
+        assert_script_run('qubes-dom0-update -y zfs', timeout => 900);
+        assert_script_run('modprobe zfs zfs_arc_max=67108864');
+
+        assert_script_run('printf "label: gpt\n,,L" | sfdisk /dev/sdb');
+        assert_script_run('zpool create -f testpool /dev/sdb1');
+        assert_script_run('qvm-pool add --option container=testpool pool-test zfs');
     } else {
         die "Invalid PARTITIONING value";
     }

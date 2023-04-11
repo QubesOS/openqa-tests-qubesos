@@ -147,19 +147,12 @@ sub usbvm_fixup {
     my ($self) = @_;
 
     select_root_console();
-    if ((check_var("VERSION", "4.1") or check_var("VERSION", "4.2")) and !check_var("BACKEND", "qemu")) {
-        # fixup for USBVM with USB keyboard present - do it for R4.1 only -
-        # R4.2 should allow it out of the box
-        my $sed_usb = "sed -i -e 's:rd.qubes.hide_all_usb:usbcore.authorized_default=0:'";
-        script_run("$sed_usb /boot/grub2/grub.cfg");
-        script_run("$sed_usb /boot/efi/EFI/qubes/grub.cfg");
-        script_run("$sed_usb /etc/default/grub");
+    if (check_var("BACKEND", "qemu")) {
+        assert_script_run('echo sys-usb dom0 allow > /etc/qubes-rpc/policy/qubes.InputTablet');
+        assert_script_run('echo sys-net dom0 allow >> /etc/qubes-rpc/policy/qubes.InputTablet');
+        sleep(5);
+        assert_script_run('lsusb || qvm-run --no-gui -p -u root $(qvm-check -q sys-usb && echo sys-usb || echo sys-net) \'systemctl start qubes-input-sender-tablet@$(basename $(readlink /dev/input/by-id/usb-QEMU_QEMU_USB_Tablet_*-event-mouse))\'', timeout => 60);
     }
-
-    assert_script_run('echo sys-usb dom0 allow > /etc/qubes-rpc/policy/qubes.InputTablet');
-    assert_script_run('echo sys-net dom0 allow >> /etc/qubes-rpc/policy/qubes.InputTablet');
-    sleep(5);
-    assert_script_run('lsusb || qvm-run --no-gui -p -u root $(qvm-check -q sys-usb && echo sys-usb || echo sys-net) \'systemctl start qubes-input-sender-tablet@$(basename $(readlink /dev/input/by-id/usb-QEMU_QEMU_USB_Tablet_*-event-mouse))\'', timeout => 60);
     select_console('x11');
 }
 

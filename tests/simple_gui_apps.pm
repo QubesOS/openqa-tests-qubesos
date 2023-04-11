@@ -36,7 +36,7 @@ sub run {
     assert_and_click("vm-settings-applications", timeout => 60);
     assert_and_click("vm-settings-app-evince");
     send_key('end');
-    check_screen("vm-settings-app-xterm", timeout => 5);
+    check_screen("vm-settings-app-xterm", timeout => 8);
     send_key_until_needlematch("vm-settings-app-xterm", 'up', 20, 5);
     assert_and_click("vm-settings-app-add");
     assert_and_click("vm-settings-app-evince");
@@ -46,6 +46,11 @@ sub run {
     assert_and_click("vm-settings-app-text-editor");
     assert_and_click("vm-settings-app-add");
     assert_and_click("vm-settings-app-evince");
+    # let is scroll maybe, if evince not selected, click it again...
+    sleep(2);
+    if (check_screen("vm-settings-app-evince", 5)) {
+        assert_and_click("vm-settings-app-evince");
+    }
     assert_and_click("vm-settings-app-add");
     if (check_screen("vm-settings-app-missing-firefox")) {
         # Debian has different desktop file name, add it again

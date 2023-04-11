@@ -62,7 +62,7 @@ sub run {
         send_key "ret";
     }
 
-    assert_screen "firstboot-not-ready", 90;
+    assert_screen "firstboot-not-ready", 180;
 
     if (check_var('BACKEND', 'generalhw')) {
         # wiggle mouse a bit, for some reason needed...

@@ -143,6 +143,10 @@ sub run {
     assert_and_click('vm-settings-devices-strict-ok');
 
     # select a device and add
+    if (!check_screen('vm-settings-devices-select', 5)) {
+        # if not there, try to scroll first
+        assert_and_click('vm-settings-devices-scroll-down');
+    }
     assert_and_click('vm-settings-devices-select');
     assert_and_click('vm-settings-devices-add');
 

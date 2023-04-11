@@ -61,6 +61,8 @@ sub run {
     if (check_var("MACHINE", "hw7")) {
         # not really AMT, but LPSS on PCI bus 0
         $extra_xen_opts .= ' com1=115200,8n1,amt';
+    } elsif (check_var("MACHINE", "hw1")) {
+        $extra_xen_opts .= ' com1=115200,8n1,pci,msi,04:00.0';
     } elsif (check_var("MACHINE", "hw2")) {
         $extra_xen_opts .= ' com1=115200,8n1';
     } elsif (check_var("MACHINE", "hw8")) {

@@ -83,5 +83,13 @@ sub run {
     type_string("exit\n");
 };
 
+sub post_fail_hook {
+    my $self = shift;
+
+    sleep(5);
+    save_screenshot;
+    $self->SUPER::post_fail_hook();
+};
+
 1;
 

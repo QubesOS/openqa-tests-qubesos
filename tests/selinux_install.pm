@@ -36,11 +36,20 @@ sub run {
 
         assert_script_run("qvm-start $template");
         assert_script_run("(set -o pipefail; qvm-run -p -u root $template 'dnf install -y selinux-policy' 2>&1 | tee -a /tmp/selinux-install.log)", timeout => 300);
+        # switch to permissive until fs get relabeled
+        assert_script_run("(set -o pipefail; qvm-run -p -u root $template 'sed -i -e \"s/^SELINUX=.*/SELINUX=permissive/\" /etc/selinux/config' 2>&1 | tee -a /tmp/selinux-install.log)", timeout => 300);
         assert_script_run("qvm-shutdown --wait $template", timeout => 60);
         assert_script_run("qvm-prefs $template qrexec_timeout 3600");
         assert_script_run("qvm-prefs $template kernelopts \"\$(qvm-prefs $template kernelopts) selinux=1 security=selinux\"");
         # this will "fail" as the template will shutdown itself after relabel
         script_run("time qvm-start $template", timeout => 3600);
+        # just in case, but it should shutdown on its own already
+        assert_script_run("qvm-shutdown --wait $template", timeout => 60);
+        upload_logs("/var/log/xen/console/guest-$template.log");
+        # then finally set to enforcing
+        assert_script_run("(set -o pipefail; qvm-run -p -u root $template 'sed -i -e \"s/^SELINUX=.*/SELINUX=enforcing/\" /etc/selinux/config' 2>&1 | tee -a /tmp/selinux-install.log)", timeout => 300);
+        assert_script_run("qvm-shutdown --wait $template", timeout => 60);
+        upload_logs("/tmp/selinux-install.log");
     }
 }
 

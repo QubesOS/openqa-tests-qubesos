@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 16,
+      "ypos": 512,
+      "width": 256,
+      "xpos": 1
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "text luks prompt"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "luks-prompt",
+    "luks-prompt-text"
+  ]
+}

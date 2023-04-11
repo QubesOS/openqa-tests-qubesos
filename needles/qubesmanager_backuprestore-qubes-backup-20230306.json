@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 172,
+      "xpos": 402,
+      "height": 15,
+      "type": "match",
+      "ypos": 37
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "qubes-backup"
+  ]
+}

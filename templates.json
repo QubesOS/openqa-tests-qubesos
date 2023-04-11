@@ -223,7 +223,7 @@
         },
         {
           "key": "SERIALDEV",
-          "value": "ttyS0"
+          "value": "hvc0"
         },
         {
           "key": "UEFI",

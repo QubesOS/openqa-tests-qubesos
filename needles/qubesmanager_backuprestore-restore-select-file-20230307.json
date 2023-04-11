@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "xpos": 286,
+      "width": 78,
+      "type": "match",
+      "ypos": 404,
+      "height": 41,
+      "click_point": {
+        "xpos": 40,
+        "ypos": 11.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "restore-select-file"
+  ]
+}

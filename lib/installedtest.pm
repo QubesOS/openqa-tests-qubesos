@@ -229,6 +229,7 @@ sub post_fail_hook {
     enable_dom0_network_netvm() unless $self->{network_up};
     script_run "ip r";
     script_run "tail -40 /var/log/xen/console/guest-sys-net.log";
+    script_run "tail -40 /var/log/xen/console/guest-sys-usb.log";
     upload_logs('/var/log/libvirt/libxl/libxl-driver.log');
     $self->save_and_upload_log('journalctl -b', 'journalctl.log', {timeout => 120});
     $self->save_and_upload_log('sudo -u user journalctl --user -b', 'user-journalctl.log', {timeout => 120});

@@ -124,6 +124,14 @@ ENDFUNC
             upload_logs "/tmp/objgraphs-$test.tar.gz";
             script_run "sudo rm -f /tmp/objgraph-*";
         }
+        unless (script_run "sudo tar czf /tmp/window-dumps-$test.tar.gz /tmp/window-dump-*") {
+            upload_logs "/tmp/window-dumps-$test.tar.gz";
+            script_run "sudo rm -f /tmp/window-dump-*";
+        }
+        unless (script_run "sudo tar czf /tmp/audio-sample-$test.tar.gz /tmp/audio-sample-*") {
+            upload_logs "/tmp/audio-sample-$test.tar.gz";
+            script_run "sudo rm -f /tmp/audio-sample-*";
+        }
         if (script_run('pidof -x qvm-start-daemon')) {
             record_soft_failure('qvm-start-daemon crashed');
         }

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 21,
+      "ypos": 226,
+      "width": 157,
+      "xpos": 403
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "menu-tor-browser",
+    "new-menu"
+  ]
+}

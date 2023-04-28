@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 17,
+      "type": "match",
+      "ypos": 171,
+      "xpos": 405,
+      "width": 121
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "menu-vm-evince",
+    "new-menu"
+  ]
+}

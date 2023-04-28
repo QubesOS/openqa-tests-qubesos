@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 18,
+      "ypos": 200,
+      "xpos": 386,
+      "width": 66
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "menu-vm-firefox",
+    "new-menu"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 47,
+      "xpos": 380,
+      "type": "match",
+      "ypos": 34,
+      "height": 46
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-fedora-37",
+    "work-files"
+  ]
+}

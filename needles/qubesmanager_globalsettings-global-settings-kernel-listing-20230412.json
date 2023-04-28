@@ -1,0 +1,29 @@
+{
+  "area": [
+    {
+      "height": 26,
+      "type": "match",
+      "ypos": 169,
+      "width": 112,
+      "xpos": 502,
+      "click_point": {
+        "ypos": 14,
+        "xpos": 212
+      }
+    },
+    {
+      "height": 16,
+      "type": "match",
+      "ypos": 176,
+      "xpos": 772,
+      "width": 92,
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw1",
+    "ENV-VERSION-4-2",
+    "global-settings-kernel-listing"
+  ]
+}

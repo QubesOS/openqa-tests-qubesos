@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "click_point": {
+        "ypos": 17.5,
+        "xpos": 49.5
+      },
+      "xpos": 415,
+      "width": 95,
+      "type": "match",
+      "ypos": 344,
+      "height": 67
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-fedora-38",
+    "files-work"
+  ]
+}

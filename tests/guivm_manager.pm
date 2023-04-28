@@ -29,6 +29,9 @@ sub run {
     # 2. Generate menu (#5804)
     assert_and_click("menu");
     assert_and_click("menu-qubes-tools");
+    if (match_has_tag("new-menu")) {
+        assert_and_click("menu-qubes-tools-submenu");
+    }
     assert_and_click("menu-qubes-manager");
     assert_screen("qubes-qube-manager", timeout => 120);
 

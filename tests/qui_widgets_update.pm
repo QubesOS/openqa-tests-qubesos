@@ -41,7 +41,9 @@ sub run {
 
     # launch the updater
     assert_and_click('qubes-update-launch-updater', timeout => 20);
-    assert_and_click('qubes-update-enable-for-all', timeout => 20);
+    if (check_var("VERSION", "4.1")) {
+        assert_and_click('qubes-update-enable-for-all', timeout => 20);
+    }
 
     assert_and_click('qubes-update-deselect-dom0', timeout => 20);
     assert_and_click('qubes-update-select-dom0', timeout => 20);

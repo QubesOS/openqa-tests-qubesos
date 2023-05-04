@@ -52,7 +52,7 @@ sub run {
     assert_and_click('qubes-update-next', timeout => 20);
     assert_and_click('qubes-update-cancel', timeout => 20);
 
-    assert_screen('qubes-update-cancelling');
+    assert_and_click('qubes-update-cancelling');
     assert_and_click('qubes-update-finish', timeout => 1200);
 
     # try launching the updater from console

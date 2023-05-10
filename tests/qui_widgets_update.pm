@@ -54,9 +54,12 @@ sub run {
 
     assert_and_click('qubes-update-cancelling');
     if (!check_var("VERSION", "4.1")) {
-        assert_and_click('qubes-update-next', timeout => 20);
+        assert_and_click('qubes-update-next', timeout => 1200);
+        assert_and_click('qubes-update-finish', timeout => 20);
     }
-    assert_and_click('qubes-update-finish', timeout => 1200);
+    else {
+        assert_and_click('qubes-update-finish', timeout => 1200);
+    }
 
     # try launching the updater from console
     x11_start_program('qubes-update-gui');

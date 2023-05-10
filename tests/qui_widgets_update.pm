@@ -53,7 +53,7 @@ sub run {
     assert_and_click('qubes-update-cancel', timeout => 20);
 
     assert_and_click('qubes-update-cancelling');
-    if (check_var("VERSION", "4.1")) {
+    if (!check_var("VERSION", "4.1")) {
         assert_and_click('qubes-update-next', timeout => 20);
     }
     assert_and_click('qubes-update-finish', timeout => 1200);

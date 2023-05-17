@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 20,
+      "ypos": 416,
+      "width": 114,
+      "xpos": 98
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "menu-vm-windows-test",
+    "menu-vm-windows-test-running",
+    "new-menu"
+  ]
+}

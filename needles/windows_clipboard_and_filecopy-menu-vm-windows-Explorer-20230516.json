@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 548,
+      "width": 82,
+      "height": 22,
+      "ypos": 546,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN10",
+    "menu-vm-windows-Explorer",
+    "new-menu"
+  ]
+}

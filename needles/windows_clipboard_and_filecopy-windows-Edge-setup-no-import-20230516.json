@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 152,
+      "ypos": 662,
+      "width": 172,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN10",
+    "windows-Edge-setup-no-import"
+  ]
+}

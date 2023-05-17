@@ -28,6 +28,9 @@ sub open_website_paste_edge {
         assert_and_click("windows-Edge-complete-setup-confirm");
         assert_and_click("windows-Edge-no-signin");
     } else {
+        if (check_screen("windows-Edge-no-google-signin", timeout => 15)) {
+            assert_and_click("windows-Edge-no-google-signin");
+        }
         assert_and_click("windows-Edge-setup-no-import");
         assert_and_click("windows-Edge-no-profiling");
         assert_and_click("windows-Edge-complete-setup-confirm");
@@ -77,6 +80,9 @@ sub run {
     assert_screen("menu-vm-windows-scroll-down");
     move_to_lastmatch();
     sleep(10);
+    if (match_has_tag("new-menu")) {
+        mouse_click();
+    }
     mouse_hide();
     sleep(1);
     assert_and_click("menu-vm-windows-Explorer");
@@ -181,9 +187,15 @@ sub run {
 
     assert_and_click("menu");
     assert_and_click("menu-vm-windows-test");
-    #assert_screen("menu-vm-windows-scroll-down");
-    #move_to_lastmatch();
-    #sleep(5);
+    if (check_screen("menu-vm-windows-scroll-down", timeout => 30)) {
+        move_to_lastmatch();
+        sleep(10);
+        if (match_has_tag("new-menu")) {
+            mouse_click();
+        }
+        mouse_hide();
+        sleep(1);
+    }
     if (check_screen("menu-vm-windows-Edge", timeout => 30)) {
         open_website_paste_edge;
     } elsif (check_screen("menu-vm-windows-IE", timeout => 30)) {

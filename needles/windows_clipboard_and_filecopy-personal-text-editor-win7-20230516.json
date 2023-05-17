@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 18,
+      "ypos": 35,
+      "width": 79,
+      "xpos": 819
+    },
+    {
+      "type": "match",
+      "height": 36,
+      "ypos": 59,
+      "width": 63,
+      "xpos": 333
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-WIN7",
+    "ENV-fedora-37",
+    "personal-text-editor"
+  ]
+}

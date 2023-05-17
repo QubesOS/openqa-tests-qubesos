@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 807,
+      "ypos": 473,
+      "width": 62,
+      "height": 19,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "qubes-update-cancelling"
+  ]
+}

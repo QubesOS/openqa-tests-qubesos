@@ -12,7 +12,7 @@
   "qubes-gui-dom0": "gui-daemon",
   "qubes-gui-agent": "gui-agent-linux",
   "qubes-core-dom0-linux": "core-admin-linux",
-  "qubes-qrexec-libs": "core-qrexec",
+  "qubes-core-qrexec-libs": "core-qrexec",
   "qubes-db": "core-qubesdb",
   "qubes-desktop-linux-common": "desktop-linux-common",
   "qubes-desktop-linux-manager": "desktop-linux-manager",

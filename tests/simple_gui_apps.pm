@@ -39,17 +39,23 @@ sub run {
     check_screen("vm-settings-app-xterm", timeout => 8);
     send_key_until_needlematch("vm-settings-app-xterm", 'up', 20, 5);
     assert_and_click("vm-settings-app-add");
-    assert_and_click("vm-settings-app-evince");
+    # wait for xterm to really be added, because that moves entries on the left
+    assert_screen("vm-settings-app-xterm-added");
+    assert_and_click(["vm-settings-app-evince", "vm-settings-app-text-editor"]);
     send_key('end');
     # let it scroll...
     sleep(1);
     assert_and_click("vm-settings-app-text-editor");
     assert_and_click("vm-settings-app-add");
-    assert_and_click("vm-settings-app-evince");
+    assert_and_click(["vm-settings-app-evince", "vm-settings-app-start-qube"]);
+    if (match_has_tag("vm-settings-app-start-qube")) {
+        # if start qube was clicked, scroll to home to make evince ("Document Viewer") visible
+        send_key('home');
+    }
     # let is scroll maybe, if evince not selected, click it again...
     sleep(2);
     if (check_screen("vm-settings-app-evince", 5)) {
-        assert_and_click("vm-settings-app-evince");
+        click_lastmatch();
     }
     assert_and_click("vm-settings-app-add");
     if (check_screen("vm-settings-app-missing-firefox")) {

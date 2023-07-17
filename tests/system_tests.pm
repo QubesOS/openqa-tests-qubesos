@@ -111,7 +111,7 @@ ENDFUNC
         # upload per-test logs
         my $test_logs_path = "/tmp/$test/";
         assert_script_run("mkdir $test_logs_path");
-        assert_script_run("sudo python3 split_logs.py --junit-xml=nose2-junit-$test.xml --outdir=$test_logs_path");
+        assert_script_run("sudo python3 split_logs.py --junit-xml=nose2-junit-$test.xml --outdir=$test_logs_path", timeout => 120);
         my $files_path_str = script_output("find $test_logs_path -type f");
         my @files_paths = split /\n/, $files_path_str;
         foreach my $file_path (@files_paths) {

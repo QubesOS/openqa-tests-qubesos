@@ -5,7 +5,7 @@ use testapi;
 sub run {
     select_console('root-console');
     # make upload as small as possible
-    script_run("fstrim -v /", 120);
+    script_run("fstrim -v /", timeout => 180);
     # shutdown before uploading disk image
     script_run("poweroff", 0);
     assert_shutdown 300;

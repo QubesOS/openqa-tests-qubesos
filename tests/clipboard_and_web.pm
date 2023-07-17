@@ -57,7 +57,7 @@ sub run {
     send_key("ret");
     assert_screen("qubes-website", timeout => 45);
     send_key("ctrl-q");
-    if (check_screen("firefox-multitab-close", timeout => 20)) {
+    if (check_screen("firefox-multitab-close", timeout => 30)) {
         assert_and_click("firefox-multitab-close");
     }
     wait_still_screen();

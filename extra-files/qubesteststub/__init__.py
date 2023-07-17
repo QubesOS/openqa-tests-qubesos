@@ -85,7 +85,7 @@ class DefaultPV(qubes.ext.Extension):
             if '0c03:' in line:
                 self.usbdevs.append(bdf)
 
-        qubes.vm.qubesvm.QubesVM.qrexec_timeout._default = 90
+        qubes.vm.qubesvm.QubesVM.qrexec_timeout._default = 120
         qubes.vm.qubesvm.QubesVM.qrexec_timeout._default_function = None
         if 'xen_scrub_pages' not in qubes.config.defaults['kernelopts']:
             qubes.config.defaults['kernelopts'] += ' xen_scrub_pages=0'

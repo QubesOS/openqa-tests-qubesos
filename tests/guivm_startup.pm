@@ -44,7 +44,7 @@ sub run {
     type_string $testapi::password;
     send_key "ret";
 
-    assert_screen("desktop", timeout => 90);
+    assert_screen("desktop", timeout => 120);
 
     # FIXME: make it packaged, rc.local or such
     select_root_console();

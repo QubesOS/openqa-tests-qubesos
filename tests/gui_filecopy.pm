@@ -60,6 +60,8 @@ sub run {
     assert_screen("file-copy-prompt");
     type_string("personal");
     assert_and_click("file-copy-prompt-confirm");
+    # wait for progress dialog to finish
+    sleep(2);
 
     # verify, and then open in DispVM
     assert_and_click("menu");

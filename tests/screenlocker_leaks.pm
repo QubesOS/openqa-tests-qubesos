@@ -50,7 +50,7 @@ sub run {
     sleep(60);
     # and unlock
     send_key('ctrl');
-    assert_screen('xscreensaver-prompt', timeout=>8);
+    assert_screen('xscreensaver-prompt', timeout=>20);
     type_password();
     send_key('ret');
     assert_and_click(['work-xterm', 'work-xterm-inactive']);

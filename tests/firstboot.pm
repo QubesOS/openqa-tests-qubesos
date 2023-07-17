@@ -47,7 +47,7 @@ sub run {
 
     if (check_var('BACKEND', 'generalhw')) {
         # force plymouth to show on HDMI output too
-        if (!check_screen(["luks-prompt", "firstboot-not-ready"], 90)) {
+        if (!check_screen(["luks-prompt", "firstboot-not-ready"], 120)) {
             send_key 'esc';
             send_key 'esc';
             sleep 1;

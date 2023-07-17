@@ -86,7 +86,11 @@ repo-testing:
     - name: qubes-testing
     - baseurl: https://yum.qubes-os.org/r{{ qubes_ver }}/current-testing/vm/centos{{ grains['osrelease'] }}
 {% elif grains['os'] == 'Debian' %}
+{% if qubes_ver == "4.1" %}
     - name: deb [arch=amd64] https://deb.qubes-os.org/r{{ qubes_ver }}/vm {{ grains['oscodename'] }}-testing main
+{% else %}
+    - name: deb [arch=amd64 signed-by=/usr/share/keyrings/qubes-archive-keyring.gpg] https://deb.qubes-os.org/r{{ qubes_ver }}/vm {{ grains['oscodename'] }}-testing main
+{% endif %}
     - file: /etc/apt/sources.list.d/qubes-r4.list
     - require:
       - pkg: python3-apt
@@ -98,7 +102,11 @@ repo-testing:
 
 /etc/apt/sources.list.d/qubes-r4.list:
   file.append:
+{% if qubes_ver == "4.1" %}
     - text: deb [arch=amd64] https://deb.qubes-os.org/r{{ qubes_ver }}/vm {{ grains['oscodename'] }}-testing main
+{% else %}
+    - text: deb [arch=amd64 signed-by=/usr/share/keyrings/qubes-archive-keyring.gpg] https://deb.qubes-os.org/r{{ qubes_ver }}/vm {{ grains['oscodename'] }}-testing main
+{% endif %}
 
 {% endif %}
 

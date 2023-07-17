@@ -200,6 +200,19 @@ sub run {
         open_website_paste_edge;
     } elsif (check_screen("menu-vm-windows-IE", timeout => 30)) {
         open_website_paste_ie;
+    } elsif (check_screen("menu-vm-windows-Explorer")) {
+        # no known browser, but Windows Explorer is visible; scroll one screen up and retry
+        send_key("right");
+        send_key("end");
+        send_key("pageup");
+        send_key("pageup");
+        if (check_screen("menu-vm-windows-Edge", timeout => 30)) {
+            open_website_paste_edge;
+        } elsif (check_screen("menu-vm-windows-IE", timeout => 30)) {
+            open_website_paste_ie;
+        } else {
+            die "no browser found in windows-test";
+        }
     } else {
         die "no browser found in windows-test";
     }

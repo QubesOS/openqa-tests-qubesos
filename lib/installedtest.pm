@@ -225,7 +225,7 @@ sub post_fail_hook {
     script_run "cat /var/log/salt/minion";
     script_run "cat /var/log/libvirt/libxl/libxl-driver.log";
     script_run "tail /var/log/xen/console/guest*-dm.log";
-    script_run "grep -B 60 'Kernel panic' /var/log/xen/console/guest*.log";
+    script_run "grep -B 100 'Kernel panic' /var/log/xen/console/guest*.log";
     enable_dom0_network_netvm() unless $self->{network_up};
     script_run "ip r";
     script_run "tail -200 /var/log/xen/console/guest-sys-net.log";

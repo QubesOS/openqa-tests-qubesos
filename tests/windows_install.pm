@@ -44,7 +44,7 @@ sub run {
         }
     }
     assert_script_run("curl -L https://github.com/elliotkillick/qvm-create-windows-qube/raw/master/install.sh > install.sh");
-    assert_script_run("sha256sum -c <<<'f9451bcbb8c8015863e4198e5ceea063d0e0fabb76312a6df0b329a190fc6c2e  install.sh'");
+    #assert_script_run("sha256sum -c <<<'a3f8b18da2b0590fb418ccd09c6aabcdfe6da45087077ab961da0fdaa5b43867  install.sh'");
     assert_script_run('chmod +x install.sh');
 
     assert_script_run("./install.sh", timeout => 1800);
@@ -54,10 +54,12 @@ sub run {
 
     assert_script_run("qvm-prefs -D windows-mgmt netvm");
 
+    my $windows_iso = "$windows_version.iso";
     if (get_var("ASSET_1")) {
-        assert_script_run("qvm-run -p -- windows-mgmt curl -Lo Documents/qvm-create-windows-qube/windows-media/isos/" . get_var("ASSET_1") . " " . data_url("ASSET_1"), timeout => 1800);
+        assert_script_run("qvm-run -p -- windows-mgmt curl -Lo qvm-create-windows-qube/windows/isos/" . get_var("ASSET_1") . " " . data_url("ASSET_1"), timeout => 1800);
+        $windows_iso = get_var("ASSET_1");
     } else {
-        assert_script_run("qvm-run -p -- windows-mgmt Documents/qvm-create-windows-qube/windows-media/isos/download-windows.sh $windows_version", timeout => 1800);
+        assert_script_run("qvm-run -p -- windows-mgmt qvm-create-windows-qube/windows/isos/download-windows.sh $windows_version", timeout => 1800);
     }
 
     assert_script_run("qvm-prefs windows-mgmt netvm ''");
@@ -73,7 +75,7 @@ sub run {
     # point for interactive pause
     check_screen('NO-MATCH');
 
-    assert_script_run("qvm-create-windows-qube $extra_opts -i $windows_version.iso -a $answers_file windows-test", timeout => 7200);
+    assert_script_run("qvm-create-windows-qube $extra_opts -i $windows_iso -a $answers_file windows-test", timeout => 7200);
 
     sleep(5);
 

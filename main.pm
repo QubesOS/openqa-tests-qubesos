@@ -101,6 +101,11 @@ if (get_var('PIPEWIRE')) {
     autotest::loadtest "tests/pipewire_install.pm";
 }
 
+if (check_var('DESKTOP', 'kde')) {
+    autotest::loadtest "tests/kde_install.pm";
+    autotest::loadtest "tests/kde_startup.pm";
+}
+
 # do not execute same tests before each system tests run
 if (check_var('TEST_GENERIC', '1') and
         (!get_var('DO_UPDATE') or check_var('RESTART_AFTER_UPDATE', '1'))) {

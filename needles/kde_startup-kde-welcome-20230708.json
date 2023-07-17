@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "xpos": 224,
+      "ypos": 184,
+      "width": 146,
+      "height": 31,
+      "type": "match"
+    },
+    {
+      "xpos": 199,
+      "ypos": 120,
+      "width": 71,
+      "height": 24,
+      "type": "match",
+      "click_point": {
+        "xpos": 35.5,
+        "ypos": 12
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "kde-welcome"
+  ]
+}

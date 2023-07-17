@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 500,
+      "ypos": 43,
+      "width": 86,
+      "height": 23,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "vm-settings-applications"
+  ]
+}

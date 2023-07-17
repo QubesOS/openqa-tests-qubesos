@@ -38,7 +38,11 @@ sub run {
     # wait for the first notification
     assert_screen("notification-test");
     # lock the screen
-    send_key('ctrl-alt-delete');
+    if (check_var("DESKTOP", "kde")) {
+        send_key('super-l');
+    } else {
+        send_key('ctrl-alt-delete');
+    }
     # wait for notifications to (potentially) appear
     sleep(3);
     assert_screen("screenlocker-blank");

@@ -1,0 +1,29 @@
+{
+  "area": [
+    {
+      "height": 92,
+      "width": 288,
+      "xpos": 185,
+      "ypos": 358,
+      "type": "match"
+    },
+    {
+      "ypos": 735,
+      "xpos": 994,
+      "width": 27,
+      "height": 26,
+      "type": "match"
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "menu on the right"
+    }
+  ],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "desktop-clear"
+  ]
+}

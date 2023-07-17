@@ -203,7 +203,7 @@ sub init_desktop_runner {
     # too fast typing or looses characters because of the load caused (also
     # see below). See https://progress.opensuse.org/issues/18200
     if (check_var('DESKTOP', 'kde')) {
-        type_string_slow $program;
+        type_string($program, max_interval => 13);
     }
     else {
         type_string $program;

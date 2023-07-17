@@ -25,7 +25,7 @@ sub run {
     x11_start_program('sh -c \'echo -e "timeout:\t0:02:00" > ~/.xscreensaver\'', valid => 0);
     if (check_var('KEEP_SCREENLOCKER', '1')) {
         x11_start_program('xscreensaver-command -restart', target_match => 'desktop-clear');
-    } else {
+    } elsif (!check_var("DESKTOP", "kde")) {
         x11_start_program('xscreensaver -no-splash', target_match => 'desktop-clear');
     }
     assert_and_click("menu");

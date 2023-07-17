@@ -61,6 +61,11 @@ sub run {
             if (check_var('VERSION', '4.0')) {
                 assert_script_run("sudo qubes-dom0-update --clean --enablerepo=qubes-*templates* --action=$action -y qubes-template-$template", timeout => 1500);
             } else {
+                if (check_var('VERSION', '4.1')) {
+                    # don't use mirrors, they may not have the template yet,
+                    # and R4.1 doesn't fallback to another
+                    assert_script_run("sudo sed -i 's/^#baseurl = https/baseurl = https/;s/^metalink/#metalink/' /etc/qubes/repo-templates/*.repo");
+                }
                 assert_script_run("qvm-template $action --enablerepo=qubes-*templates* $template", timeout => 1800);
             }
         }

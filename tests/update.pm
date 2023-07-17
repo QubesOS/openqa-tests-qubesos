@@ -44,7 +44,7 @@ sub run {
     }
 
     if (get_var("UPDATE")) {
-        assert_script_run('cp -a /root/extra-files/update /srv/salt/');
+        assert_script_run('/bin/cp -a /root/extra-files/update /srv/salt/');
         assert_script_run('qubesctl top.enable update');
     }
     my $pillar_dir = "/srv/pillar/base/update";
@@ -72,7 +72,7 @@ sub run {
     assert_script_run("printf \"base:\\n  '*':\\n    - update\\n\" > $pillar_dir/init.top");
     assert_script_run('qubesctl top.enable update pillar=True');
     if (get_var("SALT_SYSTEM_TESTS")) {
-        assert_script_run('cp -a /root/extra-files/system-tests /srv/salt/');
+        assert_script_run('/bin/cp -a /root/extra-files/system-tests /srv/salt/');
         assert_script_run('qubesctl top.enable system-tests');
     }
 

@@ -166,7 +166,9 @@ if (get_var("GUI_TESTS")) {
 
         autotest::loadtest "tests/qubesmanager_backuprestore.pm";
         autotest::loadtest "tests/qubesmanager_createnewvm.pm";
-        autotest::loadtest "tests/qubesmanager_globalsettings.pm";
+        if (check_var("VERSION", "4.1")) {
+            autotest::loadtest "tests/qubesmanager_globalsettings.pm";
+        }
         autotest::loadtest "tests/qubesmanager_manager.pm";
         autotest::loadtest "tests/qubesmanager_templatemanager.pm";
         autotest::loadtest "tests/qubesmanager_vmsettings.pm";

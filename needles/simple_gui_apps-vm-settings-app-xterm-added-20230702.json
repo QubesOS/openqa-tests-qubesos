@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 222,
+      "height": 19,
+      "type": "match",
+      "width": 109,
+      "xpos": 486
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "vm-settings-app-xterm-added"
+  ]
+}

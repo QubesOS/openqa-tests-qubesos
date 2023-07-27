@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 353,
+      "height": 18,
+      "width": 193,
+      "xpos": 393
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "desktop-runner"
+  ]
+}

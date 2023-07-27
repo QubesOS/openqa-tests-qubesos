@@ -1,0 +1,31 @@
+{
+  "area": [
+    {
+      "ypos": 53,
+      "height": 16,
+      "type": "match",
+      "width": 74,
+      "xpos": 369
+    },
+    {
+      "xpos": 601,
+      "width": 109,
+      "height": 17,
+      "ypos": 53,
+      "type": "match"
+    },
+    {
+      "height": 21,
+      "ypos": 127,
+      "type": "match",
+      "xpos": 297,
+      "width": 174,
+      "match": 93
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "RELEASE-4-1",
+    "personal-firefox"
+  ]
+}

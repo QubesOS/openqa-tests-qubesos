@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 78,
+      "xpos": 98,
+      "type": "match",
+      "ypos": 198,
+      "height": 18
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "menu-vm-personal",
+    "new-menu"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 715,
+      "width": 83,
+      "type": "match",
+      "height": 18,
+      "ypos": 427
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "work-xterm"
+  ]
+}

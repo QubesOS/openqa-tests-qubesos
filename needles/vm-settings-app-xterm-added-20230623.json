@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 19,
+      "ypos": 228,
+      "type": "match",
+      "xpos": 486,
+      "width": 109
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "vm-settings-app-xterm-added"
+  ]
+}

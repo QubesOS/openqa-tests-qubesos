@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 121,
+      "xpos": 403,
+      "type": "match",
+      "ypos": 172,
+      "height": 17
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "menu-vm-evince",
+    "new-menu"
+  ]
+}

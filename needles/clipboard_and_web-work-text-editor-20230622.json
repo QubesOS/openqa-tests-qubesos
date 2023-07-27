@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 136,
+      "xpos": 285,
+      "height": 26,
+      "ypos": 66,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-RELEASE-4-2",
+    "ENV-debian-12",
+    "work-text-editor"
+  ]
+}

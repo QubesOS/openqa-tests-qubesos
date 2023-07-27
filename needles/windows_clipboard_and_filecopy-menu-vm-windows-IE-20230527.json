@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 118,
+      "xpos": 467,
+      "ypos": 610,
+      "height": 22,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-WIN7",
+    "menu-vm-windows-IE",
+    "new-menu"
+  ]
+}

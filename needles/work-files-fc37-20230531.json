@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 46,
+      "ypos": 34,
+      "xpos": 380,
+      "width": 47,
+      "match": 92
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "ENV-fedora-37",
+    "work-files"
+  ]
+}

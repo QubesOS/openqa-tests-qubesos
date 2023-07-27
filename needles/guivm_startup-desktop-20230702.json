@@ -1,0 +1,30 @@
+{
+  "area": [
+    {
+      "width": 288,
+      "xpos": 555,
+      "type": "match",
+      "height": 92,
+      "ypos": 576
+    },
+    {
+      "ypos": 4,
+      "height": 26,
+      "type": "match",
+      "width": 27,
+      "xpos": 2
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "wrong wallpaper https://github.com/QubesOS/qubes-issues/issues/8311"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "desktop",
+    "desktop-clear",
+    "x11"
+  ]
+}

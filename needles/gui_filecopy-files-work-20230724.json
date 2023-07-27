@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "width": 95,
+      "xpos": 413,
+      "type": "match",
+      "click_point": {
+        "xpos": 49.5,
+        "ypos": 10.5
+      },
+      "ypos": 340,
+      "height": 67
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-debian-12",
+    "files-work"
+  ]
+}

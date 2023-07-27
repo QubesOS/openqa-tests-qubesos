@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 402,
+      "width": 66,
+      "type": "match",
+      "height": 18,
+      "ypos": 200
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "menu-vm-firefox",
+    "new-menu"
+  ]
+}

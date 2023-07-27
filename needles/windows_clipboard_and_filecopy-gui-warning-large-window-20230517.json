@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 714,
+      "width": 251,
+      "ypos": 135,
+      "height": 50,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-WIN7",
+    "gui-warning-large-window"
+  ]
+}

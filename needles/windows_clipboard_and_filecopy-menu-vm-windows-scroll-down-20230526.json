@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 653,
+      "height": 42,
+      "click_point": {
+        "ypos": 19,
+        "xpos": 29
+      },
+      "xpos": 684,
+      "width": 36
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-WIN10",
+    "menu-vm-windows-scroll-down",
+    "new-menu"
+  ]
+}

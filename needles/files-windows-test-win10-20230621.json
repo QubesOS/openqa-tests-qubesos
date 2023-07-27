@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 128,
+      "xpos": 272,
+      "ypos": 204,
+      "height": 55,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN10",
+    "RELEASE-4-1",
+    "files-windows-test"
+  ]
+}

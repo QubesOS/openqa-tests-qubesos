@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 420,
+      "width": 86,
+      "ypos": 355,
+      "height": 73
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-debian-12",
+    "files-test-file"
+  ]
+}

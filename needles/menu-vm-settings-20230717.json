@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "height": 18,
+      "xpos": 714,
+      "width": 95,
+      "ypos": 68,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "menu-vm-settings",
+    "menu-vm-settings-selected",
+    "new-menu"
+  ]
+}

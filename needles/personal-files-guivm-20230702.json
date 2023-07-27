@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "height": 42,
+      "ypos": 192,
+      "type": "match",
+      "width": 70,
+      "xpos": 495
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "ENV-fedora-38",
+    "personal-files"
+  ]
+}

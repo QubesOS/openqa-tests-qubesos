@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "ypos": 272,
+      "width": 169,
+      "xpos": 427,
+      "height": 24,
+      "type": "match"
+    },
+    {
+      "width": 86,
+      "xpos": 470,
+      "type": "match",
+      "click_point": {
+        "xpos": 44,
+        "ypos": 13
+      },
+      "height": 22,
+      "ypos": 489
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-debian-12",
+    "RELEASE-4-2",
+    "text-editor-save-prompt"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 277,
+      "ypos": 148,
+      "width": 187,
+      "height": 29,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "global-config-usb-input-device",
+    "global-config-usb-input-devices"
+  ]
+}

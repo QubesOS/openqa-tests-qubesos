@@ -118,6 +118,10 @@ if (check_var('TEST_GUIVM', '1')) {
     autotest::loadtest "tests/guivm_manager.pm";
 }
 
+if (check_var('TEST_FIDO', '1')) {
+    autotest::loadtest "tests/fido.pm";
+}
+
 if (check_var('TEST_SUSPEND', '1')) {
     autotest::loadtest "tests/suspend.pm";
 }

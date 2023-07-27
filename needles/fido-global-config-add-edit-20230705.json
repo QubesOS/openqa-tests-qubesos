@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "xpos": 582,
+      "ypos": 421,
+      "width": 68,
+      "height": 29,
+      "type": "match",
+      "click_point": {
+        "xpos": 24,
+        "ypos": 14.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "global-config-add-edit"
+  ]
+}

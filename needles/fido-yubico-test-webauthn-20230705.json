@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 296,
+      "ypos": 539,
+      "width": 170,
+      "height": 157,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "yubico-test-webauthn"
+  ]
+}

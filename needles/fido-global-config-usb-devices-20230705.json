@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 92,
+      "ypos": 366,
+      "width": 112,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "global-config-usb-devices"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 128,
+      "ypos": 633,
+      "width": 55,
+      "height": 29,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "yubico-next"
+  ]
+}

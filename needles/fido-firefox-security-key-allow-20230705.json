@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 682,
+      "ypos": 329,
+      "width": 76,
+      "height": 27,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "firefox-security-key-allow"
+  ]
+}

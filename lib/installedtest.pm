@@ -148,8 +148,10 @@ sub usbvm_fixup {
 
     select_root_console();
     if (check_var("BACKEND", "qemu")) {
-        assert_script_run('echo sys-usb dom0 allow > /etc/qubes-rpc/policy/qubes.InputTablet');
-        assert_script_run('echo sys-net dom0 allow >> /etc/qubes-rpc/policy/qubes.InputTablet');
+        # allow USB tablet, not only mouse
+        my $policy_path = "/etc/qubes/policy.d/30-openqa.policy";
+        script_run "echo 'qubes.InputTablet * sys-usb dom0 allow' >> $policy_path";
+        script_run "echo 'qubes.InputTablet * sys-net dom0 allow' >> $policy_path";
         sleep(5);
         assert_script_run('lsusb || qvm-run --no-gui -p -u root $(qvm-check -q sys-usb && echo sys-usb || echo sys-net) \'systemctl start qubes-input-sender-tablet@$(basename $(readlink /dev/input/by-id/usb-QEMU_QEMU_USB_Tablet_*-event-mouse))\'', timeout => 60);
     }

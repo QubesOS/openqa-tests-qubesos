@@ -91,13 +91,12 @@ sub run {
         script_run "$sed_enable_discard /mnt/sysimage/etc/default/grub";
     }
 
-    if (!check_var("BACKEND", "qemu")) {
-        # allow USB tablet, not only mouse
-        my $policy_path = "/etc/qubes/policy.d/30-openqa.policy";
-        #script_run "echo 'qubes.InputKeyboard * sys-usb dom0 allow' > /mnt/sysimage$policy_path";
-        #script_run "echo 'qubes.InputMouse * sys-usb dom0 allow' >> /mnt/sysimage$policy_path";
-        script_run "echo 'qubes.InputTablet * sys-usb dom0 allow' >> /mnt/sysimage$policy_path";
-    }
+    # allow USB tablet, not only mouse
+    my $policy_path = "/etc/qubes/policy.d/30-openqa.policy";
+    #script_run "echo 'qubes.InputKeyboard * sys-usb dom0 allow' > /mnt/sysimage$policy_path";
+    #script_run "echo 'qubes.InputMouse * sys-usb dom0 allow' >> /mnt/sysimage$policy_path";
+    script_run "echo 'qubes.InputTablet * sys-usb dom0 allow' >> /mnt/sysimage$policy_path";
+    script_run "echo 'qubes.InputTablet * sys-net dom0 allow' >> /mnt/sysimage$policy_path";
 
     # when changing here, update release_upgrade.pm too
     my $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:console=hvc0 console=tty0:g\'';

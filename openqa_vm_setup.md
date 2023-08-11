@@ -179,6 +179,7 @@ Go to "Machines" (<http://127.0.0.1:4150/admin/machines>) and add a new one:
    QEMU_APPEND=device VGA,edid=on,xres=1024,yres=768
    QEMU_DISABLE_SNAPSHOTS=1
    VIRTIO_CONSOLE=1
+   NICMODEL=e1000e
    ```
 
 `QEMU_APPEND` makes needles match, otherwise the screen is somewhat distorted.

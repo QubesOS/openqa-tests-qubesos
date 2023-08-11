@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 298,
+      "height": 29,
+      "ypos": 458,
+      "width": 424
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "aem-luks-key-prompt"
+  ]
+}

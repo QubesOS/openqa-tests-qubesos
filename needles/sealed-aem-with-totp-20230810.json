@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 105,
+      "type": "match",
+      "ypos": 0,
+      "xpos": 0,
+      "width": 480,
+      "margin": 100
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "aem-secret.otp-sealed"
+  ]
+}

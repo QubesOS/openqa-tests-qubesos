@@ -59,6 +59,8 @@ if (get_var('ISO')) {
     if (get_var("DEFAULT_TEMPLATE") and check_var("VERSION", "4.0")) {
         autotest::loadtest "tests/switch_template.pm";
     }
+} elsif (get_var('TEST_AEM')) {
+    autotest::loadtest "tests/aem.pm";
 } else {
     autotest::loadtest "tests/startup.pm";
     if (get_var('DO_UPDATE')) {

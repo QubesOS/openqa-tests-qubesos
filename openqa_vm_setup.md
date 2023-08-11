@@ -45,7 +45,7 @@ qemu-system-x86_64 -m 6G \
                    -drive if=virtio,file=disk.qcow2,format=qcow2 \
                    -cpu host \
                    -smp `nproc` \
-                   -netdev user,id=mynet0,hostfwd=tcp:127.0.0.1:4151-:22,hostfwd=tcp:127.0.0.1:4150-:80 \
+                   -netdev user,id=mynet0,hostfwd=tcp:127.0.0.1:4151-:22,hostfwd=tcp:127.0.0.1:4150-:80,hostfwd=tcp:127.0.0.1:4152-:80 \
                    -device virtio-net,netdev=mynet0
 ```
 

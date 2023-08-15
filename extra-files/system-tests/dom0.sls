@@ -19,6 +19,7 @@ dom0-packages:
       - xinput
 {% endif %}
       - openssl
+      - anti-evil-maid
 
 haveged:
   service.running:

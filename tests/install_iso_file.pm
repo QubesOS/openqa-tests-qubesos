@@ -117,6 +117,7 @@ sub run {
         # older grub
         assert_script_run("sed -i -e 's:multiboot2:multiboot:' -e 's:module2:module:' /mnt/iso/grub2/grub.cfg");
     }
+    assert_script_run("cat /mnt/iso/grub2/grub.cfg");
     assert_script_run("sync");
     assert_script_run("umount /mnt/iso");
     type_string("reboot -fn\n");

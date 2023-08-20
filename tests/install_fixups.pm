@@ -137,6 +137,10 @@ sub run {
     # improve logging
     script_run "echo 'XENCONSOLED_ARGS=--timestamp=all' >> /mnt/sysimage/etc/sysconfig/xencommons";
 
+    # some more debug logs
+    script_run "cryptsetup luksDump /dev/nvme0n1p3";
+    script_run "cat /tmp/storage.log";
+
     type_string "sync\n";
     select_console('installation');
     #eject_cd;

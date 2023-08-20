@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 274,
+      "ypos": 287,
+      "width": 250,
+      "xpos": 182
+    },
+    {
+      "type": "match",
+      "height": 24,
+      "ypos": 547,
+      "xpos": 763,
+      "width": 115
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "installer-custom-summary-accept"
+  ]
+}

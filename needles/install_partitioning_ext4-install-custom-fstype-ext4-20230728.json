@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 506,
+      "ypos": 282,
+      "width": 53,
+      "height": 23,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "install-custom-fstype-ext4"
+  ]
+}

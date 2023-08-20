@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "ypos": 341,
+      "height": 30,
+      "xpos": 503,
+      "width": 81,
+      "type": "match",
+      "click_point": {
+        "xpos": 37.5,
+        "ypos": 30
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "install-custom-fstype"
+  ]
+}

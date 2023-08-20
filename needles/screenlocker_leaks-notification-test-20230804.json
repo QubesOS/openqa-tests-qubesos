@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 144,
+      "width": 45,
+      "xpos": 958,
+      "height": 34
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-debian-12",
+    "notification-test"
+  ]
+}

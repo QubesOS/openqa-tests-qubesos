@@ -119,7 +119,10 @@ sub do_restore {
     assert_and_click('restore-select', timeout => 15);
     send_key('~');
     send_key('ret');
-    assert_screen('select-file-is-home');
+    assert_screen(['select-file-is-home', 'select-file-home']);
+    if (match_has_tag('select-file-home')) {
+        click_lastmatch();
+    }
     assert_and_click('select-file-sort-modified', timeout => 15);
     assert_and_click('restore-select-file', timeout => 15);
     send_key('end');

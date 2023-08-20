@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 148,
+      "ypos": 151,
+      "width": 58,
+      "height": 27,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "select-file-home"
+  ]
+}

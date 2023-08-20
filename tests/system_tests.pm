@@ -42,6 +42,8 @@ sub run {
     }
     # don't let logrotate restart qubesd in the middle of the tests
     assert_script_run("sudo systemctl stop crond");
+    # unmute audio
+    assert_script_run("pactl set-sink-mute 0 0");
 
     if (get_var('TEST_TEMPLATES')) {
         assert_script_run("export QUBES_TEST_TEMPLATES='" . get_var('TEST_TEMPLATES') . "'");

@@ -66,7 +66,11 @@ if (get_var('ISO')) {
             autotest::loadtest "tests/update_templates.pm";
         }
         if (get_var('UPDATE') || get_var('SALT_SYSTEM_TESTS')) {
-            autotest::loadtest "tests/update.pm";
+            if (check_var("VERSION", "4.1")) {
+                autotest::loadtest "tests/update.pm";
+            } else {
+                autotest::loadtest "tests/update2.pm";
+            }
         }
         if (get_var("SELINUX_TEMPLATES")) {
             autotest::loadtest "tests/selinux_install.pm";
@@ -84,6 +88,13 @@ if (get_var('ISO')) {
 }
 
 if (check_var('RELEASE_UPGRADE', '1')) {
+    if (get_var('UPDATE') || get_var('SALT_SYSTEM_TESTS')) {
+        if (check_var("VERSION", "4.1")) {
+            autotest::loadtest "tests/update.pm";
+        } else {
+            autotest::loadtest "tests/update2.pm";
+        }
+    }
     autotest::loadtest "tests/release_upgrade.pm";
 }
 

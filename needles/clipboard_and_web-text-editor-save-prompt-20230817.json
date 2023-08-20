@@ -1,0 +1,29 @@
+{
+  "area": [
+    {
+      "height": 24,
+      "ypos": 356,
+      "xpos": 333,
+      "width": 134,
+      "type": "match"
+    },
+    {
+      "width": 86,
+      "xpos": 412,
+      "click_point": {
+        "xpos": 44,
+        "ypos": 13
+      },
+      "type": "match",
+      "height": 22,
+      "ypos": 411
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-fedora-xfce",
+    "RELEASE-4-2",
+    "geany-save-prompt",
+    "text-editor-save-prompt"
+  ]
+}

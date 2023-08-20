@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "ypos": 114,
+      "xpos": 190,
+      "width": 64,
+      "height": 35,
+      "type": "match"
+    },
+    {
+      "type": "match",
+      "ypos": 114,
+      "width": 58,
+      "xpos": 33,
+      "height": 36
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "file-save-dialog-home-dir"
+  ]
+}

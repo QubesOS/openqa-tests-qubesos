@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 73,
+      "ypos": 247,
+      "xpos": 437,
+      "width": 86,
+      "match": 92
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "files-test-file"
+  ]
+}

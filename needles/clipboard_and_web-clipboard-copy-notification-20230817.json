@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 35,
+      "width": 248,
+      "xpos": 746,
+      "ypos": 63,
+      "match": 90
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "clipboard-copy-notification"
+  ]
+}

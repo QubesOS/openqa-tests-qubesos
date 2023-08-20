@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "height": 27,
+      "width": 127,
+      "xpos": 552,
+      "ypos": 622,
+      "type": "match",
+      "match": 92
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-fedora-xfce",
+    "RELEASE-4-2",
+    "files-qubesincoming"
+  ]
+}

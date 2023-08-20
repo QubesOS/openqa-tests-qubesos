@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "ypos": 276,
+      "width": 45,
+      "xpos": 959,
+      "height": 34,
+      "type": "match",
+      "match": 90
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "notification-test"
+  ]
+}

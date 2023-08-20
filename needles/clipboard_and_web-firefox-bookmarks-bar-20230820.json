@@ -1,0 +1,27 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 151,
+      "xpos": 98,
+      "width": 112,
+      "height": 24,
+      "match": 90
+    },
+    {
+      "type": "match",
+      "height": 25,
+      "ypos": 74,
+      "xpos": 158,
+      "width": 149,
+      "match": 90
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "firefox-bookmarks-bar"
+  ]
+}

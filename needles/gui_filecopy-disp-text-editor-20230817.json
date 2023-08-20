@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 17,
+      "ypos": 36,
+      "width": 35,
+      "xpos": 391,
+      "match": 90
+    },
+    {
+      "height": 18,
+      "ypos": 34,
+      "xpos": 460,
+      "width": 48,
+      "type": "match",
+      "match": 90
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "disp-text-editor"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 18,
+      "xpos": 396,
+      "width": 66,
+      "ypos": 169,
+      "match": 90
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "menu-vm-firefox",
+    "new-menu"
+  ]
+}

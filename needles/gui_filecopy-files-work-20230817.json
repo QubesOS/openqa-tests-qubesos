@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "width": 95,
+      "xpos": 542,
+      "type": "match",
+      "click_point": {
+        "ypos": 17.5,
+        "xpos": 49.5
+      },
+      "height": 67,
+      "ypos": 386,
+      "match": 92
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "files-work"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "height": 17,
+      "xpos": 397,
+      "width": 121,
+      "ypos": 141,
+      "type": "match",
+      "match": 90
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "menu-vm-evince",
+    "new-menu"
+  ]
+}

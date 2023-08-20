@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "ypos": 257,
+      "width": 126,
+      "xpos": 153,
+      "height": 16,
+      "type": "match",
+      "match": 90
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "vm-settings-app-evince"
+  ]
+}

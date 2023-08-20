@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "xpos": 128,
+      "ypos": 581,
+      "width": 61,
+      "height": 15,
+      "type": "match",
+      "match": 90
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "vm-settings-app-geany",
+    "vm-settings-app-text-editor"
+  ]
+}

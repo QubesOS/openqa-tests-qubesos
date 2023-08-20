@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 360,
+      "width": 79,
+      "ypos": 719,
+      "height": 35,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "menu-vm-start-qube"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 288,
+      "width": 133,
+      "xpos": 404,
+      "height": 22
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "menu-vm-Files",
+    "menu-vm-Thunar",
+    "new-menu"
+  ]
+}

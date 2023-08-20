@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "xpos": 407,
+      "width": 47,
+      "ypos": 333,
+      "height": 28,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "menu-vm-work",
+    "menu-vm-work-selected",
+    "new-menu"
+  ]
+}

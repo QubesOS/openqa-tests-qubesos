@@ -34,6 +34,13 @@ sub run {
     }
     assert_and_click("menu-vm-settings");
     assert_and_click("vm-settings-applications", timeout => 60);
+    my $text_editor_added = 0;
+    if (check_screen("vm-settings-app-geany", 10)) {
+        # this is xfce - it has geany as "text editor"
+        click_lastmatch();
+        assert_and_click("vm-settings-app-add");
+        $text_editor_added = 1;
+    }
     assert_and_click("vm-settings-app-evince");
     send_key('end');
     check_screen("vm-settings-app-xterm", timeout => 8);
@@ -41,12 +48,14 @@ sub run {
     assert_and_click("vm-settings-app-add");
     # wait for xterm to really be added, because that moves entries on the left
     assert_screen("vm-settings-app-xterm-added");
-    assert_and_click(["vm-settings-app-evince", "vm-settings-app-text-editor"]);
-    send_key('end');
-    # let it scroll...
-    sleep(1);
-    assert_and_click("vm-settings-app-text-editor");
-    assert_and_click("vm-settings-app-add");
+    if (!$text_editor_added) {
+        assert_and_click(["vm-settings-app-evince", "vm-settings-app-text-editor"]);
+        send_key('end');
+        # let it scroll...
+        sleep(1);
+        assert_and_click("vm-settings-app-text-editor");
+        assert_and_click("vm-settings-app-add");
+    }
     assert_and_click(["vm-settings-app-evince", "vm-settings-app-start-qube"]);
     if (match_has_tag("vm-settings-app-start-qube")) {
         # if start qube was clicked, scroll to home to make evince ("Document Viewer") visible
@@ -72,8 +81,8 @@ sub run {
     # now try to start "Document Viewer"
     assert_and_click("menu");
     assert_and_click("menu-vm-work");
-    assert_and_click("menu-vm-evince");
-    assert_screen("work-evince", timeout => 90);
+    assert_and_click(["menu-vm-evince", "work-vm-atril"]);
+    assert_screen(["work-evince", "work-atril"], timeout => 90);
 
     # wait for full startup
     sleep(2);

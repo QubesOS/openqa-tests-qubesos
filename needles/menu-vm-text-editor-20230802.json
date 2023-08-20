@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 25,
+      "ypos": 255,
+      "xpos": 708,
+      "width": 96
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "menu-vm-text-editor",
+    "new-menu"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 72,
+      "xpos": 126,
+      "ypos": 359,
+      "height": 16,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "vm-settings-app-start-qube"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "height": 20,
+      "ypos": 686,
+      "xpos": 613,
+      "width": 115,
+      "type": "match",
+      "match": 90
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-fedora-xfce",
+    "RELEASE-4-2",
+    "files-open-in-dispvm"
+  ]
+}

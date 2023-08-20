@@ -53,6 +53,7 @@ sub run {
     # wait for firefox to fully start
     check_screen("firefox-bookmarks-bar", timeout => 20);
     assert_and_click("personal-firefox");
+    sleep(1);
     send_key("ctrl-v");
     send_key("ret");
     assert_screen("qubes-website", timeout => 45);

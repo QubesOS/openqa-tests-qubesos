@@ -101,7 +101,7 @@ sub run {
     # create partition for the ISO file
     my $sfdisk_layout = "label: dos\n\n";
     $sfdisk_layout .= "type=83, bootable\n";
-    assert_script_run("echo '$sfdisk_layout' | sfdisk /dev/?db");
+    assert_script_run("echo '$sfdisk_layout' | sfdisk /dev/?db", max_interval => 100);
     assert_script_run("while ! [ -e /dev/?db1 ]; do sleep 1; done");
     assert_script_run("mkfs.ext4 -F /dev/?db1");
     assert_script_run("mkdir /mnt/iso");

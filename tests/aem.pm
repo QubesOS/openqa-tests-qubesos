@@ -101,6 +101,7 @@ sub wait_for_startup {
 
 sub initiate_reboot {
     type_string "reboot\n";
+    wait_serial qr/reboot/u, 30;
     wait_serial qr/.*#\s*$/u, 30;
     select_console('x11', await_console => 0);
     reset_consoles();

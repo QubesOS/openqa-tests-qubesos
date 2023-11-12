@@ -220,6 +220,7 @@ sub post_fail_hook {
     sleep(1);
     save_screenshot;
     select_root_console();
+    script_run "lspci";
     script_run "xl info";
     script_run "xl list";
     script_run "xl dmesg";

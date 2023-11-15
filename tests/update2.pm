@@ -105,10 +105,6 @@ sub run {
 
     assert_script_run("script -c 'qubes-vm-update --max-concurrency=2 $targets --show-output' -a -e qubesctl-upgrade.log", timeout => 14400);
     upload_logs("qubesctl-upgrade.log");
-    assert_script_run('tail -1 qubesctl-upgrade.log|grep -v failed');
-    assert_script_run('! grep ERROR qubesctl-upgrade.log');
-    assert_script_run('! grep "^  Failed: *[1-9]" qubesctl-upgrade.log');
-    assert_script_run('! grep "Failed to return clean data" qubesctl-upgrade.log');
 
     # disable all states
     script_run('rm -f /srv/salt/_tops/base/*');

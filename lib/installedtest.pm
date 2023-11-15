@@ -207,6 +207,19 @@ sub init_gui_session {
     wait_still_screen;
 }
 
+sub maybe_unlock_screen {
+    my ($self) = @_;
+
+    # unlock the screen, if screenlocker engaged
+    if (check_screen("screenlocker-blank")) {
+        send_key('ctrl');
+        assert_screen('xscreensaver-prompt', timeout=>5);
+        type_password();
+        send_key('ret');
+        sleep(1);
+    }
+}
+
 sub save_and_upload_log {
     my ($self, $cmd, $file, $args) = @_;
     script_run("$cmd > $file", $args->{timeout});

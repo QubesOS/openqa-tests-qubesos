@@ -121,8 +121,14 @@ sub upgrade_41_to_42_before_reboot {
 }
 
 sub upgrade_41_to_42_after_reboot {
+    my ($self) = @_;
+
     assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --template-standalone-upgrade' release-upgrade.log", timeout => 8000);
+    $self->maybe_unlock_screen;
     assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --finalize' release-upgrade-post-reboot.log", timeout => 7200);
+    $self->maybe_unlock_screen;
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --assumeyes --convert-policy' release-upgrade-post-reboot.log", timeout => 600);
+    $self->maybe_unlock_screen;
 }
 
 sub run {
@@ -138,12 +144,14 @@ sub run {
         assert_script_run("echo | sudo tee -a /etc/yum.repos.d/qubes-dom0.repo");
     }
 
-    my $templates = script_output('qvm-ls --raw-data --fields name,klass');
-    foreach (split /\n/, $templates) {
-        next unless /Template/;
-        s/\|.*//;
-        assert_script_run ("qvm-run -u root --no-gui -ap $_ 'dnf config-manager --set-enabled qubes*current-testing; sed -i \"/#deb .*deb.qubes-os.org.*-testing/s/^#//\" /etc/apt/sources.list.d/qubes-r4.list; true'", timeout => 120);
-        assert_script_run("qvm-shutdown --wait $_", timeout => 90);
+    if (0) {
+        my $templates = script_output('qvm-ls --raw-data --fields name,klass');
+        foreach (split /\n/, $templates) {
+            next unless /Template/;
+            s/\|.*//;
+            assert_script_run ("qvm-run -u root --no-gui -ap $_ 'dnf config-manager --set-enabled qubes*current-testing; sed -i \"/#deb .*deb.qubes-os.org.*-testing/s/^#//\" /etc/apt/sources.list.d/qubes-r4.list; true'", timeout => 180);
+            assert_script_run("qvm-shutdown --wait $_", timeout => 90);
+        }
     }
 
     script_run("pkill xscreensaver");
@@ -192,10 +200,12 @@ sub run {
     if (check_var("VERSION", "4.1")) {
         upgrade_40_to_41_after_reboot;
     } elsif (check_var("VERSION", "4.2")) {
-        upgrade_41_to_42_after_reboot;
+        $self->upgrade_41_to_42_after_reboot;
     }
 
     upload_logs('/home/user/release-upgrade-post-reboot.log', failok => 1);
+    $self->save_and_upload_log('head -20 /etc/qubes/policy.d/*.policy', 'policy-new.txt');
+    $self->save_and_upload_log('head -20 /etc/qubes-rpc/policy/*', 'policy-old.txt');
 
     type_string("exit\n");
 

@@ -32,7 +32,8 @@ sub run {
 
     $qvmpci_cmd = 'qvm-pci ls';
     # FIXME: system upgraded from R4.0 still has 'allow' here
-    if (check_var('VERSION', '4.0') or check_var('RELEASE_UPGRADE', '1')) {
+    if (check_var('VERSION', '4.0') or
+            (check_var('VERSION', '4.1') and check_var('RELEASE_UPGRADE', '1'))) {
         $mouse_action = 'allow';
     } elsif (check_var("BACKEND", "generalhw")) {
         # tests/firstboot.pm selects automatic mouse allow on generalhw
@@ -45,9 +46,9 @@ sub run {
     }
 
     my $policy_mouse = "/etc/qubes/policy.d/50-config-input.policy";
-    my $prefix_mouse = "^qubes.InputMouse .*";
+    my $prefix_mouse = "^qubes.InputMouse[[:space:]].*";
     my $policy_keyboard = "/etc/qubes/policy.d/50-config-input.policy";
-    my $prefix_keyboard = "^qubes.InputKeyboard .*";
+    my $prefix_keyboard = "^qubes.InputKeyboard[[:space:]].*";
 
     if (check_var("VERSION", "4.1")) {
         $policy_mouse = "/etc/qubes-rpc/policy/qubes.InputMouse";
@@ -63,12 +64,12 @@ sub run {
     } elsif (get_var('USBVM', 'sys-usb') eq 'sys-usb') {
         assert_script_run('xl domid sys-usb');
         assert_script_run('qvm-check --running sys-usb');
-        assert_script_run("grep \"${prefix_mouse}sys-usb.*dom0.*$mouse_action\" $policy_mouse");
-        assert_script_run("! grep \"${prefix_mouse}sys-net.*dom0.*\\(allow\\|ask\\)\" $policy_mouse");
+        assert_script_run("grep \"${prefix_mouse}sys-usb.*\\(dom0\\|\@adminvm\\).*$mouse_action\" $policy_mouse");
+        assert_script_run("! grep \"${prefix_mouse}sys-net.*\\(dom0\\|\@adminvm\\).*\\(allow\\|ask\\)\" $policy_mouse");
         if ($keyboard_action) {
-            assert_script_run("grep \"${prefix_keyboard}sys-usb.*dom0.*$keyboard_action\" $policy_keyboard");
+            assert_script_run("grep \"${prefix_keyboard}sys-usb.*\\(dom0\\|\@adminvm\\).*$keyboard_action\" $policy_keyboard");
         } else {
-            assert_script_run("! grep \"${prefix_keyboard}sys-usb.*dom0.*\\(allow\\|ask\\)\" $policy_keyboard");
+            assert_script_run("! grep \"${prefix_keyboard}sys-usb.*\\(dom0\\|\@adminvm\\).*\\(allow\\|ask\\)\" $policy_keyboard");
         }
     } elsif (check_var('USBVM', 'sys-net')) {
         assert_script_run('! xl domid sys-usb');
@@ -77,8 +78,8 @@ sub run {
         assert_script_run('qvm-check --running sys-net');
         # On Xen >= 4.13 PCI passthrough no longer works on OpenQA (IOMMU strictly required even for PV)
         assert_script_run("$qvmpci_cmd sys-net|grep USB") unless check_var("VERSION", "4.1");
-        assert_script_run("grep \"${prefix_mouse}sys-net.*dom0.*$mouse_action\" $policy_mouse");
-        assert_script_run("! grep \"${prefix_mouse}sys-usb.*dom0.*\\(allow\\|ask\\)\" $policy_mouse");
+        assert_script_run("grep \"${prefix_mouse}sys-net.*\\(dom0\\|\@adminvm\\).*$mouse_action\" $policy_mouse");
+        assert_script_run("! grep \"${prefix_mouse}sys-usb.*\\(dom0\\|\@adminvm\\).*\\(allow\\|ask\\)\" $policy_mouse");
     }
     select_console('x11');
 }

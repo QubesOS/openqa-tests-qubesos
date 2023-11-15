@@ -27,6 +27,10 @@ sub run {
     # open work VM settings and add "Document Viewer" application
     assert_and_click("menu");
     assert_and_click("menu-vm-work");
+    if (check_var("VERSION", "4.2")) {
+        # workaround for "settings" visible too early
+        assert_screen("menu-vm-start-qube");
+    }
     if (!check_screen("menu-vm-settings")) {
         # "settings" entry doesn't fit on screen, scroll to it
         send_key("right");
@@ -43,7 +47,7 @@ sub run {
     }
     assert_and_click("vm-settings-app-evince");
     send_key('end');
-    check_screen("vm-settings-app-xterm", timeout => 8);
+    check_screen("vm-settings-app-xterm", timeout => 10);
     send_key_until_needlematch("vm-settings-app-xterm", 'up', 20, 5);
     assert_and_click("vm-settings-app-add");
     # wait for xterm to really be added, because that moves entries on the left
@@ -62,7 +66,7 @@ sub run {
         send_key('home');
     }
     # let is scroll maybe, if evince not selected, click it again...
-    sleep(2);
+    sleep(4);
     if (check_screen("vm-settings-app-evince", 5)) {
         click_lastmatch();
     }
@@ -76,7 +80,7 @@ sub run {
     assert_screen("desktop");
 
     # wait for menu to regenerate
-    sleep(2);
+    sleep(5);
 
     # now try to start "Document Viewer"
     assert_and_click("menu");

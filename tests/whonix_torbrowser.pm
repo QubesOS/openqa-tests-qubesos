@@ -29,7 +29,7 @@ sub run {
     assert_and_click("menu-vm-anon-whonix");
     assert_and_click("menu-tor-browser");
 
-    assert_screen("anon-whonix-tor-browser", timeout => 120);
+    assert_screen("anon-whonix-tor-browser", timeout => 180);
     # wait for full startup
     sleep(2);
     assert_and_click("tor-browser-address-bar");

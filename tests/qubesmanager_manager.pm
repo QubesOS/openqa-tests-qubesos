@@ -38,6 +38,7 @@ sub run {
 
     # check if dom0 logs are not empty
     assert_and_click('qube-manager-dom0-rc', button => 'right');
+    wait_still_screen;
     if (check_var("VERSION", "4.0")) {
         # Qubes 4.0: logs submenu
         # clicking over this menu is sensitive for mouse movements and

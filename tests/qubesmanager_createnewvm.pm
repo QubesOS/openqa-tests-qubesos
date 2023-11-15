@@ -33,6 +33,7 @@ sub run {
     # choose a label
     assert_and_click('qubes-vm-create-label-open');
     assert_and_click('qubes-vm-create-label-choose-blue');
+    wait_still_screen;
 
     # choose type
     assert_and_click('qubes-vm-create-type-open');

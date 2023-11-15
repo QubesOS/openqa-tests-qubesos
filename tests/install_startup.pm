@@ -89,6 +89,12 @@ sub run {
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;
 
+    if (match_has_tag('installer-inactive')) {
+        mouse_set(10, 10);
+        mouse_click();
+        mouse_hide();
+    }
+
     if (check_var("BACKEND", "qemu")) {
         # get console on hvc1 too
         select_console('install-shell');

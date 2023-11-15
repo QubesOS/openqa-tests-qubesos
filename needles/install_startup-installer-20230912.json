@@ -1,0 +1,32 @@
+{
+  "area": [
+    {
+      "ypos": 90,
+      "width": 238,
+      "xpos": 197,
+      "height": 94,
+      "type": "match"
+    },
+    {
+      "height": 48,
+      "ypos": 711,
+      "width": 102,
+      "xpos": 917,
+      "type": "match"
+    },
+    {
+      "width": 154,
+      "xpos": 786,
+      "ypos": 33,
+      "height": 17,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "installer",
+    "installer-inactive",
+    "installer-welcome-prerelease"
+  ]
+}

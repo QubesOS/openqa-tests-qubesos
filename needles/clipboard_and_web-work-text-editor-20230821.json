@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 426,
+      "width": 82,
+      "ypos": 35,
+      "height": 16,
+      "match": 90
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-RELEASE-4-2",
+    "ENV-fedora-xfce",
+    "work-geany",
+    "work-text-editor"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "height": 15,
+      "xpos": 126,
+      "width": 61,
+      "ypos": 638,
+      "type": "match",
+      "match": 90
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "vm-settings-app-geany"
+  ]
+}

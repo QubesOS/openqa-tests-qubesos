@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "height": 16,
+      "ypos": 54,
+      "width": 134,
+      "xpos": 468,
+      "type": "match"
+    },
+    {
+      "xpos": 256,
+      "width": 62,
+      "ypos": 115,
+      "height": 29,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "work-atril"
+  ]
+}

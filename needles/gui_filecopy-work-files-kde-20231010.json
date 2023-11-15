@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 111,
+      "width": 47,
+      "xpos": 444,
+      "height": 33,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "work-files"
+  ]
+}

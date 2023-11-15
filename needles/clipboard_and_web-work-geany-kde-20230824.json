@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 53,
+      "xpos": 542,
+      "width": 82,
+      "height": 16
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-RELEASE-4-2",
+    "ENV-fedora-xfce",
+    "work-geany",
+    "work-text-editor"
+  ]
+}

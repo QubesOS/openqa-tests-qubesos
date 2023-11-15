@@ -1,0 +1,35 @@
+{
+  "area": [
+    {
+      "ypos": 8,
+      "xpos": 355,
+      "width": 74,
+      "height": 16,
+      "type": "match",
+      "match": 90
+    },
+    {
+      "ypos": 7,
+      "xpos": 569,
+      "width": 109,
+      "height": 18,
+      "type": "match",
+      "match": 90
+    },
+    {
+      "width": 174,
+      "xpos": 246,
+      "ypos": 85,
+      "height": 21,
+      "type": "match",
+      "match": 90
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "personal-firefox"
+  ]
+}

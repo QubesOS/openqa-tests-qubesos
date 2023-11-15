@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 52,
+      "ypos": 446,
+      "width": 881,
+      "xpos": 76
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "tor-browser-ipcheck-ok"
+  ]
+}

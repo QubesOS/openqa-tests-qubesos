@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "height": 36,
+      "ypos": 128,
+      "xpos": 453,
+      "width": 70,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "personal-files"
+  ]
+}

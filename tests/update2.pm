@@ -66,6 +66,10 @@ sub run {
             assert_script_run("printf '  key: update-key\\n' >> $pillar_dir/init.sls");
         }
     }
+    # workaround for https://github.com/osresearch/heads/issues/1499
+    if (!check_var("HEADS", "1")) {
+        assert_script_run("printf '  aem: True\\n' >> $pillar_dir/init.sls");
+    }
     assert_script_run("printf \"base:\\n  '*':\\n    - update\\n\" > $pillar_dir/init.top");
     assert_script_run('qubesctl top.enable update pillar=True');
     if (get_var("SALT_SYSTEM_TESTS")) {

@@ -19,7 +19,9 @@ dom0-packages:
       - xinput
 {% endif %}
       - openssl
+{% if salt['pillar.get']('update:aem', '') %}
       - anti-evil-maid
+{% endif %}
 
 haveged:
   service.running:

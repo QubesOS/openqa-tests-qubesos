@@ -177,6 +177,7 @@ sub connect_wifi {
         assert_and_click("nm-applet-wifi-password");
         type_string($wifi_password, secret => 1);
         send_key('ret');
+        assert_screen("nm-applet-connected-wifi");
     }
     # now use wifi to connect to the target
     set_var('WIFI_CONNECTED', '1');
@@ -191,7 +192,7 @@ sub init_gui_session {
     if (check_var("CONNECT_WIFI", "1")) {
         $self->connect_wifi;
     } else {
-        assert_screen("nm-connection-established", 150);
+        assert_screen(["nm-connection-established", "nm-applet-connected"], 150);
     }
     assert_screen("no-notifications");
 

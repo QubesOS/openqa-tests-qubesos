@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "height": 23,
+      "ypos": 40,
+      "width": 241,
+      "xpos": 728,
+      "type": "match"
+    },
+    {
+      "type": "match",
+      "height": 22,
+      "ypos": 117,
+      "width": 179,
+      "xpos": 812
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-fedora-38-xfce",
+    "nm-connection-established",
+    "nm-connection-established-under-qube-start"
+  ]
+}

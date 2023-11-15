@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 26,
+      "xpos": 827,
+      "width": 24,
+      "ypos": 3,
+      "type": "match",
+      "match": 92
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "nm-applet-connected"
+  ]
+}

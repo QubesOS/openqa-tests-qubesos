@@ -23,6 +23,7 @@ def get_packages(dist, version):
             "redhat-rpm-config",
             "python3-devel", # TODO: CentOS: python38-devel, python36-devel
             "nmap-ncat",
+            "pipewire-utils",
         ]
     return packages
 

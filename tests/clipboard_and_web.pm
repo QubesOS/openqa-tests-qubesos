@@ -37,6 +37,7 @@ sub run {
     sleep(1);
     send_key("ctrl-shift-c");
     assert_screen("clipboard-copy-notification");
+    die "nothing got copied" if (match_has_tag("clipboard-copy-0-bytes"));
 
     # try to start "Firefox" in personal
     assert_and_click("menu");

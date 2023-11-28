@@ -1,6 +1,7 @@
 import asyncio
 import subprocess
 import pathlib
+import os
 
 import qubes.ext
 import qubes.vm.qubesvm
@@ -39,8 +40,12 @@ class DefaultPV(qubes.ext.Extension):
             # IOMMU missing
             if 'hvm_directio' not in self.physinfo['virt_caps'] and vm.virt_mode != 'pv':
                 vm.virt_mode = 'pv'
-            # disable e820_host, otherwise guest crashes when host booted with OVMF
-            vm.features['pci-e820-host'] = False
+            if os.path.exists('/sys/firmware/efi') and vm.virt_mode == 'pv':
+                # on UEFI (OVMF) disable e820_host, otherwise guest crashes;
+                # but then, force swiotlb as without e820_host automatic detection
+                # doesn't work in Linux (since f9a38ea5172a3365f4594335ed5d63e15af2fd18)
+                vm.features['pci-e820-host'] = False
+                vm.kernelopts += " iommu=soft"
 
     @qubes.ext.handler('domain-start')
     async def on_domain_start(self, vm, event, **kwargs):

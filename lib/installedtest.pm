@@ -87,20 +87,23 @@ sub handle_system_startup {
         }
     }
 
-    if (check_var('BACKEND', 'generalhw')) {
-        # force plymouth to show on HDMI output too
-        if (!check_screen(["luks-prompt", "login-prompt-user-selected"], 60)) {
-            send_key 'esc';
-            send_key 'esc';
-            sleep 5;
+    if (!check_var("HEADS_DISK_UNLOCK", "1")) {
+        # do _not_ allow luks prompt if Unlock Key was entered already
+        if (check_var('BACKEND', 'generalhw')) {
+            # force plymouth to show on HDMI output too
+            if (!check_screen(["luks-prompt", "login-prompt-user-selected"], 60)) {
+                send_key 'esc';
+                send_key 'esc';
+                sleep 5;
+            }
         }
-    }
 
-    # handle both encrypted and unencrypted setups
-    assert_screen ["luks-prompt", "login-prompt-user-selected"], 600;
-    if (match_has_tag('luks-prompt')) {
-        type_string "lukspass";
-        send_key "ret";
+        # handle both encrypted and unencrypted setups
+        assert_screen ["luks-prompt", "login-prompt-user-selected"], 600;
+        if (match_has_tag('luks-prompt')) {
+            type_string "lukspass";
+            send_key "ret";
+        }
     }
     assert_screen ["login-prompt-user-selected"], 600;
 

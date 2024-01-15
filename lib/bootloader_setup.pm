@@ -131,9 +131,9 @@ sub heads_generate_hotp {
         send_key 'ret';
         type_string '12345678';
         send_key 'ret';
-        assert_screen('heads-tpm-owner-prompt');
-        type_string '12345678';
-        send_key 'ret';
+        #assert_screen('heads-tpm-owner-prompt');
+        #type_string '12345678';
+        #send_key 'ret';
     } else {
         send_key 'ret';
     }
@@ -148,6 +148,21 @@ sub heads_generate_hotp {
     send_key 'ret';
     assert_screen('heads-nitrokey-init-success');
     send_key 'ret';
+    if (check_var("HEADS_DISK_UNLOCK", "1") and check_screen('heads-disk-recovery-key-prompt', 15)) {
+        # WARNING: TPM sealed Disk Unlock Key secret needs to be resealed ...
+        # Resealing TPM LUKS Unlock Key ...
+        # Enter Disk Recovery Key/passphrase:
+        assert_screen('heads-disk-recovery-key-prompt');
+        send_key 'lukspass';
+        send_key 'ret';
+        assert_screen("heads-disk-unlock-key-prompt");
+        type_string 'unlockpass';
+        send_key 'ret';
+        type_string 'unlockpass';
+        send_key 'ret';
+        # let it remove/add slot and scroll a bit to hide old pin prompts
+        sleep(10);
+    }
     assert_screen('heads-menu');
     if (match_has_tag('heads-menu-hotp-fail')) {
         # click refresh
@@ -173,6 +188,9 @@ sub heads_boot_default {
     send_key 'ret';
     if (check_screen(['heads-no-hashes', 'heads-hash-mismatch'], 10)) {
         send_key 'ret';
+        if (check_screen("heads-hash-mismatch-list", 10)) {
+            send_key 'q';
+        }
         assert_screen(['heads-update-hashes-prompt', 'heads-gpg-card-prompt']);
         if (match_has_tag('heads-update-hashes-prompt')) {
             send_key 'ret';
@@ -205,20 +223,57 @@ sub heads_boot_default {
         send_key 'ret';
         assert_screen('heads-boot-menu-list');
         send_key 'ret';
-        assert_screen('heads-confirm-default-select');
-        # make default, not just one time boot
-        send_key 'down';
+        assert_screen(['heads-confirm-default-select', 'heads-confirm-default-selected']);
+        if (!match_has_tag('heads-confirm-default-selected')) {
+            # make default, not just one time boot
+            send_key 'down';
+        }
         send_key 'ret';
-        # Saving a default will modify the disk. Proceed? (Y/n)
-        assert_screen('heads-confirm-modify-disk');
-        send_key 'ret';
-        # Do you wish to add a disk encryption to the TPM [y/N]?
-        assert_screen('heads-disk-key-tpm-prompt');
-        send_key 'ret';
+        if (check_var("HEADS_DISK_UNLOCK", "1")) {
+            # Do you wish to add a disk encryption to the TPM [y/N]?
+            assert_screen('heads-disk-key-tpm-prompt');
+            send_key 'y';
+            # (only on update, not fresh install)
+            # Do you want to reuse configured Encrypted LVM groups/ Block devices? [Y/n]:
+            if (check_screen("heads-disk-key-config-reuse", 15)) {
+                send_key 'y';
+            }
+            assert_screen("heads-disk-recovery-key-prompt");
+            type_string 'lukspass';
+            send_key 'ret';
+            assert_screen("heads-disk-unlock-key-prompt");
+            type_string 'unlockpass';
+            send_key 'ret';
+            type_string 'unlockpass';
+            send_key 'ret';
+            # let it remove/add slot and scroll a bit to hide old pin prompts
+            sleep(10);
+        } else {
+            # Saving a default will modify the disk. Proceed? (Y/n)
+            assert_screen('heads-confirm-modify-disk');
+            send_key 'ret';
+            # Do you wish to add a disk encryption to the TPM [y/N]?
+            assert_screen('heads-disk-key-tpm-prompt');
+            send_key 'ret';
+            # let it remove/add slot and scroll a bit to hide old pin prompts
+            sleep(10);
+        }
+        # FIXME: this and the next one matches prompt from earlier (still at the top of the screen)
         assert_screen('heads-gpg-card-prompt');
         send_key 'ret';
+        sleep(1);
         assert_screen('heads-gpg-card-pin-prompt');
         type_string '123456';
         send_key 'ret';
+    }
+    if (check_screen('heads-menu', 30)) {
+        # depending on Heads version, generating /boot hashes is followed by reboot
+        send_key 'ret';
+        if (check_var("HEADS_DISK_UNLOCK", "1")) {
+            # Enter LUKS Disk Unlock Key passphrase (blank to abort):
+            assert_screen('heads-disk-unlock-prompt');
+            type_string 'unlockpass';
+            send_key 'ret';
+        }
     }
 }

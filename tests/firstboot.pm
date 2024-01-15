@@ -58,6 +58,9 @@ sub run {
     assert_screen ["luks-prompt", "firstboot-not-ready"], 180;
 
     if (match_has_tag('luks-prompt')) {
+        if (check_var("HEADS_DISK_UNLOCK", "1")) {
+            die "Unexpected LUKS prompt - should be avoided by keyfile from Heads";
+        }
         type_string "lukspass";
         send_key "ret";
     }

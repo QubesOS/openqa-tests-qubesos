@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 492,
+      "height": 29,
+      "ypos": 323,
+      "xpos": 78
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw5",
+    "heads-update-hashes-prompt"
+  ]
+}

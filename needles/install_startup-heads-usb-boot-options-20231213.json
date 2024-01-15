@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 77,
+      "height": 34,
+      "ypos": 107,
+      "width": 254
+    },
+    {
+      "type": "match",
+      "width": 228,
+      "xpos": 102,
+      "ypos": 320,
+      "height": 29
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw5",
+    "ENV-VERSION-4-2",
+    "heads-usb-boot-options"
+  ]
+}

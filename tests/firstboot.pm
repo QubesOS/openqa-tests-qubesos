@@ -24,6 +24,25 @@ use bootloader_setup;
 
 my $configuring = 0;
 
+sub setup_user {
+    assert_and_click 'installer-install-hub-user';
+    assert_screen 'installer-user';
+    type_string 'user';
+    send_key 'tab';
+    if (get_var('VERSION') =~ /^3|4\.2/) {
+        send_key 'tab';
+    }
+    type_string $password;
+    send_key 'tab';
+    type_string $password;
+    # let the password quality check process it
+    sleep(1);
+    send_key 'f12';
+    assert_screen 'installer-user-weak-pass';
+    send_key 'f12';
+    assert_screen 'installer-install-user-created';
+}
+
 sub run {
     my ($self) = @_;
 
@@ -113,6 +132,10 @@ sub run {
     # TODO: check defaults, select various options
 
     send_key "f12";
+
+    if (check_var("INSTALL_OEM", "1")) {
+        setup_user;
+    }
 
     my $needs_to_confirm_done = 1;
     assert_screen(["firstboot-done", "firstboot-in-progress"], 10);

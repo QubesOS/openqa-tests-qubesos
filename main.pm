@@ -26,6 +26,8 @@ if (get_var('ISO')) {
     autotest::loadtest "tests/isosize.pm";
     if (get_var('INSTALL_ISO_FILE')) {
         autotest::loadtest "tests/install_iso_file.pm";
+    } elsif (get_var('INSTALL_OEM')) {
+        autotest::loadtest "tests/install_oem.pm";
     } else {
         autotest::loadtest "tests/install_startup.pm";
     }
@@ -33,17 +35,19 @@ if (get_var('ISO')) {
         autotest::loadtest "tests/install_preexisting_system.pm";
         autotest::loadtest "tests/install_startup_2.pm";
     }
-    autotest::loadtest "tests/install_welcome.pm";
-    if (get_var('KEYBOARD_LAYOUT')) {
-        autotest::loadtest "tests/install_keyboard.pm";
-    }
-    if (get_var('PARTITIONING')) {
-        autotest::loadtest "tests/install_partitioning_" . get_var('PARTITIONING') . ".pm";
-    } else {
-        autotest::loadtest "tests/install_partitioning_default.pm";
-    }
-    if (check_var("VERSION", "4.0")) {
-        autotest::loadtest "tests/install_templates.pm";
+    if (!get_var('INSTALL_OEM')) {
+        autotest::loadtest "tests/install_welcome.pm";
+        if (get_var('KEYBOARD_LAYOUT')) {
+            autotest::loadtest "tests/install_keyboard.pm";
+        }
+        if (get_var('PARTITIONING')) {
+            autotest::loadtest "tests/install_partitioning_" . get_var('PARTITIONING') . ".pm";
+        } else {
+            autotest::loadtest "tests/install_partitioning_default.pm";
+        }
+        if (check_var("VERSION", "4.0")) {
+            autotest::loadtest "tests/install_templates.pm";
+        }
     }
     autotest::loadtest "tests/install_do_user.pm";
     autotest::loadtest "tests/install_fixups.pm";

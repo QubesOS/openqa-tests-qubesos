@@ -22,14 +22,16 @@ use utils qw(us_colemak);
 
 
 sub run {
-    wait_still_screen();
-    if (!check_var("VERSION", "4.0")) {
-        setup_user();
-    }
-    assert_screen 'installer-main-ready';
-    send_key 'f12';
-    if (check_var("VERSION", "4.0")) {
-        setup_user();
+    if (!get_var("INSTALL_OEM")) {
+        wait_still_screen();
+        if (!check_var("VERSION", "4.0")) {
+            setup_user();
+        }
+        assert_screen 'installer-main-ready';
+        send_key 'f12';
+        if (check_var("VERSION", "4.0")) {
+            setup_user();
+        }
     }
 
     my $timeout = 1500;

@@ -51,16 +51,19 @@ sub run {
     if (match_has_tag('whonix-connected-wizard')) {
         send_key('ret');
     }
-    if (check_screen('whonixcheck-time-unstable')) {
-        send_key('ret');
-        wait_still_screen;
-    }
-    if (check_screen("whonix-connecting", 60)) {
-        assert_screen("whonix-connected", 150);
-    }
-    # this may show up some time after connecting...
-    if (check_screen("whonix-news", timeout => 300)) {
-        assert_and_click("whonix-news");
+    while (check_screen(['whonixcheck-time-unstable', "whonix-connecting", "whonix-news"], timeout => 120)) {
+        if (match_has_tag('whonixcheck-time-unstable')) {
+            send_key('ret');
+            wait_still_screen;
+        }
+        if (match_has_tag("whonix-connecting")) {
+            assert_screen("whonix-connected", 150);
+        }
+        # this may show up some time after connecting...
+        if (match_has_tag("whonix-news")) {
+            assert_and_click("whonix-news");
+            wait_still_screen;
+        }
     }
 }
 

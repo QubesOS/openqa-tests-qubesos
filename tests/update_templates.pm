@@ -93,8 +93,8 @@ sub run {
     # other system VMs will be restarted later anyway (whole system restart)
     # re-run salt state for whonix too, in case of new Whonix VMs to create
     # (like - for new whonix version)
-    if (get_var("UPDATE_TEMPLATES") =~ /whonix-gw-(\d+)/) {
-        my $whonix_vers = $1;
+    if (get_var("UPDATE_TEMPLATES") =~ /whonix-(gw|gateway)-(\d+)/) {
+        my $whonix_vers = $2;
         assert_script_run("qvm-shutdown --wait sys-whonix", timeout => 90);
         assert_script_run("sudo qubesctl top.enable qvm.anon-whonix");
         assert_script_run("(set -o pipefail; sudo qubesctl state.highstate pillar=\"{'qvm':{'whonix':{'version': $whonix_vers}}}\" 2>&1 | tee qubesctl-whonix.log)", timeout => 1800);

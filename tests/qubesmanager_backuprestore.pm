@@ -92,11 +92,12 @@ sub prep_backup {
     send_key('tab');
 
     assert_and_click('backup-select-backup-dir', timeout => 10);
-    sleep(5); # needed because if the window appears too slowly, the ~ is ignored
+    # needed because if the window appears too slowly, the ~ is ignored
+    wait_still_screen;
     send_key('~');
     send_key('ret');
     #assert_and_click('backup-select-backup-dir3', timeout => 10);
-    sleep(5); # as above
+    wait_still_screen; # as above
 
     # input password
     send_key('tab');

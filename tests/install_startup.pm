@@ -87,7 +87,7 @@ sub run {
     }
 
     # wait for the installer welcome screen to appear
-    assert_screen 'installer', 300;
+    assert_screen 'installer', 360;
 
     if (match_has_tag('installer-inactive')) {
         mouse_set(10, 10);

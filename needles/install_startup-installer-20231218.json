@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "height": 73,
+      "ypos": 103,
+      "xpos": 205,
+      "width": 224,
+      "type": "match"
+    },
+    {
+      "xpos": 781,
+      "ypos": 30,
+      "width": 159,
+      "height": 20,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw5",
+    "ENV-VERSION-4-2",
+    "installer",
+    "installer-welcome-prerelease"
+  ]
+}

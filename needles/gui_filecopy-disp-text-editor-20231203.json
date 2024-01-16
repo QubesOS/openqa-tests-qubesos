@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 339,
+      "height": 21,
+      "ypos": 51,
+      "width": 44
+    },
+    {
+      "type": "match",
+      "width": 76,
+      "ypos": 56,
+      "height": 16,
+      "xpos": 627,
+      "match": 92
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "disp-text-editor"
+  ]
+}

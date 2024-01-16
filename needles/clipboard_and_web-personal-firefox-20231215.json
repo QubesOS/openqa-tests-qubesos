@@ -1,0 +1,31 @@
+{
+  "area": [
+    {
+      "xpos": 376,
+      "height": 16,
+      "ypos": 44,
+      "width": 74,
+      "type": "match"
+    },
+    {
+      "width": 109,
+      "height": 18,
+      "ypos": 43,
+      "xpos": 583,
+      "type": "match"
+    },
+    {
+      "type": "match",
+      "ypos": 119,
+      "height": 21,
+      "xpos": 284,
+      "width": 174
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "personal-firefox"
+  ]
+}

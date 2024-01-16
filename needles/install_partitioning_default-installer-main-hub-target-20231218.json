@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 29,
+      "ypos": 8,
+      "xpos": 168,
+      "width": 245
+    },
+    {
+      "type": "match",
+      "ypos": 177,
+      "height": 29,
+      "xpos": 764,
+      "width": 178
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw5",
+    "ENV-VERSION-4-2",
+    "installer-main-hub-target"
+  ]
+}

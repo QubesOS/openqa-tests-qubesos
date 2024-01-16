@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 208,
+      "ypos": 9,
+      "height": 27,
+      "xpos": 167
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "installer-progress"
+  ]
+}

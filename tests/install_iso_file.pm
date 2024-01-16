@@ -92,10 +92,10 @@ sub run {
         assert_script_run("nmcli n on");
         assert_script_run("nmcli d connect \$(ls /sys/class/net|grep ^en)");
         assert_script_run("nm-online");
-        my $grub2_url = 'https://archive.fedoraproject.org/pub/archive/fedora/linux/updates/32/Everything/x86_64/Packages/g/grub2-pc-modules-2.04-24.fc32.noarch.rpm';
+        my $grub2_url = 'https://archive.fedoraproject.org/pub/fedora/linux/updates/37/Everything/x86_64/Packages/g/grub2-pc-modules-2.06-94.fc37.noarch.rpm';
         assert_script_run("curl -o grub2-pc-modules.rpm '$grub2_url'");
         type_string("cat >/tmp/rpm-install.py <<EOF\n${rpm_install}EOF\n", max_interval => 128);
-        assert_script_run("python3 /tmp/rpm-install.py /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-32-primary grub2-pc-modules.rpm");
+        assert_script_run("python3 /tmp/rpm-install.py /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-37-primary grub2-pc-modules.rpm");
     }
 
     # create partition for the ISO file

@@ -6,14 +6,14 @@ def get_packages(dist, version):
     packages = [
         "createrepo_c" if dist == "RedHat" else "createrepo-c", # else: Debian
         "dnsmasq",
-        "python3-pip",
+        "python3-pip" if dist != "ArchLinux" else "python-pip",
         "qubes-gpg-split-tests",
         "xdotool",
         "gcc",
-        "pulseaudio-utils",
+        "pulseaudio-utils" if dist != "ArchLinux" else "libpulse",
         "git",
         "alsa-utils",
-        "qubes-input-proxy-sender",
+        "qubes-input-proxy-sender" if dist != "ArchLinux" else "qubes-input-proxy",
         "qubes-usb-proxy",
         "usbutils",
         "qubes-core-admin-client",
@@ -25,6 +25,10 @@ def get_packages(dist, version):
             "nmap-ncat",
             "pipewire-utils",
         ]
+    if dist == "ArchLinux":
+        packages.remove("createrepo-c") # not packaged there, consider AUR later
+        packages.remove("qubes-gpg-split-tests") # not a separate package
+        packages.remove("qubes-core-admin-client") # not packaged yet
     return packages
 
 def systemtests(os_data, log, **kwargs):
@@ -49,6 +53,10 @@ def systemtests(os_data, log, **kwargs):
                               env=environ)
     elif os_data["os_family"] == "RedHat":
         subprocess.check_call(["dnf", "-y", "install"] + pkgs,
+                              stdin=subprocess.DEVNULL,
+                              env=environ)
+    elif os_data["os_family"] == "ArchLinux":
+        subprocess.check_call(["pacman", "--noconfirm", "-Sy"] + pkgs,
                               stdin=subprocess.DEVNULL,
                               env=environ)
     else:

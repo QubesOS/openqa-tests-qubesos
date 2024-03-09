@@ -45,6 +45,30 @@ def testrepo(os_data, log, **kwargs):
                 f.write("repo_gpgcheck = 1\n")
                 with open("/etc/pki/rpm-gpg/RPM-GPG-KEY-test", "w") as key_f:
                     key_f.write(UPDATE_REPO_KEY)
+    elif os_data["os_family"] == "ArchLinux":
+        with open('/etc/pacman.d/80-qubes-testing.conf', 'w') as f:
+            if ENABLE_TESTING:
+                f.write(f"[qubes-r{QUBES_VER}-current-testing]\n")
+                f.write(f"Server = https://archlinux.qubes-os.org/r{QUBES_VER}/current-testing/vm/archlinux/pkgs\n")
+            if UPDATE_REPO_URL:
+                f.write("[qubes-test]\n")
+                f.write(f"Server = {UPDATE_REPO_URL}/vm/archlinux\n")
+                with open("/usr/share/pacman/keyrings/qubes-test.gpg", "w") as f:
+                    f.write(UPDATE_REPO_KEY)
+                list_output = subprocess.check_output([
+                    "gpg", "--show-keys", "--with-colons", "--with-fingerprint",
+                    "/usr/share/pacman/keyrings/qubes-test.gpg"
+                ]).decode()
+                key_fpr = [l for l in list_output.splitlines() if l.startswith("fpr:")][0].split(":")[9]
+                with open("/usr/share/pacman/keyrings/qubes-test-trusted", "w") as f:
+                    f.write(key_fpr + ":4:")
+                with open("/usr/share/pacman/keyrings/qubes-test-revoked", "w") as f:
+                    pass
+                if not os.listdir('/etc/pacman.d/gnupg/private-keys-v1.d'):
+                    subprocess.run("pacman-key", "--init", check=True)
+                    subprocess.run("pacman-key", "--populate", check=True)
+                else:
+                    subprocess.run("pacman-key", "--populate", "qubes-test", check=True)
     if Path('/usr/share/whonix/marker').exists():
         subprocess.check_call([
             "repository-dist",

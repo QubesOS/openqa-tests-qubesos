@@ -28,7 +28,7 @@ TARGET_ISO_DIR = '/var/lib/openqa/factory/iso'
 # defaults
 config_defaults = {
     'owner_allowlist': 'QubesOS',
-    'repo_allowlist': 'qubes-continuous-integration qubes-installer-qubes-os qubes-linux-kernel qubes-vmm-xen qubes-vmm-xen-stubdom-linux',
+    'repo_allowlist': 'qubes-continuous-integration qubes-installer-qubes-os qubes-linux-kernel qubes-vmm-xen qubes-vmm-xen-stubdom-linux qubes-gui-agent-linux',
     'repo_blocklist': None,
     'job_allowlist': '*',
     'user_allowlist': None,
@@ -256,6 +256,7 @@ def run_test_pr(comment_details):
     values['VERSION'] = version
     if pr_details['base']['repo']['name'] in (
             'qubes-linux-kernel',
+            'qubes-gui-agent-linux',
             'qubes-vmm-xen',
             'qubes-vmm-xen-stubdom-linux'):
         values['FLAVOR'] = 'kernel'

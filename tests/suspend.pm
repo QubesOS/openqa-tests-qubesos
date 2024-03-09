@@ -35,6 +35,8 @@ sub run {
     }
 
     assert_script_run('sudo dmesg -n 8');
+    #script_run('qvm-run -pu root sys-net "command -v ethtool || dnf install -y ethtool"');
+    #script_run('qvm-run -pu root sys-net "intf=\$(ip route show default | cut -f 5 -d \" \"); ethtool \$intf wol g"');
     assert_script_run('sudo rtcwake -n -s 30');
     assert_script_run('sudo systemctl suspend');
     sleep(60);

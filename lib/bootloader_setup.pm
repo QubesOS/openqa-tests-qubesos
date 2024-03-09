@@ -144,10 +144,14 @@ sub heads_generate_hotp {
     }
     send_key 'ret';
     assert_screen('heads-admin-pin-prompt');
-    type_string '12345678';
+    if (!match_has_tag('heads-admin-pin-default-detected')) {
+        type_string '12345678';
+    }
     send_key 'ret';
-    assert_screen('heads-nitrokey-init-success');
-    send_key 'ret';
+    # this screen isn't present in newer Heads builds anymore
+    if (check_screen('heads-nitrokey-init-success', 30)) {
+        send_key 'ret';
+    }
     if (check_var("HEADS_DISK_UNLOCK", "1") and check_screen('heads-disk-recovery-key-prompt', 15)) {
         # WARNING: TPM sealed Disk Unlock Key secret needs to be resealed ...
         # Resealing TPM LUKS Unlock Key ...
@@ -182,7 +186,11 @@ sub heads_boot_default {
     }
     assert_screen('heads-menu', 120);
     if (match_has_tag('heads-menu-hotp-fail')) {
-        heads_generate_hotp;
+        if (check_var("MACHINE", "hw5")) {
+            heads_generate_hotp(reset_tpm => 1);
+        } else {
+            heads_generate_hotp;
+        }
     }
     # Default boot
     send_key 'ret';

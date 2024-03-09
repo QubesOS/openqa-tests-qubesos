@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 46,
+      "width": 265,
+      "ypos": 674,
+      "height": 14
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw5",
+    "heads-disk-recovery-key-prompt"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "width": 134,
+      "ypos": 34,
+      "type": "match",
+      "xpos": 147,
+      "height": 17
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "wrong archlinux hostname"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-archlinux",
+    "work-xterm"
+  ]
+}

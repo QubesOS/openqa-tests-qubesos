@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 71,
+      "ypos": 700,
+      "width": 249,
+      "height": 24,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw5",
+    "heads-admin-pin-default-detected",
+    "heads-admin-pin-prompt"
+  ]
+}

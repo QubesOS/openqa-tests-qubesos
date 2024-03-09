@@ -1,0 +1,31 @@
+{
+  "area": [
+    {
+      "width": 74,
+      "xpos": 355,
+      "type": "match",
+      "height": 16,
+      "ypos": 8
+    },
+    {
+      "height": 18,
+      "ypos": 7,
+      "type": "match",
+      "xpos": 569,
+      "width": 109
+    },
+    {
+      "type": "match",
+      "xpos": 241,
+      "width": 174,
+      "ypos": 84,
+      "height": 21
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "personal-firefox"
+  ]
+}

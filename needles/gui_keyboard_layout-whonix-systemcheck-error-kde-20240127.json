@@ -1,0 +1,35 @@
+{
+  "area": [
+    {
+      "width": 91,
+      "xpos": 297,
+      "type": "match",
+      "height": 18,
+      "ypos": 306
+    },
+    {
+      "xpos": 118,
+      "width": 59,
+      "type": "match",
+      "ypos": 339,
+      "height": 21
+    },
+    {
+      "height": 18,
+      "ypos": 465,
+      "click_point": {
+        "xpos": 35,
+        "ypos": 9
+      },
+      "width": 70,
+      "xpos": 836,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4-2",
+    "whonix-systemcheck-error"
+  ]
+}

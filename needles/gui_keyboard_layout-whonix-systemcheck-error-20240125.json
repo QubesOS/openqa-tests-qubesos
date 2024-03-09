@@ -1,0 +1,34 @@
+{
+  "area": [
+    {
+      "xpos": 155,
+      "ypos": 34,
+      "width": 91,
+      "height": 18,
+      "type": "match"
+    },
+    {
+      "xpos": 21,
+      "ypos": 65,
+      "width": 59,
+      "height": 21,
+      "type": "match"
+    },
+    {
+      "xpos": 739,
+      "ypos": 184,
+      "width": 70,
+      "height": 18,
+      "type": "match",
+      "click_point": {
+        "xpos": 35,
+        "ypos": 9
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-1",
+    "whonix-systemcheck-error"
+  ]
+}

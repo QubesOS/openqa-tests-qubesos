@@ -1,0 +1,27 @@
+{
+  "area": [
+    {
+      "height": 17,
+      "ypos": 123,
+      "type": "match",
+      "xpos": 430,
+      "width": 120
+    },
+    {
+      "click_point": {
+        "ypos": 9,
+        "xpos": 34.5
+      },
+      "ypos": 562,
+      "height": 18,
+      "type": "match",
+      "width": 69,
+      "xpos": 711
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "whonix-wizard-cancel"
+  ]
+}

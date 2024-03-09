@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 472,
+      "ypos": 297,
+      "width": 84,
+      "height": 76,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw10",
+    "ENV-VERSION-4-2",
+    "panel-user-menu-reboot"
+  ]
+}

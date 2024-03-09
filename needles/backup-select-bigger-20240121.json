@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 36,
+      "xpos": 369,
+      "type": "match",
+      "ypos": 151,
+      "height": 18
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "backup-select-bigger"
+  ]
+}

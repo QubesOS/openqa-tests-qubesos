@@ -119,6 +119,10 @@ sub run {
         } else {
             assert_screen('firstboot-qubes-usbvm-unavailable', timeout => 5);
         }
+    } elsif (check_var('USBVM', 'disable')) {
+        # "disable" differs from "none" by not expecting it to be disabled
+        # automatically, but to disable it explicitly
+        assert_and_click('firstboot-qubes-usbvm-enabled', timeout => 5);
     } elsif (get_var('USBVM', 'sys-usb') eq 'sys-usb') {
         assert_screen('firstboot-qubes-usbvm-enabled', 5);
         if (check_var('BACKEND', 'generalhw')) {

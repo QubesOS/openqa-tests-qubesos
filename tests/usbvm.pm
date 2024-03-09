@@ -58,7 +58,7 @@ sub run {
     }
 
     assert_script_run('xl list');
-    if (check_var('USBVM', 'none')) {
+    if (check_var('USBVM', 'none') or check_var('USBVM', 'disable')) {
         assert_script_run('! xl domid sys-usb');
         assert_script_run('! qvm-check sys-usb');
     } elsif (get_var('USBVM', 'sys-usb') eq 'sys-usb') {

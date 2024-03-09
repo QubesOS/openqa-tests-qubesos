@@ -91,8 +91,11 @@ sub run {
     }
 
     if (check_var('FLAVOR', 'kernel')) {
-        # disable custom repo for VMs - it is empty
-        $repo_url = "";
+        # check if there is anything in the VM repo, otherwise disable it
+        # FIXME: don't hardcode bookworm here, maybe simply have some extra job setting
+        if (script_run("curl -vf $repo_url/vm/dists/bookworm/Release >/dev/null") != 0) {
+            $repo_url = "";
+        }
     }
     assert_script_run("sed -i 's%\@REPO_URL\@%$repo_url%' /root/extra-files/update/testrepo.py");
     assert_script_run("sed -i \"s%\@REPO_KEY\@%\$(cat /srv/salt/update/update-key.asc | sed -z 's:\\n:\\\\n:g')%\" /root/extra-files/update/testrepo.py");

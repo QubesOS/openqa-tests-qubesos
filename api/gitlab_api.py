@@ -193,6 +193,10 @@ def run_test():
         values['SELINUX_TEMPLATES'] = req_values['SELINUX_TEMPLATES']
     if 'TEST_TEMPLATES' in req_values:
         values['TEST_TEMPLATES'] = req_values['TEST_TEMPLATES']
+    if 'FLAVOR' in req_values and req_values['FLAVOR'] in ('pull-requests', 'kernel', 'whonix'):
+        values['FLAVOR'] = req_values['FLAVOR']
+    if 'KERNEL_VERSION' in req_values and req_values['KERNEL_VERSION'] in ('stable', 'latest'):
+        values['KERNEL_VERSION'] = req_values['KERNEL_VERSION']
 
     subprocess.check_call([
         'openqa-cli', 'api', '-X', 'POST',

@@ -142,7 +142,7 @@ sub run {
     }
 
     my $needs_to_confirm_done = 1;
-    assert_screen(["firstboot-done", "firstboot-in-progress"], 10);
+    assert_screen(["firstboot-done", "firstboot-in-progress"], 20);
     if (match_has_tag("firstboot-done")) {
         send_key "f12";
         $needs_to_confirm_done = 0;

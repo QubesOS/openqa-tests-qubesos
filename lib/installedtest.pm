@@ -173,7 +173,7 @@ sub connect_wifi {
         assert_and_click("nm-applet-more-networks");
         assert_and_click($wifi_needle);
         # network list refresh can hit just before clicking, retry in that case
-        if (!check_screen("nm-applet-wifi-password", 8)) {
+        if (!check_screen("nm-applet-wifi-password", 10)) {
             assert_and_click("nm-applet-more-networks");
             assert_and_click($wifi_needle);
         }

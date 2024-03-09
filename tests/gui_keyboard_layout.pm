@@ -40,6 +40,10 @@ sub test_file_touch {
     if (check_screen('whonix-wizard-cancel', 5)) {
         click_lastmatch();
     }
+    # and a message about wrong qube type
+    if (check_screen('whonix-systemcheck-error', 20)) {
+        click_lastmatch();
+    }
     # ... then click xterm again
     assert_and_click(['work-xterm', 'work-xterm-inactive']);
     type_string("touch e1qwertya\n");

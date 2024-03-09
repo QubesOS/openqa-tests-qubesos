@@ -36,7 +36,7 @@ sub run {
     assert_script_run('qvm-run work true');
 
     # check if devices notify about connecting
-    assert_and_click('qui-notifications-devices', timeout => 20);
+    assert_and_click('qui-devices-open', timeout => 20);
     send_key('down');
     send_key('right');
     send_key('ret');

@@ -31,6 +31,10 @@ sub run {
     assert_and_click("menu-vm-text-editor");
     assert_screen("work-text-editor", timeout => 90);
 
+    # ensure focus in on document content area
+    if (check_screen("text-editor-area", 5)) {
+        click_lastmatch;
+    }
     type_string("https://www.qubes-os.org/\n");
     send_key("ctrl-a");
     send_key("ctrl-c");

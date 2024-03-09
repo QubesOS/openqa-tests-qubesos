@@ -66,7 +66,7 @@ sub run {
                     # and R4.1 doesn't fallback to another
                     assert_script_run("sudo sed -i 's/^#baseurl = https/baseurl = https/;s/^metalink/#metalink/' /etc/qubes/repo-templates/*.repo");
                 }
-                assert_script_run("qvm-template $action --enablerepo=qubes-*templates* $template", timeout => 1800);
+                assert_script_run("qvm-template $action --yes --enablerepo=qubes-*templates* $template", timeout => 1800);
             }
         }
         # unlock the screen, if screenlocker engaged

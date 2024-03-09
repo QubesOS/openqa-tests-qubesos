@@ -329,14 +329,14 @@ class JobData(Base):
         all_templates = []
 
         for log in json_data['job']['ulogs']:
-            if log == 'update-template-versions.txt':
+            if log == 'update-template-versions.txt' or log == 'update2-template-versions.txt':
                 log_file = "{}/tests/{}/file/{}".format(
                     OPENQA_URL, self.job_id, log)
 
                 template_list = requests.get(log_file).text.split('\n')
                 for line in template_list:
                     all_templates.append(
-                        re.sub(r"(.*)-([^-]*-[^-]*)\.noarch", r"\1 \2", line))
+                        re.sub(r"(.*)-([^-]*-[^-]*)(\.noarch)?", r"\1 \2", line))
 
         templates = []
 

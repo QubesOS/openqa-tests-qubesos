@@ -140,6 +140,9 @@ if (check_var('TEST_FIDO', '1')) {
     autotest::loadtest "tests/fido.pm";
 }
 
+if (check_var('SUSPEND_MODE', 'S0ix')) {
+    autotest::loadtest "tests/enable_s0ix.pm";
+}
 if (check_var('TEST_SUSPEND', '1')) {
     autotest::loadtest "tests/suspend.pm";
 }

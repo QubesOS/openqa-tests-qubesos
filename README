@@ -61,3 +61,4 @@ Variables used in tests:
  - `KERNEL_VERSION` - which kernel flavor should be used - currently supported value is 'latest', which will switch to kernel-latest and kernel-latest-qubes-vm during update
  - `PIPEWIRE` - when set to `1`, VMs are set to use pipewire instead of
    pulseaudio, including switching native pulseaudio to pipewire-pulse.
+ - `SUSPEND_MODE` - what suspend mode should be used; default is `S3`, set to `S0ix` to use S0ix suspend

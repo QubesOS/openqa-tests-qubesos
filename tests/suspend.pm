@@ -22,11 +22,17 @@ use networking;
 
 sub run {
     my ($self) = @_;
+    my ($counters_before, $requirements_before, $counters_after, $requirements_after);
 
-    select_console('x11');
+    select_console("x11");
     assert_screen "desktop";
-    x11_start_program('xterm');
+    x11_start_program("xterm");
     curl_via_netvm;
+
+    if (check_var("SUSPEND_MODE", "S0ix")) {
+        $counters_before = script_output("sudo cat /sys/kernel/debug/pmc_core/substate_residencies");
+        $requirements_before = script_output("sudo cat /sys/kernel/debug/pmc_core/substate_requirements");
+    }
 
     assert_script_run('sudo dmesg -n 8');
     assert_script_run('sudo rtcwake -n -s 30');
@@ -46,7 +52,7 @@ sub run {
     send_key('ret');
     sleep(10);
 
-    # stupid workaround for "ttyAMA ttyAMA1: 1 input overrun(s)" on RPi side
+    # stupid workaround for Xen's serial issues
     if (check_var("MACHINE", "hw2")) {
         type_string("xl debug-key h;sleep 0.2;xl debug-key h;xl debug-key h\n");
     }
@@ -57,6 +63,11 @@ sub run {
     # log some info
     script_run('xl list');
     script_run('virsh -c xen list --all');
+
+    if (check_var("SUSPEND_MODE", "S0ix")) {
+        $counters_after = script_output("sudo cat /sys/kernel/debug/pmc_core/substate_residencies");
+        $requirements_after = script_output("sudo cat /sys/kernel/debug/pmc_core/substate_requirements");
+    }
 
     # resumed and qrexec really works
     assert_script_run('qvm-run -p sys-net true');

@@ -1,0 +1,33 @@
+From 13abe408d3be60bc6f646933e1219a24e7d80eae Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>
+Date: Mon, 11 Mar 2024 00:42:28 +0000
+Subject: [PATCH] Raise MEMFD_BASE_ADDRESS to not conflict with dom0 kernel
+
+Kernel in qubes is built with CONFIG_PHYSICAL_START=0x200000 to fix booting on
+AMD Threadripper[1]. But this in turns conflicts with OVMF using area around
+0x800000. The dom0 kernel cannot relocate itself this early (at least not yet),
+so this conflict leads to boot failure.
+Dom0 kernel used to have CONFIG_PHYSICAL_START=0x1000000, so it was above that
+OVMF working area.
+For now unbreak virtualized UEFI installation tests by moving OVMF much higher
+(above kernel and initrd).
+
+[1] https://github.com/QubesOS/qubes-linux-kernel/commit/3e8be4ac1682370977d4d0dc1d782c428d860282
+---
+ OvmfPkg/Include/Fdf/OvmfPkgDefines.fdf.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/OvmfPkg/Include/Fdf/OvmfPkgDefines.fdf.inc b/OvmfPkg/Include/Fdf/OvmfPkgDefines.fdf.inc
+index 6170c5993c..26518e9f85 100644
+--- a/OvmfPkg/Include/Fdf/OvmfPkgDefines.fdf.inc
++++ b/OvmfPkg/Include/Fdf/OvmfPkgDefines.fdf.inc
+@@ -103,4 +103,4 @@ SET gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingBase = gUefiOvmfPk
+ SET gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareBase   = gUefiOvmfPkgTokenSpaceGuid.PcdOvmfFlashNvStorageFtwSpareBase
+ !endif
+ 
+-DEFINE MEMFD_BASE_ADDRESS = 0x800000
++DEFINE MEMFD_BASE_ADDRESS = 0x4000000
+-- 
+2.43.0
+

@@ -26,6 +26,10 @@ sub run {
 
     # try to start "Text Editor" (gedit)
     assert_and_click("menu");
+    if (check_screen("menu-tab-favorites-active", 30)) {
+        # switch to apps tab
+        click_lastmatch();
+    }
     assert_and_click("menu-vm-work");
     wait_still_screen();
     assert_and_click("menu-vm-text-editor");
@@ -65,8 +69,12 @@ sub run {
 
     # verify, and then open in DispVM
     assert_and_click("menu");
+    if (check_screen("menu-tab-favorites-active", 30)) {
+        # switch to apps tab
+        click_lastmatch();
+    }
     assert_and_click("menu-vm-personal");
-    wait_still_screen();
+    wait_still_screen(stilltime => 10);
     assert_and_click("menu-vm-Files");
     assert_screen("personal-files", timeout => 90);
     assert_and_click("files-qubesincoming", dclick => 1);

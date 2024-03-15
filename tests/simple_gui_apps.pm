@@ -59,20 +59,17 @@ sub run {
     if (!$text_editor_added) {
         assert_and_click(["vm-settings-app-evince", "vm-settings-app-text-editor"]);
         send_key('end');
-        # let it scroll...
-        sleep(1);
+        wait_still_screen;
         assert_and_click("vm-settings-app-text-editor");
         assert_and_click("vm-settings-app-add");
+        wait_still_screen;
     }
     assert_and_click(["vm-settings-app-evince", "vm-settings-app-start-qube"]);
     if (match_has_tag("vm-settings-app-start-qube")) {
         # if start qube was clicked, scroll to home to make evince ("Document Viewer") visible
         send_key('home');
-    }
-    # let is scroll maybe, if evince not selected, click it again...
-    sleep(4);
-    if (check_screen("vm-settings-app-evince", 5)) {
-        click_lastmatch();
+        wait_still_screen;
+        assert_and_click("vm-settings-app-evince");
     }
     assert_and_click("vm-settings-app-add");
     if (check_screen("vm-settings-app-missing-firefox")) {

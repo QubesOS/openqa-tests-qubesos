@@ -64,7 +64,8 @@ sub tianocore_select_bootloader {
 
 sub heads_boot_usb {
     # FIXME: workaround for broken HDMI after cold boot
-    if (!check_screen(['heads-menu', 'heads-no-boot', 'heads-no-os'], timeout => 15)) {
+    # https://github.com/linuxboot/heads/issues/1557
+    if (!check_screen(['heads-menu', 'heads-no-boot', 'heads-no-os'], timeout => 20)) {
         send_key("ctrl-alt-delete");
         sleep(3);
     }
@@ -277,11 +278,11 @@ sub heads_boot_default {
     if (check_screen('heads-menu', 30)) {
         # depending on Heads version, generating /boot hashes is followed by reboot
         send_key 'ret';
-        if (check_var("HEADS_DISK_UNLOCK", "1")) {
-            # Enter LUKS Disk Unlock Key passphrase (blank to abort):
-            assert_screen('heads-disk-unlock-prompt');
-            type_string 'unlockpass';
-            send_key 'ret';
-        }
+    }
+    if (check_var("HEADS_DISK_UNLOCK", "1")) {
+        # Enter LUKS Disk Unlock Key passphrase (blank to abort):
+        assert_screen('heads-disk-unlock-prompt');
+        type_string 'unlockpass';
+        send_key 'ret';
     }
 }

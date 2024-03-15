@@ -15,6 +15,7 @@ dom0-packages:
       - python3-nose2
       - python3-objgraph
       - patch
+      - qubes-video-companion-dom0
 {% if grains['osrelease'] == '4.2' %}
       - xinput
 {% endif %}

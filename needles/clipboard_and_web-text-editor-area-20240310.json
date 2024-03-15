@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 143,
+      "ypos": 203,
+      "width": 470,
+      "height": 189,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-fedora-xfce",
+    "ENV-guivm",
+    "text-editor-area"
+  ]
+}

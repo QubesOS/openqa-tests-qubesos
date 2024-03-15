@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 26,
+      "ypos": 3,
+      "width": 24,
+      "xpos": 875,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-fedora-39-xfce",
+    "nm-applet-connected"
+  ]
+}

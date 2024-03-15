@@ -62,7 +62,8 @@ sub run {
         assert_script_run("printf '  repo_onion: $repo_url\\n' >> $pillar_dir/init.sls");
         if (get_var('KEY_1')) {
             my $key_url = get_var('KEY_1');
-            assert_script_run("curl -f $key_url > /srv/salt/update/update-key.asc");
+            #assert_script_run("curl -f $key_url > /srv/salt/update/update-key.asc");
+            assert_script_run("curl -f $repo_url/key.pub > /srv/salt/update/update-key.asc");
             assert_script_run("printf '  key: update-key\\n' >> $pillar_dir/init.sls");
         }
     }

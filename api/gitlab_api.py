@@ -238,7 +238,7 @@ def run_test_pr(comment_details):
         return respond(404, "build not found")
 
     version = '4.2'
-    buildid = time.strftime('%Y%m%d%H-') + version
+    buildid = time.strftime('%Y%m%d%H%M-') + version
     # cannot serve repo directly from gitlab, because it refuses connections via Tor :/
     repo_url = repo_job + '/artifacts/raw/repo'
     with requests.get(repo_job + '/artifacts/download', stream=True) as r:

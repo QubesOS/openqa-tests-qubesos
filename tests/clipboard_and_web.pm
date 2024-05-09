@@ -35,6 +35,9 @@ sub run {
     assert_and_click("menu-vm-text-editor");
     assert_screen("work-text-editor", timeout => 90);
 
+    if (check_screen("text-editor-no-file-open-new", 5)) {
+        click_lastmatch;
+    }
     # ensure focus in on document content area
     if (check_screen("text-editor-area", 5)) {
         click_lastmatch;

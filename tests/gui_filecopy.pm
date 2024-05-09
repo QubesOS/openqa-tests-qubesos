@@ -95,7 +95,7 @@ sub run {
         wait_still_screen();
     }
     assert_and_click("files-open-in-dispvm");
-    assert_screen("disp-text-editor", timeout => 90);
+    assert_screen("disp-text-editor", timeout => 120);
     # verify content
     assert_screen("text-editor-qubes-url");
     send_key("ctrl-q");

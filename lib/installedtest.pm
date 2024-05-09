@@ -164,7 +164,7 @@ sub usbvm_fixup {
 sub connect_wifi {
     my ($self) = @_;
 
-    if (!check_screen("nm-applet-connected-wifi", 60)) {
+    if (!check_screen("nm-applet-connected-wifi", 90)) {
         my $wifi_password = get_required_var("WIFI_PASSWORD");
         my $wifi_needle = "nm-applet-wifi-" . get_var("WIFI_NAME");
         assert_and_click("nm-applet");

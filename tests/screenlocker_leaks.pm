@@ -29,6 +29,10 @@ sub run {
     select_console('x11');
 
     assert_and_click("menu");
+    if (check_screen("menu-tab-favorites-active", 30)) {
+        # switch to apps tab
+        click_lastmatch();
+    }
     assert_and_click("menu-vm-work");
     assert_and_click("menu-vm-xterm");
 

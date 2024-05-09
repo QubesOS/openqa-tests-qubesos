@@ -46,7 +46,12 @@ sub run {
     send_key("ctrl-q");
 
     assert_and_click("menu");
+    if (check_screen("menu-tab-favorites-active", 30)) {
+        # switch to apps tab
+        click_lastmatch();
+    }
     assert_and_click("menu-vm-work");
+    wait_still_screen();
     assert_and_click("menu-vm-Files");
 
     # copy to another VM

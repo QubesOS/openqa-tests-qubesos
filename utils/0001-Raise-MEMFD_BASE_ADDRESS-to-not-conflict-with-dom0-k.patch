@@ -1,4 +1,4 @@
-From 13abe408d3be60bc6f646933e1219a24e7d80eae Mon Sep 17 00:00:00 2001
+From f5fdad92fe65d52ae0c9f2cf19cf343e322660c8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
  <marmarek@invisiblethingslab.com>
 Date: Mon, 11 Mar 2024 00:42:28 +0000
@@ -19,7 +19,7 @@ For now unbreak virtualized UEFI installation tests by moving OVMF much higher
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/OvmfPkg/Include/Fdf/OvmfPkgDefines.fdf.inc b/OvmfPkg/Include/Fdf/OvmfPkgDefines.fdf.inc
-index 6170c5993c..26518e9f85 100644
+index 6170c5993c..6753cef53f 100644
 --- a/OvmfPkg/Include/Fdf/OvmfPkgDefines.fdf.inc
 +++ b/OvmfPkg/Include/Fdf/OvmfPkgDefines.fdf.inc
 @@ -103,4 +103,4 @@ SET gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingBase = gUefiOvmfPk
@@ -27,7 +27,7 @@ index 6170c5993c..26518e9f85 100644
  !endif
  
 -DEFINE MEMFD_BASE_ADDRESS = 0x800000
-+DEFINE MEMFD_BASE_ADDRESS = 0x4000000
++DEFINE MEMFD_BASE_ADDRESS = 0x5200000
 -- 
 2.43.0
 

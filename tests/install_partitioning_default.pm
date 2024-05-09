@@ -32,6 +32,10 @@ sub run {
     }
     assert_and_click 'installer-done';
     assert_screen 'installer-disk-luks-passphrase';
+    if (match_has_tag('installer-disk-luks-passphrase-inactive')) {
+        click_lastmatch;
+        wait_still_screen;
+    }
     type_string 'lukspass';
     send_key 'tab';
     type_string 'lukspass';

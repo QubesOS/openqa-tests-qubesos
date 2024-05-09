@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "xpos": 278,
+      "type": "match",
+      "width": 291,
+      "ypos": 168,
+      "height": 28
+    },
+    {
+      "xpos": 638,
+      "type": "match",
+      "width": 130,
+      "ypos": 576,
+      "height": 25
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "installer-inactive",
+    "installer-prerelease"
+  ]
+}

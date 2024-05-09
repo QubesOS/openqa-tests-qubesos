@@ -8,7 +8,7 @@ ENABLE_TESTING = True
 QUBES_VER = "@QUBES_VER@"
 WHONIX_REPO = "@WHONIX_REPO@"
 
-def testrepo(os_data, log, **kwargs):
+def atestrepo(os_data, log, **kwargs):
     if os.path.exists("/usr/share/whonix/marker"):
         # Whonix randomizes time, sometimes setting it in the future, which breaks
         # at least Debian fasttrack

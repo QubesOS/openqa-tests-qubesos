@@ -91,18 +91,16 @@ sub run {
         $targets =~ s/ /,/g;
     }
 
-    if (check_var('FLAVOR', 'kernel')) {
-        # check if there is anything in the VM repo, otherwise disable it
-        # FIXME: don't hardcode bookworm here, maybe simply have some extra job setting
-        if (script_run("curl -vf $repo_url/vm/dists/bookworm/Release >/dev/null") != 0) {
-            $repo_url = "";
-        }
+    # check if there is anything in the VM repo, otherwise disable it
+    # FIXME: don't hardcode bookworm here, maybe simply have some extra job setting
+    if (script_run("curl -vf $repo_url/vm/dists/bookworm/Release >/dev/null") != 0) {
+        $repo_url = "";
     }
-    assert_script_run("sed -i 's%\@REPO_URL\@%$repo_url%' /root/extra-files/update/testrepo.py");
-    assert_script_run("sed -i \"s%\@REPO_KEY\@%\$(cat /srv/salt/update/update-key.asc | sed -z 's:\\n:\\\\n:g')%\" /root/extra-files/update/testrepo.py");
-    assert_script_run("sed -i 's%\@QUBES_VER\@%" . get_var('VERSION') . "%' /root/extra-files/update/testrepo.py");
-    assert_script_run("sed -i 's%\@WHONIX_REPO\@%" . get_var('WHONIX_REPO', 'testers') . "%' /root/extra-files/update/testrepo.py");
-    assert_script_run("cp /root/extra-files/update/testrepo.py /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/");
+    assert_script_run("sed -i 's%\@REPO_URL\@%$repo_url%' /root/extra-files/update/atestrepo.py");
+    assert_script_run("sed -i \"s%\@REPO_KEY\@%\$(cat /srv/salt/update/update-key.asc | sed -z 's:\\n:\\\\n:g')%\" /root/extra-files/update/atestrepo.py");
+    assert_script_run("sed -i 's%\@QUBES_VER\@%" . get_var('VERSION') . "%' /root/extra-files/update/atestrepo.py");
+    assert_script_run("sed -i 's%\@WHONIX_REPO\@%" . get_var('WHONIX_REPO', 'testers') . "%' /root/extra-files/update/atestrepo.py");
+    assert_script_run("cp /root/extra-files/update/atestrepo.py /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/");
     if (get_var("SALT_SYSTEM_TESTS")) {
         assert_script_run("cp /root/extra-files/update/systemtests.py /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/");
     }
@@ -112,7 +110,7 @@ sub run {
 
     # disable all states
     script_run('rm -f /srv/salt/_tops/base/*');
-    script_run('rm -f /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/testrepo.py');
+    script_run('rm -f /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/atestrepo.py');
     script_run('rm -f /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/systemtests.py');
 
     # log package versions

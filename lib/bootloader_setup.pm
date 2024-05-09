@@ -65,48 +65,65 @@ sub tianocore_select_bootloader {
 sub heads_boot_usb {
     # FIXME: workaround for broken HDMI after cold boot
     # https://github.com/linuxboot/heads/issues/1557
-    if (!check_screen(['heads-menu', 'heads-no-boot', 'heads-no-os'], timeout => 20)) {
+    if (!check_screen(['heads-menu', 'heads-no-boot', 'heads-no-os', 'heads-hotp-fail-screen'], timeout => 20)) {
         send_key("ctrl-alt-delete");
-        sleep(3);
+        sleep(5);
     }
-    assert_screen(['heads-menu', 'heads-no-boot', 'heads-no-os'], timeout => 45);
+    assert_screen(['heads-menu', 'heads-no-boot', 'heads-no-os', 'heads-hotp-fail-screen'], timeout => 45);
+    my $usb_boot_selected = 0;
     if (match_has_tag('heads-no-os')) {
-        send_key 'down';
+        # Select "Boot from USB"
         send_key 'down';
         send_key 'ret';
-        assert_screen('heads-menu');
+        $usb_boot_selected = 1;
     } elsif (match_has_tag('heads-no-boot')) {
         send_key 'right';
         send_key 'ret';
         assert_screen('heads-menu');
+    } elsif (match_has_tag('heads-hotp-fail-screen')) {
+        # choose "Ignore error and continue to main menu"
+        send_key 'down';
+        send_key 'ret';
     }
-    # select options
-    send_key 'down';
-    send_key 'down';
-    send_key 'ret';
-    assert_screen('heads-options');
-    # select boot menu
-    send_key 'ret';
-    sleep(10);
-    assert_screen('heads-boot-options');
-    # select USB boot
-    send_key 'down';
-    send_key 'ret';
+    if (!$usb_boot_selected) {
+        # select options
+        send_key 'down';
+        send_key 'down';
+        send_key 'ret';
+        assert_screen('heads-options');
+        # select boot menu
+        send_key 'ret';
+        sleep(10);
+        assert_screen('heads-boot-options');
+        # select USB boot
+        send_key 'down';
+        send_key 'ret';
+    }
     assert_screen(['heads-usb-boot-options', 'heads-usb-boot-list', 'heads-usb-boot-disk-list']);
     if (match_has_tag('heads-usb-boot-disk-list')) {
+        my $tries = 7;
+        while ($tries > 0 and !check_screen("heads-usb-boot-disk-entry")) {
+            wait_screen_change {
+                send_key 'down';
+            };
+            $tries--;
+        }
         send_key 'ret';
         assert_screen(['heads-usb-boot-options', 'heads-usb-boot-list']);
     }
     my $tries = 7;
-    # scroll to the right option, with misleadingly named needle heads-usb-boot-options
-    while ($tries > 0 and !check_screen('heads-usb-boot-options')) {
+    # misleadingly named needle heads-usb-boot-options is the default installer entry
+    my $boot_option_needle = "heads-usb-boot-options";
+    $boot_option_needle = "heads-usb-boot-oem" if check_var("INSTALL_OEM_STARTUP", "1");
+    # scroll to the right option
+    while ($tries > 0 and !check_screen($boot_option_needle)) {
         wait_screen_change {
             send_key 'down';
         };
         $tries--;
     }
     # boot the default, ISO post-processing already disabled media check
-    assert_screen('heads-usb-boot-options');
+    assert_screen($boot_option_needle);
     send_key 'ret';
 }
 
@@ -132,9 +149,10 @@ sub heads_generate_hotp {
         send_key 'ret';
         type_string '12345678';
         send_key 'ret';
-        #assert_screen('heads-tpm-owner-prompt');
-        #type_string '12345678';
-        #send_key 'ret';
+        if (check_screen('heads-tpm-owner-prompt', 10)) {
+            type_string '12345678';
+            send_key 'ret';
+        }
     } else {
         send_key 'ret';
     }
@@ -185,13 +203,20 @@ sub heads_boot_default {
         send_key("ctrl-alt-delete");
         sleep(3);
     }
-    assert_screen('heads-menu', 120);
+
+    assert_screen(['heads-menu', 'heads-hotp-fail-screen'], 120);
     if (match_has_tag('heads-menu-hotp-fail')) {
         if (check_var("MACHINE", "hw5")) {
             heads_generate_hotp(reset_tpm => 1);
         } else {
             heads_generate_hotp;
         }
+    } elsif (match_has_tag('heads-hotp-fail-screen')) {
+        # choose "Ignore error and continue to main menu"
+        send_key 'down';
+        send_key 'ret';
+        wait_still_screen;
+        heads_generate_hotp;
     }
     # Default boot
     send_key 'ret';
@@ -259,8 +284,9 @@ sub heads_boot_default {
             sleep(10);
         } else {
             # Saving a default will modify the disk. Proceed? (Y/n)
-            assert_screen('heads-confirm-modify-disk');
-            send_key 'ret';
+            if (check_screen('heads-confirm-modify-disk', 15)) {
+                send_key 'ret';
+            }
             # Do you wish to add a disk encryption to the TPM [y/N]?
             assert_screen('heads-disk-key-tpm-prompt');
             send_key 'ret';

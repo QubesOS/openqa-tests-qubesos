@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "ypos": 113,
+      "width": 201,
+      "type": "match",
+      "xpos": 559,
+      "height": 33
+    },
+    {
+      "height": 25,
+      "xpos": 147,
+      "type": "match",
+      "ypos": 186,
+      "width": 441
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw6",
+    "heads-menu",
+    "heads-menu-hotp-fail"
+  ]
+}

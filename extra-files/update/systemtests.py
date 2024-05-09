@@ -17,6 +17,7 @@ def get_packages(dist, version):
         "qubes-usb-proxy",
         "usbutils",
         "qubes-core-admin-client",
+        "qubes-audio-daemon",
         "qubes-video-companion",
     ]
     if dist == "RedHat":

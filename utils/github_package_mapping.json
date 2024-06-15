@@ -27,6 +27,8 @@
   "qubes-snapd-helper": "app-linux-snapd-helper",
   "qubes-usb-proxy": "app-linux-usb-proxy",
   "qubes-utils": "linux-utils",
+  "qubes-video-companion": "video-companion",
+  "qubes-video-companion-sender": "video-companion",
   "rpm-oxide": "rpm-oxide",
   "xen-libs": "vmm-xen",
   "xen-hvm-stubdom-linux": "vmm-xen-stubdom-linux",

@@ -16,7 +16,7 @@ dom0-packages:
       - python3-objgraph
       - patch
       - qubes-video-companion-dom0
-{% if grains['osrelease'] == '4.2' %}
+{% if grains['osrelease'] != '4.1' %}
       - xinput
 {% endif %}
       - openssl

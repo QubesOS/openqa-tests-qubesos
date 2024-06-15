@@ -29,7 +29,7 @@ sub setup_user {
     assert_screen 'installer-user';
     type_string 'user';
     send_key 'tab';
-    if (get_var('VERSION') =~ /^3|4\.2/) {
+    if (!check_var('VERSION', '4.1')) {
         send_key 'tab';
     }
     type_string $password;

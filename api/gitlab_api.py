@@ -158,7 +158,7 @@ def run_test():
 
     print(repr(req_values))
 
-    version = req_values.get('VERSION') or '4.2'
+    version = req_values.get('VERSION') or '4.3'
     buildid = time.strftime('%Y%m%d%H-') + version
     # cannot serve repo directly from gitlab, because it refuses connections via Tor :/
     repo_url = req_values['REPO_JOB'] + '/artifacts/raw/repo'
@@ -236,7 +236,7 @@ def run_test_pr(comment_details):
     if not repo_job:
         return respond(404, "build not found")
 
-    version = '4.2'
+    version = '4.3'
     buildid = time.strftime('%Y%m%d%H%M-') + version
     # cannot serve repo directly from gitlab, because it refuses connections via Tor :/
     repo_url = repo_job + '/artifacts/raw/repo'

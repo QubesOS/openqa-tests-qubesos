@@ -61,7 +61,7 @@ sub setup_user {
         type_string 'user';
     }
     send_key 'tab';
-    if (get_var('VERSION') =~ /^3|4\.2/) {
+    if (!check_var('VERSION', '4.1')) {
         send_key 'tab';
     }
     if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {

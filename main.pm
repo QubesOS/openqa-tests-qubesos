@@ -81,7 +81,7 @@ if (get_var('ISO')) {
         if (get_var("SELINUX_TEMPLATES")) {
             autotest::loadtest "tests/selinux_install.pm";
         }
-        if (get_var('GUIVM')) {
+        if (get_var('GUIVM') || get_var('GUIVM_VNC')) {
             autotest::loadtest "tests/update_guivm.pm";
         }
     } else {
@@ -111,7 +111,7 @@ if (get_var('DO_GUIVM')) {
         autotest::loadtest "tests/update_templates.pm";
         autotest::loadtest "tests/update_post_templates.pm";
     }
-    if (get_var('GUIVM')) {
+    if (get_var('GUIVM') || get_var('GUIVM_VNC')) {
         autotest::loadtest "tests/update_guivm.pm";
     }
 }

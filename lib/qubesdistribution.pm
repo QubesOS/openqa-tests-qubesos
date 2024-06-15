@@ -68,6 +68,13 @@ sub init_consoles {
 
     $self->add_console('x11',            'tty-console', {tty => 1});
 
+    $self->add_console('guivm-vnc',      'vnc-base',    {
+                hostname => 'localhost',
+                connect_timeout => 3,
+                port => 5555,
+                description => "sys-gui's VNC",
+    });
+
     return;
 }
 

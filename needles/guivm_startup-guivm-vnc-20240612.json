@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "xpos": 443,
+      "ypos": 314,
+      "width": 175,
+      "height": 53,
+      "type": "match"
+    },
+    {
+      "xpos": 9,
+      "ypos": 5,
+      "width": 82,
+      "height": 28,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "ENV-fedora-xfce",
+    "guivm-vnc",
+    "login-prompt-user-selected"
+  ]
+}

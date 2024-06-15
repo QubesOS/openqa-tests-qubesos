@@ -40,13 +40,25 @@ def fill_results_context(results, jobs, reference_jobs=None, instability_analysi
                 if instability_analysis.is_test_unstable(fail):
                     fail.unstable = True
 
+def format_github_link(link):
+    """
+    Github "helpfully" formats links by removing information from it, try to prevent that
+    """
+    if '/commits/' in link:
+        return link.partition('/commits/')[0] + f" ({link})"
+    return link
 
-def format_results(results, jobs, reference_jobs=None, instability_analysis=None):
+
+def format_results(results, jobs, reference_jobs=None, instability_analysis=None, github_links=None):
 
     output_string = "{}\n" \
                     "Complete test suite and dependencies: {}\n".format(
                         COMMENT_TITLE,
                         jobs[0].get_build_url())
+
+    if github_links and not ('create-or-update' in next(iter(github_links))):
+        output_string += "\nTest run included the following:\n"
+        output_string += ''.join(f"- {format_github_link(url)}\n" for url in github_links)
 
     if results.get('system_tests_update', []):
         output_string += "\nInstalling updates failed, skipping the report!\n"
@@ -265,7 +277,7 @@ def main():
     fill_results_context(result, jobs, reference_jobs, instability_analysis)
 
     formatted_result = format_results(result, jobs, reference_jobs,
-                                      instability_analysis)
+                                      instability_analysis, github_links=prs)
 
     labels = get_labels_from_results(result)
 

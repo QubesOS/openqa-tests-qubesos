@@ -21,7 +21,9 @@ use testapi;
 
 
 sub run {
-    select_console('x11');
+    my ($self) = @_;
+
+    $self->select_gui_console;
     assert_screen "desktop";
 
     # open Tor Browser in anon-whonix 
@@ -50,7 +52,7 @@ sub run {
 
 sub post_fail_hook {
     my ($self) = @_;
-    select_console('x11');
+    $self->select_gui_console;
     send_key('esc');
     send_key('esc');
     save_screenshot;

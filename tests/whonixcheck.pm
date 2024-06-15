@@ -28,7 +28,7 @@ sub run {
         return;
     }
 
-    select_console('x11');
+    $self->select_gui_console;
     assert_screen "desktop";
     x11_start_program('xterm');
     curl_via_netvm;

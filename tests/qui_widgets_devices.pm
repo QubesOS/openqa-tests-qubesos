@@ -22,8 +22,10 @@ use testapi;
 
 
 sub run {
+    my ($self) = @_;
+
     # open global-settings
-    select_console('x11');
+    $self->select_gui_console;
     assert_screen "desktop";
 
     # check if widget opened, open it
@@ -44,7 +46,7 @@ sub run {
 
 sub post_fail_hook {
     my ($self) = @_;
-    select_console('x11');
+    $self->select_gui_console;
     send_key('esc');
     save_screenshot;
     $self->SUPER::post_fail_hook;

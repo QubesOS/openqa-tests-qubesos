@@ -24,7 +24,7 @@ use Mojo::File qw(path);
 sub run {
     my ($self) = @_;
 
-    select_console('x11');
+    $self->select_gui_console;
     assert_screen "desktop";
     x11_start_program('xterm');
     send_key('alt-f10');

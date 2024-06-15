@@ -25,7 +25,7 @@ sub run {
     my $failed = 0;
     my $windows_version = get_required_var("WINDOWS_VERSION");
 
-    select_console('x11');
+    $self->select_gui_console;
     x11_start_program('xterm');
     send_key('alt-f10');
     curl_via_netvm;

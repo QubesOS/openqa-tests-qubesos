@@ -22,7 +22,9 @@ use testapi;
 
 
 sub run {
-    select_console('x11');
+    my ($self) = @_;
+
+    $self->select_gui_console;
     assert_screen "desktop";
 
     # workaround for GTK+ setting too large window under XFCE

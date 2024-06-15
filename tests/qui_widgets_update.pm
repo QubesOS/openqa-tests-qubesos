@@ -23,15 +23,17 @@ use serial_terminal;
 
 
 sub run {
+    my ($self) = @_;
+
     # open global-settings
-    select_console('x11');
+    $self->select_gui_console;
     assert_screen "desktop";
 
     # make sure there's something to update
 
     select_root_console();
     script_run('qvm-features --unset `qubes-prefs default-template` updates-available;qvm-features `qubes-prefs default-template` updates-available 1;qvm-features --unset dom0 updates-available;qvm-features dom0 updates-available 1');
-    select_console('x11');
+    $self->select_gui_console;
 
     # wait for update alert to appear
     assert_screen('qui-updates-update-available', 120);
@@ -72,7 +74,7 @@ sub run {
 
 sub post_fail_hook {
     my ($self) = @_;
-    select_console('x11');
+    $self->select_gui_console;
     send_key('esc');
     if (!check_screen('desktop', 5)) {
         send_key('alt-f4');

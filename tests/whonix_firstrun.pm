@@ -22,7 +22,7 @@ use testapi;
 sub run {
     my ($self) = @_;
 
-    select_console('x11');
+    $self->select_gui_console;
     x11_start_program('qvm-start sys-whonix', valid => 0);
     if (!check_screen(['whonix-connected', 'whonix-firstrun'], 120)) {
         # no firstrun wizard? maybe already accepted - verify it

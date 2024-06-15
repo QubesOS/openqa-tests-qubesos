@@ -23,8 +23,10 @@ use serial_terminal;
 
 
 sub run {
+    my ($self) = @_;
+
     # open global-settings
-    select_console('x11');
+    $self->select_gui_console;
     assert_screen "desktop";
 
     # check if widget opened, open it
@@ -46,7 +48,7 @@ sub run {
     # run a new vm
     select_root_console();
     assert_script_run('qvm-start work', 200);
-    select_console('x11');
+    $self->select_gui_console;
     # check if its not scrolling
     assert_and_click('qui-domains-open', timeout => 60);
     assert_screen('qui-domains-not-scrolling');
@@ -56,14 +58,14 @@ sub run {
     send_key('esc');
     select_root_console();
     script_run('qvm-shutdown --wait work', 200);
-    select_console('x11');
+    $self->select_gui_console;
 
 
 }
 
 sub post_fail_hook {
     my ($self) = @_;
-    select_console('x11');
+    $self->select_gui_console;
     send_key('esc');
     save_screenshot;
     select_root_console();

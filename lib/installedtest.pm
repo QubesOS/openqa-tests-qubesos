@@ -129,7 +129,7 @@ sub handle_system_startup {
         # don't fail if whonix is not installed
         script_run('qvm-start sys-whonix', timeout => 90);
     }
-    select_console('x11');
+    $self->select_gui_console;
 
     # there is a good chance time jump activated xscreenlocker
     if (check_var("MACHINE", "hw7") and check_var("KEEP_SCREENLOCKER", "1")) {
@@ -158,7 +158,7 @@ sub usbvm_fixup {
         sleep(5);
         assert_script_run('lsusb || qvm-run --no-gui -p -u root $(qvm-check -q sys-usb && echo sys-usb || echo sys-net) \'systemctl start qubes-input-sender-tablet@$(basename $(readlink /dev/input/by-id/usb-QEMU_QEMU_USB_Tablet_*-event-mouse))\'', timeout => 60);
     }
-    select_console('x11');
+    $self->select_gui_console;
 }
 
 sub connect_wifi {
@@ -209,6 +209,18 @@ sub init_gui_session {
         x11_start_program('xscreensaver-command -exit', valid => 0);
     }
     wait_still_screen;
+}
+
+sub select_gui_console {
+    my ($self) = @_;
+
+    select_console(get_var('GUI_CONSOLE', 'x11'));
+}
+
+sub set_gui_console {
+    my ($self, $console) = @_;
+
+    set_var('GUI_CONSOLE', $console);
 }
 
 sub maybe_unlock_screen {

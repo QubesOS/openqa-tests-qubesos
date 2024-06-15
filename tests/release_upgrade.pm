@@ -134,7 +134,7 @@ sub upgrade_41_to_42_after_reboot {
 sub run {
     my ($self) = @_;
 
-    select_console('x11');
+    $self->select_gui_console;
     x11_start_program('xterm');
     send_key('alt-f10');
     curl_via_netvm;

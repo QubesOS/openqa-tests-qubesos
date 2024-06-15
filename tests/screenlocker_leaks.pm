@@ -23,10 +23,12 @@ use serial_terminal;
 # WARNING: this test depends on simple_gui_apps.pm (which adds xterm to the menu)
 
 sub run {
+    my ($self) = @_;
+
     select_root_console();
     # install mate-notification-daemon, as it triggers the issue more reliably than xfce4-notifyd
     assert_script_run('qvm-run -p -u root work "dnf -y install mate-notification-daemon || apt -y install mate-notification-daemon"', timeout => 180);
-    select_console('x11');
+    $self->select_gui_console;
 
     assert_and_click("menu");
     if (check_screen("menu-tab-favorites-active", 30)) {

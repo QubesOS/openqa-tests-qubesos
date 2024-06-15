@@ -22,7 +22,9 @@ use serial_terminal;
 
 
 sub run {
-    select_console('x11');
+    my ($self) = @_;
+
+    $self->select_gui_console;
 
     assert_and_click("panel-user-menu");
     assert_and_click("panel-user-menu-logout");

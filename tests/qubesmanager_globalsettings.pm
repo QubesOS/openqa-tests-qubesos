@@ -23,8 +23,10 @@ use serial_terminal;
 
 
 sub run {
+    my ($self) = @_;
+
     # open global-settings
-    select_console('x11');
+    $self->select_gui_console;
     assert_screen "desktop";
     x11_start_program('qubes-global-settings');
 
@@ -73,12 +75,12 @@ sub run {
 
     select_root_console();
     assert_script_run('qubes-prefs default-kernel $(ls -v /var/lib/qubes/vm-kernels|tail -1|tee /dev/stderr)', 20);
-    select_console('x11');
+    $self->select_gui_console;
 }
 
 sub post_fail_hook {
     my ($self) = @_;
-    select_console('x11');
+    $self->select_gui_console;
     send_key('esc');
     save_screenshot;
     $self->SUPER::post_fail_hook;

@@ -26,7 +26,7 @@ sub run {
 
 sub post_fail_hook {
     my ($self) = @_;
-    select_console('x11');
+    $self->select_gui_console;
     save_screenshot;
     $self->SUPER::post_fail_hook;
 };

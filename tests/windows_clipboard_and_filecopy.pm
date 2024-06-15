@@ -71,7 +71,9 @@ sub open_website_paste_ie {
 
 
 sub run {
-    select_console('x11');
+    my ($self) = @_;
+
+    $self->select_gui_console;
     assert_screen "desktop";
 
     # try to start File Explorer

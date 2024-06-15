@@ -81,7 +81,7 @@ sub run {
         assert_script_run("grep \"${prefix_mouse}sys-net.*\\(dom0\\|\@adminvm\\).*$mouse_action\" $policy_mouse");
         assert_script_run("! grep \"${prefix_mouse}sys-usb.*\\(dom0\\|\@adminvm\\).*\\(allow\\|ask\\)\" $policy_mouse");
     }
-    select_console('x11');
+    $self->select_gui_console;
 }
 
 1;

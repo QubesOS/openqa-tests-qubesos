@@ -22,7 +22,7 @@ use testapi;
 sub run {
     my ($self) = @_;
 
-    select_console('x11');
+    $self->select_gui_console;
     x11_start_program('xterm');
 
     assert_script_run('qvm-create -l red runningvm');

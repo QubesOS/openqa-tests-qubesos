@@ -23,7 +23,7 @@ use networking;
 sub run {
     my ($self) = @_;
 
-    select_console('x11');
+    $self->select_gui_console;
     x11_start_program('xterm');
     send_key('alt-f10');
 

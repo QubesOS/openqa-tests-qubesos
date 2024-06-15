@@ -19,6 +19,7 @@ use base "installedtest";
 use strict;
 use testapi;
 use networking;
+use Mojo::File qw(path);
 
 sub run {
     my ($self) = @_;
@@ -117,15 +118,25 @@ sub run {
     # log package versions
     my $list_tpls_cmd = 'qvm-template list --installed --machine-readable | awk -F\'|\' \'{ print "qubes-template-" $2 "-" gensub("0:", "", 1, $3) }\'';
     $self->save_and_upload_log("(rpm -qa qubes-template-*; $list_tpls_cmd)", 'template-versions.txt');
-    $self->save_and_upload_log('rpm -qa', 'dom0-packages.txt');
+    my $fname = $self->save_and_upload_log('rpm -qa', 'dom0-packages.txt');
+    my $packages = path('ulogs', $fname)->slurp;
+    $packages = join("\n", sort split(/\n/, $packages));
+    my $all_packages = "Dom0:\n" . $packages;
     my $templates = script_output('qvm-ls --raw-data --fields name,klass');
-    foreach (split /\n/, $templates) {
+    foreach (sort split /\n/, $templates) {
         next unless /Template/;
         s/\|.*//;
-        $self->save_and_upload_log("qvm-run --no-gui -ap $_ 'rpm -qa; dpkg -l; true'",
+        $fname = $self->save_and_upload_log("qvm-run --no-gui -ap $_ 'rpm -qa; dpkg -l; pacman -Q; true'",
                 "template-$_-packages.txt", {timeout =>90});
+        $packages = path('ulogs', $fname)->slurp;
+        $packages = join("\n", sort split(/\n/, $packages));
+        $all_packages .= "\n" . $_ . ":\n" . $packages;
+        #assert_script_run("qvm-run --service -p $_ qubes.PostInstall", timeout => 90);
+        script_output("qvm-features $_", timeout => 90);
         assert_script_run("qvm-shutdown --wait $_", timeout => 90);
     }
+    path("sut_packages.txt")->spew($all_packages);
+    $self->save_and_upload_log('journalctl -b', 'journalctl.log', {timeout => 120});
 
     if (check_var('RESTART_AFTER_UPDATE', '1')) {
         type_string("reboot\n");

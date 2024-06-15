@@ -227,8 +227,9 @@ sub maybe_unlock_screen {
 sub save_and_upload_log {
     my ($self, $cmd, $file, $args) = @_;
     script_run("$cmd > $file", $args->{timeout});
-    upload_logs($file) unless $args->{noupload};
+    my $ret = upload_logs($file) unless $args->{noupload};
     save_screenshot if $args->{screenshot};
+    return $ret;
 }
 
 sub post_fail_hook {

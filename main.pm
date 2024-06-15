@@ -84,6 +84,8 @@ if (get_var('ISO')) {
         if (get_var('GUIVM')) {
             autotest::loadtest "tests/update_guivm.pm";
         }
+    } else {
+        autotest::loadtest "tests/fetch_packages_list.pm";
     }
     if (get_var("DEFAULT_TEMPLATE")) {
         autotest::loadtest "tests/switch_template.pm";

@@ -40,6 +40,8 @@ class DefaultPV(qubes.ext.Extension):
             # IOMMU missing
             if 'hvm_directio' not in self.physinfo['virt_caps'] and vm.virt_mode != 'pv':
                 vm.virt_mode = 'pv'
+            elif 'hvm_directio' in self.physinfo['virt_caps'] and vm.virt_mode != 'hvm':
+                vm.virt_mode = 'hvm'
             if os.path.exists('/sys/firmware/efi') and vm.virt_mode == 'pv':
                 # on UEFI (OVMF) disable e820_host, otherwise guest crashes;
                 # but then, force swiotlb as without e820_host automatic detection

@@ -65,16 +65,21 @@ sub run {
         $extra_xen_opts .= ' com1=115200,8n1,pci,msi,04:00.0';
     } elsif (check_var("MACHINE", "hw2")) {
         $extra_xen_opts .= ' com1=115200,8n1';
-    } elsif (check_var("MACHINE", "hw8")) {
-        $extra_xen_opts .= ' dbgp=xhci@pci00:14.0,share=yes';
-        $serial_console = "xhci";
+#    } elsif (check_var("MACHINE", "hw8")) {
+#        $extra_xen_opts .= ' dbgp=xhci@pci00:14.0,share=yes';
+#        $serial_console = "xhci";
+    } elsif (check_var("MACHINE", "hw9")) {
+        $extra_xen_opts .= ' com1=115200,8n1';
     } elsif (check_var("MACHINE", "hw11")) {
         $extra_xen_opts .= ' com1=115200,8n1,pci';
     } elsif (check_var("MACHINE", "hw12")) {
-        $extra_xen_opts .= ' dbgp=xhci@pcic1:00.3,share=yes';
+        $extra_xen_opts .= ' dbgp=xhci@pcic1:00.3,share=yes ioapic_ack=new';
         $serial_console = "xhci";
     } elsif (check_var("MACHINE", "hw13")) {
         $extra_xen_opts .= ' com1=115200,8n1';
+    } elsif (check_var("MACHINE", "hw15")) {
+        $extra_xen_opts .= ' dbgp=xhci@pci00:14.0,share=yes';
+        $serial_console = "xhci";
     }
     script_run "sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /mnt/sysimage/boot/grub2/grub.cfg";
     script_run "sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";

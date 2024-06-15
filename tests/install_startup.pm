@@ -102,9 +102,9 @@ sub run {
         select_console('installation', await_console=>0);
     }
 
-    if (check_var("MACHINE", "hw7")) {
+    if (check_var("MACHINE", "hw7") or check_var("MACHINE", "hw12")) {
         select_root_console();
-        # broken RTC? battery dead?
+        # RTC battery not connected
         script_run("date -s @" . time());
         script_run("hwclock -w");
         select_console('installation', await_console=>0);

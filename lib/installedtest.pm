@@ -247,10 +247,10 @@ sub post_fail_hook {
     script_run "cat /var/log/libvirt/libxl/libxl-driver.log";
     script_run "tail /var/log/xen/console/guest*-dm.log";
     script_run "grep -B 100 'Kernel panic' /var/log/xen/console/guest*.log";
-    enable_dom0_network_netvm() unless $self->{network_up};
-    script_run "ip r";
     script_run "tail -200 /var/log/xen/console/guest-sys-net.log";
     script_run "tail -200 /var/log/xen/console/guest-sys-usb.log";
+    enable_dom0_network_netvm() unless $self->{network_up};
+    script_run "ip r";
     upload_logs('/var/log/libvirt/libxl/libxl-driver.log');
     $self->save_and_upload_log('journalctl -b', 'journalctl.log', {timeout => 120});
     $self->save_and_upload_log('sudo -u user journalctl --user -b', 'user-journalctl.log', {timeout => 120});

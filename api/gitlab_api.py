@@ -12,7 +12,6 @@ import os
 import json
 import time
 import requests
-import zipfile
 import tempfile
 import string
 import hmac
@@ -171,8 +170,8 @@ def run_test():
             f.flush()
             repo_dir = TARGET_REPO_DIR + '/' + buildid
             os.mkdir(repo_dir)
-            with zipfile.ZipFile(f.name, 'r') as repo_zip:
-                repo_zip.extractall(repo_dir)
+            subprocess.check_output(
+                ['unzip', '-q', f.name, '-d', repo_dir])
             # get rid of 'repo' dir nesting
             for subdir in os.listdir(repo_dir + '/repo'):
                 os.rename(repo_dir + '/repo/' + subdir, repo_dir + '/' + subdir)
@@ -249,8 +248,8 @@ def run_test_pr(comment_details):
             f.flush()
             repo_dir = TARGET_REPO_DIR + '/' + buildid
             os.mkdir(repo_dir)
-            with zipfile.ZipFile(f.name, 'r') as repo_zip:
-                repo_zip.extractall(repo_dir)
+            subprocess.check_output(
+                ['unzip', '-q', f.name, '-d', repo_dir])
             # get rid of 'repo' dir nesting
             for subdir in os.listdir(repo_dir + '/repo'):
                 os.rename(repo_dir + '/repo/' + subdir, repo_dir + '/' + subdir)

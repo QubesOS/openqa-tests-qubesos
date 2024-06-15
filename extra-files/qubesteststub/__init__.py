@@ -16,6 +16,7 @@ class DefaultPV(qubes.ext.Extension):
         pv_passthrough_available = (self.xeninfo['xen_minor'] < 13 or 
             'qubes.enable_insecure_pv_passthrough' in self.dom0_cmdline)
         if 'hvm_directio' not in self.physinfo['virt_caps'] and not pv_passthrough_available:
+            # FIXME: new devices API
             if vm.name in ('sys-net', 'sys-usb'):
                 for ass in list(vm.devices['pci'].assignments()):
                     await vm.devices['pci'].detach(ass)
@@ -28,15 +29,29 @@ class DefaultPV(qubes.ext.Extension):
             else:
                 missing = set()
 
-            for dev in vm.devices['pci'].persistent():
-                missing.discard(dev.ident.replace('_', ':'))
-            for dev in missing:
-                ass = DeviceAssignment(vm.app.domains[0], dev.replace(':', '_'),
-                        options={'no-strict-reset': 'True'},
-                        persistent=True)
-                await vm.devices['pci'].attach(ass)
+            if hasattr(vm.devices['pci'], 'get_assigned_devices'):
+                # new devices API
+                for dev in vm.devices['pci'].get_assigned_devices():
+                    missing.discard(dev.ident.replace('_', ':'))
+                for dev in missing:
+                    ass = DeviceAssignment(vm.app.domains[0], dev.replace(':', '_'),
+                            options={'no-strict-reset': 'True'},
+                            required=True)
+                    await vm.devices['pci'].assign(ass)
+            else:
+                # old devices API
+                for dev in vm.devices['pci'].persistent():
+                    missing.discard(dev.ident.replace('_', ':'))
+                for dev in missing:
+                    ass = DeviceAssignment(vm.app.domains[0], dev.replace(':', '_'),
+                            options={'no-strict-reset': 'True'},
+                            persistent=True)
+                    await vm.devices['pci'].attach(ass)
 
-        if len(vm.devices['pci'].persistent()):
+        has_pci_devices = (len(list(vm.devices['pci'].get_assigned_devices()))
+                           if hasattr(vm.devices['pci'], 'get_assigned_devices')
+                           else len(vm.devices['pci'].persistent()))
+        if has_pci_devices:
             # IOMMU missing
             if 'hvm_directio' not in self.physinfo['virt_caps'] and vm.virt_mode != 'pv':
                 vm.virt_mode = 'pv'
@@ -51,7 +66,10 @@ class DefaultPV(qubes.ext.Extension):
 
     @qubes.ext.handler('domain-start')
     async def on_domain_start(self, vm, event, **kwargs):
-        if vm.name == 'sys-net' and not len(vm.devices['pci'].persistent()):
+        has_pci_devices = (len(list(vm.devices['pci'].get_assigned_devices()))
+                           if hasattr(vm.devices['pci'], 'get_assigned_devices')
+                           else len(vm.devices['pci'].persistent()))
+        if vm.name == 'sys-net' and not has_pci_devices:
             for dev in self.netdevs:
                 subprocess.call('echo 0000:{} > /sys/bus/pci/drivers/pciback/unbind'.format(dev), shell=True)
                 subprocess.call('echo 0000:{} > /sys/bus/pci/drivers/e1000e/bind'.format(dev), shell=True)
@@ -66,7 +84,7 @@ class DefaultPV(qubes.ext.Extension):
             subprocess.call('ip l s {} up'.format(iface), shell=True)
             subprocess.call('ip l s xenbr0 up', shell=True)
             subprocess.call('xl network-attach sys-net bridge=xenbr0', shell=True)
-        if vm.name == 'sys-usb' and not len(vm.devices['pci'].persistent()):
+        if vm.name == 'sys-usb' and not has_pci_devices:
             for dev in self.usbdevs:
                 subprocess.call('echo 0000:{} > /sys/bus/pci/drivers/pciback/unbind'.format(dev), shell=True)
                 subprocess.call('echo 0000:{} > /sys/bus/pci/drivers/ehci-pci/bind'.format(dev), shell=True)

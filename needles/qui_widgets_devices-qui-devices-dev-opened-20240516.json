@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "width": 83,
+      "xpos": 739,
+      "type": "match",
+      "ypos": 68,
+      "height": 52
+    },
+    {
+      "ypos": 176,
+      "height": 39,
+      "type": "match",
+      "xpos": 503,
+      "width": 116
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "new-new-devices",
+    "qui-devices-dev-opened"
+  ]
+}

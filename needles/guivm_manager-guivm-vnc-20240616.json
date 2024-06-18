@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "xpos": 3,
+      "ypos": 3,
+      "width": 26,
+      "height": 26,
+      "type": "match"
+    },
+    {
+      "xpos": 737,
+      "ypos": 313,
+      "width": 236,
+      "height": 124,
+      "type": "match"
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "wrong wallpaper"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "guivm-vnc"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "xpos": 60,
+      "ypos": 163,
+      "width": 230,
+      "height": 28,
+      "type": "match"
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "missing plymouth theme"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "luks-prompt"
+  ]
+}

@@ -88,14 +88,24 @@ sub run {
     select_root_console();
 
     if (!check_var("VERSION", "4.0")) {
+        my $grub2_url = {
+            '4.1' => 'https://archive.fedoraproject.org/pub/archive/fedora/linux/updates/32/Everything/x86_64/Packages/g/grub2-pc-modules-2.04-24.fc32.noarch.rpm',
+            '4.2' => 'https://archives.fedoraproject.org/pub/archive/fedora/linux/updates/37/Everything/x86_64/Packages/g/grub2-pc-modules-2.06-94.fc37.noarch.rpm',
+            '4.3' => 'https://archives.fedoraproject.org/pub/archive/fedora/linux/updates/37/Everything/x86_64/Packages/g/grub2-pc-modules-2.06-94.fc37.noarch.rpm',
+        }->{get_var('VERSION')};
+        my $key = {
+            '4.1' => '/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-32-primary',
+            '4.2' => '/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-37-primary',
+            '4.3' => '/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-37-primary',
+        }->{get_var('VERSION')};
+
         # enable network to download grub pkg
         assert_script_run("nmcli n on");
         assert_script_run("nmcli d connect \$(ls /sys/class/net|grep ^en)");
         assert_script_run("nm-online");
-        my $grub2_url = 'https://archive.fedoraproject.org/pub/fedora/linux/updates/37/Everything/x86_64/Packages/g/grub2-pc-modules-2.06-94.fc37.noarch.rpm';
         assert_script_run("curl -o grub2-pc-modules.rpm '$grub2_url'");
         type_string("cat >/tmp/rpm-install.py <<EOF\n${rpm_install}EOF\n", max_interval => 128);
-        assert_script_run("python3 /tmp/rpm-install.py /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-37-primary grub2-pc-modules.rpm");
+        assert_script_run("python3 /tmp/rpm-install.py $key grub2-pc-modules.rpm");
     }
 
     # create partition for the ISO file

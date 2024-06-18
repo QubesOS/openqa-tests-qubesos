@@ -9,6 +9,7 @@
 import subprocess
 import sys
 import os
+import re
 import json
 import time
 import requests
@@ -218,12 +219,19 @@ def github_event():
             user = webhook_obj['comment']['user']['login']
             if user.lower() not in config['user_allowlist'].lower().split():
                 return respond(200, 'comment of this user ignored')
-        if webhook_obj['comment']['body'].lower() == 'openqarun':
+        if webhook_obj['comment']['body'].lower().startswith('openqarun'):
             return run_test_pr(webhook_obj['comment'])
 
     return respond(200, 'nothing to do')
 
 def run_test_pr(comment_details):
+    comment_body = comment_details['body'].strip()
+    comment_params = dict([
+        param.split("=", 1)
+        for param in comment_body.split(" ")
+        if "=" in param and param[0].isupper()
+    ])
+
     # get PR info
     issue_url = comment_details['issue_url']
     r = requests.get(issue_url)
@@ -238,7 +246,10 @@ def run_test_pr(comment_details):
     if not repo_job:
         return respond(404, "build not found")
 
-    version = '4.3'
+    version = comment_params.get("VERSION", "4.3")
+    if not re.match(r"\A[0-9]\.[0-9]\Z", version):
+        return respond(400, "invalid VERSION value")
+
     buildid = time.strftime('%Y%m%d%H%M-') + version
     # cannot serve repo directly from gitlab, because it refuses connections via Tor :/
     repo_url = repo_job + '/artifacts/raw/repo'

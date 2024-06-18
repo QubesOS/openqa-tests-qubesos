@@ -104,7 +104,9 @@ sub run {
 
 sub post_fail_hook {
     my ($self) = @_;
-    $self->select_gui_console;
+    eval {
+        $self->select_gui_console;
+    };
     send_key('esc');
     send_key('esc');
     save_screenshot;

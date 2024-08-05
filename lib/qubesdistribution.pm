@@ -310,19 +310,19 @@ sub script_run {
     if (testapi::is_serial_terminal) {
         testapi::wait_serial($self->{serial_term_prompt}, no_regex => 1, quiet => $args{quiet});
     }
-    testapi::type_string("$cmd", max_interval => 100);
+    testapi::type_string("$cmd", max_interval => 150);
     if ($args{timeout} > 0) {
         die "Terminator '&' found in script_run call. script_run can not check script success. Use 'background_script_run' instead."
           if $cmd =~ qr/(?<!\\)&$/;
         my $str = testapi::hashed_string("SR" . $cmd . $args{timeout});
         my $marker = "; echo $str-\$?-" . ($args{output} ? "Comment: $args{output}" : '');
         if (testapi::is_serial_terminal) {
-            testapi::type_string($marker, max_interval => 100);
+            testapi::type_string($marker, max_interval => 150);
             testapi::wait_serial($cmd . $marker, no_regex => 1, quiet => $args{quiet});
             testapi::type_string("\n");
         }
         else {
-            testapi::type_string("$marker > /dev/$testapi::serialdev\n", max_interval => 100);
+            testapi::type_string("$marker > /dev/$testapi::serialdev\n", max_interval => 150);
         }
         my $res = testapi::wait_serial(qr/$str-\d+-/, timeout => $args{timeout}, quiet => $args{quiet});
         return unless $res;

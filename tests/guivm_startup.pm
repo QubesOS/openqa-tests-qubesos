@@ -35,6 +35,10 @@ sub run {
     x11_start_program('xterm');
     assert_script_run("qubes-prefs default_guivm $vm");
     assert_script_run("qvm-shutdown --all --wait && sleep 2 && qvm-start sys-firewall && { ! qvm-check sys-usb || qvm-start sys-usb; }", 180+180+90);
+    # reset SSH console if applicable
+    if (check_var("BACKEND", "generalhw")) {
+        console("root-virtio-terminal")->reset;
+    }
     assert_script_run("! qvm-check sys-whonix || time qvm-start sys-whonix", 90);
     assert_script_run("tail -F /var/log/xen/console/guest-$vm.log >> /dev/$testapi::serialdev & true");
     assert_script_run("qvm-start --skip-if-running $vm");

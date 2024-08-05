@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 257,
+      "ypos": 434,
+      "width": 236,
+      "height": 20,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "firstboot-qubes-usb-keyboard-not-allowed"
+  ]
+}

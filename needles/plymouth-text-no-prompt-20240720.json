@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 117,
+      "ypos": 415,
+      "width": 391,
+      "height": 17,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw1",
+    "ENV-VERSION-4-2",
+    "plymouth-text-no-prompt"
+  ]
+}

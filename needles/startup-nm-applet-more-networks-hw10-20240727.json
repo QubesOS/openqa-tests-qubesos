@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 125,
+      "ypos": 173,
+      "xpos": 500,
+      "type": "match",
+      "height": 15
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw10",
+    "ENV-VERSION-4.3",
+    "nm-applet-more-networks",
+    "nm-applet-more-networks-selected"
+  ]
+}

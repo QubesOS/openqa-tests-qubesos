@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 142,
+      "ypos": 371,
+      "width": 187,
+      "height": 23,
+      "type": "match"
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "missing plymouth theme"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.1",
+    "luks-prompt",
+    "luks-prompt-hires"
+  ]
+}

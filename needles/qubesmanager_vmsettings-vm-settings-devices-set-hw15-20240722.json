@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "ypos": 141,
+      "width": 131,
+      "type": "match",
+      "xpos": 551,
+      "height": 43,
+      "click_point": {
+        "xpos": 63.5,
+        "ypos": 34.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw15",
+    "vm-settings-devices-set"
+  ]
+}

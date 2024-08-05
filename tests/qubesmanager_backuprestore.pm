@@ -32,10 +32,10 @@ sub run {
     x11_start_program("gsettings set org.gtk.Settings.FileChooser window-position '(50, 50)'", valid => 0);
 
     prep_backup('dom0', 1);
-    assert_and_click('backup-next', timeout => 5);
+    assert_and_click('backup-next');
 
     # cancel the backup
-    assert_and_click('backup-cancel', timeout => 15);
+    assert_and_click('backup-cancel');
     assert_screen('backup-cancelled', 30);
     send_key('esc');
     send_key('esc');
@@ -44,7 +44,7 @@ sub run {
 
     # retry backup
     prep_backup('dom0', 0);
-    assert_and_click('backup-next', timeout => 5);
+    assert_and_click('backup-next');
     assert_and_click('backup-finish', timeout => 120);
 
     assert_screen('desktop', 60);
@@ -56,7 +56,7 @@ sub run {
     # and now just check if restore is able to cancel
     x11_start_program('qubes-backup-restore');
 
-    assert_and_click('restore-cancel', timeout => 15);
+    assert_and_click('restore-cancel');
 
     assert_screen('desktop');
 
@@ -69,21 +69,21 @@ sub prep_backup {
     x11_start_program('qubes-backup');
 
     # move all vms to unavailable
-    assert_and_click('backup-deselect-all', timeout => 15);
+    assert_and_click('backup-deselect-all');
     assert_screen('backup-selected-none');
 
     # select only sys-net
-    assert_and_click('backup-select-sys-net', timeout => 15);
-    assert_and_click('backup-select-sys-net2', timeout => 15);
+    assert_and_click('backup-select-sys-net');
+    assert_and_click('backup-select-sys-net2');
 
     # select some template too
     if ($bigger) {
-        assert_and_click('backup-select-bigger', timeout => 15);
-        assert_and_click('backup-select-sys-net2', timeout => 15);
+        assert_and_click('backup-select-bigger');
+        assert_and_click('backup-select-sys-net2');
     }
 
     # click next
-    assert_and_click('backup-next', timeout => 10);
+    assert_and_click('backup-next');
 
     if ($vmname eq 'sys-net') {
         send_key('s');
@@ -93,7 +93,7 @@ sub prep_backup {
     }
     send_key('tab');
 
-    assert_and_click('backup-select-backup-dir', timeout => 10);
+    assert_and_click('backup-select-backup-dir');
     # needed because if the window appears too slowly, the ~ is ignored
     wait_still_screen;
     send_key('~');
@@ -108,8 +108,8 @@ sub prep_backup {
     send_key('tab');
     send_key('a');
 
-    assert_and_click('backup-next', timeout => 10);
-    assert_screen('backup-confirmation-screen', 10);
+    assert_and_click('backup-next');
+    assert_screen('backup-confirmation-screen');
 
 }
 
@@ -119,20 +119,20 @@ sub do_restore {
     # make sure dom0 is selected
     send_key('d');
 
-    assert_and_click('restore-select', timeout => 15);
+    assert_and_click('restore-select');
     send_key('~');
     send_key('ret');
     assert_screen(['select-file-is-home', 'select-file-home']);
     if (match_has_tag('select-file-home')) {
         click_lastmatch();
     }
-    assert_and_click('select-file-sort-modified', timeout => 15);
-    assert_and_click('restore-select-file', timeout => 15);
+    assert_and_click('select-file-sort-modified');
+    assert_and_click('restore-select-file');
     send_key('end');
 
     send_key('ret');
 
-    assert_and_click('restore-verify-only', timeout => 15);
+    assert_and_click('restore-verify-only');
 
     # password input
     send_key('tab');
@@ -144,19 +144,19 @@ sub do_restore {
     # wait for app to register passphrase
     sleep(1);
 
-    assert_and_click('restore-next', timeout => 15);
+    assert_and_click('restore-next');
 
-    assert_and_click('restore-select-all', timeout => 15);
-    assert_and_click('restore-next', timeout => 15);
+    assert_and_click('restore-select-all');
+    assert_and_click('restore-next');
 
     # view the summary screen and go forward
-    assert_and_click('restore-next', timeout => 15);
+    assert_and_click('restore-next');
 
     # wait for success
-    assert_and_click('restore-success', timeout => 90);
+    assert_and_click('restore-success');
 
     # exit
-    assert_and_click('restore-finish', timeout => 10);
+    assert_and_click('restore-finish');
     
     send_key('esc');
 }

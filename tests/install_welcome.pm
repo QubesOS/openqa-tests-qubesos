@@ -37,10 +37,10 @@ sub run {
     }
 
     send_key 'f12';
-    if (check_screen('installer-prerelease', 10)) {
+    if (check_screen('installer-prerelease', 20)) {
         assert_and_click 'installer-prerelease';
     }
-    if (check_screen 'installer-unsupported-hardware', 10) {
+    if (check_screen 'installer-unsupported-hardware', 20) {
         if (check_var("BACKEND", "qemu")) {
             assert_and_click 'installer-unsupported-hardware';
         } else {

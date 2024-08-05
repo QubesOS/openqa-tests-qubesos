@@ -53,8 +53,9 @@ sub run {
     }
     assert_and_click("vm-settings-app-evince");
     send_key('end');
+    sleep(1);
     check_screen("vm-settings-app-xterm", timeout => 10);
-    send_key_until_needlematch("vm-settings-app-xterm", 'up', 20, 5);
+    send_key_until_needlematch("vm-settings-app-xterm", 'up', 20, 7);
     assert_and_click("vm-settings-app-add");
     # wait for xterm to really be added, because that moves entries on the left
     assert_screen("vm-settings-app-xterm-added");

@@ -70,7 +70,8 @@ sub run {
     assert_and_click("files-move-to-other");
     assert_screen("file-copy-prompt");
     type_string("personal");
-    assert_and_click("file-copy-prompt-confirm");
+    assert_screen("file-copy-prompt-confirm");
+    send_key("ret");
     # wait for progress dialog to finish
     sleep(2);
 

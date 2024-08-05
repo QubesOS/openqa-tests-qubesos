@@ -321,7 +321,8 @@ sub post_fail_hook {
     $self->save_and_upload_log('xl dmesg', 'xl-dmesg.log');
     $self->save_and_upload_log('qvm-run --no-gui -p -u root sys-firewall "cat /var/log/xen/xen-hotplug.log"', 'sys-firewall-xen-hotplug.log');
     # if guivm is enabled in the run, and selected in this very test job:
-    if (check_var('GUIVM', '1') and check_var('TEST_GUIVM', '1')) {
+    if ((check_var('GUIVM', '1') or check_var('GUIVM_VNC', '1'))
+            and check_var('TEST_GUIVM', '1')) {
         my $vm = 'sys-gui';
         $vm = 'sys-gui-vnc' if get_var('GUIVM_VNC');
         $self->save_and_upload_log("qvm-run --no-gui -p -u root $vm 'cat /home/user/.xsession-errors'", 'sys-gui-xsession-errors.log');

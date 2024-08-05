@@ -48,7 +48,7 @@ sub run {
     send_key("ctrl-a");
     send_key("ctrl-c");
     sleep(1);
-    send_key("ctrl-shift-c");
+    send_key("ctrl-shift-C");
     assert_screen("clipboard-copy-notification");
     die "nothing got copied" if (match_has_tag("clipboard-copy-0-bytes"));
 
@@ -66,7 +66,7 @@ sub run {
     # wait for full startup
     sleep(2);
 
-    send_key("ctrl-shift-v");
+    send_key("ctrl-shift-V");
     assert_screen("clipboard-paste-notification");
     # wait for firefox to fully start
     check_screen("firefox-bookmarks-bar", timeout => 20);

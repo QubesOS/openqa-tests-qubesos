@@ -43,13 +43,14 @@ sub run {
     if (check_var('BACKEND', 'generalhw')) {
         power('on');
     }
-    sleep(15);
+    # wait for the automatic prompt to expire - we may see it at the very end
+    # of the timeout, too late to type the passphrase in
+    wait_still_screen;
+    # then trigger it with a fresh timeout
     wait_screen_change {
         send_key 'ctrl';
     };
-    send_key('ctrl');
     assert_screen('xscreensaver-prompt');
-    # unlock screen
     type_string($password);
     send_key('ret');
     sleep(10);

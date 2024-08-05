@@ -60,21 +60,36 @@ sub run {
             send_key "down";
             send_key "down";
             send_key "down";
+            send_key "down";
             send_key "ret";
         }
     }
 
+    my @luks_needles = ("luks-prompt", "firstboot-not-ready");
     if (check_var('BACKEND', 'generalhw')) {
-        # force plymouth to show on HDMI output too
-        if (!check_screen(["luks-prompt", "firstboot-not-ready"], 120)) {
-            send_key 'esc';
-            send_key 'esc';
-            sleep 1;
+        push(@luks_needles, "plymouth-text-no-prompt");
+        if (check_var('HEADS', '1') and !check_var("HEADS_DISK_UNLOCK", "1")) {
+            # "plymouth-text-no-prompt" would be whole blank here, so fallback
+            # to the old approach with check_screen timeout
+            if (!check_screen(\@luks_needles, 180)) {
+                # force plymouth to show on HDMI output too
+                send_key 'esc';
+                send_key 'esc';
+                sleep 5;
+            }
         }
     }
 
     # handle both encrypted and unencrypted setups
-    assert_screen ["luks-prompt", "firstboot-not-ready"], 180;
+    assert_screen(\@luks_needles, 300);
+    if (match_has_tag("plymouth-text-no-prompt")) {
+        # force plymouth to show on HDMI output too
+        send_key 'esc';
+        send_key 'esc';
+        sleep 5;
+    }
+    # handle both encrypted and unencrypted setups
+    assert_screen(["luks-prompt", "firstboot-not-ready"], 60);
 
     if (match_has_tag('luks-prompt')) {
         if (check_var("HEADS_DISK_UNLOCK", "1")) {

@@ -87,19 +87,32 @@ sub handle_system_startup {
         }
     }
 
+    # do _not_ allow luks prompt if Unlock Key was entered already
     if (!check_var("HEADS_DISK_UNLOCK", "1")) {
-        # do _not_ allow luks prompt if Unlock Key was entered already
+        my @luks_needles = ("luks-prompt", "login-prompt-user-selected");
         if (check_var('BACKEND', 'generalhw')) {
-            # force plymouth to show on HDMI output too
-            if (!check_screen(["luks-prompt", "login-prompt-user-selected"], 60)) {
-                send_key 'esc';
-                send_key 'esc';
-                sleep 5;
+            push(@luks_needles, "plymouth-text-no-prompt");
+            if (check_var('HEADS', '1')) {
+                # "plymouth-text-no-prompt" would be whole blank here,
+                # so fallback to the old approach with check_screen timeout
+                if (!check_screen(\@luks_needles, 30)) {
+                    # force plymouth to show on HDMI output too
+                    send_key 'esc';
+                    send_key 'esc';
+                    sleep 5;
+                }
             }
         }
 
         # handle both encrypted and unencrypted setups
-        assert_screen ["luks-prompt", "login-prompt-user-selected"], 600;
+        assert_screen(\@luks_needles, 600);
+        if (match_has_tag("plymouth-text-no-prompt")) {
+            # force plymouth to show on HDMI output too
+            send_key 'esc';
+            send_key 'esc';
+            sleep 5;
+        }
+        assert_screen(["luks-prompt", "login-prompt-user-selected"], 60);
         if (match_has_tag('luks-prompt')) {
             type_string "lukspass";
             send_key "ret";

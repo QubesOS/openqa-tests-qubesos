@@ -35,13 +35,17 @@ sub run {
     if (check_var('VERSION', '4.0') or
             (check_var('VERSION', '4.1') and check_var('RELEASE_UPGRADE', '1'))) {
         $mouse_action = 'allow';
+    } elsif (check_var("HID", "PS2")) {
+        $mouse_action = 'ask';
     } elsif (check_var("BACKEND", "generalhw")) {
-        # tests/firstboot.pm selects automatic mouse allow on generalhw
+        # tests/firstboot.pm selects automatic mouse allow on generalhw, unless HID=PS2
         $mouse_action = 'allow';
     } else {
         $mouse_action = 'ask';
     }
-    if (check_var("BACKEND", "generalhw")) {
+    if (check_var("HID", "PS2")) {
+        $keyboard_action = 'deny';
+    } elsif (check_var("BACKEND", "generalhw")) {
         $keyboard_action = 'allow';
     }
 

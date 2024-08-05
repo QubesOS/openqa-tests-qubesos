@@ -66,3 +66,4 @@ Variables used in tests:
  - `SUSPEND_MODE` - what suspend mode should be used; default is `S3`, set to `S0ix` to use S0ix suspend
  - `INSTALL_OEM` - do fully automated OEM installation
  - `INSTALL_OEM_STARTUP` - start OEM installation, but still expect interactive prompts during installation
+ - `HID` - for generalhw tests, tell it whether `USB` hid is used (default) or `PS2` one; in the latter case, sys-usb is not supposed to have input-proxy allowed by default

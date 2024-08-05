@@ -140,9 +140,11 @@ sub run {
         assert_and_click('firstboot-qubes-usbvm-enabled', timeout => 5);
     } elsif (get_var('USBVM', 'sys-usb') eq 'sys-usb') {
         assert_screen('firstboot-qubes-usbvm-enabled', 5);
-        if (check_var('BACKEND', 'generalhw')) {
+        if (check_var('BACKEND', 'generalhw') && !check_var('HID', 'PS2')) {
             assert_screen('firstboot-qubes-usb-keyboard-allowed');
             assert_and_click('firstboot-qubes-usb-mouse-allow');
+        } elsif (check_var('HID', 'PS2')) {
+            assert_screen('firstboot-qubes-usb-keyboard-not-allowed');
         }
     } elsif (check_var('USBVM', 'sys-net')) {
         assert_screen('firstboot-qubes-usbvm-enabled', 5);

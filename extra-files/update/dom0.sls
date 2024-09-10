@@ -5,7 +5,7 @@
 {% elif grains['osrelease'] == '4.2' %}
 {% set basedist = 'fc37' %}
 {% elif grains['osrelease'] == '4.3' %}
-{% set basedist = 'fc37' %}
+{% set basedist = 'fc41' %}
 {% else %}
 {% set basedist = 'unknown' %}
 {% endif %}

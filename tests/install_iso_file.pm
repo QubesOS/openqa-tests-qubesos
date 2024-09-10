@@ -91,12 +91,12 @@ sub run {
         my $grub2_url = {
             '4.1' => 'https://archive.fedoraproject.org/pub/archive/fedora/linux/updates/32/Everything/x86_64/Packages/g/grub2-pc-modules-2.04-24.fc32.noarch.rpm',
             '4.2' => 'https://archives.fedoraproject.org/pub/archive/fedora/linux/updates/37/Everything/x86_64/Packages/g/grub2-pc-modules-2.06-94.fc37.noarch.rpm',
-            '4.3' => 'https://archives.fedoraproject.org/pub/archive/fedora/linux/updates/37/Everything/x86_64/Packages/g/grub2-pc-modules-2.06-94.fc37.noarch.rpm',
+            '4.3' => 'https://dl.fedoraproject.org/pub/fedora/linux/development/41/Everything/x86_64/os/Packages/g/grub2-pc-modules-2.12-4.fc41.noarch.rpm',
         }->{get_var('VERSION')};
         my $key = {
             '4.1' => '/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-32-primary',
             '4.2' => '/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-37-primary',
-            '4.3' => '/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-37-primary',
+            '4.3' => '/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-41-primary',
         }->{get_var('VERSION')};
 
         # enable network to download grub pkg

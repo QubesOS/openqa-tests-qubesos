@@ -242,7 +242,9 @@ sub init_gui_session {
 
     # disable screensaver
     if (!check_var('KEEP_SCREENLOCKER', '1')) {
-        x11_start_program('xscreensaver-command -exit', valid => 0);
+        x11_start_program('env xscreensaver-command -exit', valid => 0);
+        x11_start_program('env xfce4-screensaver-command --exit', valid => 0);
+        # todo: disable light-locker
     }
     wait_still_screen;
 }

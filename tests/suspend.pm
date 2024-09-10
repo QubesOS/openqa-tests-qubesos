@@ -47,9 +47,10 @@ sub run {
     # of the timeout, too late to type the passphrase in
     wait_still_screen;
     # then trigger it with a fresh timeout
-    wait_screen_change {
-        send_key 'ctrl';
-    };
+    my $retry = 3;
+    while (!wait_screen_change(sub { send_key 'ctrl' }) and $retry > 0) {
+        $retry -= 1;
+    }
     assert_screen('xscreensaver-prompt');
     type_string($password);
     send_key('ret');

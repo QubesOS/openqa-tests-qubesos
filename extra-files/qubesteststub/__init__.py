@@ -36,7 +36,7 @@ class DefaultPV(qubes.ext.Extension):
                 for dev in missing:
                     ass = DeviceAssignment(vm.app.domains[0], dev.replace(':', '_'),
                             options={'no-strict-reset': 'True'},
-                            required=True)
+                            required=True, attach_automatically=True)
                     await vm.devices['pci'].assign(ass)
             else:
                 # old devices API

@@ -31,6 +31,8 @@ def get_packages(dist, version):
         packages.remove("createrepo-c") # not packaged there, consider AUR later
         packages.remove("qubes-gpg-split-tests") # not a separate package
         packages.remove("qubes-core-admin-client") # not packaged yet
+        packages.remove("qubes-audio-daemon") # not packaged yet
+        packages.remove("qubes-video-companion") # not packaged yet
     return packages
 
 def systemtests(os_data, log, **kwargs):

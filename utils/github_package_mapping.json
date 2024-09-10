@@ -23,6 +23,7 @@
   "qubes-manager": "manager",
   "qubes-mgmt-salt": "mgmt-salt",
   "qubes-mgmt-salt-dom0-qvm": "mgmt-salt-dom0-qvm",
+  "qubes-mgmt-salt-dom0-virtual-machines": "mgmt-salt-dom0-virtual-machines",
   "qubes-mgmt-salt-vm-connector": "mgmt-salt",
   "qubes-snapd-helper": "app-linux-snapd-helper",
   "qubes-usb-proxy": "app-linux-usb-proxy",

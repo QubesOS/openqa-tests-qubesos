@@ -26,9 +26,12 @@ sub run {
 
     # wait for resolution change (on generalhw, there is a background process
     # that calls xrandr shortly after Xorg startup)
-    sleep 3;
+    sleep 5;
     # Xorg driver needs few moves to callibrate
     mouse_set(0, 0);
+    sleep 1;
+    mouse_set(100, 100);
+    sleep 1;
     mouse_hide;
     save_screenshot;
 

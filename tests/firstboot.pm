@@ -101,9 +101,17 @@ sub run {
 
     assert_screen "firstboot-not-ready", 180;
 
+    # give it a moment to initialize input, it looks like weston(?) needs more
+    # time than Xorg here
+    sleep(5);
+
     if (check_var('BACKEND', 'generalhw')) {
         # wiggle mouse a bit, for some reason needed...
         mouse_set(0, 0);
+        sleep 1;
+        mouse_set(100, 100);
+        mouse_click();
+        sleep 1;
         mouse_hide;
     }
 

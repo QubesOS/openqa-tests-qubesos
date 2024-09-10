@@ -230,6 +230,16 @@ sub init_gui_session {
     $self->handle_login_prompt;
 
     if (check_var("CONNECT_WIFI", "1")) {
+        if (check_var('BACKEND', 'generalhw')) {
+            # wiggle mouse a bit, for some reason needed...
+            mouse_set(0, 0);
+            sleep 1;
+            mouse_set(100, 100);
+            mouse_click();
+            sleep 1;
+            mouse_hide;
+        }
+
         $self->connect_wifi;
     } else {
         assert_screen(["nm-connection-established", "nm-applet-connected"], 150);

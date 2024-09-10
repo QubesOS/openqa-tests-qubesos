@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 158,
+      "ypos": 216,
+      "type": "match",
+      "xpos": 144,
+      "height": 36
+    },
+    {
+      "type": "match",
+      "xpos": 702,
+      "width": 81,
+      "ypos": 542,
+      "height": 26
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "restore-finish"
+  ]
+}

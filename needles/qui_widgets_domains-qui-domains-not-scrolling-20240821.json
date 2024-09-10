@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "xpos": 657,
+      "type": "match",
+      "width": 108,
+      "ypos": 193,
+      "height": 82
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "the wallpaper is wrong, and here we are checking for wallpaper in the right spot"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qui-domains-not-scrolling"
+  ]
+}

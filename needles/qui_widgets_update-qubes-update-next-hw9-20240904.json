@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "ypos": 733,
+      "width": 82,
+      "xpos": 730,
+      "type": "match",
+      "height": 25,
+      "match": 95
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw9",
+    "ENV-VERSION-4.3",
+    "qubes-update-next"
+  ]
+}

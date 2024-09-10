@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 97,
+      "ypos": 106,
+      "xpos": 100,
+      "type": "match",
+      "height": 22
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "menu-vm-anon-whonix",
+    "menu-vm-anon-whonix-selected",
+    "new-menu"
+  ]
+}

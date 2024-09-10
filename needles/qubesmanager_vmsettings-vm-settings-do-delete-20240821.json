@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "height": 20,
+      "xpos": 467,
+      "type": "match",
+      "ypos": 270,
+      "width": 95
+    },
+    {
+      "height": 39,
+      "width": 85,
+      "ypos": 382,
+      "type": "match",
+      "xpos": 581
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-do-delete"
+  ]
+}

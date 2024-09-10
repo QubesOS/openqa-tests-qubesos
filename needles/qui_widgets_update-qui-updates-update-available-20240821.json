@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 241,
+      "ypos": 122,
+      "type": "match",
+      "xpos": 749,
+      "height": 25
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qui-updates-update-available"
+  ]
+}

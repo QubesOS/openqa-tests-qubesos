@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 760,
+      "type": "match",
+      "ypos": 147,
+      "width": 102,
+      "height": 21
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-label-open"
+  ]
+}

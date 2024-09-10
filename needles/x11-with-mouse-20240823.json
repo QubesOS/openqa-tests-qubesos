@@ -1,0 +1,31 @@
+{
+  "area": [
+    {
+      "height": 92,
+      "xpos": 11,
+      "type": "match",
+      "ypos": 620,
+      "width": 288
+    },
+    {
+      "height": 26,
+      "ypos": 2,
+      "width": 27,
+      "xpos": 0,
+      "type": "match"
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "wrong wallpaper"
+    }
+  ],
+  "tags": [
+    "ENV-MACHINE-hw7",
+    "ENV-VERSION-4.3",
+    "desktop",
+    "menu",
+    "x11"
+  ]
+}

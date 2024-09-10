@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 26,
+      "width": 148,
+      "ypos": 91,
+      "type": "match",
+      "xpos": 716
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qubes-update-launch-updater"
+  ]
+}

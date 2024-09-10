@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 389,
+      "width": 167,
+      "xpos": 109,
+      "type": "match",
+      "height": 15
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw7",
+    "ENV-VERSION-4.3",
+    "vm-settings-allow-dispvms"
+  ]
+}

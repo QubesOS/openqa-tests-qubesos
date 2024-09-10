@@ -1,0 +1,27 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 324,
+      "ypos": 367,
+      "width": 104,
+      "height": 26
+    },
+    {
+      "width": 60,
+      "ypos": 365,
+      "click_point": {
+        "xpos": 47,
+        "ypos": 16
+      },
+      "xpos": 630,
+      "type": "match",
+      "height": 48
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-service-open"
+  ]
+}

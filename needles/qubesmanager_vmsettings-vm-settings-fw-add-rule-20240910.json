@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 866,
+      "height": 30,
+      "ypos": 189,
+      "width": 27,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw7",
+    "ENV-VERSION-4.3",
+    "vm-settings-fw-add-rule"
+  ]
+}

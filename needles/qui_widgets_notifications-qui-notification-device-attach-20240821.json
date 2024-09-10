@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 65,
+      "ypos": 246,
+      "type": "match",
+      "xpos": 733,
+      "height": 21
+    },
+    {
+      "height": 19,
+      "ypos": 226,
+      "width": 114,
+      "xpos": 732,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qui-notification-device-attach"
+  ]
+}

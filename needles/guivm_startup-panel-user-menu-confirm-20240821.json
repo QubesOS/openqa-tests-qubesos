@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 65,
+      "ypos": 345,
+      "type": "match",
+      "xpos": 374,
+      "height": 24
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "panel-user-menu-confirm"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "width": 197,
+      "ypos": 353,
+      "type": "match",
+      "xpos": 369,
+      "height": 16,
+      "match": 95
+    },
+    {
+      "type": "match",
+      "xpos": 368,
+      "ypos": 375,
+      "width": 88,
+      "height": 47,
+      "match": 95
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "qubes-vm-create-networking-opened"
+  ]
+}

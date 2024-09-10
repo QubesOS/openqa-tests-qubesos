@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 686,
+      "width": 69,
+      "type": "match",
+      "xpos": 749,
+      "height": 20
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-cancel"
+  ]
+}

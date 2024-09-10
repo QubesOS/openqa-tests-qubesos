@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 111,
+      "type": "match",
+      "ypos": 417,
+      "width": 189,
+      "height": 23
+    },
+    {
+      "height": 24,
+      "xpos": 301,
+      "type": "match",
+      "ypos": 415,
+      "width": 46
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-def-dvm-open"
+  ]
+}

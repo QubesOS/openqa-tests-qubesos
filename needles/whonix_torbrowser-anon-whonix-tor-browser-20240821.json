@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "ypos": 35,
+      "width": 99,
+      "xpos": 571,
+      "type": "match",
+      "height": 16
+    },
+    {
+      "height": 21,
+      "width": 169,
+      "ypos": 73,
+      "xpos": 56,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "anon-whonix-tor-browser"
+  ]
+}

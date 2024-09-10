@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 47,
+      "width": 194,
+      "ypos": 241,
+      "xpos": 133,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw7",
+    "ENV-VERSION-4.3",
+    "vm-settings-no-warn-mem"
+  ]
+}

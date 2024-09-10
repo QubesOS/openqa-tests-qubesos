@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "height": 44,
+      "width": 109,
+      "ypos": 27,
+      "type": "match",
+      "xpos": 813
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "wrong wallpaper"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "no-notifications"
+  ]
+}

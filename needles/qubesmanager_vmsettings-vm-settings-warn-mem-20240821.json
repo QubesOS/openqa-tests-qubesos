@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 447,
+      "ypos": 37,
+      "width": 106,
+      "height": 12
+    },
+    {
+      "ypos": 274,
+      "width": 324,
+      "type": "match",
+      "xpos": 118,
+      "height": 17
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-warn-mem"
+  ]
+}

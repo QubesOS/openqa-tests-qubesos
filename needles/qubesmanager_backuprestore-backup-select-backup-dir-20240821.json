@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 184,
+      "width": 27,
+      "type": "match",
+      "xpos": 291,
+      "height": 22
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "backup-select-backup-dir"
+  ]
+}

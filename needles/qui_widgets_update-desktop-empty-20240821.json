@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "height": 567,
+      "ypos": 181,
+      "width": 766,
+      "xpos": 127,
+      "type": "match"
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "the wallpaper is wrong, and here we are checking for wallpaper in the right spot"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "desktop-empty"
+  ]
+}

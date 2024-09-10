@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 131,
+      "ypos": 38,
+      "type": "match",
+      "xpos": 553,
+      "height": 24
+    },
+    {
+      "height": 24,
+      "type": "match",
+      "xpos": 560,
+      "width": 321,
+      "ypos": 92
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qui-clipboard-opened"
+  ]
+}

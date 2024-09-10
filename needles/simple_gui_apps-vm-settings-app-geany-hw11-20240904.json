@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 130,
+      "ypos": 536,
+      "width": 61,
+      "height": 15
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw11",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-xfce",
+    "vm-settings-app-geany"
+  ]
+}

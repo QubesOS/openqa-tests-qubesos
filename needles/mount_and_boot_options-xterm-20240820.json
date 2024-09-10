@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 16,
+      "xpos": 20,
+      "type": "match",
+      "ypos": 57,
+      "width": 76
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "xterm"
+  ]
+}

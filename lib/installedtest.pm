@@ -217,6 +217,7 @@ sub connect_wifi {
         type_string($wifi_password, secret => 1, max_interval => 50);
         send_key('ret');
         assert_screen("nm-applet-connected-wifi");
+        mouse_hide;
     }
     # now use wifi to connect to the target
     set_var('WIFI_CONNECTED', '1');

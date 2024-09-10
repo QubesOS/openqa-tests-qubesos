@@ -57,7 +57,8 @@ sub run {
         # Force 1024x768 so openQA is happy
         assert_script_run("qvm-run --nogui -pu root sys-gui-vnc env XAUTHORITY=/var/run/lightdm/root/:0 xrandr -s 1024x768");
 
-        select_console('guivm-vnc');
+        select_console('guivm-vnc', await_console=>0);
+        assert_screen('login-prompt-user-selected');
         type_string $testapi::password;
         send_key "ret";
 

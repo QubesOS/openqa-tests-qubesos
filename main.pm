@@ -18,6 +18,7 @@
 use strict;
 use testapi;
 use autotest;
+use OpenQA::Test::RunArgs;
 
 require 'qubesdistribution.pm';
 testapi::set_distribution(qubesdistribution->new());
@@ -164,6 +165,22 @@ if (get_var('SYSTEM_TESTS')) {
     autotest::loadtest "tests/system_tests.pm";
 }
 
+if (check_var('SECUREDROP_INSTALL', '1')) {
+    # Setup sys-whonix connection so it does not interfere later
+    autotest::loadtest("tests/whonix_firstrun.pm", name => "Setup_sys-whonix");
+
+    autotest::loadtest("tests/securedrop/install_pre_reboot.pm", name => "installing_SecureDrop");
+
+    # Setup sd-whonix connection
+    my $args = OpenQA::Test::RunArgs->new();
+    $args->{whonix_gw_override} = 'sd-whonix';
+    autotest::loadtest("tests/whonix_firstrun.pm", name =>"Setup_sd-whonix",  run_args => $args);
+
+    autotest::loadtest("tests/securedrop/install_reboot_and_update.pm", name => "reboot_and_finish_install");
+} elsif (check_var('SECUREDROP_TEST', "basic_functionality")) {
+    autotest::loadtest("tests/securedrop/basic_functionality.pm");
+}
+
 if (get_var('TEST_GUI_INTERACTIVE')) {
     autotest::loadtest "tests/simple_gui_apps.pm";
     autotest::loadtest "tests/clipboard_and_web.pm";
@@ -213,6 +230,7 @@ if (get_var('TEST_GUI_INTERACTIVE')) {
 }
 
 autotest::loadtest "tests/shutdown.pm";
+
 
 1;
 

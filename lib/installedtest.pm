@@ -329,6 +329,7 @@ sub upload_packages_versions {
             $all_packages .= $_ . ": " . $packages . "\n";
         } else {
             $all_packages .= $_ . ": failed\n";
+            last;  # skip remaining uploads if any failed
         }
         #assert_script_run("qvm-run --service -p $_ qubes.PostInstall", timeout => 90);
         script_output("qvm-features $_", timeout => 90);

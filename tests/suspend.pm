@@ -43,9 +43,11 @@ sub run {
     if (check_var('BACKEND', 'generalhw')) {
         power('on');
     }
+    sleep(10);
     # wait for the automatic prompt to expire - we may see it at the very end
     # of the timeout, too late to type the passphrase in
     wait_still_screen;
+    mouse_hide;
     # then trigger it with a fresh timeout
     my $retry = 3;
     while (!wait_screen_change(sub { send_key 'ctrl' }) and $retry > 0) {

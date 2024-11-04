@@ -140,12 +140,6 @@ sub console_selected {
     # locked, display manager is waiting for login, etc.
     #return ensure_unlocked_desktop if $args{tags} =~ /x11/;
     assert_screen($args{tags}, no_wait => 1);
-
-    if (check_var('BACKEND', 'generalhw') and $console =~ m/(x11|installation)/) {
-        # wiggle mouse a bit, for some reason needed...
-        mouse_set(0, 0);
-        mouse_hide;
-    }
 }
 
 sub handle_password_prompt {

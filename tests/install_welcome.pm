@@ -27,10 +27,12 @@ sub run {
     # wait for resolution change (on generalhw, there is a background process
     # that calls xrandr shortly after Xorg startup)
     sleep 5;
-    # Xorg driver needs few moves to callibrate
+    # Xorg driver needs few moves to detect tool (sub)device
     mouse_set(0, 0);
     sleep 1;
     mouse_set(100, 100);
+    sleep 1;
+    mouse_click();
     sleep 1;
     mouse_hide;
     save_screenshot;

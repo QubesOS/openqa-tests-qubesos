@@ -101,19 +101,15 @@ sub run {
 
     assert_screen "firstboot-not-ready", 180;
 
-    # give it a moment to initialize input, it looks like weston(?) needs more
-    # time than Xorg here
-    sleep(5);
-
-    if (check_var('BACKEND', 'generalhw')) {
-        # wiggle mouse a bit, for some reason needed...
-        mouse_set(0, 0);
-        sleep 1;
-        mouse_set(100, 100);
-        mouse_click();
-        sleep 1;
-        mouse_hide;
-    }
+    # libinput creates a virtual subdevice on a first tablet move event,
+    # and it takes long enough that some events immediately after that
+    # might get ignored. Avoid the issue by sending first move in a
+    # controlled way and waiting a bit to let it initialize.
+    mouse_set(100, 100);
+    mouse_click();
+    sleep(1);
+    mouse_hide;
+    sleep(1);
 
     assert_and_click "firstboot-qubes";
 

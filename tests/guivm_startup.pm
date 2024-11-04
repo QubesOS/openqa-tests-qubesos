@@ -39,6 +39,8 @@ sub run {
     if (check_var("BACKEND", "generalhw")) {
         console("root-virtio-terminal")->reset;
     }
+    # let libinput know about the tablet
+    mouse_hide;
     assert_script_run("! qvm-check sys-whonix || time qvm-start sys-whonix", 90);
     assert_script_run("tail -F /var/log/xen/console/guest-$vm.log >> /dev/$testapi::serialdev & true");
     assert_script_run("qvm-start --skip-if-running $vm");

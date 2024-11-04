@@ -30,6 +30,9 @@ sub run {
     if (script_run("qvm-check sys-usb") == 0) {
         # those need to remain in dom0 for S0ix to work, they aren't real USB controllers anyway
         assert_script_run("qvm-shutdown --wait sys-usb; for dev in \$(qvm-pci ls | grep 'USB.*NHI' | cut -f 1 -d ' '); do qvm-pci dt sys-usb \$dev; done; qvm-start sys-usb");
+        sleep(5);
+        # let libinput know about the tablet
+        mouse_hide;
     }
     assert_script_run('qvm-features dom0 suspend-s0ix 1');
     type_string("exit\n");

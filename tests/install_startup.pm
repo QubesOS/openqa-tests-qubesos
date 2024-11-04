@@ -93,6 +93,12 @@ sub run {
         mouse_set(10, 10);
         mouse_click();
         mouse_hide();
+        sleep(2);
+    } else {
+        # sync mouse position, and do the first mouse move for Xorg to really
+        # detect (sub)device presence
+        mouse_hide();
+        sleep(2);
     }
 
     if (check_var("BACKEND", "qemu")) {

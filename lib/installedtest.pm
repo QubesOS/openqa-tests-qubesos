@@ -43,6 +43,16 @@ sub handle_login_prompt {
     send_key "ret";
 
     assert_screen("desktop", timeout => 60);
+
+    # Xorg creates "tool subdevice" only on first its event (move), and may
+    # loose/reorder few events about this time - trigger this before actually
+    # using mouse.
+    # sys-usb has dependency to start before user login, so should be running
+    # at this point already
+    mouse_set(10, 10);
+    sleep 1;
+    mouse_hide;
+    sleep 1;
 }
 
 sub restore_keyboard_layout {
@@ -230,16 +240,6 @@ sub init_gui_session {
     $self->handle_login_prompt;
 
     if (check_var("CONNECT_WIFI", "1")) {
-        if (check_var('BACKEND', 'generalhw')) {
-            # wiggle mouse a bit, for some reason needed...
-            mouse_set(0, 0);
-            sleep 1;
-            mouse_set(100, 100);
-            mouse_click();
-            sleep 1;
-            mouse_hide;
-        }
-
         $self->connect_wifi;
     } else {
         assert_screen(["nm-connection-established", "nm-applet-connected"], 150);

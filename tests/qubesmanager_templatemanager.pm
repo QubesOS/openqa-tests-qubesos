@@ -53,6 +53,10 @@ sub run {
 
     # press ok
     assert_and_click('template-ok', timeout => 20);
+    if (match_has_tag('template-apply')) {
+        assert_and_click('template-close', timeout => 20);
+    }
+
     assert_screen('desktop');
 
     # turn on again

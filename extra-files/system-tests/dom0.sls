@@ -10,6 +10,9 @@ dom0-packages:
       - qubes-usb-proxy-dom0
       - syslinux
       - genisoimage
+      - grub2-pc-modules
+      # for mkefiboot
+      - lorax
       - pulseaudio-utils
       - btrfs-progs
       - python3-nose2

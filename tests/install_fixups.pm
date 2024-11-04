@@ -65,9 +65,9 @@ sub run {
         $extra_xen_opts .= ' com1=115200,8n1,pci,msi,04:00.0';
     } elsif (check_var("MACHINE", "hw2")) {
         $extra_xen_opts .= ' com1=115200,8n1';
-#    } elsif (check_var("MACHINE", "hw8")) {
-#        $extra_xen_opts .= ' dbgp=xhci@pci00:14.0,share=yes';
-#        $serial_console = "xhci";
+    } elsif (check_var("MACHINE", "hw8")) {
+        $extra_xen_opts .= ' dbgp=xhci@pci00:14.0,share=yes';
+        $serial_console = "xhci";
     } elsif (check_var("MACHINE", "hw9")) {
         $extra_xen_opts .= ' com1=115200,8n1';
     } elsif (check_var("MACHINE", "hw11")) {

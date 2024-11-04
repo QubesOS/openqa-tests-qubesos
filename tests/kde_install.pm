@@ -38,8 +38,11 @@ sub run {
 #    assert_script_run("curl " . autoinst_url('/files/extra-files.tar.gz.b64') . " | base64 -d | tar xz -C /root");
 #    assert_script_run('/bin/cp -a /root/extra-files/system-tests /srv/salt/');
 
-    assert_script_run("sudo qubes-dom0-update -y kde-settings-qubes 2>&1 | tee /tmp/kde-install.log", timeout => 1800);
+    assert_script_run("(set -o pipefail; sudo qubes-dom0-update -y kde-settings-qubes 2>&1 | tee /tmp/kde-install.log)", timeout => 1800);
     upload_logs('/tmp/kde-install.log', failok => 1);
+
+    # add this manually for now, but at some point it should get packaged
+    assert_script_run("printf '[LightDM]\\nsessions-directory=/usr/share/lightdm/sessions:/usr/share/xsessions:/usr/share/wayland-sessions\\n' | sudo tee /etc/lightdm/lightdm.conf.d/50-enable-wayland-sessions.conf");
 
 #    type_string("exit\n");
     type_string("exit\n");

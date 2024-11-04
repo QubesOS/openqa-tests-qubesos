@@ -34,7 +34,7 @@ sub test_file_touch {
     my ($self, $guivm) = @_;
     # touch a file with input from gui domain and then from target vm
     x11_start_program('touch e1qwertya', valid => 0);
-    x11_start_program('qvmrun work xterm', target_match => ['work-xterm', 'work-xterm-inactive', 'whonix-wizard-cancel'], match_timeout => 90);
+    x11_start_program('qvmrun work xterm', target_match => ['work-xterm', 'work-xterm-inactive', 'whonix-wizard-cancel', 'whonix-systemcheck-error'], match_timeout => 90);
     # wait for possibly whonixcheck...
     sleep 5;
     if (check_screen('whonix-wizard-cancel', 5)) {

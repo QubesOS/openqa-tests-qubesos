@@ -187,10 +187,10 @@ sub run {
     assert_screen_with_keypress "firstboot-configuring-salt", $timeout;
     assert_screen_with_keypress "firstboot-setting-network", 600;
     if ($needs_to_confirm_done) {
-        assert_screen_with_keypress("firstboot-done", 240);
+        assert_screen("firstboot-done", 240);
         send_key "f12";
     } else {
-        assert_screen_with_keypress "login-prompt-user-selected", 300;
+        assert_screen "login-prompt-user-selected", 300;
     }
 
     assert_screen "login-prompt-user-selected", 90;

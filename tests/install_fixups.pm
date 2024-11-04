@@ -157,7 +157,9 @@ sub run {
 
     type_string "sync\n";
     select_console('installation');
-    #eject_cd;
+    if (check_var("MACHINE", "hw3")) {
+        eject_cd;
+    }
     #power 'reset';
     assert_and_click 'installer-install-done-reboot';
     reset_consoles();

@@ -32,11 +32,19 @@ class DefaultPV(qubes.ext.Extension):
             if hasattr(vm.devices['pci'], 'get_assigned_devices'):
                 # new devices API
                 for dev in vm.devices['pci'].get_assigned_devices():
-                    missing.discard(dev.ident.replace('_', ':'))
+                    if hasattr(dev, "port"):
+                        missing.discard(dev.port.port_id.replace('_', ':'))
+                    else:
+                        missing.discard(dev.ident.replace('_', ':'))
                 for dev in missing:
-                    ass = DeviceAssignment(vm.app.domains[0], dev.replace(':', '_'),
-                            options={'no-strict-reset': 'True'},
-                            required=True, attach_automatically=True)
+                    if hasattr(DeviceAssignment, "new"):
+                        ass = DeviceAssignment.new(vm.app.domains[0], dev.replace(':', '_'), "pci",
+                                options={'no-strict-reset': 'True'},
+                                mode="required")
+                    else:
+                        ass = DeviceAssignment(vm.app.domains[0], dev.replace(':', '_'),
+                                options={'no-strict-reset': 'True'},
+                                required=True, attach_automatically=True)
                     await vm.devices['pci'].assign(ass)
             else:
                 # old devices API

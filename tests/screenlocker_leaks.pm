@@ -56,6 +56,8 @@ sub run {
     sleep(60);
     # and unlock
     send_key('ctrl');
+    sleep(0.1);
+    send_key('ctrl');
     assert_screen('xscreensaver-prompt', timeout=>20);
     type_password();
     send_key('ret');

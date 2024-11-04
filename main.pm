@@ -184,6 +184,9 @@ if (get_var("TEST_WINDOWS_GUI_INTERACTIVE")) {
 }
 
 if (get_var("GUI_TESTS")) {
+        autotest::loadtest "tests/desktop_linux_manager_config.pm";
+        autotest::loadtest "tests/desktop_linux_manager_policy_edit.pm";
+
         autotest::loadtest "tests/qui_widgets_clipboard.pm";
         autotest::loadtest "tests/qui_widgets_devices.pm";
         autotest::loadtest "tests/qui_widgets_disk_space.pm";

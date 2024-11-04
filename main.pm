@@ -184,6 +184,10 @@ if (get_var("TEST_WINDOWS_GUI_INTERACTIVE")) {
 }
 
 if (get_var("GUI_TESTS")) {
+        autotest::loadtest "tests/desktop_linux_manager_create_qube.pm";
+        autotest::loadtest "tests/desktop_linux_manager_config.pm";
+        autotest::loadtest "tests/desktop_linux_manager_policy_edit.pm";
+
         autotest::loadtest "tests/qui_widgets_clipboard.pm";
         autotest::loadtest "tests/qui_widgets_devices.pm";
         autotest::loadtest "tests/qui_widgets_disk_space.pm";
@@ -191,7 +195,6 @@ if (get_var("GUI_TESTS")) {
         autotest::loadtest "tests/qui_widgets_notifications.pm";
         autotest::loadtest "tests/qui_widgets_update.pm";
 
-        autotest::loadtest "tests/qubesmanager_backuprestore.pm";
         autotest::loadtest "tests/qubesmanager_createnewvm.pm";
         if (check_var("VERSION", "4.1")) {
             autotest::loadtest "tests/qubesmanager_globalsettings.pm";
@@ -199,6 +202,8 @@ if (get_var("GUI_TESTS")) {
         autotest::loadtest "tests/qubesmanager_manager.pm";
         autotest::loadtest "tests/qubesmanager_templatemanager.pm";
         autotest::loadtest "tests/qubesmanager_vmsettings.pm";
+        autotest::loadtest "tests/qubesmanager_backuprestore.pm";
+
 }
 
 if (get_var('TEST_GUI_INTERACTIVE')) {

@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 661,
+      "height": 34,
+      "type": "match",
+      "width": 279,
+      "ypos": 578
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-xfce",
+    "clipboard-copy-notification"
+  ]
+}

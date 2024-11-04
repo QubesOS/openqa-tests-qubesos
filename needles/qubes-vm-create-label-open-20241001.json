@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "ypos": 239,
+      "type": "match",
+      "width": 137,
+      "xpos": 655,
+      "height": 32
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "https://github.com/QubesOS/qubes-issues/issues/9457 - wrong color"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qubes-vm-create-label-open"
+  ]
+}

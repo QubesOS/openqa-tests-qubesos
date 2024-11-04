@@ -1,0 +1,30 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 107,
+      "xpos": 151,
+      "height": 18,
+      "ypos": 74
+    },
+    {
+      "height": 17,
+      "xpos": 483,
+      "width": 43,
+      "type": "match",
+      "ypos": 103
+    },
+    {
+      "width": 57,
+      "type": "match",
+      "height": 18,
+      "xpos": 703,
+      "ypos": 641
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "backup-finish"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "area": [
+    {
+      "xpos": 109,
+      "height": 27,
+      "width": 167,
+      "type": "match",
+      "ypos": 178
+    },
+    {
+      "ypos": 215,
+      "width": 228,
+      "type": "match",
+      "xpos": 104,
+      "height": 32
+    },
+    {
+      "ypos": 280,
+      "height": 57,
+      "xpos": 111,
+      "type": "match",
+      "width": 574
+    },
+    {
+      "width": 129,
+      "type": "match",
+      "xpos": 760,
+      "height": 36,
+      "ypos": 139
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "https://github.com/QubesOS/qubes-issues/issues/9457 - wrong color"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-basics-changed"
+  ]
+}

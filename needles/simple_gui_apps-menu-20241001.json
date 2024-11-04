@@ -1,0 +1,35 @@
+{
+  "area": [
+    {
+      "xpos": 362,
+      "height": 179,
+      "width": 349,
+      "type": "match",
+      "ypos": 532
+    },
+    {
+      "ypos": 725,
+      "click_point": {
+        "xpos": 18,
+        "ypos": 16
+      },
+      "height": 33,
+      "xpos": 976,
+      "width": 35,
+      "type": "match"
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "menu button on wrong side"
+    }
+  ],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4.3",
+    "desktop",
+    "menu",
+    "x11"
+  ]
+}

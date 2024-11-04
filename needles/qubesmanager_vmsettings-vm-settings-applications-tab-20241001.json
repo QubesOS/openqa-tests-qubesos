@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "ypos": 72,
+      "type": "match",
+      "width": 90,
+      "xpos": 463,
+      "height": 17
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "https://github.com/QubesOS/qubes-issues/issues/9457 - wrong color"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-applications-tab"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "area": [
+    {
+      "xpos": 362,
+      "height": 179,
+      "width": 349,
+      "type": "match",
+      "ypos": 532
+    },
+    {
+      "height": 33,
+      "xpos": 18,
+      "type": "match",
+      "width": 35,
+      "ypos": 723,
+      "click_point": {
+        "ypos": 17,
+        "xpos": 16
+      }
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "https://github.com/QubesOS/qubes-issues/issues/9457 - wrong color"
+    }
+  ],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4.3",
+    "desktop",
+    "desktop-clear",
+    "menu",
+    "x11"
+  ]
+}

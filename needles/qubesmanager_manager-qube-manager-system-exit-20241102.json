@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 21,
+      "xpos": 29,
+      "type": "match",
+      "width": 138,
+      "ypos": 184
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qube-manager-system-exit"
+  ]
+}

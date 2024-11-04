@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "ypos": 294,
+      "xpos": 419,
+      "height": 14,
+      "type": "match",
+      "width": 161
+    },
+    {
+      "height": 38,
+      "xpos": 495,
+      "width": 93,
+      "type": "match",
+      "ypos": 367
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-rename-cancel"
+  ]
+}

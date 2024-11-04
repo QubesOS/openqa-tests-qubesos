@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "height": 20,
+      "xpos": 426,
+      "type": "match",
+      "width": 118,
+      "ypos": 568
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "https://github.com/QubesOS/qubes-issues/issues/9457 - wrong color"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-service-remove-clock"
+  ]
+}

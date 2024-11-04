@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "ypos": 184,
+      "type": "match",
+      "width": 116,
+      "height": 16,
+      "xpos": 365
+    },
+    {
+      "ypos": 211,
+      "type": "match",
+      "width": 44,
+      "height": 49,
+      "xpos": 340
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qube-manager-sorted"
+  ]
+}

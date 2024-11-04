@@ -1,0 +1,35 @@
+{
+  "area": [
+    {
+      "xpos": 180,
+      "height": 18,
+      "width": 91,
+      "type": "match",
+      "ypos": 34
+    },
+    {
+      "type": "match",
+      "width": 59,
+      "height": 21,
+      "xpos": 63,
+      "ypos": 66
+    },
+    {
+      "type": "match",
+      "width": 70,
+      "xpos": 739,
+      "height": 18,
+      "click_point": {
+        "ypos": 9,
+        "xpos": 35
+      },
+      "ypos": 192
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-2",
+    "whonix-systemcheck-error"
+  ]
+}

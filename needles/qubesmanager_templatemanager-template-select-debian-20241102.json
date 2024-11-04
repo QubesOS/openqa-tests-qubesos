@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 668,
+      "width": 54,
+      "type": "match",
+      "height": 20,
+      "xpos": 154
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "template-select-debian"
+  ]
+}

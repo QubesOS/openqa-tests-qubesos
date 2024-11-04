@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "xpos": 447,
+      "height": 12,
+      "width": 106,
+      "type": "match",
+      "ypos": 37
+    },
+    {
+      "ypos": 274,
+      "type": "match",
+      "width": 324,
+      "height": 17,
+      "xpos": 118
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "https://github.com/QubesOS/qubes-issues/issues/9457 - wrong color"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-warn-mem"
+  ]
+}

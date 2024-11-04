@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 283,
+      "type": "match",
+      "xpos": 715,
+      "height": 65,
+      "ypos": 56
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "clipboard-paste-notification"
+  ]
+}

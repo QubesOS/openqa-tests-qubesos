@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 297,
+      "type": "match",
+      "width": 84,
+      "height": 76,
+      "xpos": 472
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw15",
+    "ENV-VERSION-4.3",
+    "panel-user-menu-reboot"
+  ]
+}

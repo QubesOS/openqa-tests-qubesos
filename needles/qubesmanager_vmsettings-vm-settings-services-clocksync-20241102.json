@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 108,
+      "xpos": 206,
+      "height": 19,
+      "ypos": 164
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-services-clocksync"
+  ]
+}

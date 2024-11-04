@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "width": 95,
+      "type": "match",
+      "height": 25,
+      "xpos": 48,
+      "ypos": 209
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "https://github.com/QubesOS/qubes-issues/issues/9457 - wrong color"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "template-selectvm1"
+  ]
+}

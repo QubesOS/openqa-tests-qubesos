@@ -1,0 +1,32 @@
+{
+  "area": [
+    {
+      "width": 100,
+      "type": "match",
+      "height": 24,
+      "xpos": 436,
+      "ypos": 270
+    },
+    {
+      "click_point": {
+        "xpos": 45.5,
+        "ypos": 35
+      },
+      "ypos": 373,
+      "xpos": 486,
+      "height": 70,
+      "width": 91,
+      "type": "match"
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "https://github.com/QubesOS/qubes-issues/issues/9457 - wrong color"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-delete-cancel"
+  ]
+}

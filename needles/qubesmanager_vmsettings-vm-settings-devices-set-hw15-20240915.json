@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 131,
+      "height": 43,
+      "xpos": 551,
+      "click_point": {
+        "ypos": 34.5,
+        "xpos": 63.5
+      },
+      "ypos": 141
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw15",
+    "ENV-VERSION-4.3",
+    "vm-settings-devices-set"
+  ]
+}

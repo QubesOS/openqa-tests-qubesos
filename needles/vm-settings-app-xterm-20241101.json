@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 626,
+      "height": 14,
+      "xpos": 127,
+      "width": 54,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw1",
+    "ENV-VERSION-4-3",
+    "vm-settings-app-xterm"
+  ]
+}

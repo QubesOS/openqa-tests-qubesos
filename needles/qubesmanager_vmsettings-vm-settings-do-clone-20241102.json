@@ -1,0 +1,34 @@
+{
+  "area": [
+    {
+      "xpos": 482,
+      "height": 20,
+      "type": "match",
+      "width": 80,
+      "ypos": 235
+    },
+    {
+      "ypos": 317,
+      "xpos": 219,
+      "height": 27,
+      "type": "match",
+      "width": 205
+    },
+    {
+      "type": "match",
+      "width": 128,
+      "height": 59,
+      "xpos": 718,
+      "ypos": 436,
+      "click_point": {
+        "ypos": 34.5,
+        "xpos": 53
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-do-clone"
+  ]
+}

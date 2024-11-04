@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 161,
+      "xpos": 419,
+      "height": 14,
+      "ypos": 294
+    },
+    {
+      "ypos": 367,
+      "type": "match",
+      "width": 93,
+      "xpos": 500,
+      "height": 38
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "https://github.com/QubesOS/qubes-issues/issues/9457 - wrong color"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-rename-cancel"
+  ]
+}

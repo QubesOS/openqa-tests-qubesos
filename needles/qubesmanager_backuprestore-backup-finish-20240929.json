@@ -1,0 +1,35 @@
+{
+  "area": [
+    {
+      "ypos": 74,
+      "height": 18,
+      "xpos": 151,
+      "type": "match",
+      "width": 107
+    },
+    {
+      "ypos": 105,
+      "type": "match",
+      "width": 43,
+      "xpos": 482,
+      "height": 17
+    },
+    {
+      "xpos": 703,
+      "height": 18,
+      "width": 57,
+      "type": "match",
+      "ypos": 641
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "https://github.com/QubesOS/qubes-issues/issues/9457"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "backup-finish"
+  ]
+}

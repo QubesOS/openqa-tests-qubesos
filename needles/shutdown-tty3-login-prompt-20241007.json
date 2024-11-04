@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "ypos": 86,
+      "type": "match",
+      "width": 94,
+      "xpos": 0,
+      "height": 23
+    },
+    {
+      "ypos": 58,
+      "width": 58,
+      "type": "match",
+      "xpos": 372,
+      "height": 26
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "text-login",
+    "tty3-selected"
+  ]
+}

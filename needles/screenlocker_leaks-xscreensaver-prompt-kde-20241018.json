@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "ypos": 433,
+      "width": 176,
+      "type": "match",
+      "height": 57,
+      "xpos": 353
+    },
+    {
+      "ypos": 217,
+      "width": 163,
+      "type": "match",
+      "height": 170,
+      "xpos": 429
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4.3",
+    "xscreensaver-prompt"
+  ]
+}

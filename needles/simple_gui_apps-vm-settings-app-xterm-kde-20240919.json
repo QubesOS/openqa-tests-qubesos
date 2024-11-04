@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "width": 54,
+      "type": "match",
+      "height": 14,
+      "xpos": 130,
+      "ypos": 625
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "orange selection?!"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "vm-settings-app-xterm"
+  ]
+}

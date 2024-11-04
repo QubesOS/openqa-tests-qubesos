@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 209,
+      "type": "match",
+      "width": 97,
+      "xpos": 223,
+      "height": 20
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-template-change-whonix"
+  ]
+}

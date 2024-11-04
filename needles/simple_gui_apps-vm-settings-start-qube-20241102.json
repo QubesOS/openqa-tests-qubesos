@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 391,
+      "width": 72,
+      "type": "match",
+      "xpos": 128,
+      "height": 16
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "vm-settings-app-start-qube"
+  ]
+}

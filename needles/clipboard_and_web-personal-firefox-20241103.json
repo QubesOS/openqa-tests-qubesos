@@ -1,0 +1,30 @@
+{
+  "area": [
+    {
+      "xpos": 376,
+      "height": 16,
+      "type": "match",
+      "width": 74,
+      "ypos": 44
+    },
+    {
+      "ypos": 43,
+      "xpos": 583,
+      "height": 18,
+      "type": "match",
+      "width": 109
+    },
+    {
+      "height": 21,
+      "xpos": 284,
+      "type": "match",
+      "width": 174,
+      "ypos": 119
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "personal-firefox"
+  ]
+}

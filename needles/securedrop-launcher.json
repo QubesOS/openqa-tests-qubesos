@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "xpos": 570,
+      "ypos": 469,
+      "width": 92,
+      "height": 26,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "securedrop-launcher"
+  ]
+}

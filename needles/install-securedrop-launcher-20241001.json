@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "xpos": 3,
+      "ypos": 56,
+      "width": 826,
+      "height": 185,
+      "type": "match",
+      "click_point": {
+        "xpos": 774,
+        "ypos": 162.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "whonix-systemcheck-derived-repo-accept"
+  ]
+}

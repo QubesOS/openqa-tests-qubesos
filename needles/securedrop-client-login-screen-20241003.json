@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 589,
+      "type": "match",
+      "height": 623,
+      "xpos": 222,
+      "ypos": 77
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "securedrop-client-login-screen"
+  ]
+}

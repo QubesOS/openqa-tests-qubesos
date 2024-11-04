@@ -1,0 +1,27 @@
+{
+  "area": [
+    {
+      "xpos": 247,
+      "ypos": 218,
+      "width": 330,
+      "height": 65,
+      "type": "match"
+    },
+    {
+      "xpos": 569,
+      "ypos": 468,
+      "width": 93,
+      "height": 27,
+      "type": "match",
+      "click_point": {
+        "xpos": 46.5,
+        "ypos": 13.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "securedrop-launcher"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "xpos": 797,
+      "height": 30,
+      "width": 29,
+      "type": "match",
+      "ypos": 0,
+      "click_point": {
+        "xpos": 14.5,
+        "ypos": 15
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-securedrop",
+    "disable-screen-blanking-click-power-tray-icon"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 147,
+      "xpos": 3,
+      "width": 826,
+      "type": "match",
+      "ypos": 56
+    }
+  ],
+  "properties": [],
+  "tags": [
+    " whonix-systemcheck-derived-repo ",
+    "ENV-securedrop"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 513,
+      "type": "match",
+      "height": 219,
+      "xpos": 243,
+      "ypos": 320
+    }
+  ],
+  "properties": [],
+  "tags": [
+    " securedrop-launcher-updates-complete-reboot",
+    "ENV-securedrop"
+  ]
+}

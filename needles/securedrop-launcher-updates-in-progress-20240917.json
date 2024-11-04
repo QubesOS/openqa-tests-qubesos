@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 509,
+      "xpos": 244,
+      "height": 68,
+      "ypos": 212
+    },
+    {
+      "xpos": 243,
+      "ypos": 323,
+      "width": 512,
+      "height": 219,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "securedrop-launcher-updates-in-progress"
+  ]
+}

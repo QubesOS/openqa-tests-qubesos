@@ -138,10 +138,11 @@ sub handle_system_startup {
 
     ## HACK (RTC looks to be running off the main battery, which is disconnected)
     if (check_var("MACHINE", "hw7") or check_var("MACHINE", "hw12")) {
-        assert_script_run("date -s @" . time());
+        assert_script_run("date -u -s @" . time());
         assert_script_run("hwclock -w");
         assert_script_run("qvm-run --nogui -u root sys-firewall qvm-sync-clock");
-        assert_script_run("qvm-run --nogui -u root sys-whonix qvm-sync-clock");
+        # Whonix blocks qvm-sync-clock
+        assert_script_run("qvm-run --nogui -u root sys-whonix date -u -s @" . time());
     }
 
     # WTF part

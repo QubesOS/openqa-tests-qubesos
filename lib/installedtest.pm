@@ -313,8 +313,8 @@ sub post_fail_hook {
     enable_dom0_network_netvm() unless $self->{network_up};
     script_run "ip r";
     upload_logs('/var/log/libvirt/libxl/libxl-driver.log');
-    $self->save_and_upload_log('journalctl -b', 'journalctl.log', {timeout => 120});
-    $self->save_and_upload_log('sudo -u user journalctl --user -b', 'user-journalctl.log', {timeout => 120});
+    $self->save_and_upload_log('journalctl -b --output=short-precise', 'journalctl.log', {timeout => 120});
+    $self->save_and_upload_log('sudo -u user journalctl --user -b --output=short-precise', 'user-journalctl.log', {timeout => 120});
     upload_logs('/var/lib/qubes/qubes.xml');
     #my $logs = script_output('ls -1 /var/log/xen/console/*.log');
     #foreach (split(/\n/, $logs)) {

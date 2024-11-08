@@ -31,7 +31,7 @@ def maybe_restart_failed_job(job_id, job_details):
     if job_details['job']['result'] == 'user_cancelled':
         return False
     for group in job_details['job']['testresults']:
-        if group['result'] in ('passed', 'cancelled'):
+        if group['result'] in ('passed', 'cancelled', 'none'):
             continue
         if group['name'] not in RESTART_ON_GROUP_FAIL:
             continue

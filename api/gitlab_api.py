@@ -128,7 +128,7 @@ def verify_webhook_obj():
 
     return webhook_obj
 
-def get_job_from_pr(pr_details):
+def get_job_from_pr(pr_details, job_name="publish:repo"):
     r = requests.get(pr_details['_links']['statuses']['href'])
     r.raise_for_status()
     for status in r.json():
@@ -142,7 +142,7 @@ def get_job_from_pr(pr_details):
         for job in r.json():
             if job['status'] != 'success':
                 continue
-            if 'publish:repo' not in job['name']:
+            if job_name not in job['name']:
                 continue
             return job['web_url']
     return None
@@ -241,14 +241,14 @@ def run_test_pr(comment_details):
     r.raise_for_status()
     pr_details = r.json()
 
-    # get associated gitlab job
-    repo_job = get_job_from_pr(pr_details)
-    if not repo_job:
-        return respond(404, "build not found")
-
     version = comment_params.get("VERSION", "4.3")
     if not re.match(r"\A[0-9]\.[0-9]\Z", version):
         return respond(400, "invalid VERSION value")
+
+    # get associated gitlab job
+    repo_job = get_job_from_pr(pr_details, job_name=f"r{version}:publish:repo")
+    if not repo_job:
+        return respond(404, "build not found")
 
     buildid = time.strftime('%Y%m%d%H%M-') + version
     # cannot serve repo directly from gitlab, because it refuses connections via Tor :/

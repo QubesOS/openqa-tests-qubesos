@@ -39,7 +39,10 @@ sub run {
 
     # check if devices notify about connecting
     assert_and_click('qui-devices-open', timeout => 20);
-    send_key('down');
+    if (!check_screen('qui-devices-mic-selected')) {
+        # open a device
+        send_key('down');
+    }
     send_key('right');
     send_key('ret');
     assert_screen('qui-notification-device-attach', 60);

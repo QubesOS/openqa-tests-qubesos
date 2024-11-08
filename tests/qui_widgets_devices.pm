@@ -36,8 +36,13 @@ sub run {
     send_key('esc');
     assert_and_click('qui-devices-open', timeout => 20);
 
-    # open a device
-    send_key('down');
+    if (check_screen('qui-devices-mic-selected')) {
+        # mic already selected, open submenu
+        send_key('right');
+    } else {
+        # open a device
+        send_key('down');
+    }
     assert_screen('qui-devices-dev-opened', timeout => 20);
 
     # close the widget

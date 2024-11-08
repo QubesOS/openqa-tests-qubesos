@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 744,
+      "height": 26,
+      "width": 148,
+      "type": "match",
+      "ypos": 72
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw7",
+    "ENV-VERSION-4.3",
+    "qubes-update-launch-updater",
+    "qubes-update-launch-updater-selected"
+  ]
+}

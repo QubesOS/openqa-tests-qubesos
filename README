@@ -1,4 +1,4 @@
-OpenQA Tests for Qubes OS 
+OpenQA Tests for Qubes OS
 
 To install, clone this repo to /var/lib/openqa/tests/qubesos
 
@@ -67,3 +67,7 @@ Variables used in tests:
  - `INSTALL_OEM` - do fully automated OEM installation
  - `INSTALL_OEM_STARTUP` - start OEM installation, but still expect interactive prompts during installation
  - `HID` - for generalhw tests, tell it whether `USB` hid is used (default) or `PS2` one; in the latter case, sys-usb is not supposed to have input-proxy allowed by default
+
+SecureDrop variables used in tests:
+ - `SECUREDROP_INSTALL` - when set to `1`, SecureDrop Workstation is installed
+ - `SECUREDROP_TEST` - when set with a value, SecureDrop tests are run on top of an existing installation

@@ -207,9 +207,7 @@ if (get_var('TEST_GUI_INTERACTIVE')) {
     autotest::loadtest "tests/collect_logs.pm";
 }
 
-if (get_var("STORE_HDD_1") || get_var("PUBLISH_HDD_1")) {
-    autotest::loadtest "tests/shutdown.pm";
-}
+autotest::loadtest "tests/shutdown.pm";
 
 1;
 

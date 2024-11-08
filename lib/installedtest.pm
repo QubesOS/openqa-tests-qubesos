@@ -343,6 +343,12 @@ sub post_fail_hook {
         $self->save_and_upload_log("qvm-run --no-gui -p $vm 'journalctl -b --user'", 'sys-gui-user-journalctl.log');
         $self->save_and_upload_log("qvm-run --no-gui -p -u root $vm 'tar cz /var/log'", 'sys-gui-var_log.tar.gz');
     }
+    if (check_var("BACKEND", "generalhw")) {
+        # clears ext4 "orphan present" flag
+        script_run("! mountpoint -q /boot/efi || mount -o ro,remount /boot/efi");
+        script_run("! mountpoint -q /boot || mount -o ro,remount /boot");
+        script_run("sync");
+    }
 }
 
 

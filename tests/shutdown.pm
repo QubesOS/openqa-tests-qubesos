@@ -6,9 +6,18 @@ sub run {
     select_console('root-console');
     # make upload as small as possible
     script_run("fstrim -v /", timeout => 180);
-    # shutdown before uploading disk image
-    script_run("poweroff", 0);
-    assert_shutdown 300;
+    if (get_var("STORE_HDD_1") || get_var("PUBLISH_HDD_1")) {
+        # shutdown before uploading disk image
+        script_run("poweroff", 0);
+        assert_shutdown 300;
+    } elsif (check_var("BACKEND", "generalhw")) {
+        # otherwise just sync and remount /boot (clears the orphan present
+        # flag) if running non-virtualized
+        script_run("! mountpoint -q /boot/efi || mount -o ro,remount /boot/efi");
+        script_run("! mountpoint -q /boot || mount -o ro,remount /boot");
+        script_run("sync");
+    }
+
 }
 
 # this is not 'fatal' or 'important' as all wiki test cases are passed

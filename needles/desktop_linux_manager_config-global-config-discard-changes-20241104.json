@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 462,
+      "ypos": 490,
+      "width": 165,
+      "height": 50,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-discard-changes"
+  ]
+}

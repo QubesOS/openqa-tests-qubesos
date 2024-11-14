@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 219,
+      "xpos": 122,
+      "height": 17,
+      "ypos": 503
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw8",
+    "ENV-VERSION-4.3",
+    "vm-settings-devices-select"
+  ]
+}

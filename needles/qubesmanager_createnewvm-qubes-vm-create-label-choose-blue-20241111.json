@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 374,
+      "width": 112,
+      "type": "match",
+      "xpos": 654,
+      "height": 23
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "qubes-vm-create-label-choose-blue"
+  ]
+}

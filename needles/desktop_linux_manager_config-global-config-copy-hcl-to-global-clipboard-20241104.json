@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 792,
+      "ypos": 485,
+      "width": 152,
+      "height": 47,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-copy-hcl-to-global-clipboard"
+  ]
+}

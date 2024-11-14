@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 277,
+      "ypos": 570,
+      "width": 370,
+      "height": 37,
+      "type": "match"
+    },
+    {
+      "xpos": 523,
+      "ypos": 567,
+      "width": 129,
+      "height": 40,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-fullscreen-open"
+  ]
+}

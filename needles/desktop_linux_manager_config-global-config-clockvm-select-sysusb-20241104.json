@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 531,
+      "ypos": 513,
+      "width": 74,
+      "height": 24,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-clockvm-select-sysusb"
+  ]
+}

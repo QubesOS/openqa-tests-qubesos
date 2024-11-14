@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 332,
+      "ypos": 402,
+      "width": 81,
+      "height": 12,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "new-qube-close-network-settings"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 414,
+      "ypos": 387,
+      "width": 87,
+      "height": 14,
+      "type": "match"
+    },
+    {
+      "xpos": 353,
+      "ypos": 390,
+      "width": 40,
+      "height": 10,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "new-qube-select-fedora-xfce"
+  ]
+}

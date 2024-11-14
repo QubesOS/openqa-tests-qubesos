@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 915,
+      "ypos": 531,
+      "width": 32,
+      "height": 23,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "new-qube-add-app"
+  ]
+}

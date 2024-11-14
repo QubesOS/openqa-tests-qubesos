@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 521,
+      "ypos": 47,
+      "width": 108,
+      "height": 13,
+      "type": "match"
+    },
+    {
+      "xpos": 67,
+      "ypos": 191,
+      "width": 182,
+      "height": 21,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "policy-editor-90-default-open"
+  ]
+}

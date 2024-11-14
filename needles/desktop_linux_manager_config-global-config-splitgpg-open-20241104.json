@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 90,
+      "ypos": 454,
+      "width": 99,
+      "height": 27,
+      "type": "match"
+    },
+    {
+      "xpos": 273,
+      "ypos": 152,
+      "width": 131,
+      "height": 46,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-splitgpg-open"
+  ]
+}

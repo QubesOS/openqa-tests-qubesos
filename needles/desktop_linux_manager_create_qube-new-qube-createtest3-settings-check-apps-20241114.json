@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 553,
+      "ypos": 173,
+      "width": 70,
+      "height": 50,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "new-qube-createtest3-settings-check-apps"
+  ]
+}

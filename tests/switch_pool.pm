@@ -46,7 +46,7 @@ sub run {
         assert_script_run('mount /var/lib/qubes-pool');
         assert_script_run('qvm-pool add --option dir_path=/var/lib/qubes-pool pool-test file-reflink');
     } elsif (get_var('PARTITIONING') eq 'xfs') {
-        assert_script_run('qubes-dom0-update -y xfsprogs', timeout => 300);
+        assert_script_run('rpm -q xfsprogs || qubes-dom0-update -y xfsprogs', timeout => 300);
         assert_script_run('printf "label: gpt\n,,L" | sfdisk /dev/sdb');
         assert_script_run('mkfs.xfs /dev/sdb1');
         assert_script_run('printf "/dev/sdb1 /var/lib/qubes-pool xfs defaults 0 0" >> /etc/fstab');

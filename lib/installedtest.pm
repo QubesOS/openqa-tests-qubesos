@@ -310,8 +310,8 @@ sub upload_packages_versions {
                                            {failok=>$args{failok}});
     if ($fname) {
         my $packages = path('ulogs', $fname)->slurp;
-        $packages = join("\n", sort split(/\n/, $packages));
-        $all_packages .= "Dom0:\n" . $packages;
+        $packages = join("\nDom0: ", sort split(/\n/, $packages));
+        $all_packages .= "Dom0: " . $packages . "\n";
     } else {
         $all_packages .= "Dom0: failed\n";
     };
@@ -325,10 +325,10 @@ sub upload_packages_versions {
                 {timeout =>90, failok=>$args{failok}});
         if ($fname) {
             my $packages = path('ulogs', $fname)->slurp;
-            $packages = join("\n", sort split(/\n/, $packages));
-            $all_packages .= "\n" . $_ . ":\n" . $packages;
+            $packages = join("\n$_: ", sort split(/\n/, $packages));
+            $all_packages .= $_ . ": " . $packages . "\n";
         } else {
-            $all_packages .= "\n" . $_ . ": failed\n";
+            $all_packages .= $_ . ": failed\n";
         }
         #assert_script_run("qvm-run --service -p $_ qubes.PostInstall", timeout => 90);
         script_output("qvm-features $_", timeout => 90);

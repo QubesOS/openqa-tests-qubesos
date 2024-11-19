@@ -23,6 +23,7 @@ use networking;
 use bootloader_setup;
 use serial_terminal;
 use utils qw(us_colemak colemak_us);
+use Mojo::File qw(path);
 
 sub new {
     my ($class, $args) = @_;
@@ -288,10 +289,52 @@ sub maybe_unlock_screen {
 
 sub save_and_upload_log {
     my ($self, $cmd, $file, $args) = @_;
-    script_run("$cmd > $file", $args->{timeout});
-    my $ret = upload_logs($file) unless $args->{noupload};
+    script_run("$cmd > $file", timeout=>$args->{timeout});
+    my $ret = upload_logs(
+        $file,
+        timeout=>$args->{timeout},
+        failok=>$args->{failok}
+    ) unless $args->{noupload};
     save_screenshot if $args->{screenshot};
+    return undef if ($args->{failok} and !-e "ulogs/$ret");
     return $ret;
+}
+
+sub upload_packages_versions {
+    my ($self, %args) = @_;
+
+    my $all_packages = "";
+
+    # log package versions
+    my $fname = $self->save_and_upload_log('rpm -qa', 'dom0-packages.txt',
+                                           {failok=>$args{failok}});
+    if ($fname) {
+        my $packages = path('ulogs', $fname)->slurp;
+        $packages = join("\n", sort split(/\n/, $packages));
+        $all_packages .= "Dom0:\n" . $packages;
+    } else {
+        $all_packages .= "Dom0: failed\n";
+    };
+
+    my $templates = script_output('qvm-ls --raw-data --fields name,klass');
+    foreach (sort split /\n/, $templates) {
+        next unless /Template/;
+        s/\|.*//;
+        $fname = $self->save_and_upload_log("qvm-run --no-gui -ap $_ 'rpm -qa; dpkg -l; pacman -Q; true'",
+                "template-$_-packages.txt",
+                {timeout =>90, failok=>$args{failok}});
+        if ($fname) {
+            my $packages = path('ulogs', $fname)->slurp;
+            $packages = join("\n", sort split(/\n/, $packages));
+            $all_packages .= "\n" . $_ . ":\n" . $packages;
+        } else {
+            $all_packages .= "\n" . $_ . ": failed\n";
+        }
+        #assert_script_run("qvm-run --service -p $_ qubes.PostInstall", timeout => 90);
+        script_output("qvm-features $_", timeout => 90);
+        assert_script_run("qvm-shutdown --wait $_", timeout => 90);
+    }
+    path("sut_packages.txt")->spew($all_packages);
 }
 
 sub post_fail_hook {

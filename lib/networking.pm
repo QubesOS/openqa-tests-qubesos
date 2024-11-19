@@ -102,7 +102,7 @@ curl() {
     fi
 
     if [ -n "\$inputfile" ]; then
-        qvm-run --no-gui -p sys-net "curl \$allargs" <\$inputfile
+        qvm-run --no-gui -p sys-net "curl --max-time 10 \$allargs" <\$inputfile
     else
         qvm-run --no-gui -p sys-net "curl \$allargs"
     fi

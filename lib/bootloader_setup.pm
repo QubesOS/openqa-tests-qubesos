@@ -102,7 +102,7 @@ sub heads_boot_usb {
     assert_screen(['heads-usb-boot-options', 'heads-usb-boot-list', 'heads-usb-boot-disk-list']);
     if (match_has_tag('heads-usb-boot-disk-list')) {
         my $tries = 7;
-        while ($tries > 0 and !check_screen("heads-usb-boot-disk-entry")) {
+        while ($tries > 0 and !check_screen("heads-usb-boot-disk-entry", timeout => 5)) {
             wait_screen_change {
                 send_key 'down';
             };
@@ -199,7 +199,7 @@ sub heads_generate_hotp {
 
 sub heads_boot_default {
     # FIXME: workaround for broken HDMI after cold boot
-    if (check_var("MACHINE", "hw5") and !check_screen('heads-menu', 120)) {
+    if (!check_screen('heads-menu', 120)) {
         send_key("ctrl-alt-delete");
         sleep(3);
     }
@@ -216,7 +216,11 @@ sub heads_boot_default {
         send_key 'down';
         send_key 'ret';
         wait_still_screen;
-        heads_generate_hotp;
+        if (check_var("MACHINE", "hw5")) {
+            heads_generate_hotp(reset_tpm => 1);
+        } else {
+            heads_generate_hotp;
+        }
     }
     # Default boot
     send_key 'ret';
@@ -296,7 +300,7 @@ sub heads_boot_default {
         # FIXME: this and the next one matches prompt from earlier (still at the top of the screen)
         assert_screen('heads-gpg-card-prompt');
         send_key 'ret';
-        sleep(1);
+        sleep(2);
         assert_screen('heads-gpg-card-pin-prompt');
         type_string '123456';
         send_key 'ret';

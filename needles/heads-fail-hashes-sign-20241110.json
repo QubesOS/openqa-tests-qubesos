@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 77,
+      "height": 28,
+      "width": 294,
+      "type": "match",
+      "ypos": 324
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw6",
+    "heads-fail-hashes-sign"
+  ]
+}

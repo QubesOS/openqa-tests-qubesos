@@ -3,9 +3,11 @@ use strict;
 use testapi;
 
 sub run {
-    select_console('root-console');
-    # make upload as small as possible
-    script_run("fstrim -v /", timeout => 180);
+    if (get_var("STORE_HDD_1") || get_var("PUBLISH_HDD_1") || check_var("BACKEND", "generalhw")) {
+        select_console('root-console');
+        # make upload as small as possible
+        script_run("fstrim -v /", timeout => 180);
+    }
     if (get_var("STORE_HDD_1") || get_var("PUBLISH_HDD_1")) {
         # shutdown before uploading disk image
         script_run("poweroff", 0);

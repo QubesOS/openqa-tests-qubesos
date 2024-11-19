@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 89,
+      "type": "match",
+      "ypos": 502,
+      "width": 96,
+      "height": 25
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw1",
+    "ENV-VERSION-4-2",
+    "global-config-switch-to-clipboard"
+  ]
+}

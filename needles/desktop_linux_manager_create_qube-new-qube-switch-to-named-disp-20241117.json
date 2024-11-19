@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 17,
+      "width": 159,
+      "height": 17,
+      "ypos": 435,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw1",
+    "ENV-VERSION-4-2",
+    "new-qube-switch-to-named-disp"
+  ]
+}

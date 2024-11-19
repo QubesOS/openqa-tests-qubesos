@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 397,
+      "type": "match",
+      "ypos": 47,
+      "height": 15,
+      "width": 191
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "qubes-policy-editor-gui"
+  ]
+}

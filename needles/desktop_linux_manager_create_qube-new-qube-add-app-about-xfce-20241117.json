@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 10,
+      "width": 72,
+      "ypos": 253,
+      "type": "match",
+      "xpos": 147
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "new-qube-add-app-about-xfce"
+  ]
+}

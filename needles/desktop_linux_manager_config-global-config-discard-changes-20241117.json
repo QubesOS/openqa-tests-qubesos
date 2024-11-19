@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 490,
+      "type": "match",
+      "height": 50,
+      "width": 165,
+      "xpos": 462
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw1",
+    "ENV-VERSION-4-2",
+    "global-config-discard-changes"
+  ]
+}

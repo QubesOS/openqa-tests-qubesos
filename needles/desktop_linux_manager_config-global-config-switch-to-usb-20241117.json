@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 89,
+      "ypos": 362,
+      "type": "match",
+      "height": 30,
+      "width": 130
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw1",
+    "ENV-VERSION-4-2",
+    "global-config-switch-to-usb"
+  ]
+}

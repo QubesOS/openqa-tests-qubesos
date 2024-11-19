@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "height": 18,
+      "xpos": 849,
+      "type": "match",
+      "width": 46,
+      "ypos": 694
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw1",
+    "ENV-VERSION-4-3",
+    "qubesmanager-ok",
+    "vm-settings-ok"
+  ]
+}

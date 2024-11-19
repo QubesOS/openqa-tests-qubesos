@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 67,
+      "height": 20,
+      "ypos": 548,
+      "type": "match",
+      "xpos": 527
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "policy-editor-select-file"
+  ]
+}

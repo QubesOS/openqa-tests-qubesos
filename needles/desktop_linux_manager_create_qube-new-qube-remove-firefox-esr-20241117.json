@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 558,
+      "type": "match",
+      "width": 68,
+      "height": 16,
+      "xpos": 377
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "new-qube-remove-firefox-esr"
+  ]
+}

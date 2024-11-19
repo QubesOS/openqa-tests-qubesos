@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 531,
+      "type": "match",
+      "height": 15,
+      "width": 80,
+      "xpos": 525
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "global-config-open-docs"
+  ]
+}

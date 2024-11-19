@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 65,
+      "xpos": 717,
+      "width": 283,
+      "type": "match",
+      "ypos": 56
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw9",
+    "ENV-VERSION-4.3",
+    "clipboard-paste-notification"
+  ]
+}

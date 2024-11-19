@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 571,
+      "type": "match",
+      "ypos": 120,
+      "width": 183,
+      "height": 22
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "qui-clipboard-copy-dom0",
+    "qui-clipboard-copy-dom0-selected"
+  ]
+}

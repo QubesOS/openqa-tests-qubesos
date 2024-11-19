@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 340,
+      "type": "match",
+      "width": 110,
+      "height": 28,
+      "xpos": 21
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "new-qube-switch-to-template"
+  ]
+}

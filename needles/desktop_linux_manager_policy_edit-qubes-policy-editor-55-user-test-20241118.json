@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "ypos": 48,
+      "type": "match",
+      "height": 10,
+      "width": 119,
+      "xpos": 513
+    },
+    {
+      "ypos": 115,
+      "type": "match",
+      "width": 132,
+      "height": 10,
+      "xpos": 81
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "qubes-policy-editor-55-user-test"
+  ]
+}

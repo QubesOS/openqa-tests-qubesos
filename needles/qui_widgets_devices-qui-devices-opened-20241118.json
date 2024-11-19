@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 58,
+      "height": 46,
+      "width": 79,
+      "xpos": 492
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw1",
+    "ENV-VERSION-4-2",
+    "new-devices",
+    "qui-devices-mic-selected",
+    "qui-devices-opened"
+  ]
+}

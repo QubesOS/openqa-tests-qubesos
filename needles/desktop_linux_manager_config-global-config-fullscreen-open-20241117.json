@@ -3,18 +3,19 @@
     {
       "height": 37,
       "width": 370,
-      "ypos": 570,
       "type": "match",
+      "ypos": 570,
       "xpos": 277,
       "click_point": {
-        "xpos": 316,
-        "ypos": 15.5
+        "ypos": 15.5,
+        "xpos": 316
       }
     }
   ],
   "properties": [],
   "tags": [
-    "ENV-VERSION-4.3",
+    "ENV-MACHINE-hw1",
+    "ENV-VERSION-4-2",
     "global-config-fullscreen-open"
   ]
 }

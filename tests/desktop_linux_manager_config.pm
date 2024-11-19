@@ -68,16 +68,19 @@ sub run {
     assert_and_click('global-config-cancel');
 
     # open at template repos
-    x11_start_program('qubes-global-config --open-at updates#template_repositories', target_match => 'qubes-global-config-template-repos');
-    assert_screen('global-config-open-at-template-repositories');
+    if (!check_var("VERSION", "4.2")) {
+        x11_start_program('qubes-global-config --open-at updates#template_repositories', target_match => 'qubes-global-config-template-repos');
+        assert_screen('global-config-open-at-template-repositories');
+        assert_and_click('global-config-switch-to-general');
+    } else {
+        x11_start_program('qubes-global-config');
+    }
 
     # open docs
-    assert_and_click('global-config-switch-to-general');
-
     assert_and_click('global-config-open-docs');
     assert_and_click('global-config-close-docs', timeout => 90);
 
-    select_console('root-virtio-terminal');
+    select_root_console;
     my $old_clockvm = script_output('qubes-prefs clockvm');
 
     if ($old_clockvm ne "sys-net") {
@@ -91,7 +94,7 @@ sub run {
     assert_and_click('global-config-clockvm-select-sysusb');
     assert_and_click('global-config-click_ok');
 
-    select_console('root-virtio-terminal');
+    select_root_console;
 
     my $new_clockvm = script_output('qubes-prefs clockvm');
 
@@ -102,7 +105,12 @@ sub run {
     assert_script_run("qubes-prefs clockvm sys-net");
     select_console('x11', await_console=>0);
 
-    x11_start_program('qubes-global-config --open-at thisdevice', target_match => 'qubes-global-config-openat-thisdevice');
+    if (!check_var("VERSION", "4.2")) {
+        x11_start_program('qubes-global-config --open-at thisdevice', target_match => 'qubes-global-config-openat-thisdevice');
+    } else {
+        x11_start_program('qubes-global-config');
+        assert_and_click('global-config-switch-to-thisdevice');
+    }
     assert_screen('global-config-thisdevice-open');
 
     assert_and_click('global-config-copy-hcl-to-global-clipboard');

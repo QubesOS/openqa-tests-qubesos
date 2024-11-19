@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 106,
+      "height": 30,
+      "ypos": 452,
+      "type": "match",
+      "xpos": 87
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw1",
+    "ENV-VERSION-4-2",
+    "global-config-switch-to-splitgpg"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 30,
+      "height": 15,
+      "type": "match",
+      "ypos": 36,
+      "xpos": 233
+    },
+    {
+      "xpos": 919,
+      "height": 14,
+      "width": 14,
+      "type": "match",
+      "ypos": 36
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "global-config-close-docs"
+  ]
+}

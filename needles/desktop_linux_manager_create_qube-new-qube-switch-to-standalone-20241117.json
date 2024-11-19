@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 102,
+      "height": 19,
+      "type": "match",
+      "ypos": 389,
+      "xpos": 25
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "new-qube-switch-to-standalone"
+  ]
+}

@@ -16,16 +16,25 @@ use strict;
 use testapi;
 use networking;
 
-
 sub run {
     my ($self) = @_;
 
     $self->select_gui_console;
-    assert_screen "desktop";
 
-    # Force-fail
-    check_screen('securedrop-client-login-screen', 5)
+    x11_start_program('xterm');
+    send_key('alt-f10');  # maximize xterm to ease troubleshooting
 
-}
+    # under some circumstances sd-proxy may be powered off
+    assert_script_run('qvm-start sd-proxy --skip-if-running');
+
+    # # Close login window (next step opens it already)
+    # send_key('alt-f4');
+
+    script_run("make -C securedrop-workstation/ run-client");
+    sleep(60); # Wait for login
+
+    assert_screen("fail-here");
+
+};
 
 1;

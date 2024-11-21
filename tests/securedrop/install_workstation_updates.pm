@@ -44,13 +44,20 @@ sub run {
     } else {
         assert_and_click("securedrop-launcher-updates-complete-continue");
     }
-    if (check_screen('securedrop-client-login-screen', 5)) {
+    if (check_screen(
+        'securedrop-client-login-screen',
+         30  # necessary due to race condition https://github.com/freedomofpress/securedrop-workstation/issues/1336
+        )) {
         send_key('alt-f4');  # exit SecureDrop client
     }
 
-    # Upload packages
     x11_start_program('xterm');
     send_key('alt-f10');  # maximize xterm to ease troubleshooting
+
+    # Suppress sd-client autostart (already verified as working earlier in script)
+    assert_script_run('rm /home/user/.config/autostart/press.freedom.SecureDropUpdater.desktop');
+
+    # Upload packages
     $self->upload_packages_versions(failok=>1);
 
 }
@@ -62,12 +69,11 @@ sub post_fail_hook {
     upload_logs('/home/user/.securedrop_updater/logs/updater.log', failok => 1);
     upload_logs('/home/user/.securedrop_updater/logs/updater-detail.log', failok => 1);
 
-    # WIP troubleshooting
-    upload_logs('/var/log/xen/console/guest-sd-base-bookworm-template.log', failok => 1);
-    upload_logs('/var/log/xen/console/guest-sd-small-bookworm-template.log', failok => 1);
-    upload_logs('/var/log/xen/console/guest-sd-large-bookworm-template.log', failok => 1);
-
+    # sdw-admin --apply
     upload_logs('/tmp/sdw-admin-apply.log', failok => 1);
+
+    $self->upload_packages_versions(failok=>1);
+
 };
 
 1;

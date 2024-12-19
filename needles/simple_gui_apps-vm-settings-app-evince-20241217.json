@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 72,
+      "height": 16,
+      "ypos": 359,
+      "type": "match",
+      "xpos": 126
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-fedora-41",
+    "vm-settings-app-start-qube"
+  ]
+}

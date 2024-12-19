@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 90,
+      "ypos": 605,
+      "type": "match",
+      "width": 68,
+      "height": 24
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-3",
+    "ENV-fedora-41",
+    "manager-work"
+  ]
+}

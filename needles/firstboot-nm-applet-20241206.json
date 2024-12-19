@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 853,
+      "width": 23,
+      "height": 25,
+      "type": "match",
+      "ypos": 3
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-debian",
+    "nm-applet"
+  ]
+}

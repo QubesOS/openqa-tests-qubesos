@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 733,
+      "ypos": 63,
+      "type": "match",
+      "width": 248,
+      "height": 35
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw1",
+    "ENV-VERSION-4.3",
+    "clipboard-copy-notification"
+  ]
+}

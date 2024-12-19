@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 18,
+      "width": 70,
+      "ypos": 391,
+      "type": "match",
+      "xpos": 91
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qube-manager-vm-rc"
+  ]
+}

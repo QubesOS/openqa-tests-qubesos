@@ -80,6 +80,9 @@ sub run {
     } elsif (check_var("MACHINE", "hw15")) {
         $extra_xen_opts .= ' dbgp=xhci@pci00:14.0,share=yes';
         $serial_console = "xhci";
+    } elsif (check_var("MACHINE", "hw16")) {
+        # not really AMT, but LPSS on PCI bus 0
+        $extra_xen_opts .= ' com1=115200,8n1,amt';
     }
     script_run "sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /mnt/sysimage/boot/grub2/grub.cfg";
     script_run "sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";

@@ -124,8 +124,8 @@ class DefaultPV(qubes.ext.Extension):
             qubes.config.defaults['kernelopts'] += ' xen_scrub_pages=0'
             qubes.config.defaults['kernelopts_pcidevs'] += ' xen_scrub_pages=0'
         if 'journald' not in qubes.config.defaults['kernelopts']:
-            qubes.config.defaults['kernelopts'] += ' systemd.journald.forward_to_console=1'
-            qubes.config.defaults['kernelopts_pcidevs'] += ' systemd.journald.forward_to_console=1'
+            qubes.config.defaults['kernelopts'] += ' systemd.journald.forward_to_console=1 systemd.journald.max_level_console=debug'
+            qubes.config.defaults['kernelopts_pcidevs'] += ' systemd.journald.forward_to_console=1 systemd.journald.max_level_console=debug'
 
         self.dom0_cmdline = pathlib.Path('/proc/cmdline').read_bytes().decode()
 

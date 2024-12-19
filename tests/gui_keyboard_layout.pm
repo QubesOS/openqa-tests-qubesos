@@ -35,14 +35,16 @@ sub test_file_touch {
     # touch a file with input from gui domain and then from target vm
     x11_start_program('touch e1qwertya', valid => 0);
     x11_start_program('qvmrun work xterm', target_match => ['work-xterm', 'work-xterm-inactive', 'whonix-wizard-cancel', 'whonix-systemcheck-error'], match_timeout => 90);
-    # wait for possibly whonixcheck...
-    sleep 5;
-    if (check_screen('whonix-wizard-cancel', 5)) {
-        click_lastmatch();
-    }
-    # and a message about wrong qube type
-    if (check_screen('whonix-systemcheck-error', 20)) {
-        click_lastmatch();
+    if ($self->{template} =~ /whonix/) {
+        # wait for possibly whonixcheck...
+        sleep 5;
+        if (check_screen('whonix-wizard-cancel', 5)) {
+            click_lastmatch();
+        }
+        # and a message about wrong qube type
+        if (check_screen('whonix-systemcheck-error', 20)) {
+            click_lastmatch();
+        }
     }
     # ... then click xterm again
     assert_and_click(['work-xterm', 'work-xterm-inactive']);
@@ -114,6 +116,7 @@ sub run {
         record_info($template, "Switching work qube to $template");
         assert_script_run("qvm-prefs work template $template");
         $self->select_gui_console;
+        $self->{template} = $template;
 
         $self->test_layout($guivm);
     }

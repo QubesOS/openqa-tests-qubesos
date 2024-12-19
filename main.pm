@@ -159,6 +159,9 @@ if (get_var("WHONIX_INTERACTIVE")) {
 }
 
 if (get_var('SYSTEM_TESTS')) {
+    if (get_var('TEST_TEMPLATES', '') =~ /minimal/) {
+        autotest::loadtest "tests/system_tests_prepare_minimal.pm";
+    }
     if (check_var('SYSTEM_TESTS', 'qubesmanager.tests')) {
         autotest::loadtest "tests/system_tests_prepare_manager.pm";
     }

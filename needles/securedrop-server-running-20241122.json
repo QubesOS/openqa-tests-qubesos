@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 5,
+      "ypos": 264,
+      "width": 377,
+      "height": 71,
+      "type": "match",
+      "margin": 500
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "securedrop-server-running"
+  ]
+}

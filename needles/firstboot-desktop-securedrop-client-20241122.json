@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "width": 288,
+      "height": 92,
+      "type": "match",
+      "ypos": 432,
+      "xpos": 736
+    },
+    {
+      "xpos": 2,
+      "ypos": 4,
+      "type": "match",
+      "width": 27,
+      "height": 26
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-securedrop",
+    "desktop",
+    "x11"
+  ]
+}

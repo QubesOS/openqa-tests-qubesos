@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 828,
+      "ypos": 49,
+      "width": 173,
+      "height": 57,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-securedrop",
+    "securedrop-starting-sd-proxy"
+  ]
+}

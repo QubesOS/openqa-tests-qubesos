@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "xpos": 227,
+      "ypos": 350,
+      "width": 537,
+      "height": 36,
+      "type": "match"
+    },
+    {
+      "xpos": 598,
+      "ypos": 655,
+      "width": 131,
+      "height": 32,
+      "type": "match",
+      "click_point": {
+        "xpos": 65.5,
+        "ypos": 16
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "ENV-securedrop",
+    "securedrop-login-failure"
+  ]
+}

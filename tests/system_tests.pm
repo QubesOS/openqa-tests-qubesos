@@ -54,6 +54,7 @@ sub run {
             assert_script_run("export $_='" . get_var($_) . "'");
         }
     }
+    assert_script_run("export QUBES_TEST_SKIP_KERNEL_INSTALL=1");
     if (check_var("VERSION", "4.1")) {
         assert_script_run("export DEFAULT_LVM_POOL=qubes_dom0/vm-pool");
     }

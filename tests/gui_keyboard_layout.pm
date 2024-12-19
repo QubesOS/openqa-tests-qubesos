@@ -66,18 +66,34 @@ sub test_file_touch {
     $self->select_gui_console;
 }
 
+sub switch_layout {
+    my ($self, $layout) = @_;
+
+    if (check_var("DESKTOP", "kde")) {
+        # compare with LayoutList config set in run()
+        my $layout_idx;
+        $layout_idx = 0 if ($layout eq "us");
+        $layout_idx = 1 if ($layout eq "de");
+        die "unsupported layout $layout" unless defined $layout_idx;
+        x11_start_program("gdbus call -e -d org.kde.keyboard -o /Layouts -m org.kde.KeyboardLayouts.setLayout $layout_idx", valid => 0);
+    } else {
+        x11_start_program("setxkbmap $layout", valid => 0);
+    }
+}
+
+
 sub test_layout {
     my ($self, $guivm) = @_;
 
     # set keyboard layout before VM start
     record_info('Layout: de', 'Switching keyboard layout before VM start');
-    x11_start_program('setxkbmap de', valid => 0);
+    $self->switch_layout("de");
     sleep 1;
 
     $self->test_file_touch($guivm);
 
     record_info('Layout: us', 'Switching keyboard layout after VM start');
-    x11_start_program('setxkbmap us', valid => 0);
+    $self->switch_layout("us");
     sleep 1;
 
     if (!check_var('VERSION', '4.0')) {
@@ -106,6 +122,21 @@ sub run {
         assert_script_run("echo 'qubes.VMExecGUI * $guivm \@tag:guivm-$guivm allow' >> /etc/qubes/policy.d/25-tests.policy");
         assert_script_run("qvm-run -u root --nogui $guivm 'ln -s /usr/bin/qvm-run /usr/local/bin/qvmrun'");
     }
+
+    if (check_var("DESKTOP", "kde")) {
+        # https://euroquis.nl/kde/2024/09/14/keyboard.html
+        if ($guivm eq 'dom0') {
+            my $ret = script_run("sudo -u user sed -i -e 's/LayoutList=.*/LayoutList=us,de/' /home/user/.config/kxkbrc");
+            if ($ret != 0) {
+                assert_script_run("echo -e '[Layout]\nLayoutList=us,de' | sudo -u user tee /home/user/.config/kxkbrc");
+            }
+            assert_script_run("sudo -u user env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus gdbus emit -e -o /Layouts -s org.kde.keyboard.reloadConfig");
+        } else {
+            # TODO: do the above via qvm-run
+            die "not implemented"
+        }
+    }
+
     foreach (split /\n/, $templates) {
         next unless /Template/;
         s/\|.*//;

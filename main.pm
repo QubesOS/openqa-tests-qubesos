@@ -215,7 +215,9 @@ if (get_var("GUI_TESTS")) {
         autotest::loadtest "tests/qui_widgets_notifications.pm";
         autotest::loadtest "tests/qui_widgets_update.pm";
 
-        autotest::loadtest "tests/qubesmanager_createnewvm.pm";
+        if (check_var("VERSION", "4.2")) {
+            autotest::loadtest "tests/qubesmanager_createnewvm.pm";
+        }
         if (check_var("VERSION", "4.1")) {
             autotest::loadtest "tests/qubesmanager_globalsettings.pm";
         }

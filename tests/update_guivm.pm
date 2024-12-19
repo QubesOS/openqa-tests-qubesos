@@ -32,9 +32,12 @@ sub run {
     become_root;
     curl_via_netvm;
 
-    if (get_var('GUIVM_VNC')) {
+    if (check_var('GUIVM_VNC', '1')) {
         $state = 'qvm.sys-gui-vnc';
         $vm = 'sys-gui-vnc';
+    } elsif (check_var('GUIVM_GPU', '1')) {
+        $state = 'qvm.sys-gui-gpu';
+        $vm = 'sys-gui-gpu';
     }
 
     assert_script_run("qubesctl top.enable $state");
@@ -48,7 +51,7 @@ sub run {
 
     # disable autostart until all tests modules can deal with it
     assert_script_run("qvm-prefs $vm autostart false");
-    if (get_var('GUIVM_VNC')) {
+    if (check_var('GUIVM_VNC', '1')) {
         # setup forwarding to sys-gui-vnc
         assert_script_run("echo qvm-connect-tcp 5900:\@default:5900 | qvm-run -pu root sys-net tee -a /rw/config/rc.local");
         assert_script_run("echo nft add rule ip qubes custom-input tcp dport 5900 accept | qvm-run -pu root sys-net tee -a /rw/config/rc.local");

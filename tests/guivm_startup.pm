@@ -27,8 +27,10 @@ sub run {
     assert_screen "desktop";
     my $vm = 'sys-gui';
 
-    if (get_var('GUIVM_VNC')) {
+    if (check_var('GUIVM_VNC', '1')) {
         $vm = 'sys-gui-vnc';
+    } elsif (check_var('GUIVM_GPU', '1')) {
+        $vm = 'sys-gui-gpu';
     }
 
     # FIXME: change to serial console, don't assume x11 session in dom0
@@ -43,11 +45,17 @@ sub run {
     mouse_hide;
     assert_script_run("! qvm-check sys-whonix || time qvm-start sys-whonix", 90);
     assert_script_run("tail -F /var/log/xen/console/guest-$vm.log >> /dev/$testapi::serialdev & true");
-    assert_script_run("qvm-start --skip-if-running $vm");
 
-    type_string("exit\n");
+    if (check_var('GUIVM_GPU', '1')) {
+        select_root_console();
+        assert_script_run("systemctl stop lightdm");
+        assert_script_run("qubesctl state.sls qvm.sys-gui-gpu-attach-gpu");
+    } else {
+        assert_script_run("qvm-start --skip-if-running $vm");
+        type_string("exit\n");
+    }
 
-    if (get_var('GUIVM_VNC')) {
+    if (check_var('GUIVM_VNC', '1')) {
         # FIXME: make it packaged, rc.local or such
         select_root_console();
         if (check_var("VERSION", "4.1")) {
@@ -65,6 +73,24 @@ sub run {
         send_key "ret";
 
         $self->set_gui_console('guivm-vnc');
+        assert_screen("desktop", timeout => 120);
+    } elsif (check_var('GUIVM_GPU', '1')) {
+        # FIXME: make it packaged, rc.local or such
+        # it's already at root console for GUIVM_GPU case
+        if (check_var("VERSION", "4.1")) {
+            assert_script_run("echo -e '$testapi::password\n$testapi::password' | qvm-run --nogui -p -u root $vm 'passwd --stdin user'");
+        } else {
+            # 'passwd' is not installed by default...
+            assert_script_run("echo '$testapi::password' | qvm-run --nogui -p -u root $vm 'hash=\$(openssl passwd -6 -stdin) && sed -i \"s,^user:[^:]*,user:\$hash,\" /etc/shadow'");
+        }
+        # Force 1024x768 so openQA is happy
+        assert_script_run("qvm-run --nogui -pu root $vm env XAUTHORITY=/var/run/lightdm/root/:0 xrandr -s 1024x768");
+
+        select_console('x11', await_console=>0);
+        assert_screen('login-prompt-user-selected');
+        type_string $testapi::password;
+        send_key "ret";
+
         assert_screen("desktop", timeout => 120);
     } else {
         assert_and_click("panel-user-menu");

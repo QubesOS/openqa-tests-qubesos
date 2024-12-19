@@ -107,7 +107,7 @@ sub run {
         assert_script_run("cp /root/extra-files/update/systemtests.py /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/");
     }
 
-    assert_script_run("script -c 'qubes-vm-update --max-concurrency=2 $targets --show-output' -a -e qubesctl-upgrade.log", timeout => 14400);
+    assert_script_run("script -c 'qubes-vm-update --log DEBUG --max-concurrency=2 $targets --show-output' -a -e qubesctl-upgrade.log", timeout => 14400);
     upload_logs("qubesctl-upgrade.log");
 
     # disable all states

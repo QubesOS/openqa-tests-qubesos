@@ -60,6 +60,7 @@ sub run {
     # wait for xterm to really be added, because that moves entries on the left
     assert_screen("vm-settings-app-xterm-added");
     if (!$text_editor_added) {
+        # if there was no "Geany" earlier, look for "text editor" now
         assert_and_click(["vm-settings-app-evince", "vm-settings-app-text-editor"]);
         send_key('end');
         wait_still_screen;

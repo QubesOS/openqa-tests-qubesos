@@ -195,10 +195,12 @@ def run_test():
         values['TEST_TEMPLATES'] = req_values['TEST_TEMPLATES']
     if 'UPDATE_TEMPLATES' in req_values:
         values['UPDATE_TEMPLATES'] = req_values['UPDATE_TEMPLATES']
-    if 'FLAVOR' in req_values and req_values['FLAVOR'] in ('pull-requests', 'kernel', 'whonix'):
+    if 'FLAVOR' in req_values and req_values['FLAVOR'] in ('pull-requests', 'kernel', 'whonix', 'templates'):
         values['FLAVOR'] = req_values['FLAVOR']
     if 'KERNEL_VERSION' in req_values and req_values['KERNEL_VERSION'] in ('stable', 'latest'):
         values['KERNEL_VERSION'] = req_values['KERNEL_VERSION']
+    if 'QUBES_TEST_MGMT_TPL' in req_values:
+        values['QUBES_TEST_MGMT_TPL'] = req_values['QUBES_TEST_MGMT_TPL'];
 
     subprocess.check_call([
         'openqa-cli', 'api', '-X', 'POST',

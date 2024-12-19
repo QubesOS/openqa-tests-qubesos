@@ -49,7 +49,7 @@ sub run {
         assert_script_run("export QUBES_TEST_TEMPLATES='" . get_var('TEST_TEMPLATES') . "'");
     }
 
-    foreach ('QUBES_TEST_EXTRA_INCLUDE', 'QUBES_TEST_EXTRA_EXCLUDE') {
+    foreach ('QUBES_TEST_EXTRA_INCLUDE', 'QUBES_TEST_EXTRA_EXCLUDE', 'QUBES_TEST_MGMT_TPL') {
         if (get_var($_)) {
             assert_script_run("export $_='" . get_var($_) . "'");
         }

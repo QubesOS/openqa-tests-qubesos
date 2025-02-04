@@ -1,3 +1,6 @@
+import csv
+import io
+
 import sqlalchemy
 from sqlalchemy import (
     Column, Boolean, Integer, String, Enum, PickleType,
@@ -316,6 +319,49 @@ class JobData(Base):
         pr_list = pr_raw_list.strip().split(" ")
 
         return pr_list
+
+    def get_performance_data(self):
+        # this should return numbers, not strings
+        result = {}
+
+        json_data = self.get_job_details()
+
+        for log in json_data['job']['ulogs']:
+            if log == 'system_tests-perf_test_results.txt':
+                log_file = "{}/tests/{}/file/{}".format(
+                    OPENQA_URL, self.job_id, log)
+
+                perf_data = requests.get(log_file).text
+                break
+        else:
+            return result
+
+        if 'qrexec_perf' in json_data['job']['name']:
+            for line in perf_data.split("\n"):
+                if not line:
+                    continue
+                test_name, v = line.split(" ")
+                result[test_name] = float(v)
+            return result
+
+
+        if 'storage_perf' in json_data['job']['name']:
+            perf_data_parsed = [{k: v for k, v in row.items()}
+                 for row in csv.DictReader(io.StringIO(perf_data),
+                                           skipinitialspace=True,
+                                           delimiter=";")]
+            for line in perf_data_parsed:
+                for k, v in line.items():
+                    if k and 'bandwidth' in k:
+                        # caution: seems like the file can be broken and has
+                        # more lines than headers
+                        if float(v) != 0:
+                            result[line["# terse_version_3"] + ":" + k] = \
+                                float(v)
+
+            return result
+
+        return result
 
     def get_template_issues(self):
         json_data = self.get_job_details()

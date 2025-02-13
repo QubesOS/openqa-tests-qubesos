@@ -29,6 +29,8 @@ vm-packages:
       - python3-devel
 {% endif %}
       - nmap-ncat
+{% elif grains['os'] != 'Arch' %}
+      - python-cairo
 {% elif grains['os'] != 'Gentoo' %}
       - python3-cairo
       - libudev-dev
@@ -39,6 +41,8 @@ vm-packages:
       - createrepo_c
 {% elif grains['os'] == 'Debian' and grains['osmajorrelease'] >= 11 %}
       - createrepo-c
+{% elif grains['os'] == 'Arch' %}
+      - createrepo_c
 {% elif grains['os'] != 'Gentoo' %}
       - createrepo
 {% endif %}
@@ -55,6 +59,17 @@ vm-packages:
       - sys-devel/gcc
       - dev-vcs/git
       - media-sound/alsa-utils
+{% elif grains['os'] == 'Arch' %}
+      - dnsmasq
+      - python-pip
+      - xdotool
+      - gcc
+      - git
+      - alsa-utils
+      - qubes-input-proxy
+      - qubes-usb-proxy
+      - usbutils
+      - qubes-core-admin-client
 {% else %}
       - dnsmasq
       - python3-pip

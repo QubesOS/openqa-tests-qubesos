@@ -4,10 +4,11 @@ import time
 
 def get_packages(dist, version):
     packages = [
-        "createrepo_c" if dist == "RedHat" else "createrepo-c", # else: Debian
+        "createrepo_c" if dist != "Debian" else "createrepo-c",
         "dnsmasq",
         "python3-pip" if dist != "ArchLinux" else "python-pip",
         "qubes-gpg-split-tests",
+        "split-gpg2-tests",
         "xdotool",
         "gcc",
         "pulseaudio-utils" if dist != "ArchLinux" else "libpulse",
@@ -28,9 +29,11 @@ def get_packages(dist, version):
             "pipewire-utils",
         ]
     if dist == "ArchLinux":
-        packages.remove("createrepo-c") # not packaged there, consider AUR later
+        packages += ("qubes-vm-dom0-updates",)
+        packages += ("pipewire-audio",)  # pipewire-utils on Fedora
         packages.remove("qubes-gpg-split-tests") # not a separate package
-        packages.remove("qubes-core-admin-client") # not packaged yet
+        packages.remove("split-gpg2-tests") # not a separate package
+        #packages.remove("qubes-core-admin-client") # not packaged yet
         packages.remove("qubes-audio-daemon") # not packaged yet
         packages.remove("qubes-video-companion") # not packaged yet
     return packages

@@ -11,6 +11,7 @@ dom0-packages:
       - syslinux
       - genisoimage
       - grub2-pc-modules
+      - grub2-efi-x64-modules
       # for mkefiboot
       - lorax
       - pulseaudio-utils
@@ -19,6 +20,7 @@ dom0-packages:
       - python3-objgraph
       - patch
       - qubes-video-companion-dom0
+      - split-gpg2-dom0
 {% if grains['osrelease'] != '4.1' %}
       - xinput
 {% endif %}

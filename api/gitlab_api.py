@@ -28,7 +28,7 @@ TARGET_ISO_DIR = '/var/lib/openqa/factory/iso'
 # defaults
 config_defaults = {
     'owner_allowlist': 'QubesOS',
-    'repo_allowlist': 'qubes-continuous-integration qubes-installer-qubes-os qubes-linux-kernel qubes-vmm-xen qubes-vmm-xen-stubdom-linux qubes-gui-agent-linux qubes-grub2',
+    'repo_allowlist': 'qubes-continuous-integration qubes-installer-qubes-os qubes-linux-kernel qubes-vmm-xen qubes-vmm-xen-stubdom-linux qubes-gui-agent-linux qubes-grub2 qubes-app-linux-usb-proxy core-admin',
     'repo_blocklist': None,
     'job_allowlist': '*',
     'user_allowlist': None,
@@ -161,6 +161,14 @@ def run_test():
 
     version = req_values.get('VERSION') or '4.3'
     buildid = time.strftime('%Y%m%d%H-') + version
+
+    if 'TEST_TEMPLATES' in req_values:
+        # append distro name to buildid if test is limited to some
+        test_templates = req_values['TEST_TEMPLATES']
+        distros = {val.split("-")[0] for val in test_templates.split()}
+        if len(distros) == 1:
+            buildid += "-" + distros.pop()
+
     # cannot serve repo directly from gitlab, because it refuses connections via Tor :/
     repo_url = req_values['REPO_JOB'] + '/artifacts/raw/repo'
     with requests.get(req_values['REPO_JOB'] + '/artifacts/download', stream=True) as r:
@@ -195,6 +203,8 @@ def run_test():
         values['TEST_TEMPLATES'] = req_values['TEST_TEMPLATES']
     if 'UPDATE_TEMPLATES' in req_values:
         values['UPDATE_TEMPLATES'] = req_values['UPDATE_TEMPLATES']
+    if 'DEFAULT_TEMPLATE' in req_values:
+        values['DEFAULT_TEMPLATE'] = req_values['DEFAULT_TEMPLATE']
     if 'FLAVOR' in req_values and req_values['FLAVOR'] in ('pull-requests', 'kernel', 'whonix', 'templates'):
         values['FLAVOR'] = req_values['FLAVOR']
     if 'KERNEL_VERSION' in req_values and req_values['KERNEL_VERSION'] in ('stable', 'latest'):

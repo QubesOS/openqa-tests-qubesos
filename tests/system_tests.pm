@@ -83,6 +83,7 @@ testfunc() {
 ENDFUNC
     chop($testfunc);
     assert_script_run($testfunc);
+    assert_script_run("export QUBES_TEST_PERF_FILE=\$PWD/perf_test_results.txt");
     foreach (split / /, get_var('SYSTEM_TESTS')) {
         my ($test, $timeout) = split /:/;
         $timeout //= 3600;
@@ -111,6 +112,7 @@ ENDFUNC
         upload_logs("nose2-junit.xml");
         parse_extra_log('JUnit', "nose2-junit-$test.xml");
 
+        upload_logs("perf_test_results.txt", failok => 1);
         # upload per-test logs
         my $test_logs_path = "/tmp/$test/";
         assert_script_run("mkdir $test_logs_path");

@@ -20,6 +20,7 @@ def get_packages(dist, version):
         "qubes-core-admin-client",
         "qubes-audio-daemon",
         "qubes-video-companion",
+        "fio",
     ]
     if dist == "RedHat":
         packages += [

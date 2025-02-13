@@ -50,6 +50,11 @@ sub run {
         click_lastmatch();
         assert_and_click("vm-settings-app-add");
         $text_editor_added = 1;
+    } elsif (check_screen("vm-settings-app-leafpad", 10)) {
+        # this is Arch - it has leafpad as "text editor"
+        click_lastmatch();
+        assert_and_click("vm-settings-app-add");
+        $text_editor_added = 1;
     }
     assert_and_click("vm-settings-app-evince");
     send_key('end');

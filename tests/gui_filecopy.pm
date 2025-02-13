@@ -40,6 +40,10 @@ sub run {
     type_string("https://www.qubes-os.org/\n");
     send_key("ctrl-s");
     assert_screen("file-save-dialog-home-dir");
+    if (match_has_tag("leafpad-save-dialog-home-dir")) {
+        # select "home", as this one defaults to "recent"
+        click_lastmatch();
+    }
     send_key("ctrl-a");
     type_string("test.txt");
     send_key("ret");

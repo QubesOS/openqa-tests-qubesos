@@ -133,6 +133,89 @@ def format_results(results, jobs, reference_jobs=None, instability_analysis=None
         output_string += "## Unstable tests\n"
         output_string += instability_analysis.report(details=True)
 
+    # performance tests
+    output_string += "## Performance Tests\n\n"
+
+    current_job_perf_data = {}
+    ref_job_perf_data = {}
+    for job in jobs:
+        if job.job_name.endswith("perf"):
+            current_job_perf_data[job.job_name] = job.get_performance_data()
+
+    if reference_jobs:
+        for job in reference_jobs:
+            if job.job_name.endswith("perf"):
+                ref_job_perf_data[job.job_name] = job.get_performance_data()
+
+        performance_issues = []
+        other_perf = []
+
+        for job_name, test_results in current_job_perf_data.items():
+            for test_name, result in test_results.items():
+                s = f'* {test_name}: {result:.2f}'
+
+                # try to find reference value
+                ref = None
+                if job_name in ref_job_perf_data:
+                    ref = ref_job_perf_data[job_name].get(test_name, None)
+
+                degradation = False
+                alert = None
+
+                if ref:
+                    if 'qrexec' in job_name:
+                        degradation = result / ref > 1
+                        alert = result / ref > 1.1
+                    else:
+                        # a storage bandwidth job
+                        degradation = result / ref < 1
+                        alert = result / ref < 0.9
+
+                if degradation:
+                    s += (f" :small_red_triangle_up: ( previous "
+                          f"job: {ref:.2f}, degradation: "
+                          f"{result / ref:.2%})\n")
+                elif ref:
+                    s += (f" :green_circle: ( previous "
+                          f"job: {ref:.2f}, improvement: "
+                          f"{result / ref:.2%})\n")
+                else:
+                    s += '\n'
+
+                if alert:
+                    performance_issues.append(s)
+                else:
+                    other_perf.append(s)
+
+        output_string += "### Performance degradation:\n\n"
+        if performance_issues:
+            output_string += (
+                ("<details><summary>{} performance degradations</summary>\n"
+                 "\n{}</details>\n\n").format(
+                len(performance_issues), "".join(performance_issues)))
+        else:
+            output_string += "No issues\n"
+
+        output_string += "### Remaining performance tests:\n\n"
+        if other_perf:
+            output_string += (
+                ("<details><summary>{} tests</summary>\n"
+                 "\n{}</details>\n\n").format(
+                len(other_perf), "".join(other_perf)))
+        else:
+            output_string += "No remaining performance tests\n"
+
+    else:
+        performance_tests = []
+        for job_name, test_results in current_job_perf_data.items():
+            for test_name, result in test_results.items():
+                s = f'* {test_name}: {result:.2f}\n'
+                performance_tests.append(s)
+
+        output_string += ("<details><summary>{} tests</summary>\n\n{}</details>"
+                          "\n\n").format(len(performance_tests),
+                                         "".join(performance_tests))
+
     return output_string
 
 def main():

@@ -31,7 +31,7 @@ class InstabilityAnalysis:
         text = "<details>\n\n"
         for job_instability in self.unstable_jobs.values():
             text += job_instability.report(details)
-        text += "\n</details>"
+        text += "\n</details>\n\n"
         return text
 
 class AbstractInstability:
@@ -144,7 +144,7 @@ class TestInstability(AbstractInstability):
                         fail.job.job_id,
                         fail.get_test_url(),
                         fail.relevant_error)
-                text += "  </details>\n"
+                text += "  </details>\n\n"
             else:
                 text = "  * {}/{}\n".format(test_name, test_title)
                 text += " ({}/{} times with errors\n\n)".format(

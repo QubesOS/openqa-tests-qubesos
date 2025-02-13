@@ -52,8 +52,8 @@ sub run {
     assert_screen('global-config-general-open');
 
     # change something
-    assert_and_click('global-config-fullscreen-open');
-    assert_and_click('global-config-fullscreen-disallow');
+    assert_and_click('global-config-open-clockvm');
+    assert_and_click('global-config-clockvm-select-sysusb');
 
     # try to switch pages
     assert_and_click('global-config-switch-to-url');

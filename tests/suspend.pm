@@ -50,7 +50,11 @@ sub run {
     mouse_hide;
     # then trigger it with a fresh timeout
     my $retry = 3;
-    while (!wait_screen_change(sub { send_key 'ctrl' }) and $retry > 0) {
+    while ($retry > 0) {
+        send_key 'ctrl';
+        if (check_screen('xscreensaver-prompt', 10)) {
+            last;
+        }
         $retry -= 1;
     }
     assert_screen('xscreensaver-prompt');
@@ -87,6 +91,7 @@ sub run {
     if (script_run('qvm-check sys-whonix') == 0) {
         assert_script_run('set -o pipefail');
         my $ret = script_run("qvm-run -ap sys-whonix 'LC_ALL=C whonixcheck --verbose --leak-tests --cli' | tee whonixcheck-sys-whonix.log", timeout => 500, die_on_timeout => 0);
+        $self->maybe_unlock_screen;
         if (!defined($ret)) {
             send_key('ctrl-c');
         }

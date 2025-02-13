@@ -39,6 +39,7 @@ sub run {
 #    assert_script_run('/bin/cp -a /root/extra-files/system-tests /srv/salt/');
 
     assert_script_run("(set -o pipefail; sudo qubes-dom0-update -y kde-settings-qubes 2>&1 | tee /tmp/kde-install.log)", timeout => 1800);
+    $self->maybe_unlock_screen;
     upload_logs('/tmp/kde-install.log', failok => 1);
 
     # add this manually for now, but at some point it should get packaged

@@ -32,35 +32,29 @@ sub run {
     become_root;
     curl_via_netvm;
 
+    assert_script_run("cp /root/extra-files/update/atestrepo.py /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/");
     if (get_var("UPDATE")) {
         assert_script_run('qubesctl top.enable update');
     }
     if (get_var("SALT_SYSTEM_TESTS")) {
         assert_script_run('qubesctl top.enable system-tests');
+        assert_script_run("cp /root/extra-files/update/systemtests.py /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/");
     }
-    my @templates = split / /, get_var("UPDATE_TEMPLATES", "");
-    foreach (@templates) {
-        assert_script_run("(set -o pipefail; qubesctl --skip-dom0 --show-output --targets=$_ state.highstate 2>&1 | tee qubesctl-update.log)", timeout => 9000);
-        # unlock the screen, if screenlocker engaged
-        if (check_screen("screenlocker-blank")) {
-            # workaround for DPMS emulation issues under KVM
-            send_key('ctrl-alt-f2');
-            sleep(2);
-            send_key('ctrl-alt-f1');
-            sleep(2);
-        }
-        # unlock the screen, if screenlocker engaged
-        if (check_screen("screenlocker-blank")) {
-            send_key('ctrl');
-            assert_screen('xscreensaver-prompt', timeout=>5);
-            type_password();
-            send_key('ret');
-        }
+    my $targets = get_var('UPDATE_TEMPLATES', "");
+    $targets =~ s/ /,/g;
+    if (check_var("VERSION", "4.1")) {
+        assert_script_run("(set -o pipefail; qubesctl --skip-dom0 --show-output --targets=$targets state.highstate 2>&1 | tee qubesctl-update.log)", timeout => 9000);
+    } else {
+        assert_script_run("script -c 'qubes-vm-update --force-update --log DEBUG --max-concurrency=2 --targets=$targets --show-output' -a -e qubesctl-update.log", timeout => 14400);
     }
+    $self->maybe_unlock_screen;
     upload_logs("qubesctl-update.log");
 
     # disable all states
     script_run('rm -f /srv/salt/_tops/base/*');
+    script_run('rm -f /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/atestrepo.py');
+    script_run('rm -f /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/systemtests.py');
+
 
     type_string("exit\n");
     type_string("exit\n");

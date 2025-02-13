@@ -28,6 +28,13 @@ sub run {
     send_key('alt-f10');
 
     my $new_template = get_var("DEFAULT_TEMPLATE");
+    my $current_default = script_output("qubes-prefs default-template");
+    my $new_default = script_output("qvm-ls --raw-data --fields=name|grep ^$new_template|head -1");
+    if ($current_default eq $new_default) {
+        type_string("exit\n");
+        return;
+    }
+
     my $appmenus_funcs;
     if (check_var("VERSION", "4.0")) {
         $appmenus_funcs = <<ENDCODE;

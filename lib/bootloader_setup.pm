@@ -162,29 +162,30 @@ sub heads_generate_hotp {
         assert_screen('heads-scan-qr');
     }
     send_key 'ret';
-    assert_screen('heads-admin-pin-prompt');
-    if (!match_has_tag('heads-admin-pin-default-detected')) {
-        type_string '12345678';
-    }
-    send_key 'ret';
-    # this screen isn't present in newer Heads builds anymore
-    if (check_screen('heads-nitrokey-init-success', 30)) {
+    if (check_screen('heads-admin-pin-prompt', 15)) {
+        if (!match_has_tag('heads-admin-pin-default-detected')) {
+            type_string '12345678';
+        }
         send_key 'ret';
-    }
-    if (check_var("HEADS_DISK_UNLOCK", "1") and check_screen('heads-disk-recovery-key-prompt', 15)) {
-        # WARNING: TPM sealed Disk Unlock Key secret needs to be resealed ...
-        # Resealing TPM LUKS Unlock Key ...
-        # Enter Disk Recovery Key/passphrase:
-        assert_screen('heads-disk-recovery-key-prompt');
-        send_key 'lukspass';
-        send_key 'ret';
-        assert_screen("heads-disk-unlock-key-prompt");
-        type_string 'unlockpass';
-        send_key 'ret';
-        type_string 'unlockpass';
-        send_key 'ret';
-        # let it remove/add slot and scroll a bit to hide old pin prompts
-        sleep(10);
+        # this screen isn't present in newer Heads builds anymore
+        if (check_screen('heads-nitrokey-init-success', 30)) {
+            send_key 'ret';
+        }
+        if (check_var("HEADS_DISK_UNLOCK", "1") and check_screen('heads-disk-recovery-key-prompt', 15)) {
+            # WARNING: TPM sealed Disk Unlock Key secret needs to be resealed ...
+            # Resealing TPM LUKS Unlock Key ...
+            # Enter Disk Recovery Key/passphrase:
+            assert_screen('heads-disk-recovery-key-prompt');
+            send_key 'lukspass';
+            send_key 'ret';
+            assert_screen("heads-disk-unlock-key-prompt");
+            type_string 'unlockpass';
+            send_key 'ret';
+            type_string 'unlockpass';
+            send_key 'ret';
+            # let it remove/add slot and scroll a bit to hide old pin prompts
+            sleep(10);
+        }
     }
     assert_screen('heads-menu');
     if (match_has_tag('heads-menu-hotp-fail')) {

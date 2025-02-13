@@ -1,6 +1,7 @@
 import os
 import subprocess
 import time
+import fcntl
 
 def get_packages(dist, version):
     packages = [
@@ -46,6 +47,9 @@ def systemtests(os_data, log, **kwargs):
     if os_data["os_family"] == "Debian":
         for _ in range(5):
             try:
+                if os.path.exists("/var/lib/apt/lists/lock"):
+                    with open("/var/lib/apt/lists/lock", "rb+") as lock_f:
+                        fcntl.lockf(lock_f.fileno(), fcntl.LOCK_EX)
                 subprocess.check_call(["apt-get", "update"],
                                       stdin=subprocess.DEVNULL,
                                       env=environ)

@@ -72,13 +72,21 @@ sub run {
         x11_start_program('qubes-global-config --open-at updates#template_repositories', target_match => 'qubes-global-config-template-repos');
         assert_screen('global-config-open-at-template-repositories');
         assert_and_click('global-config-switch-to-general');
-    } else {
-        x11_start_program('qubes-global-config');
+        assert_and_click('global-config-cancel');
     }
 
     # open docs
-    assert_and_click('global-config-open-docs');
-    assert_and_click('global-config-close-docs', timeout => 90);
+    if (!check_var("VERSION", "4.2")) {
+        x11_start_program('qubes-global-config --open-at basics#memory_balancing',
+        target_match =>
+        'qubes-global-config-window-management');
+        assert_and_click('global-config-open-docs');
+        assert_and_click('global-config-close-docs', timeout => 90);
+        # exit
+        assert_and_click('global-config-cancel');
+    }
+
+    x11_start_program('qubes-global-config');
 
     select_root_console;
     my $old_clockvm = script_output('qubes-prefs clockvm');

@@ -28,10 +28,6 @@ sub run {
 
     # open work VM settings and add "Document Viewer" application
     assert_and_click("menu");
-    if (check_screen("menu-tab-favorites-active", 30)) {
-        # switch to apps tab
-        click_lastmatch();
-    }
     assert_and_click("menu-vm-work");
     if (check_var("VERSION", "4.2")) {
         # workaround for "settings" visible too early

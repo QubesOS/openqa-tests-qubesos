@@ -30,10 +30,6 @@ sub run {
     # 1. Test if qubes manager works
     # 2. Generate menu (#5804)
     assert_and_click("menu");
-    if (check_screen("menu-tab-favorites-active", 30)) {
-        # switch to apps tab
-        click_lastmatch();
-    }
     assert_and_click("menu-qubes-tools");
     if (match_has_tag("new-menu")) {
         assert_and_click("menu-qubes-tools-submenu");

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 5,
+      "ypos": 4,
+      "width": 632,
+      "height": 474,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "screenlocker-blank",
+    "screenlocker-blank-no-signal"
+  ]
+}

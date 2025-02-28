@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "xpos": 758,
+      "ypos": 333,
+      "width": 232,
+      "type": "match",
+      "height": 38,
+      "click_point": {
+        "xpos": 218,
+        "ypos": 15
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-open-clockvm"
+  ]
+}

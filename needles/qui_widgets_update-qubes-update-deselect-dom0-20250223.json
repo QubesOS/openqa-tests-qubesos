@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 161,
+      "xpos": 28,
+      "height": 28,
+      "type": "match",
+      "width": 111
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qubes-update-deselect-dom0"
+  ]
+}

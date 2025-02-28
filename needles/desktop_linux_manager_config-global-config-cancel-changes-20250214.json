@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 415,
+      "width": 294,
+      "ypos": 374,
+      "type": "match",
+      "height": 66
+    },
+    {
+      "xpos": 641,
+      "ypos": 488,
+      "width": 166,
+      "height": 54,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-cancel-changes"
+  ]
+}

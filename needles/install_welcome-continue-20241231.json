@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 930,
+      "ypos": 728,
+      "width": 82,
+      "height": 24,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "installer-welcome-continue"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "xpos": 6,
+      "width": 117,
+      "type": "match",
+      "height": 36,
+      "ypos": 302
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "wrong password prompt position"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "luks-prompt"
+  ]
+}

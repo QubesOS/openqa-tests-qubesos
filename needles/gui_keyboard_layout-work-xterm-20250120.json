@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 34,
+      "width": 134,
+      "xpos": 147,
+      "type": "match",
+      "height": 17
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-archlinux",
+    "work-xterm"
+  ]
+}

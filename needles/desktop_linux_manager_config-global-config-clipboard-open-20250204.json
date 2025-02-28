@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 90,
+      "ypos": 499,
+      "width": 93,
+      "height": 23,
+      "type": "match"
+    },
+    {
+      "type": "match",
+      "height": 55,
+      "ypos": 138,
+      "width": 187,
+      "xpos": 280
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-clipboard-open"
+  ]
+}

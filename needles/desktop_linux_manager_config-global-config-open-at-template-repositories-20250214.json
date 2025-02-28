@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 214,
+      "ypos": 465,
+      "type": "match",
+      "height": 54,
+      "xpos": 286
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-open-at-template-repositories"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 227,
+      "xpos": 664,
+      "width": 92,
+      "height": 24,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-archlinux",
+    "firefox-multitab-close"
+  ]
+}

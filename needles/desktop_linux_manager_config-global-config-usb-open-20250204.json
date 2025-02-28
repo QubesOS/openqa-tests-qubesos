@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 112,
+      "ypos": 360,
+      "height": 32,
+      "type": "match",
+      "xpos": 93
+    },
+    {
+      "width": 195,
+      "ypos": 304,
+      "type": "match",
+      "height": 52,
+      "xpos": 765
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-usb-open"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 865,
+      "type": "match",
+      "height": 30,
+      "width": 27,
+      "ypos": 193
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-fw-add-rule"
+  ]
+}

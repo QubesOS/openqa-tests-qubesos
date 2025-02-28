@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 26,
+      "ypos": 249,
+      "width": 170,
+      "xpos": 79
+    },
+    {
+      "xpos": 239,
+      "type": "match",
+      "ypos": 304,
+      "height": 28,
+      "width": 204
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw6",
+    "heads-boot-menu-list"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 161,
+      "width": 189,
+      "height": 27,
+      "xpos": 59,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qubes-update-select-dom0"
+  ]
+}

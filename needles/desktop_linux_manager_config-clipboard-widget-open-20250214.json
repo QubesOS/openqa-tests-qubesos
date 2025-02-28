@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 22,
+      "ypos": 5,
+      "height": 22,
+      "type": "match",
+      "xpos": 924
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "clipboard-widget-open"
+  ]
+}

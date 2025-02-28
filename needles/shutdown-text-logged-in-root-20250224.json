@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 168,
+      "height": 16,
+      "xpos": 4,
+      "type": "match",
+      "ypos": 128
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM-GPU",
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "text-logged-in-root"
+  ]
+}

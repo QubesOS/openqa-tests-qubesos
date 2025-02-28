@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 398,
+      "ypos": 165,
+      "width": 78,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-archlinux",
+    "menu-vm-text-editor"
+  ]
+}

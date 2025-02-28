@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 44,
+      "width": 150,
+      "ypos": 155,
+      "xpos": 318
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw7",
+    "ENV-VERSION-4-3",
+    "new-qube-select-name"
+  ]
+}

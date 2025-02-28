@@ -1,0 +1,31 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 16,
+      "ypos": 40,
+      "xpos": 374,
+      "width": 74
+    },
+    {
+      "width": 109,
+      "xpos": 581,
+      "ypos": 39,
+      "height": 18,
+      "type": "match"
+    },
+    {
+      "ypos": 113,
+      "xpos": 277,
+      "width": 174,
+      "type": "match",
+      "height": 21
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-archlinux",
+    "personal-firefox"
+  ]
+}

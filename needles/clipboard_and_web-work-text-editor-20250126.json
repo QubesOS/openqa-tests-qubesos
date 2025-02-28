@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 269,
+      "width": 82,
+      "ypos": 36,
+      "type": "match",
+      "height": 16
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-archlinux",
+    "work-leafpad",
+    "work-text-editor"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 34,
+      "type": "match",
+      "ypos": 197,
+      "width": 203,
+      "xpos": 284
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qubes-global-config-openat-thisdevice"
+  ]
+}

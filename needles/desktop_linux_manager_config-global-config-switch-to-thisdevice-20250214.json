@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 107,
+      "ypos": 567,
+      "width": 130,
+      "type": "match",
+      "height": 28
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-switch-to-thisdevice"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 24,
+      "xpos": 227,
+      "width": 91,
+      "ypos": 224
+    },
+    {
+      "click_point": {
+        "xpos": 44,
+        "ypos": 13
+      },
+      "type": "match",
+      "height": 22,
+      "width": 71,
+      "xpos": 182,
+      "ypos": 302
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "leafpad-save-prompt",
+    "text-editor-save-prompt"
+  ]
+}

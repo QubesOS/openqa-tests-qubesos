@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 43,
+      "width": 131,
+      "ypos": 141,
+      "xpos": 548
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw9",
+    "ENV-VERSION-4.3",
+    "vm-settings-devices-set"
+  ]
+}

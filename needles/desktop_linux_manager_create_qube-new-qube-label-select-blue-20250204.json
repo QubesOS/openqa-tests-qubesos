@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 325,
+      "width": 51,
+      "type": "match",
+      "height": 17,
+      "xpos": 765
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "new-qube-label-select-blue"
+  ]
+}

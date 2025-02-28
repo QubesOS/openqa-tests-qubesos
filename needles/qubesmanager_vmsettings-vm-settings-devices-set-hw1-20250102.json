@@ -1,18 +1,17 @@
 {
   "area": [
     {
-      "width": 126,
+      "ypos": 141,
       "type": "match",
-      "xpos": 154,
-      "height": 16,
-      "ypos": 265
+      "height": 43,
+      "width": 131,
+      "xpos": 547
     }
   ],
   "properties": [],
   "tags": [
     "ENV-MACHINE-hw1",
     "ENV-VERSION-4.3",
-    "vm-settings-app-atril",
-    "vm-settings-app-evince"
+    "vm-settings-devices-set"
   ]
 }

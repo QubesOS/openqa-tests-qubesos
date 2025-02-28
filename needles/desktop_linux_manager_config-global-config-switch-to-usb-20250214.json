@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 130,
+      "ypos": 295,
+      "type": "match",
+      "height": 30,
+      "xpos": 108
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-switch-to-usb"
+  ]
+}

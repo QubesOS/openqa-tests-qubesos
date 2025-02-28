@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 32,
+      "type": "match",
+      "ypos": 519,
+      "width": 136,
+      "xpos": 112
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-switch-to-url"
+  ]
+}

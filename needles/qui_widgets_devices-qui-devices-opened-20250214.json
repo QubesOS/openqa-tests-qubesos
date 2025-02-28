@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 46,
+      "type": "match",
+      "ypos": 161,
+      "width": 79,
+      "xpos": 514
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qui-devices-opened"
+  ]
+}

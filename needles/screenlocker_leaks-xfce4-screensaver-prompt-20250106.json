@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "ypos": 326,
+      "xpos": 351,
+      "width": 80,
+      "height": 77,
+      "type": "match"
+    },
+    {
+      "height": 23,
+      "type": "match",
+      "width": 86,
+      "xpos": 585,
+      "ypos": 414
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "xfce4-screensaver",
+    "xscreensaver-prompt"
+  ]
+}

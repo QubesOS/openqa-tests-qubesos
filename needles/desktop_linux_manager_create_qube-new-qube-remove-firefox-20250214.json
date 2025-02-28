@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 316,
+      "height": 21,
+      "type": "match",
+      "ypos": 519,
+      "width": 161
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "new-qube-remove-firefox"
+  ]
+}

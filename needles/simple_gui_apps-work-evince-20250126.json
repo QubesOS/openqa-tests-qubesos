@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "width": 188,
+      "xpos": 202,
+      "ypos": 34,
+      "type": "match",
+      "height": 16
+    },
+    {
+      "ypos": 67,
+      "xpos": 56,
+      "width": 62,
+      "type": "match",
+      "height": 29
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-archlinux",
+    "work-evince"
+  ]
+}

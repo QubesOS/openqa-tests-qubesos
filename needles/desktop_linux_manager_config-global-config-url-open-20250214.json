@@ -1,0 +1,30 @@
+{
+  "area": [
+    {
+      "xpos": 394,
+      "ypos": 634,
+      "width": 170,
+      "type": "match",
+      "height": 26
+    },
+    {
+      "xpos": 717,
+      "width": 234,
+      "ypos": 295,
+      "height": 55,
+      "type": "match"
+    },
+    {
+      "xpos": 109,
+      "ypos": 522,
+      "width": 123,
+      "height": 27,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-url-open"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 463,
+      "xpos": 129,
+      "width": 61,
+      "height": 15,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-archlinux",
+    "vm-settings-app-leafpad"
+  ]
+}

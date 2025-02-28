@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "ypos": 53,
+      "width": 67,
+      "height": 37,
+      "xpos": 88,
+      "type": "match"
+    },
+    {
+      "ypos": 26,
+      "type": "match",
+      "height": 26,
+      "xpos": 372,
+      "width": 58
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM-GPU",
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "text-login",
+    "tty3-selected"
+  ]
+}

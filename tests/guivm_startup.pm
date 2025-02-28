@@ -44,12 +44,13 @@ sub run {
     # let libinput know about the tablet
     mouse_hide;
     assert_script_run("! qvm-check sys-whonix || time qvm-start sys-whonix", 90);
-    assert_script_run("tail -F /var/log/xen/console/guest-$vm.log >> /dev/$testapi::serialdev & true");
+    assert_script_run("systemd-run -- sh -c 'tail -F /var/log/xen/console/guest-$vm.log >> /dev/$testapi::serialdev'");
 
     if (check_var('GUIVM_GPU', '1')) {
         select_root_console();
         assert_script_run("systemctl stop lightdm");
         assert_script_run("qubesctl state.sls qvm.sys-gui-gpu-attach-gpu");
+        assert_script_run("qvm-start --skip-if-running $vm");
     } else {
         assert_script_run("qvm-start --skip-if-running $vm");
         type_string("exit\n");
@@ -81,7 +82,7 @@ sub run {
             assert_script_run("echo -e '$testapi::password\n$testapi::password' | qvm-run --nogui -p -u root $vm 'passwd --stdin user'");
         } else {
             # 'passwd' is not installed by default...
-            assert_script_run("echo '$testapi::password' | qvm-run --nogui -p -u root $vm 'hash=\$(openssl passwd -6 -stdin) && sed -i \"s,^user:[^:]*,user:\$hash,\" /etc/shadow'");
+            assert_script_run("echo '$testapi::password' | qvm-run --nogui -p -u root $vm 'hash=\$(openssl passwd -6 -stdin) && sed -i \"s,^user:[^:]*,user:\$hash,;s,^root:[^:]*,root:\$hash,\" /etc/shadow'");
         }
         # Force 1024x768 so openQA is happy
         assert_script_run("qvm-run --nogui -pu root $vm env XAUTHORITY=/var/run/lightdm/root/:0 xrandr -s 1024x768");

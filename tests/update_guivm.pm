@@ -57,6 +57,9 @@ sub run {
         assert_script_run("echo nft add rule ip qubes custom-input tcp dport 5900 accept | qvm-run -pu root sys-net tee -a /rw/config/rc.local");
         assert_script_run("echo qubes.ConnectTCP +5900 sys-net \@default allow target=sys-gui-vnc >> /etc/qubes/policy.d/30-user.policy");
     }
+    if (check_var('GUIVM_GPU', '1')) {
+        assert_script_run("qvm-prefs sys-gui-gpu kernelopts xe.force_probe=a780");
+    }
 
     type_string("exit\n");
     type_string("exit\n");

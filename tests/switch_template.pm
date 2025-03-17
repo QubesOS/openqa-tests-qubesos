@@ -113,6 +113,16 @@ ENDCODE
     assert_script_run($migrate_templates);
 
     assert_script_run('switch_template', timeout => 1800);
+
+    become_root;
+    my $pillar_dir = "/srv/pillar/base/default_template";
+    assert_script_run("mkdir -p $pillar_dir");
+    assert_script_run("printf 'qvm:\\n' > $pillar_dir/init.sls");
+    assert_script_run("printf '  sys-gui:\\n    template: \"" . get_var('DEFAULT_TEMPLATE') . "\"\\n' >> $pillar_dir/init.sls");
+    assert_script_run("printf '  sys-gui-vnc:\\n    template: \"" . get_var('DEFAULT_TEMPLATE') . "\"\\n' >> $pillar_dir/init.sls");
+    assert_script_run("printf '  sys-gui-gpu:\\n    template: \"" . get_var('DEFAULT_TEMPLATE') . "\"\\n' >> $pillar_dir/init.sls");
+    assert_script_run("printf \"base:\\n  '*':\\n    - default_template\\n\" > $pillar_dir/init.top");
+    assert_script_run('qubesctl top.enable default_template pillar=True');
     type_string("exit\n");
     type_string("exit\n");
 }

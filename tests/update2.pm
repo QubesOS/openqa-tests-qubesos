@@ -21,6 +21,8 @@ use testapi;
 use networking;
 use Mojo::File qw(path);
 
+sub uniq { my %seen; grep !$seen{$_}++, @_ };
+
 sub run {
     my ($self) = @_;
 
@@ -89,8 +91,17 @@ sub run {
     }
     my $targets="--templates";
     if (get_var('TEST_TEMPLATES')) {
-        $targets = '--targets=' . get_var('TEST_TEMPLATES');
-        $targets =~ s/ /,/g;
+        # do a reverse map, new->old
+        my %template_map = split /[ :]/, (get_var("DISTUPGRADE_TEMPLATES", "") =~ s/(\S*):(\S*)/\2:\1/gr);
+        my @templates_to_update = ();
+        foreach (split / /, get_var('TEST_TEMPLATES')) {
+            if ($template_map{$_}) {
+                push @templates_to_update, $template_map{$_};
+            } else {
+                push @templates_to_update, $_;
+            }
+        }
+        $targets = '--targets=' . join(",", uniq(@templates_to_update));
     }
 
     # check if there is anything in the VM repo, otherwise disable it
@@ -115,11 +126,18 @@ sub run {
     script_run('rm -f /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/atestrepo.py');
     script_run('rm -f /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/systemtests.py');
 
+    # minimal net/usb qube
+    assert_script_run("qvm-service --enable sys-net minimal-netvm");
+    assert_script_run("qvm-service --enable sys-usb minimal-usbvm || :");
+
     # log package versions
     my $list_tpls_cmd = 'qvm-template list --installed --machine-readable | awk -F\'|\' \'{ print "qubes-template-" $2 "-" gensub("0:", "", 1, $3) }\'';
     $self->save_and_upload_log("(rpm -qa qubes-template-*; $list_tpls_cmd)", 'template-versions.txt');
 
-    $self->upload_packages_versions;
+    # with distupgrade package version will be uploaded later anyway
+    if (!get_var("DISTUPGRADE_TEMPLATES")) {
+        $self->upload_packages_versions;
+    }
 
     $self->save_and_upload_log('journalctl -b', 'journalctl.log', {timeout => 120});
 

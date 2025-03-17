@@ -79,6 +79,9 @@ if (get_var('ISO')) {
                 autotest::loadtest "tests/update2.pm";
             }
         }
+        if (get_var('DISTUPGRADE_TEMPLATES')) {
+            autotest::loadtest "tests/distupgrade_template.pm";
+        }
         if (get_var("SELINUX_TEMPLATES")) {
             autotest::loadtest "tests/selinux_install.pm";
         }

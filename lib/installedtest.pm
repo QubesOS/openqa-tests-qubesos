@@ -316,10 +316,17 @@ sub upload_packages_versions {
         $all_packages .= "Dom0: failed\n";
     };
 
-    my $templates = script_output('qvm-ls --raw-data --fields name,klass');
-    foreach (sort split /\n/, $templates) {
-        next unless /Template/;
-        s/\|.*//;
+    my $templates = $args{'templates'};
+    if (!$templates) {
+        $templates = [];
+        my $qvm_ls = script_output('qvm-ls --raw-data --fields name,klass');
+        foreach (split /\n/, $qvm_ls) {
+            next unless /Template/;
+            s/\|.*//;
+            push @$templates, $_;
+        }
+    }
+    foreach (sort @$templates) {
         $fname = $self->save_and_upload_log("qvm-run --no-gui -ap $_ 'rpm -qa; dpkg -l; pacman -Q; true'",
                 "template-$_-packages.txt",
                 {timeout =>90, failok=>$args{failok}});

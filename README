@@ -44,6 +44,7 @@ Variables used in tests:
  - `KEY_1` - repository key short fingerprint to use for REPO_1
  - `SALT_SYSTEM_TESTS` - run salt formula preparing for system tests (mostly install extra packages)
  - `UPDATE_TEMPLATES` - update listed template packages as a whole (space separated list of templates to update)
+ - `DISTUPGRADE_TEMPLATES` - templates to perform in-place distribution upgrade; a space separated list of pairs "old-template:new-template", for example "fedora-40-xfce:fedora-41-xfce"
  - `TEST_TEMPLATES` - limit tests to listed templates only (space separated list of templates to test)
  - `DEFAULT_TEMPLATE` - choose default template - on install jobs it's chosen in initial-setup, on update jobs all qubes that used default template are switched to this one
  - `UPDATE` - install updates in dom0 and all templates

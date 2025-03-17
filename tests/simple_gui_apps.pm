@@ -41,6 +41,23 @@ sub run {
     assert_and_click("menu-vm-settings");
     assert_and_click("vm-settings-applications", timeout => 60);
     my $text_editor_added = 0;
+    # after adding icons, less entries fit on a screen, check the second screen
+    # too
+    if (!check_screen("vm-settings-app-geany", 10)) {
+        assert_and_click("vm-settings-app-evince");
+        send_key('pgdn');
+        send_key('down');
+        send_key('down');
+        send_key('down');
+        send_key('down');
+        send_key('down');
+        send_key('down');
+        send_key('down');
+        send_key('down');
+        send_key('down');
+        send_key('down');
+        sleep(1);
+    }
     if (check_screen("vm-settings-app-geany", 10)) {
         # this is xfce - it has geany as "text editor"
         click_lastmatch();
@@ -51,6 +68,9 @@ sub run {
         click_lastmatch();
         assert_and_click("vm-settings-app-add");
         $text_editor_added = 1;
+    }
+    if (check_screen("vm-settings-apps-scroll-up", 5)) {
+        click_lastmatch();
     }
     assert_and_click("vm-settings-app-evince");
     send_key('end');

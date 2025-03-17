@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "height": 14,
+      "type": "match",
+      "xpos": 122,
+      "ypos": 643,
+      "width": 98
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "vm-settings-app-geany"
+  ]
+}

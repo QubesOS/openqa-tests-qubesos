@@ -123,9 +123,9 @@ sub run {
     assert_and_click('vm-settings-firewall-limit');
     assert_and_click('vm-settings-fw-add-rule');
     type_string('192.168.1.1');
-    assert_and_click('vm-settings-fw-tcp');
+    assert_and_click('vm-settings-fw-tcp', mousehide => -1);
     assert_and_click('vm-settings-service-open');
-    assert_and_click('vm-settings-service-http');
+    assert_and_click('vm-settings-service-http', mousehide => 1);
     send_key('ret');
     assert_screen('vm-settings-fw-set');
 

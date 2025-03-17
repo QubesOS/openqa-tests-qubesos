@@ -27,8 +27,8 @@ sub run {
     x11_start_program('qubes-policy-editor-gui');
 
     # open a file
-    assert_and_click('policy-editor-open-file-menu');
-    assert_and_click('policy-editor-select-open-file');
+    assert_and_click('policy-editor-open-file-menu', mousehide => -1);
+    assert_and_click('policy-editor-select-open-file', mousehide => 1);
     assert_and_click('policy-editor-select-90-default');
     assert_and_click('policy-editor-select-file');
 
@@ -50,8 +50,8 @@ sub run {
     assert_screen("policy-editor-error-visible");
 
     # reset
-    assert_and_click('policy-editor-open-edit-menu');
-    assert_and_click('policy-editor-edit-reset');
+    assert_and_click('policy-editor-open-edit-menu', mousehide => -1);
+    assert_and_click('policy-editor-edit-reset', mousehide => 1);
 
     assert_screen("policy-editor-no-errors-found");
 
@@ -69,6 +69,7 @@ sub run {
     assert_screen("policy-editor-firefox-rule");
 
     assert_and_click('policy-editor-quit');
+    mouse_hide();
 
 }
 

@@ -74,5 +74,18 @@ def systemtests(os_data, log, **kwargs):
     else:
         assert False
 
+    if os.path.exists("/etc/systemcheck.d/30_default.conf"):
+        with open("/etc/systemcheck.d/50_tests.conf", "w") as f:
+            f.write('systemcheck_unwanted_package="$(echo "$systemcheck_unwanted_package" | sed \'s/ python3-pip //g\')"\n')
+            f.write('journal_ignore_pattern_add "kernel: RETBleed: WARNING:"\n')
+            # test-only, actual issues
+            f.write('journal_ignore_pattern_add "augenrules.*failure 1"\n')
+            f.write('journal_ignore_pattern_add "auditd.*: Error receiving audit netlink packet"\n')
+            # Mar 14 05:36:03 host systemd-fsck[377]: fsck failed with exit status 8.
+            # Mar 14 05:36:03 host systemd-fsck[377]: Ignoring error.
+            # https://github.com/QubesOS/qubes-issues/issues/9840
+            f.write('journal_ignore_pattern_add "fsck failed with exit status 8"\n')
+            f.write('journal_ignore_pattern_add "systemd-fsck.* Ignoring error."\n')
+
     subprocess.call(["systemctl", "disable", "dnsmasq"],
                     stdin=subprocess.DEVNULL)

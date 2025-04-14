@@ -331,7 +331,10 @@ class JobData(Base):
                 log_file = "{}/tests/{}/file/{}".format(
                     OPENQA_URL, self.job_id, log)
 
-                perf_data = requests.get(log_file).text
+                r = requests.get(log_file)
+                if not r.ok:
+                    continue
+                perf_data = r.text
                 break
         else:
             return result
@@ -673,7 +676,12 @@ class TestFailure(Base):
                 else:
                     return relev_line[:max_chars-len("...")] + "..."
             except IndexError:
-                raise Exception("Failed to extract error from: " + "\n".join(lines))
+                logging.warning("Failed to extract error from: " + "\n".join(lines))
+                # just get the last line non-empty
+                line = [l for l in lines if l][-1]
+                if len(line) <= max_chars:
+                    return line
+                return line[:max_chars-len("...")] + "..."
 
 
         max_chars=70

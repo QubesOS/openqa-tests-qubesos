@@ -1,0 +1,44 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 112,
+      "width": 256,
+      "height": 95,
+      "ypos": 147
+    },
+    {
+      "type": "match",
+      "xpos": 506,
+      "ypos": 274,
+      "height": 31,
+      "width": 286
+    },
+    {
+      "xpos": 100,
+      "height": 26,
+      "ypos": 415,
+      "width": 307,
+      "type": "match"
+    },
+    {
+      "type": "match",
+      "height": 34,
+      "ypos": 449,
+      "width": 158,
+      "xpos": 500
+    },
+    {
+      "type": "match",
+      "width": 122,
+      "height": 23,
+      "ypos": 70,
+      "xpos": 240
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-2",
+    "vm-settings-advanced-changed"
+  ]
+}

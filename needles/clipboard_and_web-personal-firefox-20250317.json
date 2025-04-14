@@ -1,0 +1,31 @@
+{
+  "area": [
+    {
+      "width": 74,
+      "height": 16,
+      "ypos": 36,
+      "xpos": 291,
+      "type": "match"
+    },
+    {
+      "height": 18,
+      "ypos": 35,
+      "width": 109,
+      "xpos": 498,
+      "type": "match"
+    },
+    {
+      "type": "match",
+      "xpos": 199,
+      "width": 174,
+      "height": 21,
+      "ypos": 111
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "personal-firefox"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "height": 56,
+      "ypos": 138,
+      "click_point": {
+        "xpos": 30,
+        "ypos": 42
+      },
+      "xpos": 424,
+      "type": "match",
+      "width": 100
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4.3",
+    "vm-settings-apps-scroll-up"
+  ]
+}

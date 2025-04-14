@@ -1,0 +1,31 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 92,
+      "width": 288,
+      "ypos": 418,
+      "xpos": 615
+    },
+    {
+      "width": 27,
+      "xpos": 2,
+      "ypos": 4,
+      "type": "match",
+      "height": 26
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "wrong wallpaper"
+    }
+  ],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "desktop",
+    "desktop-clear",
+    "x11"
+  ]
+}

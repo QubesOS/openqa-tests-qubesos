@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "click_point": {
+        "ypos": 46,
+        "xpos": 30
+      },
+      "height": 56,
+      "xpos": 419,
+      "type": "match",
+      "ypos": 151,
+      "width": 58
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-apps-scroll-up"
+  ]
+}

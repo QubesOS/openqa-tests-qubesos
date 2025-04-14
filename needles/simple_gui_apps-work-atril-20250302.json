@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "ypos": 36,
+      "xpos": 234,
+      "width": 167,
+      "height": 16,
+      "type": "match"
+    },
+    {
+      "height": 29,
+      "type": "match",
+      "ypos": 94,
+      "xpos": 48,
+      "width": 62
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-xfce",
+    "work-atril"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "width": 152,
+      "xpos": 820,
+      "ypos": 570,
+      "type": "match",
+      "height": 47
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "button doesn't fit"
+    }
+  ],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "global-config-copy-hcl-to-global-clipboard"
+  ]
+}

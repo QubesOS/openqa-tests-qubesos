@@ -41,6 +41,10 @@ sub init {
         set_var('SERIALDEV', 'hvc0');
     }
     $self->{script_run_die_on_timeout} = 1;
+    $self->set_expected_serial_failures([
+        { type => 'soft', message => 'https://github.com/QubesOS/qubes-issues/issues/9803', pattern => qr/irq 23: nobody cared/ },
+        { type => 'hard', message => 'dom0 panic', pattern => qr/Hardware Dom0 crashed/ },
+    ]);
 }
 
 

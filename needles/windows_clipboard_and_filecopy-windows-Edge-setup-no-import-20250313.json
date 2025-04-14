@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 22,
+      "ypos": 553,
+      "width": 297,
+      "xpos": 48,
+      "click_point": {
+        "xpos": 19,
+        "ypos": 11.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-WIN10",
+    "windows-Edge-setup-no-import"
+  ]
+}

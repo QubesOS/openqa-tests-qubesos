@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 87,
+      "height": 47,
+      "width": 154,
+      "xpos": 460,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-WIN10",
+    "windows-Edge-address-bar"
+  ]
+}

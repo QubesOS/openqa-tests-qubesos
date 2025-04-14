@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 64,
+      "height": 31,
+      "ypos": 722,
+      "xpos": 729,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-WIN11",
+    "windows-menu-power"
+  ]
+}

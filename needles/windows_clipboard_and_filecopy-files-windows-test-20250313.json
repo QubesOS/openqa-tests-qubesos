@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 111,
+      "ypos": 177,
+      "height": 55,
+      "xpos": 180,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-fedora-xfce",
+    "files-windows-test"
+  ]
+}

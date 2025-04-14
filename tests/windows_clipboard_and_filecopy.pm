@@ -32,8 +32,19 @@ sub open_website_paste_edge {
             assert_and_click("windows-Edge-no-google-signin");
         }
         assert_and_click("windows-Edge-setup-no-import");
-        assert_and_click("windows-Edge-no-profiling");
+        my $profiling_disabled;
+        if (check_screen("windows-Edge-no-profiling", timeout => 10)) {
+            click_lastmatch();
+            $profiling_disabled = 1;
+        }
         assert_and_click("windows-Edge-complete-setup-confirm");
+        if (!$profiling_disabled) {
+            if (check_screen("windows-Edge-no-google", timeout => 10)) {
+                click_lastmatch();
+            }
+            assert_and_click("windows-Edge-no-profiling");
+            assert_and_click("windows-Edge-complete-setup-confirm-and-start");
+        }
     }
 
     send_key("ctrl-shift-v");
@@ -72,9 +83,22 @@ sub open_website_paste_ie {
 
 sub run {
     my ($self) = @_;
+    my $notepad_has_autosave = 0;
 
     $self->select_gui_console;
     assert_screen "desktop";
+
+    # workaround for https://github.com/QubesOS/qubes-issues/issues/9841\
+    x11_start_program('qvm-start windows-test', valid => 0);
+    sleep(30);
+    wait_still_screen;
+    if (check_screen("windows-networks-prompt", timeout => 20)) {
+        click_lastmatch();
+        if (match_has_tag("ENV-WIN7")) {
+            assert_and_click("windows-networks-finalize", timeout => 90);
+        }
+        sleep(5);
+    }
 
     # try to start File Explorer
     assert_and_click("menu");
@@ -116,14 +140,18 @@ sub run {
 
     # increased timeout, because it may wait for the network setting to finalize
     assert_and_click("windows-Explorer-Documents", timeout => 60);
-    assert_and_click("windows-Explorer-empty", button => 'right');
-    assert_and_click("windows-Explorer-new");
+    assert_and_click("windows-Explorer-empty", button => 'right', mousehide => -1);
+    assert_and_click("windows-Explorer-new", mousehide => 1);
     assert_and_click("windows-Explorer-new-text-file");
     if (check_screen("windows-Explorer-new-name-edit", timeout => 20)) {
         send_key("ret");
     }
     assert_and_click("windows-Explorer-new-text-file-created", timeout => 60, dclick => 1);
     assert_screen("windows-Notepad");
+    if (check_screen("windows-Notepad-autosave-notice", timeout => 10)) {
+        click_lastmatch();
+        $notepad_has_autosave = 1;
+    }
 
     type_string("https://www.qubes-os.org/\n");
     send_key("ctrl-a");
@@ -149,25 +177,40 @@ sub run {
     send_key("ret");
     assert_screen("qubes-website");
     send_key("ctrl-q");
+
     if (check_screen("firefox-multitab-close", timeout => 15)) {
         assert_and_click("firefox-multitab-close");
     }
     wait_still_screen();
 
+    if ($notepad_has_autosave) {
+        # this isn't really "autosave"; it saves somewhere, but not into the
+        # original file!
+        # do normal save explicitly
+        send_key("ctrl-s");
+    }
+
     # close the text editor too
-    assert_and_click("windows-Notepad-file-menu");
-    assert_and_click("windows-Notepad-file-exit");
-    assert_screen("windows-Notepad-save-prompt");
-    # close with saving
-    send_key("alt-s");
+    assert_and_click("windows-Notepad-file-menu", mousehide => -1);
+    assert_and_click("windows-Notepad-file-exit", mousehide => 1);
+    if (!$notepad_has_autosave) {
+        assert_screen("windows-Notepad-save-prompt");
+        # close with saving
+        send_key("alt-s");
+    }
 
     # now copy the file
     assert_and_click("windows-Explorer-new-text-file-created", button => 'right');
+    if (check_screen("windows-Explorer-file-more-options", timeout => 10)) {
+        click_lastmatch();
+    }
     assert_and_click("windows-Explorer-file-send-to");
     assert_and_click("windows-Explorer-file-send-to-other-vm");
     assert_screen("file-copy-prompt");
     type_string("personal");
-    assert_and_click("file-copy-prompt-confirm");
+    # wait for anti-clickjacking grace period to pass
+    sleep(1);
+    send_key("ret");
 
     assert_and_click("menu");
     assert_and_click("menu-vm-personal");

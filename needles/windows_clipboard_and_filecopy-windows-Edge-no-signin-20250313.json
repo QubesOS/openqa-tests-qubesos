@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 27,
+      "ypos": 659,
+      "width": 212,
+      "xpos": 126
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-WIN10",
+    "windows-Edge-no-google-signin"
+  ]
+}

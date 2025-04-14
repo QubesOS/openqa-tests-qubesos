@@ -2,19 +2,20 @@
   "area": [
     {
       "type": "match",
+      "ypos": 422,
       "height": 20,
-      "ypos": 477,
-      "width": 64,
-      "xpos": 628,
+      "xpos": 617,
       "click_point": {
-        "xpos": 31,
-        "ypos": 14
-      }
+        "xpos": 66,
+        "ypos": 10
+      },
+      "width": 114
     }
   ],
   "properties": [],
   "tags": [
-    "ENV-WIN10",
+    "ENV-VERSION-4.3",
+    "ENV-WIN11",
     "windows-Explorer-new"
   ]
 }

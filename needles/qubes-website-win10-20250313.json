@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 307,
+      "width": 394,
+      "ypos": 305,
+      "height": 116
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-WIN10",
+    "qubes-website"
+  ]
+}

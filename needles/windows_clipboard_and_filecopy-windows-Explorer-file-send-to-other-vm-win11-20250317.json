@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 693,
+      "width": 110,
+      "height": 23,
+      "ypos": 617
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-WIN11",
+    "windows-Explorer-file-send-to-other-vm"
+  ]
+}

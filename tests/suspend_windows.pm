@@ -25,10 +25,18 @@ sub run {
 
     $self->select_gui_console;
     assert_screen "desktop";
-    x11_start_program("qvm-start windows-test", valid => 0);
+    x11_start_program('xterm');
+    assert_script_run("qvm-start windows-test", timeout => 120);
     sleep(60);
     wait_still_screen;
-    x11_start_program('xterm');
+    if (!check_screen("xterm")) {
+        # covered by windows, try alt-tab first
+        send_key("alt-tab");
+        if (!check_screen("xterm", timeout => 15)) {
+            # if still nothing, start a new one
+            x11_start_program('xterm');
+        }
+    }
     assert_script_run("qubesd-query -e --fail -c /var/run/qubesd.internal.sock dom0 internal.SuspendPre dom0 && sleep 30 && qubesd-query -e --fail -c /var/run/qubesd.internal.sock dom0 internal.SuspendPost dom0", timeout => 90);
     assert_script_run("qvm-run -p windows-test 'cd'");
 };

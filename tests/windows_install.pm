@@ -45,12 +45,12 @@ sub run {
     }
     assert_script_run("curl -L https://github.com/elliotkillick/qvm-create-windows-qube/raw/master/install.sh > install.sh");
     #assert_script_run("sha256sum -c <<<'a3f8b18da2b0590fb418ccd09c6aabcdfe6da45087077ab961da0fdaa5b43867  install.sh'");
+
     assert_script_run('chmod +x install.sh');
 
     assert_script_run("./install.sh", timeout => 1800);
 
-    # temporary patch until https://github.com/elliotkillick/qvm-create-windows-qube/pull/58 get merged
-    assert_script_run("sudo sed -i -e 's:\"R4.1\":\\0|\"R4.2\":' /usr/bin/qvm-create-windows-qube");
+    assert_script_run("sudo sed -i -e 's/qvm-run -q/qvm-run -p/' /usr/bin/qvm-create-windows-qube");
 
     assert_script_run("qvm-prefs -D windows-mgmt netvm");
 
@@ -66,16 +66,15 @@ sub run {
 
     my $answers_file = "$windows_version.xml";
     $answers_file = 'win10x64-pro.xml' if ($windows_version eq "win10x64");
-
-    assert_script_run("sudo sed -i -e 's:memory 1024:memory 2048:' /usr/bin/qvm-create-windows-qube");
+    $answers_file = 'win11x64-pro.xml' if ($windows_version eq "win11x64");
 
     my $extra_opts = "";
-    $extra_opts .= "--seamless" if ( $windows_version eq "win7x64-ultimate" );
+    $extra_opts .= "--seamless" if ( check_var("QWT_SEAMLESS", "1") );
 
     # point for interactive pause
     check_screen('NO-MATCH');
 
-    assert_script_run("qvm-create-windows-qube $extra_opts -i $windows_iso -a $answers_file windows-test", timeout => 7200);
+    assert_script_run("script -e -c 'bash -x /usr/bin/qvm-create-windows-qube $extra_opts -i $windows_iso -a $answers_file windows-test' qvm-create-windows-qube.log", timeout => 7200);
 
     sleep(5);
 
@@ -91,6 +90,7 @@ sub post_fail_hook {
     sleep(5);
     save_screenshot;
     $self->SUPER::post_fail_hook();
+    upload_logs('/home/user/qvm-create-windows-qube.log', failok => 1);
 };
 
 1;

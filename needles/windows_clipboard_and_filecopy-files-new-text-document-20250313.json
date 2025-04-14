@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 174,
+      "height": 73,
+      "width": 120,
+      "xpos": 177
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-fedora-xfce",
+    "files-new-text-document"
+  ]
+}

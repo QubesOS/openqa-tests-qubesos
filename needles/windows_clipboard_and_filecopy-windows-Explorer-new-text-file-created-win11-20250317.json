@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 29,
+      "ypos": 297,
+      "width": 170,
+      "xpos": 300,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-WIN11",
+    "windows-Explorer-new-text-file-created"
+  ]
+}

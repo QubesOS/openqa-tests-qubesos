@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 300,
+      "height": 28,
+      "xpos": 441,
+      "click_point": {
+        "xpos": 46.5,
+        "ypos": 14
+      },
+      "width": 77
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-WIN11",
+    "windows-Explorer-new-name-edit"
+  ]
+}

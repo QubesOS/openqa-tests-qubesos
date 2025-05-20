@@ -29,12 +29,12 @@ sub run {
     # This has two purposes:
     # 1. Test if qubes manager works
     # 2. Generate menu (#5804)
-    assert_and_click("menu");
-    assert_and_click("menu-qubes-tools");
+    assert_and_click("menu", mousehide => -1);
+    assert_and_click("menu-qubes-tools", mousehide => -1);
     if (match_has_tag("new-menu")) {
-        assert_and_click("menu-qubes-tools-submenu");
+        assert_and_click("menu-qubes-tools-submenu", mousehide => -1);
     }
-    assert_and_click("menu-qubes-manager");
+    assert_and_click("menu-qubes-manager", mousehide => 1);
     assert_screen("qubes-qube-manager", timeout => 120);
 
     # open work VM settings

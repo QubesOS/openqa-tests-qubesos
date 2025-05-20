@@ -18,6 +18,10 @@ sub run {
         script_run("! mountpoint -q /boot/efi || mount -o ro,remount /boot/efi");
         script_run("! mountpoint -q /boot || mount -o ro,remount /boot");
         script_run("sync");
+        # shutdown, and wait optimistically, as unclean shutdown increments
+        # auth failure counter in TPM2
+        script_run("poweroff", 0);
+        sleep 60;
     }
 
 }

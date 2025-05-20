@@ -65,7 +65,7 @@ sub tianocore_select_bootloader {
 sub heads_boot_usb {
     # FIXME: workaround for broken HDMI after cold boot
     # https://github.com/linuxboot/heads/issues/1557
-    if (!check_screen(['heads-menu', 'heads-no-boot', 'heads-no-os', 'heads-hotp-fail-screen'], timeout => 20)) {
+    if (!check_screen(['heads-menu', 'heads-no-boot', 'heads-no-os', 'heads-hotp-fail-screen'], timeout => 30)) {
         send_key("ctrl-alt-delete");
         sleep(5);
     }
@@ -153,10 +153,27 @@ sub heads_generate_hotp {
             type_string '12345678';
             send_key 'ret';
         }
+        # Would you like to update the checksums and sign all of the files in /boot?
+        if (check_screen('heads-tpm-reset-success', 10)) {
+            send_key 'ret';
+            # Please confirm that your GPG card is inserted [Y/n]: 
+            assert_screen('heads-gpg-card-prompt');
+            send_key 'ret';
+            sleep(2);
+            # PIN:
+            assert_screen('heads-gpg-card-pin-prompt');
+            type_string '123456';
+            send_key 'ret';
+        }
     } else {
         send_key 'ret';
     }
-    assert_screen(['heads-generate-hotp-confirm', 'heads-scan-qr']);
+    assert_screen(['heads-generate-hotp-confirm', 'heads-scan-qr', 'heads-tpm-owner-prompt']);
+    if (match_has_tag('heads-tpm-owner-prompt')) {
+        type_string '12345678';
+        send_key 'ret';
+        assert_screen(['heads-generate-hotp-confirm', 'heads-scan-qr']);
+    }
     if (match_has_tag('heads-generate-hotp-confirm')) {
         send_key 'ret';
         assert_screen('heads-scan-qr');
@@ -200,7 +217,7 @@ sub heads_generate_hotp {
 
 sub heads_boot_default {
     # FIXME: workaround for broken HDMI after cold boot
-    if (!check_screen('heads-menu', 120)) {
+    if (!check_screen(['heads-menu', 'heads-hotp-fail-screen'], timeout => 120)) {
         send_key("ctrl-alt-delete");
         sleep(3);
     }
@@ -286,7 +303,7 @@ sub heads_boot_default {
             type_string 'unlockpass';
             send_key 'ret';
             # let it remove/add slot and scroll a bit to hide old pin prompts
-            sleep(10);
+            sleep(15);
         } else {
             # Saving a default will modify the disk. Proceed? (Y/n)
             if (check_screen('heads-confirm-modify-disk', 15)) {

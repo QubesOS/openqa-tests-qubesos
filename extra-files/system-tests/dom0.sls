@@ -22,6 +22,7 @@ dom0-packages:
       - qubes-video-companion-dom0
       - split-gpg2-dom0
       - fio
+      - openssh-server
 {% if grains['osrelease'] != '4.1' %}
       - xinput
 {% endif %}

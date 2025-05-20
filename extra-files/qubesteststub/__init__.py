@@ -7,6 +7,11 @@ import qubes.ext
 import qubes.vm.qubesvm
 import xen.lowlevel.xc
 from qubes.devices import DeviceAssignment
+try:
+    import qubes.device_protocol
+    new_api = True
+except ImportError:
+    new_api = False
 
 class DefaultPV(qubes.ext.Extension):
 
@@ -33,25 +38,25 @@ class DefaultPV(qubes.ext.Extension):
                 # new devices API
                 for dev in vm.devices['pci'].get_assigned_devices():
                     if hasattr(dev, "port"):
-                        missing.discard(dev.port.port_id.replace('_', ':'))
+                        missing.discard(dev.port.port_id)
                     else:
-                        missing.discard(dev.ident.replace('_', ':'))
+                        missing.discard(dev.ident)
                 for dev in missing:
                     if hasattr(DeviceAssignment, "new"):
-                        ass = DeviceAssignment.new(vm.app.domains[0], dev.replace(':', '_'), "pci",
+                        ass = DeviceAssignment.new(vm.app.domains[0], dev, "pci",
                                 options={'no-strict-reset': 'True'},
                                 mode="required")
                     else:
-                        ass = DeviceAssignment(vm.app.domains[0], dev.replace(':', '_'),
+                        ass = DeviceAssignment(vm.app.domains[0], dev,
                                 options={'no-strict-reset': 'True'},
                                 required=True, attach_automatically=True)
                     await vm.devices['pci'].assign(ass)
             else:
                 # old devices API
                 for dev in vm.devices['pci'].persistent():
-                    missing.discard(dev.ident.replace('_', ':'))
+                    missing.discard(dev.ident)
                 for dev in missing:
-                    ass = DeviceAssignment(vm.app.domains[0], dev.replace(':', '_'),
+                    ass = DeviceAssignment(vm.app.domains[0], dev,
                             options={'no-strict-reset': 'True'},
                             persistent=True)
                     await vm.devices['pci'].attach(ass)
@@ -97,6 +102,7 @@ class DefaultPV(qubes.ext.Extension):
                 subprocess.call('echo 0000:{} > /sys/bus/pci/drivers/pciback/unbind'.format(dev), shell=True)
                 subprocess.call('echo 0000:{} > /sys/bus/pci/drivers/ehci-pci/bind'.format(dev), shell=True)
 
+
     def __init__(self):
         super().__init__()
         x = xen.lowlevel.xc.xc()
@@ -110,13 +116,14 @@ class DefaultPV(qubes.ext.Extension):
 
         self.netdevs = []
         self.usbdevs = []
-        lspci = subprocess.check_output(['lspci', '-n']).decode()
-        for line in lspci.splitlines():
-            bdf = line.split()[0]
-            if '0200:' in line:
-                self.netdevs.append(bdf)
-            if '0c03:' in line:
-                self.usbdevs.append(bdf)
+        if not new_api:
+            lspci = subprocess.check_output(['lspci', '-n']).decode()
+            for line in lspci.splitlines():
+                bdf = line.split()[0]
+                if '0200:' in line:
+                    self.netdevs.append(bdf.replace(':', '_'))
+                if '0c03:' in line:
+                    self.usbdevs.append(bdf.replace(':', '_'))
 
         qubes.vm.qubesvm.QubesVM.qrexec_timeout._default = 120
         qubes.vm.qubesvm.QubesVM.qrexec_timeout._default_function = None
@@ -128,6 +135,25 @@ class DefaultPV(qubes.ext.Extension):
             qubes.config.defaults['kernelopts_pcidevs'] += ' systemd.journald.forward_to_console=1 systemd.journald.max_level_console=debug'
 
         self.dom0_cmdline = pathlib.Path('/proc/cmdline').read_bytes().decode()
+
+    def find_devices_of_class(self, dom0, klass):
+        for dev in dom0.devices["pci"]:
+            if repr(dev.interfaces[0]).startswith("p" + klass):
+                yield dev.port_id
+
+    @qubes.ext.handler('domain-load')
+    def on_domain_load(self, vm, *args, **kwargs):
+        if vm.app.vmm.offline_mode:
+            return
+        if not new_api:
+            return
+        # use dom0 to enumerate devices
+        if vm.klass != 'AdminVM':
+            return
+        if self.netdevs and self.usbdevs:
+            return
+        self.netdevs.extend(self.find_devices_of_class(vm, "02"))
+        self.usbdevs.extend(self.find_devices_of_class(vm, "0c03"))
 
     @qubes.ext.handler('features-request')
     async def on_features_request(self, vm, event, untrusted_features):

@@ -27,14 +27,24 @@ def add_timestamp_to_content(testcase, element):
     element.text = "# timestamp {}\n{}".format(
             timestamp, element.text)
 
-def main():
-    testcases = OrderedDict()
-    xml_root = ElementTree.parse(sys.argv[1]).getroot()
-    for testcase in xml_root.findall('testcase'):
+def extract_testcases(testsuite, testcases):
+    for testcase in testsuite.findall('testcase'):
         classname = testcase.get('classname')
         if classname not in testcases:
             testcases[classname] = []
         testcases[classname].append(testcase)
+
+def main():
+    testcases = OrderedDict()
+    xml_root = ElementTree.parse(sys.argv[1]).getroot()
+
+    if xml_root.tag == 'testsuites':
+        # Good XML: <testsuites> root containing <testsuite> elements
+        for testsuite in xml_root.findall('testsuite'):
+            extract_testcases(testsuite, testcases)
+    else:
+        # Malformed XML: no <testsuites> root (nose2 output)
+        extract_testcases(testsuite, testcases)
 
     output_xml = ElementTree.Element('testsuites')
     for classname in testcases:
@@ -86,7 +96,7 @@ def main():
                 for el_name in ('error', 'failure', 'skipped'):
                     for el in testcase.findall(el_name):
                         existing.append(el)
-            else:         
+            else:
                 tests += 1
                 time += float(testcase.get('time'))
                 testsuite.append(testcase)

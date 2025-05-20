@@ -43,21 +43,11 @@ sub run {
     if (check_var('BACKEND', 'generalhw')) {
         power('on');
     }
-    sleep(10);
-    # wait for the automatic prompt to expire - we may see it at the very end
-    # of the timeout, too late to type the passphrase in
-    wait_still_screen;
-    mouse_hide;
-    # then trigger it with a fresh timeout
-    my $retry = 3;
-    while ($retry > 0) {
-        send_key 'ctrl';
-        if (check_screen('xscreensaver-prompt', 10)) {
-            last;
-        }
-        $retry -= 1;
-    }
-    assert_screen('xscreensaver-prompt');
+    sleep(15);
+    # simulate user trying when keyboard starts working
+    send_key_until_needlematch('xscreensaver-prompt-with-chars', 'a', 20, 3);
+    # remove 'aaa' and enter the actual passphrase
+    send_key('ctrl-u');
     type_string($password);
     send_key('ret');
     sleep(10);

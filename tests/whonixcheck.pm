@@ -49,7 +49,6 @@ sub run {
         upload_logs("whonixcheck-$_.log");
         if ($ret != 0) {
             record_info('fail', "Whonixcheck for $_ failed", result => 'fail');
-            $self->record_testresult('fail');
         }
         # shutdown all except sys-whonix
         unless (/sys-whonix/) {

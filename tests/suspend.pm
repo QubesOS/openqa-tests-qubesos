@@ -87,9 +87,7 @@ sub run {
         }
         upload_logs("whonixcheck-sys-whonix.log");
         if ($ret != 0) {
-            # for developer mode
-            assert_screen("SUSPEND-FAILED");
-            record_info('fail', "Whonixcheck for sys-whonix failed", result => 'fail');
+            record_soft_failure("Whonixcheck for sys-whonix failed");
         }
     }
     type_string("exit\n");

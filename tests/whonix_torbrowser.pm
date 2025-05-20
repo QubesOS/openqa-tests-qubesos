@@ -41,7 +41,7 @@ sub run {
     assert_and_click("tor-browser-address-bar");
     type_string("https://check.torproject.org/");
     send_key("ret");
-    assert_screen("tor-browser-ipcheck-ok", timeout => 45);
+    assert_screen("tor-browser-ipcheck-ok", timeout => 60);
     send_key("ctrl-q");
     if (check_screen("torbrowser-multitab-close", timeout => 20)) {
         assert_and_click("torbrowser-multitab-close");

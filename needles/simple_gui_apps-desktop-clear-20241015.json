@@ -19,12 +19,7 @@
       }
     }
   ],
-  "properties": [
-    {
-      "name": "workaround",
-      "value": "https://github.com/QubesOS/qubes-issues/issues/9457 - wrong color"
-    }
-  ],
+  "properties": [],
   "tags": [
     "ENV-DESKTOP-kde",
     "ENV-VERSION-4.3",

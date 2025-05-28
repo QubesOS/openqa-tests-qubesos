@@ -110,10 +110,6 @@ sub run {
 
     # now try to start "Document Viewer"
     assert_and_click("menu");
-    if (check_screen("menu-tab-favorites-active", 30)) {
-        # switch to apps tab
-        click_lastmatch();
-    }
     assert_and_click("menu-vm-work");
     assert_and_click(["menu-vm-evince", "work-vm-atril"]);
     assert_screen(["work-evince", "work-atril"], timeout => 90);

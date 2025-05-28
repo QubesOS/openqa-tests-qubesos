@@ -30,7 +30,7 @@ XENLOGFORMAT = '%Y-%m-%d %H:%M:%S'
 def get_logs(path):
     logs = {} # filename -> lines[]
     for file_name in os.listdir(path):
-        if not file_name.startswith("guest-") or not file_name.endswith(".log"):
+        if not file_name.endswith(".log"):
             continue
         with open(os.path.join(path, file_name), 'rb') as f:
             logs[file_name] = f.readlines()

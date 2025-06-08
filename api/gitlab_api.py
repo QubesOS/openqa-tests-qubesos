@@ -196,7 +196,9 @@ def run_test():
     values['UPDATE'] = '1'
     #values['GUIVM'] = '1'
     #values['UPDATE_TEMPLATES'] = 'fedora-34-xfce'
-    values['PULL_REQUESTS'] = req_values['PULL_REQUESTS']
+    values['PULL_REQUESTS'] = " ".join(
+        sorted(req_values['PULL_REQUESTS'].split(" "))
+    )
     if 'SELINUX_TEMPLATES' in req_values:
         values['SELINUX_TEMPLATES'] = req_values['SELINUX_TEMPLATES']
     if 'TEST_TEMPLATES' in req_values:

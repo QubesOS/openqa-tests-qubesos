@@ -42,17 +42,22 @@ sub run {
     }
 
     send_key 'f12';
-    if (check_screen('installer-prerelease', 20)) {
-        assert_and_click 'installer-prerelease';
-    }
-    if (check_screen 'installer-unsupported-hardware', 20) {
-        if (check_var("BACKEND", "qemu")) {
-            assert_and_click 'installer-unsupported-hardware';
-        } else {
-            die "Unexpected 'unsupported hardware' message";
+    my @prompt_tags = ('installer-main-hub', 'installer-unsupported-hardware', 'installer-prerelease');
+    while (!match_has_tag('installer-main-hub')) {
+        assert_screen(\@prompt_tags);
+        if (match_has_tag('installer-prerelease')) {
+            @prompt_tags = grep { !/installer-prerelease/ } @prompt_tags;
+            assert_and_click('installer-prerelease');
+            wait_still_screen;
+        } elsif (match_has_tag('installer-unsupported-hardware')) {
+            @prompt_tags = grep { !/installer-unsupported-hardware/ } @prompt_tags;
+            if (check_var("BACKEND", "qemu")) {
+                assert_and_click 'installer-unsupported-hardware';
+            } else {
+                die "Unexpected 'unsupported hardware' message";
+            }
         }
     }
-    assert_screen 'installer-main-hub';
 }
 
 sub test_flags {

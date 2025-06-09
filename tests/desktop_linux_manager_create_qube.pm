@@ -89,7 +89,7 @@ sub run {
     assert_and_click('new-qube-success');
 
     assert_screen('new-qube-createtest3-settings');
-    assert_and_click('new-qube-createtest3-settings-switch-apps');
+    assert_and_click('new-qube-createtest-settings-switch-apps');
     assert_screen('new-qube-createtest3-settings-check-apps');
 
     send_key('esc');

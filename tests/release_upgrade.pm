@@ -131,6 +131,32 @@ sub upgrade_41_to_42_after_reboot {
     $self->maybe_unlock_screen;
 }
 
+sub upgrade_42_to_43_before_reboot {
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --update --max-concurrency=1' release-upgrade.log", timeout => 7200);
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --release-upgrade' release-upgrade.log", timeout => 600);
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --dist-upgrade' release-upgrade.log", timeout => 7200);
+    sleep(1);
+    send_key('ctrl-c');
+
+    # reset keyboard layout (but still test if after reboot)
+    if (check_var('KEYBOARD_LAYOUT', 'us-colemak')) {
+        x11_start_program(us_colemak('setxkbmap us'), valid => 0);
+    } elsif (get_var('LOCALE')) {
+        x11_start_program('setxkbmap us', valid => 0);
+    }
+    sleep(1);
+    assert_script_run("systemctl enable serial-getty\@hvc1.service");
+}
+
+sub upgrade_42_to_43_after_reboot {
+    my ($self) = @_;
+
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --template-standalone-upgrade' release-upgrade.log", timeout => 8000);
+    $self->maybe_unlock_screen;
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --finalize' release-upgrade-post-reboot.log", timeout => 7200);
+    $self->maybe_unlock_screen;
+}
+
 sub run {
     my ($self) = @_;
 
@@ -160,11 +186,13 @@ sub run {
     if (get_var('RELEASE_UPGRADE_REPO')) {
         # like https://raw.githubusercontent.com/marmarek/qubes-dist-upgrade/convert-luks
         my $url = get_var('RELEASE_UPGRADE_REPO');
-        assert_script_run("curl $url/qubes-dist-upgrade.sh > qubes-dist-upgrade.sh");
-        assert_script_run("curl $url/scripts/upgrade-template-standalone.sh > upgrade-template-standalone.sh");
-        assert_script_run("chmod +x qubes-dist-upgrade.sh");
-        assert_script_run("sudo mv -f qubes-dist-upgrade.sh /usr/sbin/qubes-dist-upgrade");
-        assert_script_run("sudo mv -f upgrade-template-standalone.sh /usr/lib/qubes/");
+        my $zip_url = $url;
+        $zip_url =~ s#https://github.com/([^/]*/[^/]*)/tree/([^/]*)#https://github.com/$1/archive/$2.zip#;
+        assert_script_run("curl -L $zip_url > dist-upgrade.zip");
+        assert_script_run("mkdir dist-upgrade && unzip dist-upgrade.zip -d dist-upgrade/");
+        assert_script_run("sudo mv -f dist-upgrade/*/qubes-dist-upgrade.sh /usr/sbin/qubes-dist-upgrade");
+        assert_script_run("sudo mv -f dist-upgrade/*/scripts/* /usr/lib/qubes/");
+        assert_script_run("sudo qubes-dom0-update -y xinput");
     }
 
     if (check_var("VERSION", "4.0")) {
@@ -173,6 +201,9 @@ sub run {
     } elsif (check_var("VERSION", "4.1")) {
         upgrade_41_to_42_before_reboot;
         set_var('VERSION', '4.2');
+    } elsif (check_var("VERSION", "4.2")) {
+        upgrade_42_to_43_before_reboot;
+        set_var('VERSION', '4.3');
     }
 
     # install qubesteststub module for updated python version
@@ -201,6 +232,8 @@ sub run {
         upgrade_40_to_41_after_reboot;
     } elsif (check_var("VERSION", "4.2")) {
         $self->upgrade_41_to_42_after_reboot;
+    } elsif (check_var("VERSION", "4.3")) {
+        $self->upgrade_42_to_43_after_reboot;
     }
 
     upload_logs('/home/user/release-upgrade-post-reboot.log', failok => 1);

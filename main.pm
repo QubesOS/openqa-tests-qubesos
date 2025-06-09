@@ -187,6 +187,10 @@ if (check_var('SECUREDROP_INSTALL', '1')) {
     autotest::loadtest("tests/securedrop/basic_functionality.pm");
 }
 
+if (get_var('DISPVM_PRELOAD')) {
+    autotest::loadtest "tests/dispvm_preload.pm";
+}
+
 if (get_var('TEST_GUI_INTERACTIVE')) {
     autotest::loadtest "tests/simple_gui_apps.pm";
     autotest::loadtest "tests/clipboard_and_web.pm";

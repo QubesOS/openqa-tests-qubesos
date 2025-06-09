@@ -46,6 +46,9 @@ sub open_website_paste_edge {
             assert_and_click("windows-Edge-complete-setup-confirm-and-start");
         }
     }
+    if (check_screen("gui-warning-large-window")) {
+        assert_and_click("gui-warning-large-window");
+    }
 
     send_key("ctrl-shift-v");
     assert_screen("clipboard-paste-notification");

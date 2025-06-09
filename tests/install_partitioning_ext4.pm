@@ -36,7 +36,7 @@ sub run {
     assert_screen 'installer-custom-partitioning';
     # TODO: this may be language dependent
     send_key 'alt-n';
-    send_key_until_needlematch('install-custom-type-lvm', 'up', 5, 1);
+    send_key_until_needlematch('install-custom-type-standard', 'up', 5, 1);
     send_key 'shift-tab';
     send_key 'ret';
     save_screenshot;

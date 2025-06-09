@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 275,
+      "ypos": 145,
+      "height": 17,
+      "width": 35,
+      "match": 94
+    },
+    {
+      "type": "match",
+      "width": 48,
+      "height": 18,
+      "ypos": 143,
+      "xpos": 344,
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "disp-text-editor"
+  ]
+}

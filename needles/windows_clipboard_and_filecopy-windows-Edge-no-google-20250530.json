@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 251,
+      "height": 34,
+      "ypos": 641,
+      "xpos": 124,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-WIN11",
+    "windows-Edge-no-google"
+  ]
+}

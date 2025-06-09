@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 63,
+      "height": 35,
+      "width": 248,
+      "xpos": 733
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-42",
+    "ENV-fedora-xfce",
+    "clipboard-copy-notification"
+  ]
+}

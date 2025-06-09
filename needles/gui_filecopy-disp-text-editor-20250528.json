@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 35,
+      "height": 17,
+      "ypos": 36,
+      "xpos": 389
+    },
+    {
+      "type": "match",
+      "height": 18,
+      "ypos": 34,
+      "width": 48,
+      "xpos": 458
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-42",
+    "ENV-fedora-xfce",
+    "disp-text-editor"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "xpos": 1609,
+      "ypos": 820,
+      "width": 568,
+      "height": 55,
+      "type": "match"
+    },
+    {
+      "xpos": 1255,
+      "ypos": 1004,
+      "width": 400,
+      "height": 53,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw7",
+    "heads-boot-menu-list"
+  ]
+}

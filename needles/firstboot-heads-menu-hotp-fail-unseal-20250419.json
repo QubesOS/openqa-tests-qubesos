@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "xpos": 643,
+      "height": 33,
+      "ypos": 113,
+      "width": 201,
+      "type": "match"
+    },
+    {
+      "xpos": 147,
+      "width": 441,
+      "ypos": 186,
+      "height": 25,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw5",
+    "heads-menu",
+    "heads-menu-hotp-fail"
+  ]
+}

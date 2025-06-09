@@ -1,0 +1,33 @@
+{
+  "area": [
+    {
+      "xpos": 375,
+      "ypos": 44,
+      "height": 16,
+      "width": 74,
+      "type": "match"
+    },
+    {
+      "xpos": 585,
+      "ypos": 43,
+      "height": 18,
+      "width": 109,
+      "type": "match"
+    },
+    {
+      "xpos": 284,
+      "ypos": 120,
+      "height": 21,
+      "width": 174,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-42",
+    "ENV-fedora-xfce",
+    "personal-firefox"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "xpos": 455,
+      "height": 46,
+      "ypos": 323,
+      "width": 216,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4-3",
+    "ENV-fedora-42",
+    "ENV-fedora-xfce",
+    "ENV-guivm-gpu",
+    "login-prompt-user-selected"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 69,
+      "height": 19,
+      "ypos": 75,
+      "xpos": 157
+    },
+    {
+      "width": 98,
+      "height": 17,
+      "ypos": 106,
+      "xpos": 104,
+      "type": "match"
+    },
+    {
+      "type": "match",
+      "click_point": {
+        "xpos": 118,
+        "ypos": 12.5
+      },
+      "xpos": 115,
+      "ypos": 146,
+      "height": 26,
+      "width": 136
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-advanced-memory"
+  ]
+}

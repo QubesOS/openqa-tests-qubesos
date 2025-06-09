@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 126,
+      "type": "match",
+      "xpos": 1592,
+      "click_point": {
+        "ypos": 12,
+        "xpos": 64
+      },
+      "height": 16,
+      "ypos": 977,
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-machine-hw17",
+    "vm-settings-app-evince",
+    "vm-settings-app-atril"
+  ]
+}

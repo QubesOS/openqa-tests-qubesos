@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 547,
+      "ypos": 141,
+      "height": 43,
+      "width": 131,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-devices-set"
+  ]
+}

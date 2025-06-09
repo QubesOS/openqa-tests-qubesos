@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 19,
+      "ypos": 255,
+      "width": 109,
+      "xpos": 517,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "ENV-archlinux",
+    "vm-settings-app-xterm-added"
+  ]
+}

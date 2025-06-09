@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "height": 18,
+      "ypos": 34,
+      "width": 83,
+      "xpos": 184,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-42",
+    "ENV-fedora-xfce",
+    "work-xterm"
+  ]
+}

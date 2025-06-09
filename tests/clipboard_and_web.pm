@@ -54,9 +54,13 @@ sub run {
     wait_still_screen();
     assert_and_click("menu-vm-firefox");
     assert_screen("personal-firefox", timeout => 120);
-
     # wait for full startup
     sleep(2);
+
+    # "Make the firefox sidebar your own"
+    if (check_screen("firefox-sidebar-prompt")) {
+        click_lastmatch;
+    }
 
     send_key("ctrl-shift-V");
     assert_screen("clipboard-paste-notification");

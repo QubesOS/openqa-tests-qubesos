@@ -43,7 +43,7 @@ sub run {
     my $text_editor_added = 0;
     # after adding icons, less entries fit on a screen, check the second screen
     # too
-    if (!check_screen("vm-settings-app-geany", 10)) {
+    if (!check_screen(["vm-settings-app-geany", "vm-settings-app-leafpad"], 10)) {
         assert_and_click("vm-settings-app-evince");
         send_key('pgdn');
         send_key('down');

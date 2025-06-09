@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 587,
+      "height": 27,
+      "ypos": 11,
+      "width": 124
+    },
+    {
+      "width": 96,
+      "height": 25,
+      "ypos": 1079,
+      "xpos": 2186,
+      "type": "match",
+      "click_point": {
+        "xpos": 48,
+        "ypos": 12.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "firstboot-qubes"
+  ]
+}

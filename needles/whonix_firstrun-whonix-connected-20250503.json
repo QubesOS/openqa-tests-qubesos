@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 184,
+      "ypos": 74,
+      "height": 28,
+      "xpos": 3480,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "whonix-connected"
+  ]
+}

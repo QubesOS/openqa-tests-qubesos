@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "xpos": 1915,
+      "height": 10,
+      "ypos": 496,
+      "width": 119,
+      "match": 94,
+      "type": "match"
+    },
+    {
+      "match": 94,
+      "type": "match",
+      "xpos": 1044,
+      "height": 10,
+      "ypos": 567,
+      "width": 132
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4-3",
+    "qubes-policy-editor-55-user-test"
+  ]
+}

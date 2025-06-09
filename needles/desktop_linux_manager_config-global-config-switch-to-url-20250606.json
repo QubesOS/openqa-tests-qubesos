@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "match": 94,
+      "type": "match",
+      "xpos": 1388,
+      "height": 32,
+      "ypos": 1215,
+      "width": 136
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "global-config-switch-to-url"
+  ]
+}

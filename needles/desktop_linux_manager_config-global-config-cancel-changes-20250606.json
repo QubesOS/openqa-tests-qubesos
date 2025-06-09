@@ -1,0 +1,30 @@
+{
+  "area": [
+    {
+      "match": 94,
+      "type": "match",
+      "width": 294,
+      "height": 66,
+      "ypos": 1070,
+      "xpos": 1781
+    },
+    {
+      "match": 94,
+      "type": "match",
+      "xpos": 2002,
+      "width": 166,
+      "height": 82,
+      "ypos": 1157,
+      "click_point": {
+        "xpos": 83,
+        "ypos": 52
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "global-config-cancel-changes"
+  ]
+}

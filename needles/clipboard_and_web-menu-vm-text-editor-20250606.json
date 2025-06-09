@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "xpos": 401,
+      "ypos": 167,
+      "height": 25,
+      "width": 66,
+      "type": "match",
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "menu-vm-geany",
+    "menu-vm-text-editor"
+  ]
+}

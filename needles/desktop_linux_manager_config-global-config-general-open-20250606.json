@@ -1,0 +1,34 @@
+{
+  "area": [
+    {
+      "xpos": 1841,
+      "width": 174,
+      "height": 32,
+      "ypos": 1327,
+      "match": 94,
+      "type": "match"
+    },
+    {
+      "xpos": 1552,
+      "ypos": 900,
+      "height": 55,
+      "width": 264,
+      "match": 94,
+      "type": "match"
+    },
+    {
+      "match": 94,
+      "type": "match",
+      "width": 90,
+      "ypos": 947,
+      "height": 32,
+      "xpos": 1386
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "global-config-general-open"
+  ]
+}

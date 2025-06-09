@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "xpos": 583,
+      "ypos": 1056,
+      "width": 91,
+      "height": 26,
+      "type": "match"
+    },
+    {
+      "xpos": 3712,
+      "ypos": 2120,
+      "width": 114,
+      "height": 24,
+      "type": "match",
+      "click_point": {
+        "xpos": 57,
+        "ypos": 12
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "installer-install-done-reboot"
+  ]
+}

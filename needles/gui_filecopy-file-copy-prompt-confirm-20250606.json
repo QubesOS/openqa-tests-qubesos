@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 74,
+      "ypos": 1184,
+      "height": 25,
+      "xpos": 2028,
+      "match": 94,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4-3",
+    "file-copy-prompt-confirm"
+  ]
+}

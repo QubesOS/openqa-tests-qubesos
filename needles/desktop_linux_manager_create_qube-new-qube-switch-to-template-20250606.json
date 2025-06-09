@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "match": 94,
+      "type": "match",
+      "width": 110,
+      "height": 28,
+      "ypos": 951,
+      "xpos": 1473
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "new-qube-switch-to-template"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "match": 94,
+      "type": "match",
+      "xpos": 1562,
+      "ypos": 1104,
+      "height": 54,
+      "width": 214
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "global-config-open-at-template-repositories"
+  ]
+}

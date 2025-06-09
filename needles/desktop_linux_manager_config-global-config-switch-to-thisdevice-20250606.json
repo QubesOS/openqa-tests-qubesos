@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "match": 94,
+      "type": "match",
+      "ypos": 1263,
+      "height": 28,
+      "width": 130,
+      "xpos": 1383
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "global-config-switch-to-thisdevice"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "area": [
+    {
+      "width": 134,
+      "height": 24,
+      "ypos": 1106,
+      "xpos": 1799,
+      "type": "match",
+      "match": 94
+    },
+    {
+      "width": 86,
+      "xpos": 1878,
+      "click_point": {
+        "xpos": 44,
+        "ypos": 13
+      },
+      "ypos": 1161,
+      "height": 22,
+      "type": "match",
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "text-editor-save-prompt"
+  ]
+}

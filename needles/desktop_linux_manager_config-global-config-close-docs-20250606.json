@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "match": 94,
+      "type": "match",
+      "xpos": 1684,
+      "ypos": 561,
+      "height": 15,
+      "width": 30
+    },
+    {
+      "match": 94,
+      "type": "match",
+      "xpos": 2549,
+      "height": 14,
+      "ypos": 561,
+      "width": 14
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "global-config-close-docs"
+  ]
+}

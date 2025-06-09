@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 3715,
+      "width": 22,
+      "height": 22,
+      "ypos": 5,
+      "match": 94,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "clipboard-widget-open"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 74,
+      "ypos": 1415,
+      "height": 24,
+      "xpos": 2216,
+      "match": 94,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "global-config-clockvm-select-sysusb"
+  ]
+}

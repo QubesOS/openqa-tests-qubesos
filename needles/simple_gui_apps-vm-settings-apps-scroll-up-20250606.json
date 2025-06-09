@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "width": 58,
+      "xpos": 1827,
+      "click_point": {
+        "ypos": 46,
+        "xpos": 30
+      },
+      "height": 56,
+      "ypos": 821,
+      "type": "match",
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "vm-settings-apps-scroll-up"
+  ]
+}

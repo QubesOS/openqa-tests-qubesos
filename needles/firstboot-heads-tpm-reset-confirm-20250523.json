@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 362,
+      "ypos": 845,
+      "height": 54,
+      "xpos": 1711,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "heads-tpm-reset-confirm"
+  ]
+}

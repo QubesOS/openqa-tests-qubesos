@@ -1,0 +1,34 @@
+{
+  "area": [
+    {
+      "xpos": 1842,
+      "width": 182,
+      "ypos": 1331,
+      "height": 27,
+      "match": 94,
+      "type": "match"
+    },
+    {
+      "match": 94,
+      "type": "match",
+      "width": 131,
+      "ypos": 895,
+      "height": 46,
+      "xpos": 1556
+    },
+    {
+      "xpos": 1386,
+      "ypos": 1084,
+      "height": 25,
+      "width": 112,
+      "match": 94,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "global-config-splitgpg-open"
+  ]
+}

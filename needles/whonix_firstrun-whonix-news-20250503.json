@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "height": 20,
+      "ypos": 65,
+      "width": 188,
+      "xpos": 62,
+      "type": "match"
+    },
+    {
+      "width": 92,
+      "type": "match",
+      "height": 32,
+      "ypos": 299,
+      "xpos": 728,
+      "click_point": {
+        "ypos": 20,
+        "xpos": 42
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "whonix-news"
+  ]
+}

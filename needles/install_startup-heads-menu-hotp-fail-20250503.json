@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 595,
+      "height": 49,
+      "width": 459,
+      "xpos": 1924
+    },
+    {
+      "type": "match",
+      "ypos": 724,
+      "height": 36,
+      "width": 415,
+      "xpos": 1251
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "heads-menu",
+    "heads-menu-hotp-fail"
+  ]
+}

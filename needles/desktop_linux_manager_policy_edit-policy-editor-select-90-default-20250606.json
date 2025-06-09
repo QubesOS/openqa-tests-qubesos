@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "match": 94,
+      "type": "match",
+      "width": 74,
+      "height": 17,
+      "ypos": 1112,
+      "xpos": 1829
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4-3",
+    "policy-editor-select-90-default"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 839,
+      "height": 283,
+      "ypos": 36,
+      "width": 491
+    },
+    {
+      "type": "match",
+      "width": 27,
+      "ypos": 4,
+      "height": 26,
+      "xpos": 2,
+      "click_point": {
+        "xpos": 13.5,
+        "ypos": 13
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4-2",
+    "desktop",
+    "menu",
+    "x11"
+  ]
+}

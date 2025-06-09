@@ -1,0 +1,38 @@
+{
+  "area": [
+    {
+      "width": 91,
+      "ypos": 889,
+      "height": 18,
+      "xpos": 1685,
+      "type": "match",
+      "match": 94
+    },
+    {
+      "xpos": 1568,
+      "height": 21,
+      "ypos": 921,
+      "width": 59,
+      "type": "match",
+      "match": 94
+    },
+    {
+      "ypos": 1218,
+      "height": 18,
+      "xpos": 2244,
+      "click_point": {
+        "xpos": 35,
+        "ypos": 9
+      },
+      "type": "match",
+      "width": 70,
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "whonix-systemcheck-error"
+  ]
+}

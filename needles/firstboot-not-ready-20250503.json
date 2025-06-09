@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 587,
+      "height": 27,
+      "ypos": 11,
+      "width": 124
+    },
+    {
+      "width": 166,
+      "height": 25,
+      "ypos": 2086,
+      "xpos": 3657,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "firstboot-not-ready"
+  ]
+}

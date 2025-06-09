@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "xpos": 14,
+      "ypos": 13,
+      "height": 19,
+      "width": 237,
+      "type": "match"
+    },
+    {
+      "type": "match",
+      "xpos": 22,
+      "height": 21,
+      "ypos": 52,
+      "width": 57
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "installer-disk-spoke",
+    "installer-done"
+  ]
+}

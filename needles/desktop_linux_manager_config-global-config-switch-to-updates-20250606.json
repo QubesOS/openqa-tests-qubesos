@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "height": 32,
+      "ypos": 1034,
+      "width": 134,
+      "xpos": 1380,
+      "match": 94,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "global-config-switch-to-updates"
+  ]
+}

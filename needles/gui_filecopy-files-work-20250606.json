@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "height": 67,
+      "ypos": 967,
+      "xpos": 1762,
+      "click_point": {
+        "ypos": 17.5,
+        "xpos": 49.5
+      },
+      "type": "match",
+      "width": 95,
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "files-work"
+  ]
+}

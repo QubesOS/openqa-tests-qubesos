@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "match": 94,
+      "type": "match",
+      "width": 198,
+      "ypos": 832,
+      "height": 16,
+      "xpos": 1803
+    },
+    {
+      "match": 94,
+      "type": "match",
+      "ypos": 874,
+      "height": 155,
+      "width": 125,
+      "xpos": 1379
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "qubes-global-config"
+  ]
+}

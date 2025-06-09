@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "xpos": 0,
+      "height": 23,
+      "ypos": 60,
+      "width": 94,
+      "type": "match"
+    },
+    {
+      "type": "match",
+      "ypos": 26,
+      "height": 26,
+      "width": 58,
+      "xpos": 380
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "text-login",
+    "tty3-selected"
+  ]
+}

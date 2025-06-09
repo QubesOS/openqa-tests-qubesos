@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "ypos": 38,
+      "height": 34,
+      "width": 45,
+      "xpos": 3777,
+      "type": "match",
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "notification-test"
+  ]
+}

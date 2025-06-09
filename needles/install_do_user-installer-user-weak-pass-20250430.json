@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 113,
+      "height": 18,
+      "ypos": 8,
+      "xpos": 4
+    },
+    {
+      "width": 290,
+      "height": 20,
+      "ypos": 2134,
+      "xpos": 37,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "installer-user-weak-pass"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 18,
+      "ypos": 1059,
+      "width": 141,
+      "xpos": 608
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "firstboot-configuring-templates"
+  ]
+}

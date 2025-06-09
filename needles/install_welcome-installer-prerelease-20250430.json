@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "xpos": 1691,
+      "height": 28,
+      "ypos": 864,
+      "width": 291,
+      "type": "match"
+    },
+    {
+      "type": "match",
+      "ypos": 1271,
+      "height": 25,
+      "width": 126,
+      "xpos": 2048
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHIME-hw17",
+    "ENV-VERSION-4.2",
+    "installer-prerelease"
+  ]
+}

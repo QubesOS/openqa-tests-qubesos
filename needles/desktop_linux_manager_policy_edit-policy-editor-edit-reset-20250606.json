@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "width": 62,
+      "ypos": 658,
+      "height": 12,
+      "click_point": {
+        "ypos": 5,
+        "xpos": 18
+      },
+      "xpos": 1016,
+      "match": 94,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4-3",
+    "policy-editor-edit-reset"
+  ]
+}

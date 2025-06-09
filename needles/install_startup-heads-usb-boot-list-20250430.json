@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 499,
+      "ypos": 641,
+      "height": 40,
+      "xpos": 1053,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "heads-usb-boot-list"
+  ]
+}

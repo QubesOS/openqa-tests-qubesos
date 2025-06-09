@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "xpos": 402,
+      "height": 18,
+      "ypos": 109,
+      "width": 66,
+      "type": "match",
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "menu-vm-firefox",
+    "new-menu"
+  ]
+}

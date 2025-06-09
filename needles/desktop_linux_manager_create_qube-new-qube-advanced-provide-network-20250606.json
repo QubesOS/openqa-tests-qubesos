@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 1698,
+      "width": 185,
+      "height": 16,
+      "ypos": 1248,
+      "match": 94,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "new-qube-advanced-provide-network"
+  ]
+}

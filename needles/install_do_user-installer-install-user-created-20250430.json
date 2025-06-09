@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 1886,
+      "ypos": 1314,
+      "height": 50,
+      "width": 140
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "installer-install-user-created"
+  ]
+}

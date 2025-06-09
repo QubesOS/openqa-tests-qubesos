@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 455,
+      "height": 31,
+      "ypos": 1379,
+      "xpos": 74,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw17",
+    "heads-scan-qr"
+  ]
+}

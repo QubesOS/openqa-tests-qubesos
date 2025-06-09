@@ -1,0 +1,27 @@
+{
+  "area": [
+    {
+      "xpos": 1757,
+      "height": 77,
+      "ypos": 1001,
+      "width": 80,
+      "match": 94,
+      "type": "match"
+    },
+    {
+      "xpos": 1993,
+      "height": 23,
+      "ypos": 1110,
+      "width": 86,
+      "match": 94,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "xfce4-screensaver",
+    "xscreensaver-prompt"
+  ]
+}

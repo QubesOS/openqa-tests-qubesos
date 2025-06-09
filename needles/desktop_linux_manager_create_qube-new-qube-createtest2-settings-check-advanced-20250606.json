@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 1525,
+      "height": 21,
+      "ypos": 1054,
+      "width": 128,
+      "match": 94,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "new-qube-createtest2-settings-check-advanced"
+  ]
+}

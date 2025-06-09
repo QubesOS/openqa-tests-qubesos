@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "ypos": 190,
+      "height": 32,
+      "width": 101,
+      "xpos": 69,
+      "type": "match",
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "menu-vm-personal",
+    "menu-vm-personal-running"
+  ]
+}

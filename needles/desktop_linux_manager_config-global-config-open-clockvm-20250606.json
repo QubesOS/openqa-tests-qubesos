@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 2424,
+      "click_point": {
+        "ypos": 55.5,
+        "xpos": 11.5
+      },
+      "ypos": 993,
+      "height": 71,
+      "match": 94,
+      "type": "match",
+      "width": 23
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "global-config-open-clockvm"
+  ]
+}

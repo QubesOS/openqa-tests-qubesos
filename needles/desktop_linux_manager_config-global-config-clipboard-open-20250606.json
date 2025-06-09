@@ -1,0 +1,34 @@
+{
+  "area": [
+    {
+      "xpos": 1836,
+      "width": 181,
+      "ypos": 1331,
+      "height": 23,
+      "match": 94,
+      "type": "match"
+    },
+    {
+      "xpos": 1559,
+      "height": 55,
+      "ypos": 881,
+      "width": 187,
+      "match": 94,
+      "type": "match"
+    },
+    {
+      "xpos": 1384,
+      "width": 116,
+      "ypos": 1124,
+      "height": 31,
+      "match": 94,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "global-config-clipboard-open"
+  ]
+}

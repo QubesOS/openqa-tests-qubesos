@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "width": 498,
+      "height": 47,
+      "ypos": 909,
+      "xpos": 1054,
+      "type": "match"
+    },
+    {
+      "type": "match",
+      "width": 550,
+      "ypos": 1007,
+      "height": 51,
+      "xpos": 1102
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "heads-boot-menu-list"
+  ]
+}

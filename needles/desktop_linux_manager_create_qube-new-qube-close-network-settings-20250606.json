@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "ypos": 998,
+      "height": 12,
+      "width": 81,
+      "xpos": 1706,
+      "type": "match",
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "new-qube-close-network-settings"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "xpos": 1564,
+      "height": 58,
+      "ypos": 888,
+      "width": 120,
+      "match": 94,
+      "type": "match"
+    },
+    {
+      "width": 128,
+      "ypos": 988,
+      "height": 35,
+      "xpos": 1384,
+      "match": 94,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "global-config-usb-open"
+  ]
+}

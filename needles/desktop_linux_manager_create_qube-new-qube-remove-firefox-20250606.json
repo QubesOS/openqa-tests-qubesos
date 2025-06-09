@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "match": 94,
+      "type": "match",
+      "height": 21,
+      "ypos": 1133,
+      "width": 161,
+      "xpos": 1724
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "new-qube-remove-firefox"
+  ]
+}

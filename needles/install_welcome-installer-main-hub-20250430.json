@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 587,
+      "height": 29,
+      "ypos": 9,
+      "width": 245
+    },
+    {
+      "ypos": 801,
+      "height": 41,
+      "width": 584,
+      "xpos": 1839,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "installer-main-hub"
+  ]
+}

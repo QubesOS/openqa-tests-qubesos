@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "width": 455,
+      "height": 42,
+      "ypos": 883,
+      "xpos": 2,
+      "type": "match",
+      "match": 94
+    },
+    {
+      "xpos": 1996,
+      "height": 21,
+      "ypos": 840,
+      "width": 27,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw17",
+    "heads-gpg-card-pin-prompt"
+  ]
+}

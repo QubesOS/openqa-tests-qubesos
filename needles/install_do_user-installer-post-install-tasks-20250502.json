@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 1057,
+      "height": 24,
+      "width": 200,
+      "xpos": 609
+    },
+    {
+      "xpos": 586,
+      "height": 32,
+      "ypos": 9,
+      "width": 214,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.2",
+    "installer-post-install-tasks"
+  ]
+}

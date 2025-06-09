@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 54,
+      "ypos": 664,
+      "width": 304,
+      "xpos": 2,
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw17",
+    "heads-tpm-owner-prompt"
+  ]
+}

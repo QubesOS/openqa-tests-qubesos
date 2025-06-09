@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 1801,
+      "width": 193,
+      "ypos": 1035,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4-2",
+    "desktop-runner"
+  ]
+}

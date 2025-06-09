@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "match": 94,
+      "type": "match",
+      "ypos": 1745,
+      "height": 213,
+      "width": 493,
+      "xpos": 952
+    },
+    {
+      "match": 94,
+      "type": "match",
+      "xpos": 2,
+      "ypos": 4,
+      "height": 26,
+      "width": 27
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "desktop-clear"
+  ]
+}

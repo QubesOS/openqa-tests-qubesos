@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 402,
+      "width": 133,
+      "ypos": 227,
+      "height": 22,
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "menu-vm-Files",
+    "menu-vm-Thunar"
+  ]
+}

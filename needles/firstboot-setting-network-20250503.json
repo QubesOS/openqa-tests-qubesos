@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 608,
+      "ypos": 1056,
+      "height": 21,
+      "width": 119
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4-2",
+    "firstboot-setting-network"
+  ]
+}

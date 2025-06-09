@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "ypos": 786,
+      "height": 17,
+      "width": 35,
+      "xpos": 1738,
+      "type": "match",
+      "match": 94
+    },
+    {
+      "type": "match",
+      "xpos": 1807,
+      "height": 18,
+      "ypos": 784,
+      "width": 48,
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "disp-text-editor"
+  ]
+}

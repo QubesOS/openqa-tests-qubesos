@@ -1,0 +1,30 @@
+{
+  "area": [
+    {
+      "xpos": 1350,
+      "ypos": 656,
+      "width": 228,
+      "height": 33,
+      "type": "match",
+      "match": 94
+    },
+    {
+      "xpos": 1613,
+      "ypos": 655,
+      "width": 40,
+      "height": 35,
+      "type": "match",
+      "click_point": {
+        "xpos": 20,
+        "ypos": 17.5
+      },
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "firefox-sidebar-prompt"
+  ]
+}

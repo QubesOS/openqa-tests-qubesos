@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 2003,
+      "ypos": 786,
+      "height": 24,
+      "width": 92,
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-xfce",
+    "firefox-multitab-close"
+  ]
+}

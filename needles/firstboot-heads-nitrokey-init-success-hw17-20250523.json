@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "height": 38,
+      "ypos": 2096,
+      "width": 803,
+      "xpos": 143,
+      "type": "match",
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw17",
+    "heads-nitrokey-init-success"
+  ]
+}

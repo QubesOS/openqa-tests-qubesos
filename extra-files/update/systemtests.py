@@ -78,6 +78,8 @@ def systemtests(os_data, log, **kwargs):
         with open("/etc/systemcheck.d/50_tests.conf", "w") as f:
             f.write('systemcheck_unwanted_package="$(echo "$systemcheck_unwanted_package" | sed \'s/ python3-pip //g\')"\n')
             f.write('journal_ignore_pattern_add "kernel: RETBleed: WARNING:"\n')
+            # Apr 15 19:13:11 host dovecot[1284]: master: Warning: Time moved forwards by 3394423.774836 seconds - adjusting timeouts.
+            f.write('journal_ignore_pattern_add "dovecot.*Time moved"\n')
             # test-only, actual issues
             f.write('journal_ignore_pattern_add "augenrules.*failure 1"\n')
             f.write('journal_ignore_pattern_add "auditd.*: Error receiving audit netlink packet"\n')

@@ -318,7 +318,7 @@ class JobData(Base):
 
         pr_list = pr_raw_list.strip().split(" ")
 
-        return pr_list
+        return sorted(pr_list)
 
     def get_performance_data(self):
         # this should return numbers, not strings

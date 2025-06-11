@@ -352,6 +352,8 @@ def main():
 
         prs.update(job.get_related_github_objects())
 
+    prs = sorted(prs)
+
     if args.instability:
         instability_analysis = InstabilityAnalysis(jobs)
     else:

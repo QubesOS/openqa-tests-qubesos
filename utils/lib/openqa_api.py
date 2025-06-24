@@ -656,9 +656,9 @@ class TestFailure(Base):
             # find relevant line(s)
             try:
                 i = len(lines) - 1
-                while re.match("^\s", lines[i]): # non whitespace-starting
+                while re.match(r"^\s", lines[i]): # non whitespace-starting
                     i -= 1
-                while not re.match("^\s", lines[i]): # until it finds whitespace
+                while not re.match(r"^\s", lines[i]): # until it finds whitespace
                     i -= 1
 
                 relev_line_prev = lines[i].strip()

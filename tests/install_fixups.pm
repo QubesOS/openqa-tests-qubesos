@@ -73,7 +73,7 @@ sub run {
     } elsif (check_var("MACHINE", "hw11")) {
         $extra_xen_opts .= ' com1=115200,8n1,pci';
     } elsif (check_var("MACHINE", "hw12")) {
-        $extra_xen_opts .= ' dbgp=xhci@pcic1:00.3,share=yes ioapic_ack=new';
+        $extra_xen_opts .= ' dbgp=xhci@pcic1:00.3,share=yes';
         $serial_console = "xhci";
     } elsif (check_var("MACHINE", "hw13")) {
         $extra_xen_opts .= ' com1=115200,8n1';

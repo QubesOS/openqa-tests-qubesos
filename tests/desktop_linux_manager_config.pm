@@ -132,7 +132,7 @@ sub run {
 
 sub post_fail_hook {
     my ($self) = @_;
-    select_console('x11');
+    select_console('x11', await_console=>0);
     if (!check_screen('desktop', 5)) {
         send_key('alt-f4');
     }

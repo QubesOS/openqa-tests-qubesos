@@ -19,7 +19,7 @@ args = None
 
 # list of test groups to automatically restart a job if fails
 # 'shutdown' is added only to system_tests_update and is needed to upload disk image
-RESTART_ON_GROUP_FAIL = ('startup_fixup', 'whonix_firstrun', 'update', 'shutdown')
+RESTART_ON_GROUP_FAIL = ('startup_fixup', 'whonix_firstrun', 'update', 'update2', 'shutdown')
 RESTART_LIMIT = 3
 
 job_restarts = collections.defaultdict(lambda: 0)

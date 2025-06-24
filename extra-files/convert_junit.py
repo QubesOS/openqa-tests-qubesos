@@ -44,7 +44,7 @@ def main():
             extract_testcases(testsuite, testcases)
     else:
         # Malformed XML: no <testsuites> root (nose2 output)
-        extract_testcases(testsuite, testcases)
+        extract_testcases(xml_root, testcases)
 
     output_xml = ElementTree.Element('testsuites')
     for classname in testcases:

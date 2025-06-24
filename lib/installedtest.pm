@@ -186,43 +186,19 @@ sub usbvm_fixup {
     $self->select_gui_console;
 }
 
-# copied from testapi.pm
-sub _calculate_clickpoint {
-    my ($needle_to_use) = shift;
-    my ($needle_area, $click_point);
-    # If there is no needle area defined, take it from the needle itself.
-    $needle_area ||= $needle_to_use->{area}->[-1];
-    # If there is no clickpoint defined, or if it has been specifically defined as "center"
-    # then calculate the click point as a central point of the specified area.
-    if (!$click_point || $click_point eq 'center') {
-        $click_point = {
-            xpos => $needle_area->{w} / 2,
-            ypos => $needle_area->{h} / 2,
-        };
-    }
-    # Use the click point coordinates (which are relative numbers inside of the area)
-    # to calculate the absolute click point position.
-    my $x = int($needle_area->{x} + $click_point->{xpos});
-    my $y = int($needle_area->{y} + $click_point->{ypos});
-    return $x, $y;
-}
-
 sub connect_wifi {
     my ($self) = @_;
 
     if (!check_screen("nm-applet-connected-wifi", 90)) {
         my $wifi_password = get_required_var("WIFI_PASSWORD");
         my $wifi_needle = "nm-applet-wifi-" . get_var("WIFI_NAME");
-        assert_and_click("nm-applet");
-        # this is really "available networks" submenu
-        assert_screen("nm-applet-more-networks");
-        my ($x, $y) = _calculate_clickpoint($testapi::last_matched_needle);
-        mouse_set($x, $y);
-        assert_and_click($wifi_needle);
+        assert_and_click("nm-applet", mousehide => -1);
+        assert_and_click("nm-applet-more-networks", mousehide => -1);
+        assert_and_click($wifi_needle, mousehide => 1);
         # network list refresh can hit just before clicking, retry in that case
-        if (!check_screen("nm-applet-wifi-password", 20)) {
-            assert_and_click("nm-applet-more-networks");
-            assert_and_click($wifi_needle);
+        if (!check_screen("nm-applet-wifi-password", 60)) {
+            assert_and_click("nm-applet-more-networks", mousehide => -1);
+            assert_and_click($wifi_needle, mousehide => 1);
         }
         assert_and_click("nm-applet-wifi-password");
         sleep(2);

@@ -57,7 +57,7 @@ sub post_fail_hook {
 
     # make test: upload also original xml, if something goes wrong with conversion
     upload_logs("/home/user/securedrop-workstation/test-data.xml", failok => 1);
-    upload_logs("/home/user/securedrop-workstationtest-data-converted.xml", failok => 1);
+    upload_logs("/home/user/securedrop-workstation/test-data-converted.xml", failok => 1);
 
 };
 

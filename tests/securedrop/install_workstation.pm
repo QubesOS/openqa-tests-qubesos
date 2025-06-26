@@ -59,7 +59,7 @@ sub install_dev {
     assert_script_run("qvm-run --pass-io sd-dev 'tar -c -C /home/user/ securedrop-workstation' | tar xvf -", timeout=>300);
     assert_script_run("ls");
 
-    assert_script_run('qvm-run -p sd-dev "sudo apt install -y make git jq"');
+    assert_script_run('qvm-run -p sd-dev "sudo apt-get install -y make git jq"');
     assert_script_run('qvm-run -p sd-dev "cd securedrop-workstation && make build-rpm"', timeout => 1000);
     assert_script_run("qvm-run --pass-io sd-dev 'cat /home/user/securedrop-workstation/rpm-build/RPMS/noarch/*.rpm' > /tmp/sdw.rpm");
     assert_script_run('sudo dnf -y install /tmp/sdw.rpm', timeout => 1000);

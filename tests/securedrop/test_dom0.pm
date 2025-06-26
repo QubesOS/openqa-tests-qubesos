@@ -26,7 +26,7 @@ sub run {
     send_key('alt-f10');  # maximize xterm to ease troubleshooting
 
     # HACK: work around "extra-files" failing to be obtained via the usual route (via CASEDIR b64)
-    assert_script_run("qvm-run -p sd-dev 'curl https://raw.githubusercontent.com/deeplow/openqa-tests-qubesos/refs/heads/31-pytest-junit-xml-convert/extra-files/convert_junit.py 2>/dev/null' > /home/user/convert_junit.py");
+    assert_script_run("qvm-run -p sd-dev 'curl https://raw.githubusercontent.com/QubesOS/openqa-tests-qubesos/refs/heads/main/extra-files/convert_junit.py 2>/dev/null' > /home/user/convert_junit.py");
 
     my $sdw_path = "/home/user/securedrop-workstation";
 

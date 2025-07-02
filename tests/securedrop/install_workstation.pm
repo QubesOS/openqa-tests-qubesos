@@ -53,7 +53,7 @@ sub install_dev {
     assert_script_run('qvm-run -p sd-dev "sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin"');
     assert_script_run('qvm-run -p sd-dev "sudo groupadd docker || true"');
     assert_script_run('qvm-run -p sd-dev "sudo usermod -aG docker \$USER"');
-    assert_script_run('qvm-kill sd-dev && qvm-start sd-dev');  # Restart for groupadd to take effect
+    assert_script_run('qvm-shutdown --wait sd-dev && qvm-start sd-dev');  # Restart for groupadd to take effect
 
     # Also copy to dom0 to run tests later, but no need to configure env vars for future `make clone`.
     assert_script_run("qvm-run --pass-io sd-dev 'tar -c -C /home/user/ securedrop-workstation' | tar xvf -", timeout=>300);

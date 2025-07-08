@@ -1,0 +1,11 @@
+[local]
+localhost
+
+[local:vars]
+ansible_connection=local
+
+[standalonevms]
+testvideolin
+
+[standalonevms:vars]
+ansible_connection=qubes

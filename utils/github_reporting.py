@@ -163,7 +163,7 @@ def format_results(results, jobs, reference_jobs=None, instability_analysis=None
                 alert = None
 
                 if ref:
-                    if 'qrexec' in job_name:
+                    if 'qrexec' in job_name or 'dispvm' in job_name:
                         degradation = result / ref > 1
                         alert = result / ref > 1.1
                     else:

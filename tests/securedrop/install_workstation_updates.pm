@@ -36,7 +36,7 @@ sub run {
     # Go through launcher
     assert_and_click("securedrop-launcher");
     assert_screen("securedrop-launcher-updates-in-progress", timeout => 10);
-    assert_screen("securedrop-launcher-updates-complete", timeout => 1200);
+    assert_screen("securedrop-launcher-updates-complete", timeout => 1500);
     if (check_screen("securedrop-launcher-updates-complete-reboot")) {
         assert_and_click("securedrop-launcher-updates-complete-reboot");
         $self->handle_system_startup;

@@ -30,7 +30,7 @@ sub run {
 
     my @templates = split / /, get_var("UPDATE_TEMPLATES");
     foreach (split / /, get_var("INSTALL_TEMPLATES")) {
-        if (m/\d+/) {
+        if (m/\d+/ || m/archlinux/) {
             push @templates, $_;
         }
     }

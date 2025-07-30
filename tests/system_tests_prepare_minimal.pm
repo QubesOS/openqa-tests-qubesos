@@ -26,19 +26,24 @@ sub run {
     my ($packages, $packages_debian, $packages_fedora) = ("", "", "");
     my ($commands, $commands_debian, $commands_fedora) = ("");
     if ($tests =~ m/extra/) {
-        if (get_var("QUBES_TEST_EXTRA_EXCLUDE")) {
+        if (get_var("QUBES_TEST_EXTRA_INCLUDE") =~ m/usbproxy/) {
+            $packages = "qubes-usb-proxy";
+        } elsif (get_var("QUBES_TEST_EXTRA_EXCLUDE")) {
             # this is the "all other" extra tests, including QVC, install it
             $packages = "qubes-video-companion";
         }
     } elsif ($tests =~ m/dom0_update/) {
         $packages = "qubes-core-agent-dom0-updates qubes-core-admin-client qubes-repo-templates";
     } elsif ($tests =~ m/grub/) {
-        $packages_debian = "qubes-kernel-vm-support grub2-common linux-image-amd64";
+        $packages_debian = "qubes-kernel-vm-support grub-common grub-pc-bin grub-efi-amd64-bin linux-image-amd64";
         $packages_fedora = "qubes-kernel-vm-support grub2-tools kernel-core";
         $commands_fedora = "grub2-install /dev/xvda";
         $commands_debian = "grub-install /dev/xvda";
     } elsif ($tests =~ m/network/) {
-        $packages = "qubes-core-agent-networking qubes-core-agent-network-manager network-manager-applet ping procps-ng";
+        $packages_fedora = "qubes-core-agent-networking qubes-core-agent-network-manager network-manager-applet ping procps-ng";
+        $packages_debian = "qubes-core-agent-networking qubes-core-agent-network-manager network-manager-applet iputils-ping procps";
+    } elsif ($tests =~ m/audio/) {
+        $packages = "pipewire-qubes qubes-audio-daemon";
     }
 
     return unless ($packages || $packages_debian || $packages_fedora);

@@ -19,14 +19,9 @@ def atestrepo(os_data, log, **kwargs):
             if ENABLE_TESTING:
                 f.write(f"deb [arch=amd64 signed-by=/usr/share/keyrings/qubes-archive-keyring.gpg] https://deb.qubes-os.org/r{QUBES_VER}/vm {os_data['codename']}-testing main\n")
             if UPDATE_REPO_URL:
-                f.write(f"deb [arch=amd64 signed-by=/usr/share/keyrings/test.gpg] {UPDATE_REPO_URL}/vm {os_data['codename']} main\n")
-                subprocess.run(
-                    ["gpg",
-                     "--no-default-keyring",
-                     "--keyring", "/usr/share/keyrings/test.gpg",
-                     "--import"],
-                    input=UPDATE_REPO_KEY.encode(),
-                    check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                f.write(f"deb [arch=amd64 signed-by=/usr/share/keyrings/test.asc] {UPDATE_REPO_URL}/vm {os_data['codename']} main\n")
+                with open("/usr/share/keyrings/test.asc", "w") as key_f:
+                    key_f.write(UPDATE_REPO_KEY)
     elif os_data["os_family"] == "RedHat":
         with open('/etc/yum.repos.d/qubes-testing.repo', 'w') as f:
             if ENABLE_TESTING:

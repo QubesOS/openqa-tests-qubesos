@@ -43,7 +43,7 @@ sub run {
     my $text_editor_added = 0;
     # after adding icons, less entries fit on a screen, check the second screen
     # too
-    if (!check_screen(["vm-settings-app-geany", "vm-settings-app-leafpad"], 10)) {
+    if (!check_screen(["vm-settings-app-geany", "vm-settings-app-leafpad", "vm-settings-app-mousepad"], 10)) {
         assert_and_click("vm-settings-app-evince");
         send_key('pgdn');
         send_key('down');
@@ -58,13 +58,9 @@ sub run {
         send_key('down');
         sleep(1);
     }
-    if (check_screen("vm-settings-app-geany", 10)) {
-        # this is xfce - it has geany as "text editor"
-        click_lastmatch();
-        assert_and_click("vm-settings-app-add");
-        $text_editor_added = 1;
-    } elsif (check_screen("vm-settings-app-leafpad", 10)) {
-        # this is Arch - it has leafpad as "text editor"
+    if (check_screen(["vm-settings-app-geany", "vm-settings-app-leafpad", "vm-settings-app-mousepad"], 10)) {
+        # Xfce has Geany or Mousepad as "text editor"
+        # Arch has Leafpad as "text editor"
         click_lastmatch();
         assert_and_click("vm-settings-app-add");
         $text_editor_added = 1;
@@ -89,8 +85,9 @@ sub run {
         assert_and_click("vm-settings-app-add");
         wait_still_screen;
     }
-    assert_and_click(["vm-settings-app-evince", "vm-settings-app-start-qube"]);
-    if (match_has_tag("vm-settings-app-start-qube")) {
+    # select Evince/Atril; or if not visible, some app close to the list end
+    assert_and_click(["vm-settings-app-evince", "vm-settings-app-start-qube", "vm-settings-app-volume-control"]);
+    if (match_has_tag("vm-settings-app-start-qube") or match_has_tag("vm-settings-app-volume-control")) {
         # if start qube was clicked, scroll to home to make evince ("Document Viewer") visible
         send_key('home');
         wait_still_screen;

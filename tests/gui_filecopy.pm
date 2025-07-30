@@ -42,6 +42,8 @@ sub run {
     }
     send_key("ctrl-a");
     type_string("test.txt");
+    # wait for the button to become active
+    sleep(1);
     send_key("ret");
     sleep(1);
     # close editor

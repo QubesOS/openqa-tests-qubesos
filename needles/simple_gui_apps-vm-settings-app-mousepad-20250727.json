@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 157,
+      "ypos": 516,
+      "width": 155,
+      "height": 19,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian",
+    "vm-settings-app-mousepad"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "xpos": 31,
+      "type": "match",
+      "ypos": 24,
+      "width": 458,
+      "height": 40
+    },
+    {
+      "xpos": 63,
+      "type": "match",
+      "ypos": 102,
+      "width": 81,
+      "height": 40
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "installer-disk-spoke"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "height": 36,
+      "width": 153,
+      "type": "match",
+      "xpos": 595,
+      "ypos": 1046
+    },
+    {
+      "width": 226,
+      "height": 46,
+      "ypos": 2078,
+      "click_point": {
+        "xpos": 114,
+        "ypos": 26
+      },
+      "xpos": 3588,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "installer-install-done-reboot"
+  ]
+}

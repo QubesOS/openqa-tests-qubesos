@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "width": 35,
+      "type": "match",
+      "height": 33,
+      "ypos": 723,
+      "xpos": 18,
+      "click_point": {
+        "ypos": 17,
+        "xpos": 16
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4.3",
+    "menu"
+  ]
+}

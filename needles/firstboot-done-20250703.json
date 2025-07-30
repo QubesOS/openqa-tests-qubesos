@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 40,
+      "width": 333,
+      "type": "match",
+      "xpos": 3476,
+      "ypos": 2084
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "firstboot-done"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 867,
+      "type": "match",
+      "xpos": 1409,
+      "height": 45,
+      "width": 472
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHONE-hw16",
+    "ENV-VERSION-4.3",
+    "firstboot-qubes-usb-keyboard-allowed"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "width": 403,
+      "height": 48,
+      "ypos": 28,
+      "xpos": 607,
+      "type": "match"
+    },
+    {
+      "type": "match",
+      "xpos": 2565,
+      "ypos": 636,
+      "height": 37,
+      "width": 354,
+      "click_point": {
+        "xpos": 86,
+        "ypos": 22.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "installer-main-hub-target"
+  ]
+}

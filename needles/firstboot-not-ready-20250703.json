@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "width": 239,
+      "height": 42,
+      "xpos": 608,
+      "type": "match",
+      "ypos": 26
+    },
+    {
+      "ypos": 2019,
+      "type": "match",
+      "xpos": 3474,
+      "height": 40,
+      "width": 337
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "firstboot-not-ready"
+  ]
+}

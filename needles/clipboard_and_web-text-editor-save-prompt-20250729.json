@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "width": 163,
+      "type": "match",
+      "xpos": 133,
+      "height": 26,
+      "ypos": 266
+    },
+    {
+      "click_point": {
+        "xpos": 44,
+        "ypos": 13
+      },
+      "width": 98,
+      "height": 22,
+      "type": "match",
+      "xpos": 282,
+      "ypos": 351
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-fedora-xfce",
+    "text-editor-save-prompt"
+  ]
+}

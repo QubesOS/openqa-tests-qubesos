@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 16,
+      "xpos": 317,
+      "width": 82,
+      "ypos": 35
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-xfce",
+    "work-mousepad",
+    "work-text-editor"
+  ]
+}

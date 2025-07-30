@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "width": 438,
+      "height": 50,
+      "xpos": 1328,
+      "type": "match",
+      "ypos": 772
+    },
+    {
+      "width": 164,
+      "height": 43,
+      "xpos": 1551,
+      "type": "match",
+      "ypos": 918
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "installer-disk-luks-passphrase"
+  ]
+}

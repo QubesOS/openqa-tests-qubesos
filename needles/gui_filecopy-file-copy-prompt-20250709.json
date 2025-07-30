@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "ypos": 403,
+      "width": 197,
+      "height": 28,
+      "type": "match",
+      "xpos": 326
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-GUIVM",
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "file-copy-prompt"
+  ]
+}

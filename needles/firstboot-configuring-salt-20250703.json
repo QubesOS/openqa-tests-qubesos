@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 635,
+      "ypos": 1029,
+      "height": 41,
+      "width": 388
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "firstboot-configuring-salt"
+  ]
+}

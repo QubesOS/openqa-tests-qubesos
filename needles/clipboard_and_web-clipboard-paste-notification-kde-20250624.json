@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 272,
+      "type": "match",
+      "height": 64,
+      "xpos": 661,
+      "ypos": 565
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4.3",
+    "clipboard-paste-notification"
+  ]
+}

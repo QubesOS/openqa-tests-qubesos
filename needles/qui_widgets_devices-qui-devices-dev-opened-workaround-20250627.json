@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 101,
+      "ypos": 68,
+      "xpos": 499,
+      "height": 52
+    },
+    {
+      "height": 39,
+      "ypos": 195,
+      "xpos": 119,
+      "width": 116,
+      "type": "match"
+    }
+  ],
+  "properties": [
+    {
+      "value": "unexpected device",
+      "name": "workaround"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qui-devices-dev-opened"
+  ]
+}

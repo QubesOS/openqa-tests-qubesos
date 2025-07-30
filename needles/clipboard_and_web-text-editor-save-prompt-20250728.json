@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "ypos": 266,
+      "type": "match",
+      "height": 26,
+      "xpos": 104,
+      "width": 144
+    },
+    {
+      "type": "match",
+      "height": 22,
+      "xpos": 279,
+      "click_point": {
+        "xpos": 44,
+        "ypos": 13
+      },
+      "width": 98,
+      "ypos": 347
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-TEMPLATE-debian",
+    "ENV-VERSION-4.3",
+    "text-editor-save-prompt"
+  ]
+}

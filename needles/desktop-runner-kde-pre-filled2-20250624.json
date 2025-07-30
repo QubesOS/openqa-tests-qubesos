@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 65,
+      "xpos": 219,
+      "ypos": 4,
+      "width": 46,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4.3",
+    "desktop-runner"
+  ]
+}

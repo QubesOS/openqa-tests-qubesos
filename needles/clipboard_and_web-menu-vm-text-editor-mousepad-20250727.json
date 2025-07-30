@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "ypos": 166,
+      "width": 96,
+      "type": "match",
+      "height": 25,
+      "xpos": 401
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian",
+    "menu-vm-mousepad",
+    "menu-vm-text-editor"
+  ]
+}

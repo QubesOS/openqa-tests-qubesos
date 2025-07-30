@@ -1,0 +1,25 @@
+{
+  "area": [
+    {
+      "width": 101,
+      "type": "match",
+      "height": 52,
+      "ypos": 142,
+      "xpos": 390
+    },
+    {
+      "height": 39,
+      "xpos": 141,
+      "ypos": 250,
+      "width": 116,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw7",
+    "ENV-VERSION-4.3",
+    "new-new-devices",
+    "qui-devices-dev-opened"
+  ]
+}

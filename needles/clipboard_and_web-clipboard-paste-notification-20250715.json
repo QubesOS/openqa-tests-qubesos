@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "ypos": 56,
+      "height": 65,
+      "type": "match",
+      "xpos": 714,
+      "width": 283,
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-42",
+    "ENV-fedora-xfce",
+    "clipboard-paste-notification"
+  ]
+}

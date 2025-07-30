@@ -1,0 +1,30 @@
+{
+  "area": [
+    {
+      "xpos": 1449,
+      "ypos": 638,
+      "width": 602,
+      "height": 67,
+      "type": "match",
+      "match": 94
+    },
+    {
+      "xpos": 2184,
+      "ypos": 1464,
+      "width": 245,
+      "height": 45,
+      "type": "match",
+      "match": 94,
+      "click_point": {
+        "xpos": 122.5,
+        "ypos": 22.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "installer-prerelease"
+  ]
+}

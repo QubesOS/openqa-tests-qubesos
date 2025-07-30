@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "ypos": 1042,
+      "type": "match",
+      "xpos": 641,
+      "height": 43,
+      "width": 416
+    },
+    {
+      "height": 52,
+      "width": 428,
+      "type": "match",
+      "xpos": 603,
+      "ypos": 18
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "installer-post-install-tasks"
+  ]
+}

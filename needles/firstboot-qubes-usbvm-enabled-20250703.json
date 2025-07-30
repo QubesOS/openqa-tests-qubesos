@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 737,
+      "xpos": 1371,
+      "type": "match",
+      "width": 504,
+      "height": 43
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "firstboot-qubes-usbvm-enabled"
+  ]
+}

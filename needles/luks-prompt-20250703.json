@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 240,
+      "height": 49,
+      "xpos": 1800,
+      "type": "match",
+      "ypos": 1241
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "luks-prompt"
+  ]
+}

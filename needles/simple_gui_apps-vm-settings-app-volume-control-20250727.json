@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 158,
+      "ypos": 410,
+      "width": 124,
+      "height": 23,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian",
+    "vm-settings-app-volume-control"
+  ]
+}

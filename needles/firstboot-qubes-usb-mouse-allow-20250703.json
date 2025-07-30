@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "width": 408,
+      "height": 41,
+      "ypos": 826,
+      "click_point": {
+        "xpos": 18,
+        "ypos": 17.5
+      },
+      "xpos": 1416,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "firstboot-qubes-usb-mouse-allow"
+  ]
+}

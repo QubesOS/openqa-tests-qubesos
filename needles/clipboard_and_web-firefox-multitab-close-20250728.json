@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 95,
+      "xpos": 655,
+      "type": "match",
+      "height": 25,
+      "ypos": 233
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-TEMPLATE-debian",
+    "ENV-VERSION-4.3",
+    "firefox-multitab-close"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 1,
+      "width": 24,
+      "type": "match",
+      "xpos": 827,
+      "height": 26
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "nm-applet-connected"
+  ]
+}

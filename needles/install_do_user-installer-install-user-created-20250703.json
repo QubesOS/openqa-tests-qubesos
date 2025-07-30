@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 1552,
+      "xpos": 1565,
+      "type": "match",
+      "width": 312,
+      "height": 99
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "installer-install-user-created"
+  ]
+}

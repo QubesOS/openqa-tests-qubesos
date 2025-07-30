@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "height": 42,
+      "width": 237,
+      "ypos": 26,
+      "type": "match",
+      "xpos": 606
+    },
+    {
+      "xpos": 2170,
+      "type": "match",
+      "ypos": 1080,
+      "width": 171,
+      "height": 44
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "firstboot-qubes"
+  ]
+}

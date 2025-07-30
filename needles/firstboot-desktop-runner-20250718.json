@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 353,
+      "width": 193,
+      "type": "match",
+      "height": 18,
+      "xpos": 397
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "desktop-runner"
+  ]
+}

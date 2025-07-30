@@ -65,11 +65,16 @@ sub tianocore_select_bootloader {
 sub heads_boot_usb {
     # FIXME: workaround for broken HDMI after cold boot
     # https://github.com/linuxboot/heads/issues/1557
-    if (!check_screen(['heads-menu', 'heads-no-boot', 'heads-no-os', 'heads-hotp-fail-screen'], timeout => 30)) {
+    if (!check_screen(['heads-menu', 'heads-no-boot', 'heads-no-os', 'heads-hotp-fail-screen'], timeout => 120)) {
         send_key("ctrl-alt-delete");
         sleep(5);
     }
-    assert_screen(['heads-menu', 'heads-no-boot', 'heads-no-os', 'heads-hotp-fail-screen'], timeout => 45);
+    assert_screen(['heads-menu', 'heads-no-boot', 'heads-no-os', 'heads-hotp-fail-screen', 'heads-hotp-counter-not-found'], timeout => 45);
+    if (match_has_tag('heads-hotp-counter-not-found')) {
+        # Press Enter to continue...
+        send_key 'ret';
+        assert_screen(['heads-menu', 'heads-no-boot', 'heads-no-os', 'heads-hotp-fail-screen'], timeout => 45);
+    }
     my $usb_boot_selected = 0;
     if (match_has_tag('heads-no-os')) {
         # Select "Boot from USB"
@@ -222,7 +227,11 @@ sub heads_boot_default {
         sleep(3);
     }
 
-    assert_screen(['heads-menu', 'heads-hotp-fail-screen'], 120);
+    assert_screen(['heads-menu', 'heads-hotp-fail-screen', 'heads-hotp-counter-not-found'], 120);
+    if (match_has_tag('heads-hotp-counter-not-found')) {
+        send_key 'ret';
+        assert_screen(['heads-menu', 'heads-hotp-fail-screen'], 30);
+    }
     if (match_has_tag('heads-menu-hotp-fail')) {
         if (check_var("MACHINE", "hw5")) {
             heads_generate_hotp(reset_tpm => 1);

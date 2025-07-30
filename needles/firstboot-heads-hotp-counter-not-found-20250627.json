@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 30,
+      "ypos": 255,
+      "width": 284,
+      "height": 17,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw5",
+    "heads-hotp-counter-not-found"
+  ]
+}

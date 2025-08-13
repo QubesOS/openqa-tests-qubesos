@@ -16,6 +16,23 @@ use strict;
 use testapi;
 use networking;
 
+
+sub install_bootstrap_dev {
+    # Assumes terminal window is open
+    # Assumes "curl_via_netvm"
+
+    # Building SecureDrop Workstation RPM and installing it in dom0
+    assert_script_run('sudo qubes-dom0-update -y make unzip');
+
+    # Download source from git commit reference
+    my $repo_archive_url = "https://github.com/freedomofpress/securedrop-workstation/archive/";
+    assert_script_run("curl -f -L -o - $repo_archive_url" . get_var('GIT_REF') . '.zip > sdw.zip');
+    assert_script_run('unzip sdw.zip');
+    assert_script_run('mv securedrop-workstation-* securedrop-workstation');
+    assert_script_run('cd securedrop-workstation && make bootstrap-dev');
+};
+
+
 sub install_staging {
     # Assumes terminal window is open
 
@@ -90,6 +107,7 @@ sub run {
 
     assert_script_run('set -o pipefail'); # Ensure pipes fail\
 
+    install_bootstrap_dev;
     install_dev;
 
     assert_script_run('env xset -dpms; env xset s off', valid => 0, timeout => 10); # disable screen blanking during long command

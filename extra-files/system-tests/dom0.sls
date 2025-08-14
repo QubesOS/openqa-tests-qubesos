@@ -18,6 +18,9 @@ dom0-packages:
       - btrfs-progs
       - python3-nose2
       - python3-objgraph
+{% if grains['osrelease'] != '4.2' %}
+      - python3-deepmerge
+{% endif %}
       - patch
       - qubes-video-companion-dom0
       - split-gpg2-dom0

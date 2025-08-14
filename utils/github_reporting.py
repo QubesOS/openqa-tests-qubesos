@@ -157,7 +157,18 @@ def format_results(results, jobs, reference_jobs=None, instability_analysis=None
                 # try to find reference value
                 ref = None
                 if job_name in ref_job_perf_data:
-                    ref = ref_job_perf_data[job_name].get(test_name, None)
+                    if 'dispvm_perf' in job_name:
+                        ref_name = test_name.split(' ')[0]
+                        ref_data = [
+                            v
+                            for k, v in ref_job_perf_data[job_name].items()
+                            if k.startswith(ref_name + ' ')
+                        ]
+                        if ref_data:
+                            ref = ref_data[0]
+                    else:
+                        ref_name = test_name
+                        ref = ref_job_perf_data[job_name].get(ref_name, None)
 
                 degradation = False
                 alert = None

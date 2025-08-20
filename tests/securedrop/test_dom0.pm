@@ -20,10 +20,7 @@ use serial_terminal qw(select_root_console);
 sub run {
     my ($self) = @_;
 
-    $self->select_gui_console;
-
-    x11_start_program('xterm');
-    send_key('alt-f10');  # maximize xterm to ease troubleshooting
+    $self->select_root_console;
 
     # HACK: work around "extra-files" failing to be obtained via the usual route (via CASEDIR b64)
     assert_script_run("qvm-run -p sd-dev 'curl https://raw.githubusercontent.com/QubesOS/openqa-tests-qubesos/refs/heads/main/extra-files/convert_junit.py 2>/dev/null' > /home/user/convert_junit.py");

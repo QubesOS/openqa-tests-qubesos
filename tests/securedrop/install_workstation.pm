@@ -34,12 +34,21 @@ sub install_dev {
     download_repo();
     build_rpm();
     assert_script_run('mv /tmp/sdw.rpm securedrop-workstation/rpm-build/RPMS/');
+    copy_config();
     assert_script_run('cd securedrop-workstation && make bootstrap-dev');
 };
 
+sub copy_config {
+
+    # This copies a "dev" config
+    assert_script_run('echo {\"submission_key_fpr\": \"65A1B5FF195B56353CC63DFFCC40EF1228271441\", \"hidserv\": {\"hostname\": \"bnbo6ryxq24fz27chs5fidscyqhw2hlyweelg4nmvq76tpxvofpyn4qd.onion\", \"key\": \"FDF476DUDSB5M27BIGEVIFCFGHQJ46XS3STAP7VG6Z2OWXLHWZPA\"}, \"environment\": \"dev\", \"vmsizes\": {\"sd_app\": 10, \"sd_log\": 5}} | tee /home/user/securedrop-workstation/config.json');
+    assert_script_run("curl https://raw.githubusercontent.com/freedomofpress/securedrop/d91dc67/securedrop/tests/files/test_journalist_key.sec.no_passphrase | tee /home/user/securedrop-workstation/sd-journalist.sec");
+};
 
 sub install_staging {
     download_repo();
+    copy_config();
+    # Note: staging won't run until we copy the config files into /usr/share/securedrop-workstation-dom0-config
 
     # `make staging` installs from yum-test
     assert_script_run('cd securedrop-workstation && make bootstrap-staging');
@@ -94,6 +103,8 @@ sub run {
     assert_script_run('set -o pipefail'); # Ensure pipes fail\
 
     install_dev;
+
+    assert_script_run('sdw-admin --validate');
 
     assert_script_run('env xset -dpms; env xset s off', valid => 0, timeout => 10); # disable screen blanking during long command
     assert_script_run('sdw-admin --apply | tee /tmp/sdw-admin-apply.log',  timeout => 6000);  # long timeout due to slow virt.

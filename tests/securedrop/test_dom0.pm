@@ -35,10 +35,6 @@ sub run {
     # See https://github.com/freedomofpress/securedrop-workstation/issues/1411
     assert_script_run('rpm -q xorg-x11-server-Xvfb || sudo qubes-dom0-update -y xorg-x11-server-Xvfb', timeout => 300);
 
-    # Set up credentials
-    script_run('ln -s /usr/share/securedrop-workstation-dom0-config/config.json /home/user/securedrop-workstation/config.json');
-    script_run('ln -s /usr/share/securedrop-workstation-dom0-config/sd-journalist.sec /home/user/securedrop-workstation/sd-journalist.sec');
-
     # Run tests (xvfb-run needed to simulate screen in root console)
     assert_script_run("xvfb-run env CI=true make -C $sdw_path test | tee make-test.log", timeout => 2400);
 

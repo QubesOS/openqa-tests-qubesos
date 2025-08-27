@@ -25,10 +25,10 @@ sub run {
     x11_start_program('sh -c \'echo -e "timeout:\t0:02:00" > ~/.xscreensaver\'', valid => 0);
     x11_start_program('xfconf-query -c xfce4-screensaver -p /saver/idle-activation/delay -t int -s 2', valid => 0);
     if (check_var('KEEP_SCREENLOCKER', '1')) {
-        if (check_var('VERSION', '4.2') || check_var('GUIVM', '1')) {
+        if (check_var('VERSION', '4.2')) {
             x11_start_program('xscreensaver-command -restart', target_match => 'desktop-clear');
         }
-    } elsif (!check_var("DESKTOP", "kde")) {
+    } elsif (check_var('VERSION', '4.2') && !check_var("DESKTOP", "kde")) {
         x11_start_program('xscreensaver -no-splash', target_match => 'desktop-clear');
     }
     assert_and_click("menu");

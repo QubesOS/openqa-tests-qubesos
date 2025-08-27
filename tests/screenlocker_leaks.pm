@@ -30,6 +30,9 @@ sub run {
     assert_script_run('qvm-run -p -u root work "dnf -y install mate-notification-daemon || apt -y install mate-notification-daemon"', timeout => 180);
     $self->select_gui_console;
 
+    # set xfce4-screenlocker to "blank" mode
+    x11_start_program("env xfconf-query -c xfce4-screensaver -p /saver/mode -n -t int -s 0", valid => 0);
+
     assert_and_click("menu");
     assert_and_click("menu-vm-work");
     assert_and_click("menu-vm-xterm");

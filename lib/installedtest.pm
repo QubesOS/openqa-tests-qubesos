@@ -211,6 +211,18 @@ sub connect_wifi {
     set_var('WIFI_CONNECTED', '1');
 }
 
+sub select_gui_console {
+    my ($self) = @_;
+
+    select_console(get_var('GUI_CONSOLE', 'x11'));
+}
+
+sub set_gui_console {
+    my ($self, $console) = @_;
+
+    set_var('GUI_CONSOLE', $console);
+}
+
 sub init_gui_session {
     my ($self) = @_;
 
@@ -231,23 +243,15 @@ sub init_gui_session {
 
     # disable screensaver
     if (!check_var('KEEP_SCREENLOCKER', '1')) {
-        x11_start_program('env xscreensaver-command -exit', valid => 0);
         x11_start_program('env xfce4-screensaver-command --exit', valid => 0);
+        # cannot use x11_start_program for such a long command due to
+        # https://github.com/QubesOS/qubes-issues/issues/10088
+        select_root_console;
+        assert_script_run('sudo -u user DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/presentation-mode -n -t bool -s true');
+        select_gui_console;
         # todo: disable light-locker
     }
     wait_still_screen;
-}
-
-sub select_gui_console {
-    my ($self) = @_;
-
-    select_console(get_var('GUI_CONSOLE', 'x11'));
-}
-
-sub set_gui_console {
-    my ($self, $console) = @_;
-
-    set_var('GUI_CONSOLE', $console);
 }
 
 sub maybe_unlock_screen {

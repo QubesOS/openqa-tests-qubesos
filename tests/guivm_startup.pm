@@ -35,6 +35,7 @@ sub run {
 
     # FIXME: change to serial console, don't assume x11 session in dom0
     x11_start_program('xterm');
+    assert_script_run("systemd-run -- sh -c 'tail -F /var/log/xen/console/guest-$vm.log >> /dev/$testapi::serialdev'");
     assert_script_run("qubes-prefs default_guivm $vm");
     assert_script_run("qvm-shutdown --all --wait && sleep 2 && qvm-start sys-firewall && { ! qvm-check sys-usb || qvm-start sys-usb; }", 180+180+90);
     # reset SSH console if applicable
@@ -44,7 +45,6 @@ sub run {
     # let libinput know about the tablet
     mouse_hide;
     assert_script_run("! qvm-check sys-whonix || time qvm-start sys-whonix", 90);
-    assert_script_run("systemd-run -- sh -c 'tail -F /var/log/xen/console/guest-$vm.log >> /dev/$testapi::serialdev'");
 
     if (check_var('GUIVM_GPU', '1')) {
         select_root_console();

@@ -67,7 +67,11 @@ sub run {
     # wait for firefox to fully start
     check_screen("firefox-bookmarks-bar", timeout => 20);
     assert_and_click("personal-firefox");
-    sleep(1);
+    # "New! Summarize pages in one click"
+    if (check_screen("firefox-ai-prompt", timeout => 30)) {
+        click_lastmatch;
+        assert_and_click("personal-firefox");
+    }
     send_key("ctrl-v");
     send_key("ret");
     assert_screen("qubes-website", timeout => 45);

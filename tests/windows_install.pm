@@ -51,6 +51,7 @@ sub run {
     assert_script_run("./install.sh", timeout => 1800);
 
     assert_script_run("sudo sed -i -e 's/qvm-run -q/qvm-run -p/' /usr/bin/qvm-create-windows-qube");
+    assert_script_run("sudo sed -i -e '/kernel/a qvm-prefs \"\$qube\" debug True' /usr/bin/qvm-create-windows-qube");
 
     assert_script_run("qvm-prefs -D windows-mgmt netvm");
 
@@ -74,7 +75,7 @@ sub run {
     # point for interactive pause
     check_screen('NO-MATCH');
 
-    assert_script_run("script -e -c 'bash -x /usr/bin/qvm-create-windows-qube $extra_opts -i $windows_iso -a $answers_file windows-test' qvm-create-windows-qube.log", timeout => 7200);
+    assert_script_run("script -e -c 'bash -x /usr/bin/qvm-create-windows-qube --netvm sys-firewall --disk-size 60 $extra_opts -i $windows_iso -a $answers_file windows-test' qvm-create-windows-qube.log", timeout => 7200);
 
     sleep(5);
 

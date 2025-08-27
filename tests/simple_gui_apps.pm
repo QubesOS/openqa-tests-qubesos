@@ -40,33 +40,18 @@ sub run {
     }
     assert_and_click("menu-vm-settings");
     assert_and_click("vm-settings-applications", timeout => 60);
-    my $text_editor_added = 0;
-    # after adding icons, less entries fit on a screen, check the second screen
-    # too
-    if (!check_screen(["vm-settings-app-geany", "vm-settings-app-leafpad", "vm-settings-app-mousepad"], 10)) {
-        assert_and_click("vm-settings-app-evince");
-        send_key('pgdn');
-        send_key('down');
-        send_key('down');
-        send_key('down');
-        send_key('down');
-        send_key('down');
-        send_key('down');
-        send_key('down');
-        send_key('down');
-        send_key('down');
-        send_key('down');
-        sleep(1);
-    }
-    if (check_screen(["vm-settings-app-geany", "vm-settings-app-leafpad", "vm-settings-app-mousepad"], 10)) {
-        # Xfce has Geany or Mousepad as "text editor"
-        # Arch has Leafpad as "text editor"
-        click_lastmatch();
-        assert_and_click("vm-settings-app-add");
-        $text_editor_added = 1;
-    }
+    # select document viewer / Atril, but don't add it yet - it's used for
+    # focus left panel for now
+    assert_and_click("vm-settings-app-evince");
+    # after adding icons, less entries fit on a screen, scroll for it
+    send_key_until_needlematch(["vm-settings-app-geany", "vm-settings-app-leafpad", "vm-settings-app-mousepad"], 'pgdn', 20, 7);
+    # Xfce has Geany or Mousepad as "text editor"
+    # Arch has Leafpad as "text editor"
+    click_lastmatch();
+    assert_and_click("vm-settings-app-add");
     if (check_screen("vm-settings-apps-scroll-up", 5)) {
         click_lastmatch();
+        send_key('home');
     }
     assert_and_click("vm-settings-app-evince");
     send_key('end');
@@ -76,15 +61,6 @@ sub run {
     assert_and_click("vm-settings-app-add");
     # wait for xterm to really be added, because that moves entries on the left
     assert_screen("vm-settings-app-xterm-added");
-    if (!$text_editor_added) {
-        # if there was no "Geany" earlier, look for "text editor" now
-        assert_and_click(["vm-settings-app-evince", "vm-settings-app-text-editor"]);
-        send_key('end');
-        wait_still_screen;
-        assert_and_click("vm-settings-app-text-editor");
-        assert_and_click("vm-settings-app-add");
-        wait_still_screen;
-    }
     # select Evince/Atril; or if not visible, some app close to the list end
     assert_and_click(["vm-settings-app-evince", "vm-settings-app-start-qube", "vm-settings-app-volume-control"]);
     if (match_has_tag("vm-settings-app-start-qube") or match_has_tag("vm-settings-app-volume-control")) {

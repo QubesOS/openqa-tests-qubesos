@@ -132,9 +132,9 @@ sub upgrade_41_to_42_after_reboot {
 }
 
 sub upgrade_42_to_43_before_reboot {
-    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --update --max-concurrency=1' release-upgrade.log", timeout => 7200);
-    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --release-upgrade' release-upgrade.log", timeout => 600);
-    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --dist-upgrade' release-upgrade.log", timeout => 7200);
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --update --max-concurrency=1 --enable-current-testing' release-upgrade.log", timeout => 7200);
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --release-upgrade --enable-current-testing' release-upgrade.log", timeout => 600);
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --dist-upgrade --enable-current-testing' release-upgrade.log", timeout => 7200);
     sleep(1);
     send_key('ctrl-c');
 
@@ -151,9 +151,9 @@ sub upgrade_42_to_43_before_reboot {
 sub upgrade_42_to_43_after_reboot {
     my ($self) = @_;
 
-    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --template-standalone-upgrade' release-upgrade.log", timeout => 8000);
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --template-standalone-upgrade --enable-current-testing' release-upgrade.log", timeout => 8000);
     $self->maybe_unlock_screen;
-    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --finalize' release-upgrade-post-reboot.log", timeout => 7200);
+    assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --finalize --enable-current-testing' release-upgrade-post-reboot.log", timeout => 7200);
     $self->maybe_unlock_screen;
 }
 

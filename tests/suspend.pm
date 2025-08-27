@@ -48,7 +48,7 @@ sub run {
     send_key_until_needlematch('xscreensaver-prompt-with-chars', 'a', 20, 3);
     # remove 'aaa' and enter the actual passphrase
     send_key('ctrl-u');
-    type_string($password);
+    type_string($password, max_interval => 150);
     send_key('ret');
     sleep(10);
 

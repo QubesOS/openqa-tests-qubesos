@@ -89,6 +89,12 @@ sub run {
         my $latest_kernel = script_output('ls -1v /var/lib/qubes/vm-kernels|grep "^[0-9]" |tail -1');
         assert_script_run("qubes-prefs default-kernel $latest_kernel");
     }
+
+    # Instead of
+    # https://github.com/QubesOS/qubes-core-admin-addon-whonix/pull/24, until
+    # Whonix 18 happens
+    script_run("qvm-prefs whonix-workstation-17 memory 500");
+
     my $targets="--templates";
     if (get_var('TEST_TEMPLATES')) {
         # do a reverse map, new->old

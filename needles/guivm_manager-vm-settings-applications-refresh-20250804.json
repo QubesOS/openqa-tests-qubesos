@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 488,
+      "height": 19,
+      "width": 117,
+      "ypos": 109
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "vm-settings-applications-refresh"
+  ]
+}

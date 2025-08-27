@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "ypos": 38,
+      "xpos": 217,
+      "type": "match",
+      "height": 16,
+      "width": 167
+    },
+    {
+      "ypos": 96,
+      "type": "match",
+      "height": 29,
+      "xpos": 49,
+      "width": 62
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "work-atril"
+  ]
+}

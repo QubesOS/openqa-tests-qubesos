@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "width": 95,
+      "type": "match",
+      "xpos": 421,
+      "height": 18,
+      "ypos": 692
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "menu-vm-settings",
+    "menu-vm-settings-selected",
+    "new-menu"
+  ]
+}

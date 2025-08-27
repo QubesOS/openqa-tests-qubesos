@@ -1,0 +1,37 @@
+{
+  "area": [
+    {
+      "height": 18,
+      "type": "match",
+      "xpos": 252,
+      "width": 91,
+      "ypos": 199
+    },
+    {
+      "ypos": 231,
+      "height": 21,
+      "type": "match",
+      "xpos": 160,
+      "width": 59
+    },
+    {
+      "type": "match",
+      "height": 18,
+      "xpos": 836,
+      "click_point": {
+        "xpos": 35,
+        "ypos": 9
+      },
+      "width": 70,
+      "ypos": 515
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "whonix-systemcheck-error"
+  ]
+}

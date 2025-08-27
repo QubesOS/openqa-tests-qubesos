@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "width": 100,
+      "type": "match",
+      "height": 20,
+      "xpos": 537,
+      "ypos": 611
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "files-move-to-other"
+  ]
+}

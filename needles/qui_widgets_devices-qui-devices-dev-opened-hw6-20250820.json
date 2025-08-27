@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "ypos": 142,
+      "width": 101,
+      "type": "match",
+      "height": 52,
+      "xpos": 318
+    },
+    {
+      "ypos": 250,
+      "width": 116,
+      "height": 39,
+      "type": "match",
+      "xpos": 66
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw6",
+    "ENV-VERSION-4.3",
+    "qui-devices-dev-opened"
+  ]
+}

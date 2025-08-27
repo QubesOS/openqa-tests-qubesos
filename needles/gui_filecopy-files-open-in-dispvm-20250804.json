@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 115,
+      "type": "match",
+      "height": 20,
+      "xpos": 644,
+      "ypos": 333
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "files-open-in-dispvm"
+  ]
+}

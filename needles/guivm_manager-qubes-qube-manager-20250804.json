@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "width": 163,
+      "height": 18,
+      "type": "match",
+      "xpos": 439,
+      "ypos": 37
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "qubes-qube-manager"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 95,
+      "xpos": 658,
+      "type": "match",
+      "height": 34,
+      "ypos": 618
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4.3",
+    "notification-test"
+  ]
+}

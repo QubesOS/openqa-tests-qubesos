@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "width": 226,
+      "xpos": 386,
+      "type": "match",
+      "height": 16,
+      "ypos": 89
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "text-editor-qubes-url"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "xpos": 154,
+      "type": "match",
+      "height": 19,
+      "width": 155,
+      "ypos": 600
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian",
+    "ENV-debian-xfce",
+    "vm-settings-app-mousepad"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "width": 414,
+      "type": "match",
+      "xpos": 600,
+      "height": 49,
+      "ypos": 22
+    },
+    {
+      "ypos": 635,
+      "height": 41,
+      "type": "match",
+      "xpos": 1507,
+      "width": 1149
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "installer-main-hub"
+  ]
+}

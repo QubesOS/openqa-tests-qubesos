@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "width": 109,
+      "xpos": 516,
+      "type": "match",
+      "height": 19,
+      "ypos": 279
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "vm-settings-app-xterm-added"
+  ]
+}

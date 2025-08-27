@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "ypos": 111,
+      "xpos": 199,
+      "type": "match",
+      "height": 35,
+      "width": 64
+    },
+    {
+      "type": "match",
+      "height": 36,
+      "xpos": 38,
+      "width": 58,
+      "ypos": 111
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "file-save-dialog-home-dir"
+  ]
+}

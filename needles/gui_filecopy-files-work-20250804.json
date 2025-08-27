@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "ypos": 379,
+      "type": "match",
+      "height": 67,
+      "xpos": 570,
+      "click_point": {
+        "ypos": 17.5,
+        "xpos": 49.5
+      },
+      "width": 95
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "files-work"
+  ]
+}

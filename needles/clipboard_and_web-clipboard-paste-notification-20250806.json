@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 258,
+      "type": "match",
+      "height": 48,
+      "xpos": 745,
+      "ypos": 63
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "clipboard-paste-notification"
+  ]
+}

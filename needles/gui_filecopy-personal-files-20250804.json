@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 70,
+      "height": 31,
+      "type": "match",
+      "xpos": 598,
+      "ypos": 262
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "personal-files"
+  ]
+}

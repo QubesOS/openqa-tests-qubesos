@@ -1,0 +1,32 @@
+{
+  "area": [
+    {
+      "xpos": 1571,
+      "type": "match",
+      "height": 20,
+      "width": 242,
+      "ypos": 977
+    },
+    {
+      "width": 66,
+      "click_point": {
+        "ypos": 9.5,
+        "xpos": 33
+      },
+      "type": "match",
+      "xpos": 2248,
+      "height": 19,
+      "ypos": 1218
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround"
+    }
+  ],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "whonix-news"
+  ]
+}

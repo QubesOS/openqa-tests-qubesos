@@ -1,0 +1,27 @@
+{
+  "area": [
+    {
+      "width": 97,
+      "type": "match",
+      "xpos": 353,
+      "height": 99,
+      "ypos": 321
+    },
+    {
+      "width": 86,
+      "type": "match",
+      "height": 23,
+      "xpos": 581,
+      "ypos": 413
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "xfce4-screensaver",
+    "xscreensaver-prompt"
+  ]
+}

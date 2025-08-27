@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "ypos": 410,
+      "type": "match",
+      "height": 28,
+      "xpos": 71,
+      "width": 70
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "menu-vm-work",
+    "menu-vm-work-running"
+  ]
+}

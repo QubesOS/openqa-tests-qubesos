@@ -1,0 +1,26 @@
+{
+  "area": [
+    {
+      "ypos": 40,
+      "type": "match",
+      "xpos": 480,
+      "height": 17,
+      "width": 35
+    },
+    {
+      "type": "match",
+      "height": 16,
+      "xpos": 712,
+      "width": 140,
+      "ypos": 39
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "disp-text-editor"
+  ]
+}

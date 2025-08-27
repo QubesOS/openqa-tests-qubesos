@@ -1,0 +1,33 @@
+{
+  "area": [
+    {
+      "ypos": 41,
+      "xpos": 353,
+      "type": "match",
+      "height": 16,
+      "width": 74
+    },
+    {
+      "width": 109,
+      "xpos": 585,
+      "type": "match",
+      "height": 17,
+      "ypos": 41
+    },
+    {
+      "width": 174,
+      "xpos": 282,
+      "type": "match",
+      "height": 21,
+      "ypos": 117
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "personal-firefox"
+  ]
+}

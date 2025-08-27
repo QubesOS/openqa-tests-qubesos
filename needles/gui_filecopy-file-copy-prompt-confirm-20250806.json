@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "click_point": {
+        "ypos": 11.5,
+        "xpos": 50
+      },
+      "width": 68,
+      "height": 25,
+      "type": "match",
+      "xpos": 631,
+      "ypos": 481
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "file-copy-prompt-confirm"
+  ]
+}

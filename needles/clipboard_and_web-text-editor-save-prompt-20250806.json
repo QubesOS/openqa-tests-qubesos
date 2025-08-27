@@ -1,0 +1,30 @@
+{
+  "area": [
+    {
+      "ypos": 276,
+      "type": "match",
+      "height": 26,
+      "xpos": 106,
+      "width": 144
+    },
+    {
+      "click_point": {
+        "xpos": 44,
+        "ypos": 13
+      },
+      "width": 98,
+      "height": 22,
+      "type": "match",
+      "xpos": 281,
+      "ypos": 357
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "mousepad-save-prompt",
+    "text-editor-save-prompt"
+  ]
+}

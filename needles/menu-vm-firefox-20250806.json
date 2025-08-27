@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "width": 51,
+      "type": "match",
+      "height": 18,
+      "xpos": 418,
+      "ypos": 107
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-TEMPLATE-debian",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "RELEASE-4-1",
+    "menu-vm-firefox"
+  ]
+}

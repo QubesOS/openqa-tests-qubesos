@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "width": 124,
+      "type": "match",
+      "xpos": 156,
+      "height": 23,
+      "ypos": 298
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "vm-settings-app-volume-control"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 470,
+      "height": 73,
+      "width": 86,
+      "ypos": 338
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "ENV-debian-xfce",
+    "ENV-fedora-xfce",
+    "files-test-file"
+  ]
+}

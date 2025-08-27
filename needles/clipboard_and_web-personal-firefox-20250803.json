@@ -1,0 +1,32 @@
+{
+  "area": [
+    {
+      "width": 74,
+      "type": "match",
+      "xpos": 376,
+      "height": 16,
+      "ypos": 44
+    },
+    {
+      "ypos": 43,
+      "xpos": 583,
+      "type": "match",
+      "height": 18,
+      "width": 109
+    },
+    {
+      "ypos": 117,
+      "height": 21,
+      "type": "match",
+      "xpos": 284,
+      "width": 174
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-TEMPLATE-debian",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "personal-firefox"
+  ]
+}

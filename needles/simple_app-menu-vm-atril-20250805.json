@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "ypos": 108,
+      "height": 22,
+      "type": "match",
+      "xpos": 451,
+      "width": 126
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-debian",
+    "ENV-debian-13",
+    "new-menu",
+    "work-vm-atril"
+  ]
+}

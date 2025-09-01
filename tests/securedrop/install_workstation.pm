@@ -83,11 +83,6 @@ sub run {
     $self->select_gui_console;
     assert_screen "desktop";
 
-    # Enable "presentation mode" to prevent the screen from going dark
-    assert_and_click('disable-screen-blanking-click-power-tray-icon');
-    assert_and_click('disable-screen-blanking-click-presentation-mode');
-    send_key('esc');
-
     x11_start_program('xterm');
     send_key('alt-f10');  # maximize xterm to ease troubleshooting
 

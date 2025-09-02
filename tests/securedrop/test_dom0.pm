@@ -32,7 +32,9 @@ sub run {
     assert_script_run('rpm -q python3-pytest-cov || sudo qubes-dom0-update -y python3-pytest-cov', timeout => 300);
     script_run('ln -s /usr/share/securedrop-workstation-dom0-config/config.json /home/user/securedrop-workstation/config.json');
     script_run('ln -s /usr/share/securedrop-workstation-dom0-config/sd-journalist.sec /home/user/securedrop-workstation/sd-journalist.sec');
-    script_run("env CI=true make -C $sdw_path test | tee make-test.log", timeout => 2400);
+
+    assert_script_run("alias dnf=qubes-dom0-update && make -C $sdw_path test-deps", timeout => 300);
+    assert_script_run("env CI=true make -C $sdw_path test | tee make-test.log", timeout => 2400);
 
 
     curl_via_netvm; # necessary for upload_logs

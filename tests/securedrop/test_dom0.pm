@@ -30,9 +30,17 @@ sub run {
     # Setup testing requirements and run tests
     assert_script_run('rpm -q python3-pytest || sudo qubes-dom0-update -y python3-pytest', timeout => 300);
     assert_script_run('rpm -q python3-pytest-cov || sudo qubes-dom0-update -y python3-pytest-cov', timeout => 300);
+
+    # Use virtual screen (xvfb) to this can run in root console.
+    # See https://github.com/freedomofpress/securedrop-workstation/issues/1411
+    assert_script_run('rpm -q xorg-x11-server-Xvfb || sudo qubes-dom0-update -y xorg-x11-server-Xvfb', timeout => 300);
+
+    # Set up credentials
     script_run('ln -s /usr/share/securedrop-workstation-dom0-config/config.json /home/user/securedrop-workstation/config.json');
     script_run('ln -s /usr/share/securedrop-workstation-dom0-config/sd-journalist.sec /home/user/securedrop-workstation/sd-journalist.sec');
-    script_run("env CI=true make -C $sdw_path test | tee make-test.log", timeout => 2400);
+
+    # Run tests (xvfb-run needed to simulate screen in root console)
+    assert_script_run("xvfb-run env CI=true make -C $sdw_path test | tee make-test.log", timeout => 2400);
 
 
     curl_via_netvm; # necessary for upload_logs

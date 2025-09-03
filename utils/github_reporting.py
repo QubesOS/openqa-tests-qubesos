@@ -172,11 +172,13 @@ def format_results(results, jobs, reference_jobs=None, instability_analysis=None
                         alert = result / ref < 0.9
 
                 if degradation:
-                    s += (f" :small_red_triangle: ( previous "
+                    red_triangle = "🔻"
+                    s += (f" {red_triangle} ( previous "
                           f"job: {ref:.2f}, degradation: "
                           f"{result / ref:.2%})\n")
                 elif ref:
-                    s += (f" :green_circle: ( previous "
+                    green_circle = "🟢"
+                    s += (f" {green_circle} ( previous "
                           f"job: {ref:.2f}, improvement: "
                           f"{result / ref:.2%})\n")
                 else:

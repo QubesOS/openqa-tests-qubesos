@@ -64,6 +64,23 @@ def format_results(results, jobs, reference_jobs=None, instability_analysis=None
         output_string += "\nInstalling updates failed, skipping the report!\n"
         return output_string
 
+    output_string += "\n"
+    failed_tests_details = ""
+    upload_failures = []
+    for k in results:
+        if results[k]:
+            if all(f.fixed for f in results[k]):
+                continue
+            if any(f.name != "system_tests" for f in results[k]):
+                continue
+            failed_tests_details += '* ' + str(k) + "\n"
+            for fail in results[k]:
+                failed_tests_details += '  * ' + str(fail) + '\n'
+                upload_failures.append(fail)
+    if upload_failures:
+        output_string +=  "## Upload failures\n"
+        output_string += failed_tests_details
+
     if reference_jobs:
         output_string += "## New failures{}\n" \
                             "Compared to: {}\n".format(
@@ -74,6 +91,8 @@ def format_results(results, jobs, reference_jobs=None, instability_analysis=None
             fails = results[k]
             add_to_output = ""
             for fail in fails:
+                if fail in upload_failures:
+                    continue
                 if fail.regression and not fail.unstable:
                     add_to_output += '  * ' + str(fail) + '\n'
 
@@ -88,15 +107,18 @@ def format_results(results, jobs, reference_jobs=None, instability_analysis=None
         if results[k]:
             if all(f.fixed for f in results[k]):
                 continue
-            failed_tests_details += '* ' + str(k) + "\n"
+            add_to_output = ""
             for fail in results[k]:
-                if fail.fixed:
+                if fail.fixed or fail in upload_failures:
                     continue
                 if fail.unstable:
-                    failed_tests_details += '  * [unstable] ' + str(fail) + '\n'
+                    add_to_output += '  * [unstable] ' + str(fail) + '\n'
                 else:
-                    failed_tests_details += '  * ' + str(fail) + '\n'
+                    add_to_output += '  * ' + str(fail) + '\n'
                 number_of_failures += 1
+            if add_to_output:
+                failed_tests_details += '* ' + str(k) + "\n"
+                failed_tests_details += add_to_output
 
     if not number_of_failures:
         output_string += "No failures!\n"

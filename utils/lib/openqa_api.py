@@ -215,10 +215,11 @@ class JobData(Base):
         json_data = self.get_job_details()
 
         failure_list = []
-
         for test_group in json_data['job']['testresults']:
             if test_group['result'] == 'passed':
                 continue
+            failures = []
+            delayed_failures = []
             for test in test_group['details']:
                 if test['result'] == 'fail':
                     failure = TestFailure(test_group['name'],
@@ -230,7 +231,17 @@ class JobData(Base):
                         if not TestFailure.exists_in_db(failure):
                             local_session.add(failure)
                             local_session.flush()
-                        failure_list.append(failure)
+                        failures.append(failure)
+                    elif failure.name == "system_tests":
+                        if not TestFailure.exists_in_db(failure):
+                            local_session.add(failure)
+                            local_session.flush()
+                        delayed_failures.append(failure)
+
+            if not failures:
+                failure_list.extend(delayed_failures)
+            else:
+                failure_list.extend(failures)
 
         self.failures[self.get_job_combined_name()] = failure_list
 

@@ -45,6 +45,8 @@ sub run {
     # unmute audio
     assert_script_run("pactl set-sink-mute 0 0");
 
+    assert_script_run("export QUBES_TEST_PERF_HWINFO=1");
+
     if (get_var('TEST_TEMPLATES')) {
         assert_script_run("export QUBES_TEST_TEMPLATES='" . get_var('TEST_TEMPLATES') . "'");
     }

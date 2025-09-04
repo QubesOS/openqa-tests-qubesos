@@ -20,6 +20,9 @@ use strict;
 use testapi;
 
 sub run {
+    if (check_var('SKIP_INSTALL', '1')) {
+        return;
+    }
     assert_and_click 'installer-main-hub-target';
     assert_screen 'installer-disk-spoke';
     if (check_var('NUMDISKS', '2')) {

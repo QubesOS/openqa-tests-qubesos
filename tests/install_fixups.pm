@@ -23,6 +23,10 @@ use serial_terminal qw(add_serial_console select_root_console);
 sub run {
     my ($self) = @_;
 
+    if (check_var('SKIP_INSTALL', '1')) {
+        return;
+    }
+
     select_root_console();
     type_string "chroot /mnt/sysimage\n";
     # command echo
@@ -47,6 +51,10 @@ sub run {
         assert_script_run("systemctl enable serial-getty\@hvc1.service");
     }
     assert_script_run("echo 'KERNEL==\"hvc*|ttyS*\", GROUP=\"qubes\", MODE=\"0660\"' > /etc/udev/rules.d/90-openqa.rules");
+    if (check_var('BACKEND', 'generalhw') and get_var('PARTITIONING', 'default') eq 'default') {
+        # increase the pool to fit more snapshots; vm-pool is large enough already
+        assert_script_run("lvextend -L 30g qubes_dom0/root-pool");
+    }
     type_string "exit\n";
     # command echo
     wait_serial("exit");

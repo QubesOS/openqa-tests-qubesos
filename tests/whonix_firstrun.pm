@@ -23,6 +23,10 @@ use OpenQA::Test::RunArgs;
 sub run {
     my ($self, $args) = @_;
 
+    if (check_var('SKIP_INSTALL', '1')) {
+        return;
+    }
+
     my $whonix_gateway = "sys-whonix";
     if (exists $args->{whonix_gw_override}) {
         $whonix_gateway = $args->{whonix_gw_override};

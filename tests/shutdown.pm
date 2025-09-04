@@ -3,6 +3,10 @@ use strict;
 use testapi;
 
 sub run {
+    if (check_var('SKIP_INSTALL', '1')) {
+        return;
+    }
+
     if (get_var("STORE_HDD_1") || get_var("PUBLISH_HDD_1") || check_var("BACKEND", "generalhw")) {
         select_console('root-console');
         # make upload as small as possible

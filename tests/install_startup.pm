@@ -22,6 +22,9 @@ use bootloader_setup;
 use serial_terminal qw(select_root_console);
 
 sub run {
+    if (check_var('SKIP_INSTALL', '1')) {
+        return;
+    }
     pre_bootmenu_setup();
 
     if (check_var('BACKEND', 'qemu')) {

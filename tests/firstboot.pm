@@ -46,6 +46,10 @@ sub setup_user {
 sub run {
     my ($self) = @_;
 
+    if (check_var('SKIP_INSTALL', '1')) {
+        return;
+    }
+
     if (check_var('HEADS', '1')) {
         heads_boot_default;
     } elsif (!check_var('UEFI', '1')) {

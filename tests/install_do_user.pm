@@ -22,6 +22,9 @@ use utils qw(us_colemak);
 
 
 sub run {
+    if (check_var('SKIP_INSTALL', '1')) {
+        return;
+    }
     if (!get_var("INSTALL_OEM")) {
         wait_still_screen();
         if (!check_var("VERSION", "4.0")) {

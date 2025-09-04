@@ -21,6 +21,9 @@ use testapi;
 use bootloader_setup;
 
 sub run {
+    if (check_var('SKIP_INSTALL', '1')) {
+        return;
+    }
     # wait for the installer welcome screen to appear
     assert_screen 'installer', 300;
 

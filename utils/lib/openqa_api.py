@@ -341,15 +341,24 @@ class JobData(Base):
 
 
         if 'dispvm_perf' in json_data['job']['name']:
-            for line in perf_data.split("\n"):
-                if not line:
-                    continue
-                data = line.split(" ")
-                name = data[0]
-                value = data[1]
-                data_dict = dict(item.split("=", maxsplit=1) for item in data[2:])
-                key = name + "(avg:" + data_dict["average"] + ")"
-                result[key] = float(value)
+            try:
+                data = json.loads(perf_data)
+                for key, value in data.items():
+                    name = value["name"]
+                    mean = value["mean"]
+                    total = value["total"]
+                    key += " (mean:" + str(mean) + ")"
+                    result[key] = float(total)
+            except json.decoder.JSONDecodeError:
+                for line in perf_data.split("\n"):
+                    if not line:
+                        continue
+                    data = line.split(" ")
+                    name = data[0]
+                    total = data[1]
+                    data_dict = dict(v.split("=", maxsplit=1) for v in data[2:])
+                    key = name + " (mean:" + data_dict["average"] + ")"
+                    result[key] = float(total)
             return result
 
         if 'qrexec_perf' in json_data['job']['name']:

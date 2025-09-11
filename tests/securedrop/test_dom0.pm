@@ -35,8 +35,16 @@ sub run {
     # See https://github.com/freedomofpress/securedrop-workstation/issues/1411
     assert_script_run('rpm -q xorg-x11-server-Xvfb || sudo qubes-dom0-update -y xorg-x11-server-Xvfb', timeout => 300);
 
+    # FIXME: DEBUG
+    assert_script_run('qvm-run -p sd-dev "cd securedrop-workstation && git checkout main && git pull"');
+    assert_script_run("rm securedrop-workstation && qvm-run --pass-io sd-dev 'tar -c -C /home/user/ securedrop-workstation' | tar xvf -", timeout=>300);
+    assert_script_run('qvm-run -p whonix-gateway-17 "ls /etc/apt/sources.list.d/"');
+    assert_script_run('qvm-run -p sd-base-bookworm-template "ls /etc/apt/sources.list.d/"');
+    assert_script_run('qvm-run -p sd-large-bookworm-template "ls /etc/apt/sources.list.d/"');
+
     # Set up credentials
-    script_run('ln -s /usr/share/securedrop-workstation-dom0-config/config.json /home/user/securedrop-workstation/config.json');
+    assert_script_run('echo "{\"submission_key_fpr\": \"65A1B5FF195B56353CC63DFFCC40EF1228271441\", \"hidserv\": {\"hostname\": \"bnbo6ryxq24fz27chs5fidscyqhw2hlyweelg4nmvq76tpxvofpyn4qd.onion\", \"key\": \"FDF476DUDSB5M27BIGEVIFCFGHQJ46XS3STAP7VG6Z2OWXLHWZPA\"}, \"environment\": \"dev\", \"vmsizes\": {\"sd_app\": 10, \"sd_log\": 5}}" | sudo tee /usr/share/securedrop-workstation-dom0-config/config.json');
+    assert_script_run('cp /usr/share/securedrop-workstation-dom0-config/config.json /home/user/securedrop-workstation/config.json');
     script_run('ln -s /usr/share/securedrop-workstation-dom0-config/sd-journalist.sec /home/user/securedrop-workstation/sd-journalist.sec');
 
     # Run tests (xvfb-run needed to simulate screen in root console)

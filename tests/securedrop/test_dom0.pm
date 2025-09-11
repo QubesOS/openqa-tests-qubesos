@@ -31,7 +31,7 @@ sub run {
     assert_script_run('rpm -q python3-pytest || sudo qubes-dom0-update -y python3-pytest', timeout => 300);
     assert_script_run('rpm -q python3-pytest-cov || sudo qubes-dom0-update -y python3-pytest-cov', timeout => 300);
 
-    # Use virtual screen (xvfb) to this can run in root console.
+    # Install virtual screen (xvfb) so that launcher tests  can access a display, otherwise not available in a root console
     # See https://github.com/freedomofpress/securedrop-workstation/issues/1411
     assert_script_run('rpm -q xorg-x11-server-Xvfb || sudo qubes-dom0-update -y xorg-x11-server-Xvfb', timeout => 300);
 

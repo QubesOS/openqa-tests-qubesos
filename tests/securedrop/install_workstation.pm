@@ -48,6 +48,9 @@ sub install_dev {
     assert_script_run('qvm-run -p sd-dev "git clone https://github.com/freedomofpress/securedrop-workstation"');
     assert_script_run('qvm-run -p sd-dev "git -C securedrop-workstation checkout ' . get_var('GIT_REF') . '"');
 
+    # Set up config.json (mainly for "dev" to be correct enviornment)
+    assert_script_run('qvm-run -p sd-dev "echo {\"submission_key_fpr\": \"65A1B5FF195B56353CC63DFFCC40EF1228271441\", \"hidserv\": {\"hostname\": \"bnbo6ryxq24fz27chs5fidscyqhw2hlyweelg4nmvq76tpxvofpyn4qd.onion\", \"key\": \"FDF476DUDSB5M27BIGEVIFCFGHQJ46XS3STAP7VG6Z2OWXLHWZPA\"}, \"environment\": \"dev\", \"vmsizes\": {\"sd_app\": 10, \"sd_log\": 5}} | tee securedrop-workstation/config.json"');
+
     # SecureDrop dev. env. according to https://developers.securedrop.org/en/latest/setup_development.html
     # DOCKER INSTALL according to https://docs.docker.com/engine/install/debian/
     assert_script_run('qvm-run -p sd-dev "sudo apt-get update"');
@@ -69,12 +72,6 @@ sub install_dev {
     assert_script_run('qvm-run -p sd-dev "cd securedrop-workstation && make build-rpm"', timeout => 1000);
     assert_script_run("qvm-run --pass-io sd-dev 'cat /home/user/securedrop-workstation/rpm-build/RPMS/noarch/*.rpm' > /tmp/sdw.rpm");
     assert_script_run('sudo dnf -y install /tmp/sdw.rpm', timeout => 1000);
-
-    # setup dev config.json
-    assert_script_run('echo {\"submission_key_fpr\": \"65A1B5FF195B56353CC63DFFCC40EF1228271441\", \"hidserv\": {\"hostname\": \"bnbo6ryxq24fz27chs5fidscyqhw2hlyweelg4nmvq76tpxvofpyn4qd.onion\", \"key\": \"FDF476DUDSB5M27BIGEVIFCFGHQJ46XS3STAP7VG6Z2OWXLHWZPA\"}, \"environment\": \"dev\", \"vmsizes\": {\"sd_app\": 10, \"sd_log\": 5}} | sudo tee /usr/share/securedrop-workstation-dom0-config/config.json');
-    assert_script_run('curl https://raw.githubusercontent.com/freedomofpress/securedrop/d91dc67/securedrop/tests/files/test_journalist_key.sec.no_passphrase | sudo tee /usr/share/securedrop-workstation-dom0-config/sd-journalist.sec');
-    assert_script_run('sdw-admin --validate');
-
 };
 
 sub run {

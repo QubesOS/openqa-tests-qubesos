@@ -39,6 +39,9 @@ sub run {
     script_run('ln -s /usr/share/securedrop-workstation-dom0-config/config.json /home/user/securedrop-workstation/config.json');
     script_run('ln -s /usr/share/securedrop-workstation-dom0-config/sd-journalist.sec /home/user/securedrop-workstation/sd-journalist.sec');
 
+    # DEBUG: shortcut to test dev env config.json
+    assert_script_run('echo {\"submission_key_fpr\": \"65A1B5FF195B56353CC63DFFCC40EF1228271441\", \"hidserv\": {\"hostname\": \"bnbo6ryxq24fz27chs5fidscyqhw2hlyweelg4nmvq76tpxvofpyn4qd.onion\", \"key\": \"FDF476DUDSB5M27BIGEVIFCFGHQJ46XS3STAP7VG6Z2OWXLHWZPA\"}, \"environment\": \"dev\", \"vmsizes\": {\"sd_app\": 10, \"sd_log\": 5}}" | tee securedrop-workstation/config.json');
+
     # Run tests (xvfb-run needed to simulate screen in root console)
     assert_script_run("xvfb-run env CI=true make -C $sdw_path test | tee make-test.log", timeout => 2400);
 

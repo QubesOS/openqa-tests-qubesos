@@ -20,10 +20,7 @@ use serial_terminal qw(select_root_console);
 sub run {
     my ($self) = @_;
 
-    $self->select_gui_console;
-
-    x11_start_program('xterm');
-    send_key('alt-f10');  # maximize xterm to ease troubleshooting
+    $self->select_root_console;
 
     # HACK: work around "extra-files" failing to be obtained via the usual route (via CASEDIR b64)
     assert_script_run("qvm-run -p sd-dev 'curl https://raw.githubusercontent.com/QubesOS/openqa-tests-qubesos/refs/heads/main/extra-files/convert_junit.py 2>/dev/null' > /home/user/convert_junit.py");
@@ -33,9 +30,20 @@ sub run {
     # Setup testing requirements and run tests
     assert_script_run('rpm -q python3-pytest || sudo qubes-dom0-update -y python3-pytest', timeout => 300);
     assert_script_run('rpm -q python3-pytest-cov || sudo qubes-dom0-update -y python3-pytest-cov', timeout => 300);
+
+    # Install virtual screen (xvfb) so that launcher tests  can access a display, otherwise not available in a root console
+    # See https://github.com/freedomofpress/securedrop-workstation/issues/1411
+    assert_script_run('rpm -q xorg-x11-server-Xvfb || sudo qubes-dom0-update -y xorg-x11-server-Xvfb', timeout => 300);
+
+    # Set up credentials
     script_run('ln -s /usr/share/securedrop-workstation-dom0-config/config.json /home/user/securedrop-workstation/config.json');
     script_run('ln -s /usr/share/securedrop-workstation-dom0-config/sd-journalist.sec /home/user/securedrop-workstation/sd-journalist.sec');
-    script_run("env CI=true make -C $sdw_path test | tee make-test.log", timeout => 2400);
+
+    # DEBUG: shortcut to test dev env config.json
+    assert_script_run('echo {\"submission_key_fpr\": \"65A1B5FF195B56353CC63DFFCC40EF1228271441\", \"hidserv\": {\"hostname\": \"bnbo6ryxq24fz27chs5fidscyqhw2hlyweelg4nmvq76tpxvofpyn4qd.onion\", \"key\": \"FDF476DUDSB5M27BIGEVIFCFGHQJ46XS3STAP7VG6Z2OWXLHWZPA\"}, \"environment\": \"dev\", \"vmsizes\": {\"sd_app\": 10, \"sd_log\": 5}}" | tee securedrop-workstation/config.json');
+
+    # Run tests (xvfb-run needed to simulate screen in root console)
+    assert_script_run("xvfb-run env CI=true make -C $sdw_path test | tee make-test.log", timeout => 2400);
 
 
     curl_via_netvm; # necessary for upload_logs

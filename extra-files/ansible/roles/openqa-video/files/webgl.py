@@ -40,17 +40,14 @@ def get_webgl_fps_firefox() -> float:
             raise RuntimeError("Unable to locate FPS element on the page")
 
         # extract the numeric part using regex
-        match = re.search(r"fps:\s*([\d\.]+)", fps_text)
+        match = re.search(r"fps:\s*([\d.]+)", fps_text)
         if not match:
             raise ValueError(f"FPS value not found in text '{fps_text}'")
-        fps_value = float(match.group(1))
-
-        # arbitrary value
-        assert fps_value > 10
-
+        return float(match.group(1))
     finally:
         driver.quit()
 
 if __name__ == "__main__":
     fps = get_webgl_fps_firefox()
+    assert isinstance(fps, float) and fps > 10.0
     print(f"fps={fps:.2f}")

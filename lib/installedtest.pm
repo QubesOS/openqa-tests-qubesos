@@ -295,6 +295,7 @@ sub upload_packages_versions {
     } else {
         $all_packages .= "Dom0: failed\n";
     };
+    assert_script_run("rm -f dom0-packages.txt");
 
     my $templates = $args{'templates'};
     if (!$templates) {
@@ -321,6 +322,7 @@ sub upload_packages_versions {
         #assert_script_run("qvm-run --service -p $_ qubes.PostInstall", timeout => 90);
         script_output("qvm-features $_", timeout => 90);
         assert_script_run("qvm-shutdown --wait $_", timeout => 90);
+        assert_script_run("rm -f template-$_-packages.txt");
     }
     path("sut_packages.txt")->spew($all_packages);
 }

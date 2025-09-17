@@ -73,6 +73,11 @@ switch_template() {
         echo "\$new_template is already default template"
         return
     fi
+    # kill preloaded disposables
+    preloaded=\$(qvm-ls --raw-list --paused --class DispVM)
+    if [ -n "\$preloaded" ]; then
+        qvm-kill \$preloaded
+    fi
     dvm_tpls=\$(qvm-ls --raw-data --fields=name,template,template_for_dispvms|grep "\$default_template|True\$"|cut -f 1 -d '|')
     for dvmtpl in \$dvm_tpls; do
         running=\$(qvm-ls --raw-data --fields=name,template,state|grep "\$dvmtpl|Running\$"|cut -f 1 -d '|')

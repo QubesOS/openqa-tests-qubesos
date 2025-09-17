@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 92,
+      "type": "match",
+      "xpos": 870,
+      "height": 21,
+      "ypos": 31
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "login-prompt-session-type-kde",
+    "login-prompt-session-type-kde-wayland"
+  ]
+}

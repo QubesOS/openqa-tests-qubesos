@@ -15,7 +15,7 @@
           devices:
             strategy: strict
             items: >
-              {{ pci_devices.split(',') }}
+              {{ pci_devices.split(',') | map('regex_replace', '^', 'pci:') }}
 
 - hosts: testvideolin
   roles:

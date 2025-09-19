@@ -91,7 +91,7 @@ def format_results(results, jobs, reference_jobs=None, instability_analysis=None
             fails = results[k]
             add_to_output = ""
             for fail in fails:
-                if fail in upload_failures:
+                if fail.name == "system_tests":
                     continue
                 if fail.regression and not fail.unstable:
                     add_to_output += '  * ' + str(fail) + '\n'
@@ -109,7 +109,7 @@ def format_results(results, jobs, reference_jobs=None, instability_analysis=None
                 continue
             add_to_output = ""
             for fail in results[k]:
-                if fail.fixed or fail in upload_failures:
+                if fail.fixed or fail.name == "system_tests":
                     continue
                 if fail.unstable:
                     add_to_output += '  * [unstable] ' + str(fail) + '\n'

@@ -42,9 +42,6 @@ sub run {
     $self->maybe_unlock_screen;
     upload_logs('/tmp/kde-install.log', failok => 1);
 
-    # add this manually for now, but at some point it should get packaged
-    assert_script_run("printf '[LightDM]\\nsessions-directory=/usr/share/lightdm/sessions:/usr/share/xsessions:/usr/share/wayland-sessions\\n' | sudo tee /etc/lightdm/lightdm.conf.d/50-enable-wayland-sessions.conf");
-
 #    type_string("exit\n");
     type_string("exit\n");
 }

@@ -120,6 +120,10 @@ if (get_var('DO_GUIVM')) {
     }
 }
 
+if (get_var('TEST_GPU_PASSTHROUGH')) {
+    autotest::loadtest "tests/gpu_passthrough.pm";
+}
+
 if (get_var('PIPEWIRE')) {
     autotest::loadtest "tests/pipewire_install.pm";
 }

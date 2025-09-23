@@ -1,0 +1,84 @@
+- name: Ensure 'non-free' is enabled in /etc/apt/sources.list
+  replace:
+    path: /etc/apt/sources.list
+    regexp: '^(deb\s+\S+\s+{{ ansible_distribution_release }}\s+)(main(?:\s+contrib)?)(.*)$'
+    replace: '\1\2 non-free\3'
+  register: nonfree_result
+
+- name: Show if /etc/apt/sources.list was changed
+  debug:
+    msg: "Added 'non-free' to sources.list"
+  when: nonfree_result.changed
+
+- name: Update apt cache (so that non-free is recognized)
+  apt:
+    update_cache: yes
+
+- name: Install dependencies
+  apt:
+    name:
+      - nvidia-driver
+      - python3-selenium
+      - mesa-utils
+    state: present
+
+- name: Add 'user' to the 'render' group
+  user:
+    name: user
+    groups: render
+    append: yes
+
+- name: Get VirtualGL GPG keyring
+  get_url:
+    url: https://packagecloud.io/dcommander/virtualgl/gpgkey
+    dest: /etc/apt/keyrings/VirtualGL.asc
+
+- name: Create VirtualGL.list
+  copy:
+    dest: /etc/apt/sources.list.d/VirtualGL.list
+    content: |
+      deb [signed-by=/etc/apt/keyrings/VirtualGL.asc] https://packagecloud.io/dcommander/virtualgl/any/ any main
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install VirtualGL package
+  apt:
+    name: virtualgl
+    state: present
+
+- name: Download Geckodriver v0.36.0 archive
+  get_url:
+    url: https://github.com/mozilla/geckodriver/releases/download/v0.36.0/geckodriver-v0.36.0-linux64.tar.gz
+    dest: /tmp/geckodriver-v0.36.0-linux64.tar.gz
+    mode: '0644'
+
+- name: Extract geckodriver binary into /usr/local/bin
+  unarchive:
+    src: /tmp/geckodriver-v0.36.0-linux64.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    creates: /usr/local/bin/geckodriver
+
+- name: Ensure geckodriver is owned by root and executable
+  file:
+    path: /usr/local/bin/geckodriver
+    owner: root
+    group: root
+    mode: '0755'
+    state: file
+
+- name: Remove downloaded Geckodriver archive
+  file:
+    path: /tmp/geckodriver-v0.36.0-linux64.tar.gz
+    state: absent
+
+- name: Copy webgl.py
+  copy:
+    dest: /usr/local/bin/webgl.py
+    src: webgl.py
+    mode: '0755'

@@ -1,0 +1,48 @@
+- hosts: local
+  tasks:
+      - name: Create testvideolin
+        qubesos:
+          guest: testvideolin
+          vmtype: "StandaloneVM"
+          label: red
+          state: present
+          template: "debian-12-xfce"
+          properties:
+            kernel: ""
+            virt_mode: "hvm"
+            memory: 4000
+            maxmem: 0
+          devices:
+            strategy: strict
+            items: >
+              {{ pci_devices.split(',') | map('regex_replace', '^', 'pci:') }}
+
+- hosts: testvideolin
+  roles:
+    - openqa-video
+  become: yes
+
+- hosts: local
+  tasks:
+    - name: Restart
+      qubesos:
+        guest: testvideolin
+        state: restarted
+        wait: true
+
+- hosts: testvideolin
+  become: yes
+  tasks:
+    - name: Run glxinfo via VirtualGL and capture output
+      shell: |
+        VGL_DISPLAY=egl vglrun glxinfo -B
+      register: glxinfo_output
+
+    - name: Verify that NVIDIA appears in glxinfo output
+      assert:
+        that:
+          - "'NVIDIA' in glxinfo_output.stdout"
+        fail_msg: "NVIDIA was not found in the glxinfo output"
+        success_msg: "NVIDIA was successfully detected in the glxinfo output"
+
+    # run VGL_DISPLAY=egl vglrun webgl.py?

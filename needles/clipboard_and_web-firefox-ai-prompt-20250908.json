@@ -1,0 +1,27 @@
+{
+  "area": [
+    {
+      "width": 184,
+      "xpos": 152,
+      "type": "match",
+      "height": 21,
+      "ypos": 135
+    },
+    {
+      "ypos": 135,
+      "type": "match",
+      "xpos": 413,
+      "height": 23,
+      "width": 30,
+      "click_point": {
+        "ypos": 11.5,
+        "xpos": 15
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "firefox-ai-prompt"
+  ]
+}

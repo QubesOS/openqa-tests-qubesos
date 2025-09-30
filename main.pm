@@ -181,11 +181,6 @@ if (check_var('SECUREDROP_INSTALL', '1')) {
     autotest::loadtest("tests/whonix_firstrun.pm", name => "Setup_sys-whonix");
 
     autotest::loadtest("tests/securedrop/install_workstation.pm");
-
-    # Setup sd-whonix connection
-    my $args = OpenQA::Test::RunArgs->new();
-    $args->{whonix_gw_override} = 'sd-whonix';
-    autotest::loadtest("tests/whonix_firstrun.pm", name =>"Setup_sd-whonix",  run_args => $args);
 } elsif (check_var('SECUREDROP_TEST', "test_dom0")) {
     autotest::loadtest("tests/securedrop/test_dom0.pm");
 } elsif (check_var('SECUREDROP_TEST', "test_gui")) {

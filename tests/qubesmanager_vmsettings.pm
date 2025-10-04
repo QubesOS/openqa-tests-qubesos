@@ -150,7 +150,7 @@ sub run {
         assert_and_click('vm-settings-devices-scroll-down');
     }
     assert_and_click('vm-settings-devices-select');
-    assert_and_click('vm-settings-devices-add');
+    assert_and_click(['vm-settings-devices-add', 'vm-settings-app-add']);
 
     # confirm
     assert_and_click('vm-settings-ok');
@@ -171,7 +171,7 @@ sub run {
     # applications
     assert_and_click('vm-settings-applications-tab');
     assert_and_click(['vm-settings-apps-dolphin-select', 'vm-settings-apps-thunar-select', 'vm-settings-apps-start-qube-select', 'vm-settings-apps-mousepad-select']);
-    assert_and_click('vm-settings-apps-add');
+    assert_and_click('vm-settings-app-add');
 
     # confirm
     send_key('alt-o');

@@ -74,12 +74,12 @@ sub prep_backup {
 
     # select only sys-net
     assert_and_click('backup-select-sys-net');
-    assert_and_click('backup-select-sys-net2');
+    assert_and_click(['backup-select-sys-net2', 'vm-settings-app-add']);
 
     # select some template too
     if ($bigger) {
         assert_and_click('backup-select-bigger');
-        assert_and_click('backup-select-sys-net2');
+        assert_and_click(['backup-select-sys-net2', 'vm-settings-app-add']);
     }
 
     # click next

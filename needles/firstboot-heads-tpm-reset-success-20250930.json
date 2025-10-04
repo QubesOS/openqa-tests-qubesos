@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "ypos": 222,
+      "xpos": 357,
+      "type": "match",
+      "height": 41,
+      "width": 281
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw5",
+    "ENV-VERSION-4.3",
+    "heads-tpm-reset-success"
+  ]
+}

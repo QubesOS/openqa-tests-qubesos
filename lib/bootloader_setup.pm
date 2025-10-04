@@ -232,22 +232,18 @@ sub heads_boot_default {
         send_key 'ret';
         assert_screen(['heads-menu', 'heads-hotp-fail-screen'], 30);
     }
+    my $rollback_saved = 0;
+    if (-e "kexec_rollback.txt") {
+        $rollback_saved = 1;
+    }
     if (match_has_tag('heads-menu-hotp-fail')) {
-        if (check_var("MACHINE", "hw5")) {
-            heads_generate_hotp(reset_tpm => 1);
-        } else {
-            heads_generate_hotp;
-        }
+        heads_generate_hotp(reset_tpm => !$rollback_saved);
     } elsif (match_has_tag('heads-hotp-fail-screen')) {
         # choose "Ignore error and continue to main menu"
         send_key 'down';
         send_key 'ret';
         wait_still_screen;
-        if (check_var("MACHINE", "hw5")) {
-            heads_generate_hotp(reset_tpm => 1);
-        } else {
-            heads_generate_hotp;
-        }
+        heads_generate_hotp(reset_tpm => !$rollback_saved);
     }
     # Default boot
     send_key 'ret';

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 374,
+      "width": 34,
+      "type": "match",
+      "xpos": 486,
+      "height": 31
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-kde",
+    "ENV-VERSION-4.3",
+    "vm-settings-app-add"
+  ]
+}

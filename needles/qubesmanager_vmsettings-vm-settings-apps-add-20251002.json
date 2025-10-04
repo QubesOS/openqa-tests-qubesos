@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 392,
+      "width": 30,
+      "height": 22,
+      "type": "match",
+      "xpos": 488
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-apps-add"
+  ]
+}

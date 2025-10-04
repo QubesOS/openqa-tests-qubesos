@@ -142,6 +142,15 @@ ENDFUNC
         if (script_run('pidof -x qvm-start-daemon')) {
             record_soft_failure('qvm-start-daemon crashed');
         }
+        if (get_var('SYSTEM_TESTS') =~ m/dispvm_perf/) {
+            # open-coded upload_logs function, to not type it for each file
+            # separately
+            my $name_prefix = $autotest::current_test->{name} . '-';
+            my $url_base = autoinst_url("/uploadlog/");
+            assert_script_run("sudo chmod -R a+rX perf_test_results*");
+            assert_script_run("ls -l");
+            assert_script_run("find perf_test_results.txt_* -type f | while read fname; do bname=\$(basename \$fname); curl --form upload=\@\$fname --form upname=$name_prefix\$bname $url_base\$bname; done");
+        }
     }
     if ($failed) {
         die "Some tests failed";

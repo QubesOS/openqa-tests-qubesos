@@ -21,6 +21,9 @@ dom0-packages:
 {% if grains['osrelease'] != '4.2' %}
       - python3-deepmerge
 {% endif %}
+      - python3-numpy
+      - python3-matplotlib
+      - open-sans-fonts
       - patch
       - qubes-video-companion-dom0
       - split-gpg2-dom0

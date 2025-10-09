@@ -35,7 +35,7 @@ sub install_dev {
     build_rpm();
     assert_script_run('mv /tmp/sdw.rpm securedrop-workstation/rpm-build/RPMS/');
     copy_config();
-    assert_script_run('cd securedrop-workstation && make bootstrap-dev');
+    assert_script_run('cd securedrop-workstation && make dev');
 };
 
 sub copy_config {
@@ -48,10 +48,7 @@ sub copy_config {
 sub install_staging {
     download_repo();
     copy_config();
-    # Note: staging won't run until we copy the config files into /usr/share/securedrop-workstation-dom0-config
-
-    # `make staging` installs from yum-test
-    assert_script_run('cd securedrop-workstation && make bootstrap-staging');
+    assert_script_run('cd securedrop-workstation && make staging');
 };
 
 

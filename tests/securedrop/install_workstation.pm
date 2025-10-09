@@ -30,25 +30,27 @@ sub download_repo {
     assert_script_run('mv securedrop-workstation-* securedrop-workstation');
 };
 
-sub install_dev {
+
+sub install {
+    my ($environment) = @_;
+
     download_repo();
-    build_rpm();
-    assert_script_run('mv /tmp/sdw.rpm securedrop-workstation/rpm-build/RPMS/');
+
+    if ($environment eq "dev") {
+        build_rpm();
+    }
     copy_config();
-    assert_script_run('cd securedrop-workstation && make dev');
+
+    assert_script_run('env xset -dpms; env xset s off', valid => 0, timeout => 10); # disable screen blanking during long command
+    assert_script_run("cd securedrop-workstation && make $environment | tee /tmp/sdw-admin-apply.log",  timeout => 6000);
+    upload_logs('/tmp/sdw-admin-apply.log', failok => 1);
 };
 
 sub copy_config {
-
-    # This copies a "dev" config
+    # This copies a "dev" config. The appropriate make {staging,dev} target
+    # should handle the environment change in the config file
     assert_script_run('echo {\"submission_key_fpr\": \"65A1B5FF195B56353CC63DFFCC40EF1228271441\", \"hidserv\": {\"hostname\": \"bnbo6ryxq24fz27chs5fidscyqhw2hlyweelg4nmvq76tpxvofpyn4qd.onion\", \"key\": \"FDF476DUDSB5M27BIGEVIFCFGHQJ46XS3STAP7VG6Z2OWXLHWZPA\"}, \"environment\": \"dev\", \"vmsizes\": {\"sd_app\": 10, \"sd_log\": 5}} | tee /home/user/securedrop-workstation/config.json');
     assert_script_run("curl https://raw.githubusercontent.com/freedomofpress/securedrop/d91dc67/securedrop/tests/files/test_journalist_key.sec.no_passphrase | tee /home/user/securedrop-workstation/sd-journalist.sec");
-};
-
-sub install_staging {
-    download_repo();
-    copy_config();
-    assert_script_run('cd securedrop-workstation && make staging');
 };
 
 
@@ -82,7 +84,8 @@ sub build_rpm {
     assert_script_run("ls");
 
     assert_script_run('qvm-run -p sd-dev "cd securedrop-workstation && make build-rpm"', timeout => 1000);
-    assert_script_run("qvm-run --pass-io sd-dev 'cat /home/user/securedrop-workstation/rpm-build/RPMS/noarch/*.rpm' > /tmp/sdw.rpm");
+    assert_script_run("mkdir -p /home/user/securedrop-workstation/rpm-build/RPMS/noarch/");
+    assert_script_run("qvm-run --pass-io sd-dev 'cat /home/user/securedrop-workstation/rpm-build/RPMS/noarch/*.rpm' > /home/user/securedrop-workstation/rpm-build/RPMS/noarch/sdw.rpm");
 };
 
 
@@ -97,15 +100,9 @@ sub run {
 
     curl_via_netvm;  # necessary for curling script and uploading logs
 
-    assert_script_run('set -o pipefail'); # Ensure pipes fail\
+    assert_script_run('set -o pipefail'); # Ensure pipes fail
 
-    install_dev;
-
-    assert_script_run('sdw-admin --validate');
-
-    assert_script_run('env xset -dpms; env xset s off', valid => 0, timeout => 10); # disable screen blanking during long command
-    assert_script_run('sdw-admin --apply | tee /tmp/sdw-admin-apply.log',  timeout => 6000);  # long timeout due to slow virt.
-    upload_logs('/tmp/sdw-admin-apply.log', failok => 1);
+    install("dev");
 
     send_key('alt-f4');  # close terminal
 }

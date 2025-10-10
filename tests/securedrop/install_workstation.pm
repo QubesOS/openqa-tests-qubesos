@@ -30,11 +30,26 @@ sub download_repo {
     assert_script_run('mv securedrop-workstation-* securedrop-workstation');
 };
 
+sub qubes_contrib_keyring_bootstrap() {
+    assert_script_run('sudo qubes-dom0-update -y qubes-repo-contrib', timeout => 120);
+    assert_script_run('sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-qubes-4-contrib-fedora', timeout => 120);
+    assert_script_run('sudo qubes-dom0-update --clean -y securedrop-workstation-keyring', timeout => 120);
+
+    # NOTE Qubes-contrib repo RPM key will stay even without the repo in the RPM
+    # DB due to https://github.com/QubesOS/qubes-issues/issues/10310
+    assert_script_run('sudo dnf -y remove qubes-repo-contrib');
+}
+
 
 sub install {
     my ($environment) = @_;
 
     download_repo();
+
+    # Install prod keyring package through Qubes-contrib to simulate end-user
+    # path, regardless of environment. This should be OK because staging / dev
+    # packages will override any prod packages due to higher version numbers
+    qubes_contrib_keyring_bootstrap();
 
     if ($environment eq "dev") {
         build_rpm();

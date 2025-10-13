@@ -31,12 +31,7 @@ sub run {
     assert_script_run('rpm -q python3-pytest || sudo qubes-dom0-update -y python3-pytest', timeout => 300);
     assert_script_run('rpm -q python3-pytest-cov || sudo qubes-dom0-update -y python3-pytest-cov', timeout => 300);
 
-    # Install virtual screen (xvfb) so that launcher tests  can access a display, otherwise not available in a root console
-    # See https://github.com/freedomofpress/securedrop-workstation/issues/1411
-    assert_script_run('rpm -q xorg-x11-server-Xvfb || sudo qubes-dom0-update -y xorg-x11-server-Xvfb', timeout => 300);
-
-    # Run tests (xvfb-run needed to simulate screen in root console)
-    assert_script_run("xvfb-run env CI=true make -C $sdw_path test | tee make-test.log", timeout => 2400);
+    assert_script_run("env XAUTHORITY=/run/lightdm/user/xauthority DISPLAY=:0.0 CI=true make -C $sdw_path test | tee make-test.log", timeout => 2400);
 
 
     curl_via_netvm; # necessary for upload_logs

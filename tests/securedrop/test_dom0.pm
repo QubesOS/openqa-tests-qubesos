@@ -20,10 +20,7 @@ use serial_terminal qw(select_root_console);
 sub run {
     my ($self) = @_;
 
-    $self->select_gui_console;
-
-    x11_start_program('xterm');
-    send_key('alt-f10');  # maximize xterm to ease troubleshooting
+    $self->select_root_console;
 
     # HACK: work around "extra-files" failing to be obtained via the usual route (via CASEDIR b64)
     assert_script_run("qvm-run -p sd-dev 'curl https://raw.githubusercontent.com/QubesOS/openqa-tests-qubesos/refs/heads/main/extra-files/convert_junit.py 2>/dev/null' > /home/user/convert_junit.py");
@@ -33,9 +30,8 @@ sub run {
     # Setup testing requirements and run tests
     assert_script_run('rpm -q python3-pytest || sudo qubes-dom0-update -y python3-pytest', timeout => 300);
     assert_script_run('rpm -q python3-pytest-cov || sudo qubes-dom0-update -y python3-pytest-cov', timeout => 300);
-    script_run('ln -s /usr/share/securedrop-workstation-dom0-config/config.json /home/user/securedrop-workstation/config.json');
-    script_run('ln -s /usr/share/securedrop-workstation-dom0-config/sd-journalist.sec /home/user/securedrop-workstation/sd-journalist.sec');
-    script_run("env CI=true make -C $sdw_path test | tee make-test.log", timeout => 2400);
+
+    assert_script_run("env XAUTHORITY=/run/lightdm/user/xauthority DISPLAY=:0.0 CI=true make -C $sdw_path test | tee make-test.log", timeout => 2400);
 
 
     curl_via_netvm; # necessary for upload_logs

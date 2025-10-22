@@ -150,7 +150,7 @@ sub run {
 
     assert_script_run('set -o pipefail'); # Ensure pipes fail
 
-    install("dev");
+    install(get_var('SECUREDROP_ENV', 'dev'));
 
     send_key('alt-f4');  # close terminal
 }

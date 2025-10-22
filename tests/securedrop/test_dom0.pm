@@ -22,8 +22,11 @@ sub run {
 
     $self->select_root_console;
 
+    curl_via_netvm; # necessary for upload_logs
+
+
     # HACK: work around "extra-files" failing to be obtained via the usual route (via CASEDIR b64)
-    assert_script_run("qvm-run -p sd-dev 'curl https://raw.githubusercontent.com/QubesOS/openqa-tests-qubesos/refs/heads/main/extra-files/convert_junit.py 2>/dev/null' > /home/user/convert_junit.py");
+    assert_script_run("curl https://raw.githubusercontent.com/QubesOS/openqa-tests-qubesos/refs/heads/main/extra-files/convert_junit.py 2>/dev/null > /home/user/convert_junit.py");
 
     my $sdw_path = "/home/user/securedrop-workstation";
 
@@ -34,7 +37,6 @@ sub run {
     assert_script_run("env XAUTHORITY=/run/lightdm/user/xauthority DISPLAY=:0.0 CI=true make -C $sdw_path test | tee make-test.log", timeout => 2400);
 
 
-    curl_via_netvm; # necessary for upload_logs
     upload_logs("$sdw_path/test-data.xml", failok => 1);  # Upload original (in case conversion fails)
 
     script_run("iconv -f utf8 -t ascii//translit $sdw_path/test-data.xml > $sdw_path/test-data-tmp.xml");

@@ -30,25 +30,15 @@ sub download_repo {
     assert_script_run('mv securedrop-workstation-* securedrop-workstation');
 };
 
-# Following instructions at https://github.com/freedomofpress/securedrop-workstation-docs/blob/366c9c4/docs/admin/install/install.rst#download-securedrop-workstation-packages
+# Following instructions at https://github.com/freedomofpress/securedrop-workstation-docs/blob/aa89494/docs/admin/install/install.rst#download-securedrop-workstation-packages
 sub qubes_contrib_keyring_bootstrap() {
 
     assert_script_run('sudo qubes-dom0-update -y qubes-repo-contrib', timeout => 120);
-
-    # HACK: temporarily needed due to QubesOS/qubes-issues#10311
-    assert_script_run('sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-qubes-4-contrib-fedora', timeout => 120);
-
     assert_script_run('sudo qubes-dom0-update --clean -y securedrop-workstation-keyring', timeout => 120);
 
     sleep(15); # sleep for securedrop-workstation-keyring key to be imported,
-    # specifically due to https://github.com/freedomofpress/securedrop-workstation-keyring/blob/0.2.0/rpm_spec/securedrop-workstation-keyring.spec#L72
-    # NOTE: Update once fixed in https://github.com/freedomofpress/securedrop-workstation-keyring/issues/36
 
     assert_script_run('sudo dnf -y remove qubes-repo-contrib');
-
-    # HACK: temporarily needed due to QubesOS/qubes-issues#10310
-    assert_script_run('systemd-run --on-active=5min rpm -e gpg-pubkey-d0941e87-5d8c9210');
-
 };
 
 sub install {

@@ -39,6 +39,11 @@ sub qubes_contrib_keyring_bootstrap() {
     assert_script_run('sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-qubes-4-contrib-fedora', timeout => 120);
 
     assert_script_run('sudo qubes-dom0-update --clean -y securedrop-workstation-keyring', timeout => 120);
+
+    sleep(15); # sleep for securedrop-workstation-keyring key to be imported,
+    # specifically due to https://github.com/freedomofpress/securedrop-workstation-keyring/blob/0.2.0/rpm_spec/securedrop-workstation-keyring.spec#L72
+    # NOTE: Update once fixed in https://github.com/freedomofpress/securedrop-workstation-keyring/issues/36
+
     assert_script_run('sudo dnf -y remove qubes-repo-contrib');
 
     # HACK: temporarily needed due to QubesOS/qubes-issues#10310
@@ -66,7 +71,6 @@ sub install {
 
     my $installation_cmd;
     if ($environment eq "prod") {
-        sleep(15); # sleep for securedrop-workstation-keyring key to be imported
         assert_script_run("sudo qubes-dom0-update --clean -y securedrop-workstation-dom0-config");
         $installation_cmd = "sdw-admin --apply";
     } else {

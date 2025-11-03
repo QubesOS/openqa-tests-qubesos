@@ -71,10 +71,12 @@ def format_results(results, jobs, reference_jobs=None, instability_analysis=None
         if results[k]:
             if all(f.fixed for f in results[k]):
                 continue
-            if any(f.name != "system_tests" for f in results[k]):
+            if any(f.name != "system_tests" and not f.fixed for f in results[k]):
                 continue
             failed_tests_details += '* ' + str(k) + "\n"
             for fail in results[k]:
+                if fail.fixed:
+                    continue
                 failed_tests_details += '  * ' + str(fail) + '\n'
                 upload_failures.append(fail)
     if upload_failures:

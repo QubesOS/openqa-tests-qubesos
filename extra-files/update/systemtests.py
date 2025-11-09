@@ -78,17 +78,25 @@ def systemtests(os_data, log, **kwargs):
     if os.path.exists("/etc/systemcheck.d/30_default.conf"):
         with open("/etc/systemcheck.d/50_tests.conf", "w") as f:
             f.write('systemcheck_unwanted_package="$(echo "$systemcheck_unwanted_package" | sed \'s/ python3-pip //g\')"\n')
-            f.write('journal_ignore_pattern_add "kernel: RETBleed: WARNING:"\n')
-            # Apr 15 19:13:11 host dovecot[1284]: master: Warning: Time moved forwards by 3394423.774836 seconds - adjusting timeouts.
-            f.write('journal_ignore_pattern_add "dovecot.*Time moved"\n')
-            # test-only, actual issues
-            f.write('journal_ignore_pattern_add "augenrules.*failure 1"\n')
-            f.write('journal_ignore_pattern_add "auditd.*: Error receiving audit netlink packet"\n')
-            # Mar 14 05:36:03 host systemd-fsck[377]: fsck failed with exit status 8.
-            # Mar 14 05:36:03 host systemd-fsck[377]: Ignoring error.
-            # https://github.com/QubesOS/qubes-issues/issues/9840
-            f.write('journal_ignore_pattern_add "fsck failed with exit status 8"\n')
-            f.write('journal_ignore_pattern_add "systemd-fsck.* Ignoring error."\n')
+            for pattern in (
+                "kernel: RETBleed: WARNING:",
+                # Apr 15 19:13:11 host dovecot[1284]: master: Warning: Time moved forwards by 3394423.774836 seconds - adjusting timeouts.
+                "dovecot.*Time moved",
+                # test-only, actual issues
+                "augenrules.*failure 1",
+                "auditd.*: Error receiving audit netlink packet",
+                # Mar 14 05:36:03 host systemd-fsck[377]: Ignoring error.
+                "systemd-fsck.* Ignoring error.",
+                # Mar 14 05:36:03 host systemd-fsck[377]: fsck failed with exit status 8.
+                # https://github.com/QubesOS/qubes-issues/issues/9840
+                "fsck failed with exit status 8",
+                "Failed to read /qubes-netvm-gateway6",
+                "'qubesdb-read /qubes-netvm-gateway6' failed",
+                "Direct firmware load for regulatory.db failed",
+                "Failed to read /qubes-ip6",
+                "'qubesdb-read /qubes-ip6' or 'qubesdb-read /qubes-gateway6' failed",
+            ):
+                f.write(f'journal_ignore_pattern_add "{pattern}" || journal_ignore_patterns_list+=( "{pattern}" )\n')
 
     subprocess.call(["systemctl", "disable", "dnsmasq"],
                     stdin=subprocess.DEVNULL)

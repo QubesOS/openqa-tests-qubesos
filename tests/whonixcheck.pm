@@ -22,6 +22,7 @@ use networking;
 
 sub run {
     my ($self) = @_;
+    my $failed = 0;
 
     if (get_var('TEST_TEMPLATES') && !(get_var("TEST_TEMPLATES") =~ m/whonix/)) {
         record_info('skip', "only selected templates test requested and whonix is not one of them");
@@ -49,6 +50,7 @@ sub run {
         upload_logs("whonixcheck-$_.log");
         if ($ret != 0) {
             record_info('fail', "Whonixcheck for $_ failed", result => 'fail');
+            $failed = 1;
         }
         # shutdown all except sys-whonix
         unless (/sys-whonix/) {
@@ -56,6 +58,7 @@ sub run {
         }
     }
     type_string("exit\n");
+    die "systemcheck failed" if ($failed);
 }
 
 1;

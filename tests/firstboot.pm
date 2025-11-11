@@ -131,7 +131,14 @@ sub run {
                 assert_and_click('disable-install-whonix', timeout => 5);
             }
         }
-        # TODO: use DEFAULT_TEMPLATE to choose the default
+        if (get_var('DEFAULT_TEMPLATE') and !check_var('DEFAULT_TEMPLATE', 'fedora')) {
+            assert_and_click('firstboot-default-template');
+            if (check_var('DEFAULT_TEMPLATE', 'debian')) {
+                assert_and_click('firstboot-default-template-debian');
+            } else {
+                die "Unsupported default template";
+            }
+        }
     }
 
     if (check_var('USBVM', 'none')) {

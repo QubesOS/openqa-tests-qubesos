@@ -22,6 +22,8 @@ use testapi;
 # WARNING: this test depends on simple_gui_apps.pm (which adds xterm to the menu)
 
 sub run {
+    my ($self) = @_;
+
     x11_start_program('sh -c \'echo -e "timeout:\t0:02:00" > ~/.xscreensaver\'', valid => 0);
     x11_start_program('xfconf-query -c xfce4-screensaver -p /saver/idle-activation/delay -t int -s 2', valid => 0);
     if (check_var('KEEP_SCREENLOCKER', '1')) {
@@ -31,7 +33,7 @@ sub run {
     } elsif (check_var('VERSION', '4.2') && !check_var("DESKTOP", "kde")) {
         x11_start_program('xscreensaver -no-splash', target_match => 'desktop-clear');
     }
-    assert_and_click("menu");
+    $self->open_menu;
     assert_and_click("menu-vm-work");
     assert_and_click("menu-vm-xterm");
 

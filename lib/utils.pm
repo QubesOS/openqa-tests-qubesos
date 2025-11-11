@@ -20,9 +20,9 @@ package utils;
 use strict;
 use base 'Exporter';
 use Exporter;
-use testapi qw(check_screen wait_still_screen assert_screen send_key mouse_set);
+use testapi qw(check_screen wait_still_screen assert_screen send_key mouse_set get_var);
 
-our @EXPORT = qw(us_colemak colemak_us assert_screen_with_keypress move_to_lastmatch);
+our @EXPORT = qw(us_colemak colemak_us assert_screen_with_keypress move_to_lastmatch maximize_window);
 
 =head2 us_colemak
 
@@ -109,6 +109,9 @@ sub move_to_lastmatch {
     mouse_set($x, $y);
 }
 
+sub maximize_window {
+    send_key(get_var('MAXIMIZE_KEY', 'alt-f10'));
+}
 
 1;
 # vim: sw=4 et ts=4:

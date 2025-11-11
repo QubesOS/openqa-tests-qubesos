@@ -254,6 +254,14 @@ sub init_gui_session {
     wait_still_screen;
 }
 
+sub open_menu {
+    if (check_var('DESKTOP', 'i3')) {
+        send_key('super-shift-D');
+    } else {
+        assert_and_click('menu');
+    }
+}
+
 sub maybe_unlock_screen {
     my ($self) = @_;
 

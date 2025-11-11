@@ -18,6 +18,7 @@
 use base "installedtest";
 use strict;
 use testapi;
+use utils;
 
 sub run {
     my ($self) = @_;
@@ -25,7 +26,7 @@ sub run {
     $self->select_gui_console;
     assert_screen "desktop";
     x11_start_program('xterm', match_typed => 'desktop-runner-xterm');
-    send_key('alt-f10');
+    maximize_window;
     script_run('mount');
     # expect discard option by default only in 4.0+
     if (get_var('VERSION') !~ /^3/) {

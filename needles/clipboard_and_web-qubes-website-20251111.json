@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 394,
+      "type": "match",
+      "xpos": 570,
+      "height": 116,
+      "ypos": 281
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-i3",
+    "ENV-VERSION-4.3",
+    "qubes-website"
+  ]
+}

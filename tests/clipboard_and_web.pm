@@ -27,7 +27,7 @@ sub run {
     assert_screen "desktop";
 
     # try to start "Text Editor" (gedit)
-    assert_and_click("menu");
+    $self->open_menu;
     assert_and_click("menu-vm-work");
     wait_still_screen();
     assert_and_click("menu-vm-text-editor");
@@ -49,7 +49,7 @@ sub run {
     die "nothing got copied" if (match_has_tag("clipboard-copy-0-bytes"));
 
     # try to start "Firefox" in personal
-    assert_and_click("menu");
+    $self->open_menu;
     assert_and_click("menu-vm-personal");
     wait_still_screen();
     assert_and_click("menu-vm-firefox");

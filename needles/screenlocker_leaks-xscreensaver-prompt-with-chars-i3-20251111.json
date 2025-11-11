@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 251,
+      "type": "match",
+      "ypos": 272,
+      "height": 230,
+      "xpos": 390
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-i3",
+    "ENV-VERSION-4.3",
+    "xscreensaver-prompt-with-chars"
+  ]
+}

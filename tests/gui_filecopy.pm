@@ -27,7 +27,7 @@ sub run {
     assert_screen "desktop";
 
     # try to start "Text Editor" (gedit)
-    assert_and_click("menu");
+    $self->open_menu;
     assert_and_click("menu-vm-work");
     wait_still_screen();
     assert_and_click("menu-vm-text-editor");
@@ -49,7 +49,7 @@ sub run {
     # close editor
     send_key("ctrl-q");
 
-    assert_and_click("menu");
+    $self->open_menu;
     assert_and_click("menu-vm-work");
     wait_still_screen();
     assert_and_click("menu-vm-Files");
@@ -74,7 +74,7 @@ sub run {
     sleep(2);
 
     # verify, and then open in DispVM
-    assert_and_click("menu");
+    $self->open_menu;
     assert_and_click("menu-vm-personal");
     wait_still_screen(stilltime => 10);
     assert_and_click("menu-vm-Files");
@@ -94,6 +94,11 @@ sub run {
     assert_and_click("files-open-in-dispvm");
     assert_screen("disp-text-editor", timeout => 120);
     # verify content
+    if (check_var('DESKTOP', 'i3')) {
+        # with default horizontal split, URL doesn't fit normally,
+        # fullscreen the window first
+        send_key("super-f");
+    }
     assert_screen("text-editor-qubes-url");
     send_key("ctrl-q");
     wait_still_screen();

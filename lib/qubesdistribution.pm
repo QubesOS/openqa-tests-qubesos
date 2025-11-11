@@ -197,7 +197,11 @@ sub become_root {
 sub init_desktop_runner {
     my ($program, $timeout) = @_;
 
-    send_key 'alt-f2';
+    if (check_var('DESKTOP', 'i3')) {
+        send_key('super-d');
+    } else {
+        send_key 'alt-f2';
+    }
     if (!check_screen('desktop-runner', $timeout)) {
         record_info('workaround', 'desktop-runner does not show up on alt-f2, retrying up to three times (see bsc#978027)');
         send_key 'esc';    # To avoid failing needle on missing 'alt' key - poo#20608

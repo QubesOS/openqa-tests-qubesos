@@ -86,7 +86,7 @@ sub run {
     assert_and_click('new-qube-remove-firefox-esr');
 
     send_key('alt-r');
-    assert_and_click('new-qube-success');
+    assert_and_click('new-qube-success', timeout => 30);
 
     assert_screen('new-qube-createtest3-settings');
     assert_and_click('new-qube-createtest-settings-switch-apps');

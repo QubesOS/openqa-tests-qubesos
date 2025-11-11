@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "width": 167,
+      "type": "match",
+      "xpos": 4,
+      "height": 16,
+      "ypos": 3
+    },
+    {
+      "ypos": 59,
+      "width": 62,
+      "type": "match",
+      "xpos": 46,
+      "height": 29
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-i3",
+    "ENV-VERSION-4.3",
+    "work-atril"
+  ]
+}

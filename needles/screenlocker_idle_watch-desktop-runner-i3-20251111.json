@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 382,
+      "ypos": 6,
+      "width": 393,
+      "height": 136,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-i3",
+    "ENV-VERSION-4.3",
+    "desktop-runner"
+  ]
+}

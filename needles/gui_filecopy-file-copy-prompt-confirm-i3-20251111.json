@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "width": 74,
+      "type": "match",
+      "click_point": {
+        "xpos": 56,
+        "ypos": 10.5
+      },
+      "xpos": 626,
+      "height": 25,
+      "ypos": 486
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-i3",
+    "ENV-VERSION-4-3",
+    "file-copy-prompt-confirm"
+  ]
+}

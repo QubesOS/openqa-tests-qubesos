@@ -1,0 +1,31 @@
+{
+  "area": [
+    {
+      "width": 74,
+      "type": "match",
+      "xpos": 569,
+      "ypos": 3,
+      "height": 16
+    },
+    {
+      "type": "match",
+      "width": 109,
+      "xpos": 719,
+      "ypos": 3,
+      "height": 18
+    },
+    {
+      "type": "match",
+      "width": 174,
+      "ypos": 76,
+      "height": 21,
+      "xpos": 661
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-i3",
+    "ENV-VERSION-4.3",
+    "personal-firefox"
+  ]
+}

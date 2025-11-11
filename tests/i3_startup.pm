@@ -1,6 +1,6 @@
 # The Qubes OS Project, https://www.qubes-os.org/
 #
-# Copyright (C) 2020 Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+# Copyright (C) 2025 Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,34 +26,34 @@ sub run {
 
     $self->select_gui_console;
 
-    assert_and_click("panel-user-menu");
-    assert_and_click("panel-user-menu-logout");
-    assert_and_click("panel-user-menu-confirm");
+    assert_and_click('panel-user-menu');
+    assert_and_click('panel-user-menu-logout');
+    assert_and_click('panel-user-menu-confirm');
 
-    assert_screen("login-prompt-user-selected");
-    assert_and_click("login-prompt-session-type-menu");
-    if (check_var("KDE_WAYLAND", "1")) {
-        assert_and_click("login-prompt-session-type-kde-wayland");
-    } else {
-        assert_and_click("login-prompt-session-type-kde-x11");
-    }
+    assert_screen('login-prompt-user-selected');
+    assert_and_click('login-prompt-session-type-menu');
+    assert_and_click('login-prompt-session-type-i3');
     type_string $testapi::password;
-    send_key "ret";
+    send_key 'ret';
 
-    assert_screen(["desktop", "kde-welcome"], timeout => 90);
+    assert_screen(['desktop', 'i3-welcome'], timeout => 90);
 
     wait_still_screen();
 
-    if (check_screen("kde-welcome", timeout => 30)) {
-        assert_and_click("kde-welcome");
+    if (check_screen('i3-welcome', timeout => 30)) {
+        send_key('ret');
+        assert_screen('i3-config-default-mod');
+        send_key('ret');
     }
     assert_screen('x11');
-    if (check_var("KDE_WAYLAND", "1")) {
-        # Plasma started from lightdm(X11) on tty1 takes tty2:
-        # https://github.com/sddm/sddm/issues/1409
-        console("x11")->set_tty(2);
+    set_var('MAXIMIZE_KEY', 'super-f');
+
+    if (check_screen('i3-config-errors')) {
+        click_lastmatch();
+        wait_still_screen;
+        send_key('shift-G');
+        die "Errors in the i3 config"
     }
-    set_var('MAXIMIZE_KEY', 'meta-pgup');
 }
 
 sub post_fail_hook {

@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "ypos": 5,
+      "height": 17,
+      "xpos": 749,
+      "width": 54,
+      "type": "match"
+    },
+    {
+      "ypos": 2,
+      "height": 16,
+      "xpos": 688,
+      "type": "match",
+      "width": 24
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-i3",
+    "ENV-VERSION-4.3",
+    "disp-text-editor"
+  ]
+}

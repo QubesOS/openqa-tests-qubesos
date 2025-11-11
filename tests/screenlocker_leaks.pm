@@ -33,7 +33,7 @@ sub run {
     # set xfce4-screenlocker to "blank" mode
     x11_start_program("env xfconf-query -c xfce4-screensaver -p /saver/mode -n -t int -s 0", valid => 0);
 
-    assert_and_click("menu");
+    $self->open_menu;
     assert_and_click("menu-vm-work");
     assert_and_click("menu-vm-xterm");
 
@@ -45,6 +45,8 @@ sub run {
     # lock the screen
     if (check_var("DESKTOP", "kde")) {
         send_key('super-l');
+    } elsif (check_var("DESKTOP", "i3")) {
+        send_key('super-shift-O');
     } else {
         send_key('ctrl-alt-delete');
     }
@@ -54,10 +56,11 @@ sub run {
     # wait for the above loop to end
     sleep(60);
     # and unlock
-    send_key('ctrl');
-    sleep(0.1);
-    send_key('ctrl');
-    assert_screen('xscreensaver-prompt', timeout=>20);
+    send_key_until_needlematch('xscreensaver-prompt-with-chars', 'a', 20, 3);
+    # remove 'aaa' and enter the actual passphrase
+    send_key('backspace');
+    send_key('backspace');
+    send_key('backspace');
     type_password();
     send_key('ret');
     assert_and_click(['work-xterm', 'work-xterm-inactive']);

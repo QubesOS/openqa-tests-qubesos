@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 258,
+      "xpos": 749,
+      "height": 48,
+      "ypos": 61
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-i3",
+    "ENV-VERSION-4.3",
+    "clipboard-paste-notification"
+  ]
+}

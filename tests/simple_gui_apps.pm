@@ -27,7 +27,7 @@ sub run {
     assert_screen "desktop";
 
     # open work VM settings and add "Document Viewer" application
-    assert_and_click("menu");
+    $self->open_menu;
     assert_and_click("menu-vm-work");
     if (check_var("VERSION", "4.2")) {
         # workaround for "settings" visible too early
@@ -82,7 +82,7 @@ sub run {
     sleep(5);
 
     # now try to start "Document Viewer"
-    assert_and_click("menu");
+    $self->open_menu;
     assert_and_click("menu-vm-work");
     assert_and_click(["menu-vm-evince", "work-vm-atril"]);
     assert_screen(["work-evince", "work-atril"], timeout => 90);

@@ -99,6 +99,12 @@ if (get_var('ISO')) {
     }
 }
 
+if (check_var('DESKTOP', 'kde')) {
+    autotest::loadtest "tests/kde_install.pm";
+} elsif (check_var('DESKTOP', 'i3')) {
+    autotest::loadtest "tests/i3_install.pm";
+}
+
 if (check_var('RELEASE_UPGRADE', '1')) {
     if (get_var('UPDATE') || get_var('SALT_SYSTEM_TESTS')) {
         if (check_var("VERSION", "4.1")) {
@@ -129,8 +135,9 @@ if (get_var('PIPEWIRE')) {
 }
 
 if (check_var('DESKTOP', 'kde')) {
-    autotest::loadtest "tests/kde_install.pm";
     autotest::loadtest "tests/kde_startup.pm";
+} elsif (check_var('DESKTOP', 'i3')) {
+    autotest::loadtest "tests/i3_startup.pm";
 }
 
 # do not execute same tests before each system tests run

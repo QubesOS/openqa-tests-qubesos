@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "xpos": 910,
+      "ypos": 137,
+      "height": 22,
+      "type": "match",
+      "width": 108
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-i3",
+    "ENV-VERSION-4.3",
+    "menu-vm-Files",
+    "menu-vm-Thunar",
+    "new-menu"
+  ]
+}

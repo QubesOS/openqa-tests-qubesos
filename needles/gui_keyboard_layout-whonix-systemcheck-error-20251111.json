@@ -1,0 +1,35 @@
+{
+  "area": [
+    {
+      "height": 18,
+      "ypos": 0,
+      "xpos": 132,
+      "width": 86,
+      "type": "match"
+    },
+    {
+      "width": 59,
+      "type": "match",
+      "xpos": 118,
+      "height": 21,
+      "ypos": 24
+    },
+    {
+      "xpos": 836,
+      "ypos": 723,
+      "height": 18,
+      "click_point": {
+        "ypos": 9,
+        "xpos": 35
+      },
+      "width": 70,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-i3",
+    "ENV-VERSION-4.3",
+    "whonix-systemcheck-error"
+  ]
+}

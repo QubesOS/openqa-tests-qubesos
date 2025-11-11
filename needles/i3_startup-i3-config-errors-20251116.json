@@ -1,0 +1,41 @@
+{
+  "area": [
+    {
+      "width": 288,
+      "type": "match",
+      "ypos": 591,
+      "height": 92,
+      "xpos": 4
+    },
+    {
+      "width": 30,
+      "type": "match",
+      "height": 30,
+      "ypos": 738,
+      "xpos": 1
+    },
+    {
+      "xpos": 7,
+      "ypos": 9,
+      "width": 213,
+      "height": 16,
+      "type": "match"
+    },
+    {
+      "xpos": 801,
+      "ypos": 11,
+      "width": 63,
+      "height": 13,
+      "type": "match",
+      "click_point": {
+        "xpos": 31.5,
+        "ypos": 6.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "i3-config-errors"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 2,
+      "type": "match",
+      "xpos": 106,
+      "height": 16,
+      "width": 82
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-i3",
+    "ENV-VERSION-4.3",
+    "work-text-editor"
+  ]
+}

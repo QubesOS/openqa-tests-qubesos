@@ -82,7 +82,10 @@ sub run {
     # if whonix is there, extra checks
     if (script_run('qvm-check sys-whonix') == 0) {
         assert_script_run('set -o pipefail');
-        my $ret = script_run("qvm-run -ap sys-whonix 'LC_ALL=C whonixcheck --verbose --leak-tests --cli' | tee whonixcheck-sys-whonix.log", timeout => 500, die_on_timeout => 0);
+        my $ret;
+        eval {
+            $ret = script_run("qvm-run -ap sys-whonix 'LC_ALL=C whonixcheck --verbose --leak-tests --cli' | tee whonixcheck-sys-whonix.log", timeout => 500);
+        };
         $self->maybe_unlock_screen;
         if (!defined($ret)) {
             send_key('ctrl-c');

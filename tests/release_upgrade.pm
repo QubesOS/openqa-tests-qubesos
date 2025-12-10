@@ -146,13 +146,45 @@ sub upgrade_42_to_43_before_reboot {
         x11_start_program('setxkbmap us', valid => 0);
     }
     sleep(1);
-    assert_script_run("systemctl enable serial-getty\@hvc1.service");
+    if (check_var("BACKEND", "generalhw")) {
+        script_run("systemctl enable sshd");
+    } else {
+        assert_script_run("systemctl enable serial-getty\@hvc1.service");
+    }
+}
+
+sub upgrade_whonix_17_to_18 {
+    my ($self, $template) = @_;
+
+    assert_script_run ("qvm-run -u root --no-gui -ap $template 'cat /usr/sbin/release-upgrade | grep version='", timeout => 60);
+    save_screenshot;
+    assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template release-upgrade' whonix-upgrade.log", timeout => 1800);
+    $self->maybe_unlock_screen;
+    assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get update' whonix-upgrade.log", timeout => 600);
+    if ($template =~ m/workstation/) {
+        assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y install qubes-whonix-workstation-gui-lxqt' whonix-upgrade.log", timeout => 1800);
+    } else {
+        assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y install qubes-whonix-gateway-gui-lxqt' whonix-upgrade.log", timeout => 1800);
+    }
+    $self->maybe_unlock_screen;
+    assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y autoremove' whonix-upgrade.log", timeout => 1800);
+    $self->maybe_unlock_screen;
 }
 
 sub upgrade_42_to_43_after_reboot {
     my ($self) = @_;
 
     assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --template-standalone-upgrade --enable-current-testing' release-upgrade.log", timeout => 8000);
+    $self->maybe_unlock_screen;
+    my $templates = script_output('qvm-ls --raw-data --fields name,klass');
+    foreach (split /\n/, $templates) {
+        next unless /Template/;
+        next unless /whonix/;
+        s/\|.*//;
+        if (/-17/) {
+            $self->upgrade_whonix_17_to_18($_);
+        }
+    }
     $self->maybe_unlock_screen;
     assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --finalize --enable-current-testing' release-upgrade-post-reboot.log", timeout => 7200);
     $self->maybe_unlock_screen;

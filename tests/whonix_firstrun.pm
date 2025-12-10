@@ -37,14 +37,14 @@ sub run {
 
     my $start_whonix_gw_cmd = sprintf "qvm-start %s", $whonix_gateway;
     x11_start_program($start_whonix_gw_cmd, valid => 0);
-    if (!check_screen(['whonix-connected', 'whonix-firstrun'], 120)) {
+    if (!check_screen(['whonix-connected', 'whonix-firstrun', 'whonix-news'], 120)) {
         # no firstrun wizard? maybe already accepted - verify it
         my $run_whonixcheck_cmd = sprintf "qvm-run %s 'whonixcheck --gui'", $whonix_gateway;
         x11_start_program($run_whonixcheck_cmd, valid => 0);
         assert_screen('whonix-connected', timeout => 60);
     }
 
-    if (match_has_tag('whonix-connected')) {
+    if (match_has_tag('whonix-connected') or match_has_tag('whonix-news')) {
         # already configured and connected, wait for notification to disappear
         assert_screen('no-notifications');
         # this may show up some time after connecting...

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 280,
+      "width": 124,
+      "type": "match",
+      "xpos": 561,
+      "height": 18
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-whonix-18",
+    "torbrowser-multitab-close"
+  ]
+}

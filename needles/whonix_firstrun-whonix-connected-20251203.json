@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 28,
+      "ypos": 148,
+      "xpos": 818,
+      "type": "match",
+      "width": 176
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4-3",
+    "whonix-connected"
+  ]
+}

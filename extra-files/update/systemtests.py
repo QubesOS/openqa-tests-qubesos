@@ -75,6 +75,10 @@ def systemtests(os_data, log, **kwargs):
     else:
         assert False
 
+    setup_dist_dir = "/usr/share/setup-dist/status-files"
+    if os.path.exists(setup_dist_dir):
+        with open(setup_dist_dir + "/setup-dist.skip", "w"):
+            pass
     if os.path.exists("/etc/systemcheck.d/30_default.conf"):
         with open("/etc/systemcheck.d/50_tests.conf", "w") as f:
             f.write('systemcheck_unwanted_package="$(echo "$systemcheck_unwanted_package" | sed \'s/ python3-pip //g\')"\n')

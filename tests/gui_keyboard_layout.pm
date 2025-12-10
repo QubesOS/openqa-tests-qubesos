@@ -143,9 +143,17 @@ sub run {
         my $template = $_;
 
         select_root_console();
+        # wait for it to finish starting first
+        assert_script_run("qvm-run -pu root work systemctl --wait is-system-running");
         assert_script_run("qvm-shutdown --wait work");
         record_info($template, "Switching work qube to $template");
         assert_script_run("qvm-prefs work template $template");
+        if ($template =~ /whonix-g/) {
+            # avoid complains about wrong qube type
+            assert_script_run("qvm-prefs work provides_network true");
+        } else {
+            assert_script_run("qvm-prefs -D work provides_network");
+        }
         $self->select_gui_console;
         $self->{template} = $template;
 

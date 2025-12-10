@@ -75,6 +75,10 @@ def systemtests(os_data, log, **kwargs):
     else:
         assert False
 
+    # workaround for https://github.com/QubesOS/qubes-issues/issues/9581
+    with open("/etc/udev/rules.d/99-network-workaround.rules", "w") as f:
+        f.write('SUBSYSTEM=="net", DRIVERS=="e1000e", RUN+="/usr/bin/ethtool -K $name sg off"\n')
+
     setup_dist_dir = "/usr/share/setup-dist/status-files"
     if os.path.exists(setup_dist_dir):
         with open(setup_dist_dir + "/setup-dist.skip", "w"):

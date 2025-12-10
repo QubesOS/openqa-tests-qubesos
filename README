@@ -73,6 +73,7 @@ Variables used in tests:
  - `GPU_DEVS` - coma-separated list of devices of a discrete GPU (example: dom0:00_01.0-00_00.0,dom0:00_01.0-00_00.1)
  - `TEST_GPU_PASSTHROUGH` - test GPU passthrough, requires `GPU_DEVS`
  - `DESKTOP` - swich to alternative desktop environment; supported values: `kde`, `i3`
+ - `WHONIX_UPDATEVM` - when set to `1`, select to fetch updates via Whonix
 
 SecureDrop variables used in tests:
  - `SECUREDROP_INSTALL` - when set to `1`, SecureDrop Workstation is installed

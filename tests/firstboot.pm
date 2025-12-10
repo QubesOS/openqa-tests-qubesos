@@ -165,6 +165,9 @@ sub run {
         assert_screen('firstboot-qubes-usbvm-enabled', 5);
         assert_and_click('firstboot-qubes-usbvm-combine', timeout => 5);
     }
+    if (check_var('WHONIX_UPDATEVM', '1')) {
+        assert_and_click('firstboot-qubes-whonix-updatevm');
+    }
     # TODO: check defaults, select various options
 
     send_key "f12";

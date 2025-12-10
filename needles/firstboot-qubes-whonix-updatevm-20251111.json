@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 320,
+      "type": "match",
+      "xpos": 258,
+      "ypos": 479,
+      "height": 21
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "firstboot-qubes-whonix-updatevm"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 19,
+      "xpos": 492,
+      "width": 109,
+      "ypos": 313
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "END-DESKTOP-i3",
+    "ENV-VERSION-4.3",
+    "vm-settings-app-xterm-added"
+  ]
+}

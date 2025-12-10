@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 138,
+      "ypos": 545,
+      "width": 87,
+      "height": 23,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian",
+    "vm-settings-app-xarchiver"
+  ]
+}

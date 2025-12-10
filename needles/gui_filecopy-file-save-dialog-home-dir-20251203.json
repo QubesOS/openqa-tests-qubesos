@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 64,
+      "xpos": 194,
+      "height": 35,
+      "ypos": 114
+    },
+    {
+      "xpos": 33,
+      "height": 36,
+      "ypos": 114,
+      "width": 58,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "file-save-dialog-home-dir"
+  ]
+}

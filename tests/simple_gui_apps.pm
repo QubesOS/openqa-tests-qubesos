@@ -62,8 +62,8 @@ sub run {
     # wait for xterm to really be added, because that moves entries on the left
     assert_screen("vm-settings-app-xterm-added");
     # select Evince/Atril; or if not visible, some app close to the list end
-    assert_and_click(["vm-settings-app-evince", "vm-settings-app-start-qube", "vm-settings-app-volume-control"]);
-    if (match_has_tag("vm-settings-app-start-qube") or match_has_tag("vm-settings-app-volume-control")) {
+    assert_and_click(["vm-settings-app-evince", "vm-settings-app-start-qube", "vm-settings-app-volume-control", "vm-settings-app-xarchiver"]);
+    if (!match_has_tag("vm-settings-app-evince")) {
         # if start qube was clicked, scroll to home to make evince ("Document Viewer") visible
         send_key('home');
         wait_still_screen;

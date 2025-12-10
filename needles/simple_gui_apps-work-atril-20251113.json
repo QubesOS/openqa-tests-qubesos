@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "xpos": 233,
+      "height": 16,
+      "ypos": 36,
+      "width": 167,
+      "type": "match"
+    },
+    {
+      "width": 62,
+      "type": "match",
+      "xpos": 48,
+      "height": 29,
+      "ypos": 91
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian-xfce",
+    "work-atril"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 74,
+      "xpos": 376,
+      "height": 16,
+      "ypos": 44
+    },
+    {
+      "width": 109,
+      "type": "match",
+      "xpos": 583,
+      "ypos": 43,
+      "height": 18
+    },
+    {
+      "xpos": 288,
+      "ypos": 118,
+      "height": 21,
+      "width": 174,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian-xfce",
+    "personal-firefox"
+  ]
+}

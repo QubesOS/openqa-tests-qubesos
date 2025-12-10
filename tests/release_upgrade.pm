@@ -215,9 +215,8 @@ sub run {
 
     script_run("pkill xscreensaver");
 
-    #assert_script_run("sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing -y qubes-dist-upgrade", timeout => 360);
     if (get_var('RELEASE_UPGRADE_REPO')) {
-        # like https://raw.githubusercontent.com/marmarek/qubes-dist-upgrade/convert-luks
+        # like https://github.com/marmarek/qubes-dist-upgrade/tree/r4.3
         my $url = get_var('RELEASE_UPGRADE_REPO');
         my $zip_url = $url;
         $zip_url =~ s#https://github.com/([^/]*/[^/]*)/tree/([^/]*)#https://github.com/$1/archive/$2.zip#;
@@ -225,7 +224,9 @@ sub run {
         assert_script_run("mkdir dist-upgrade && unzip dist-upgrade.zip -d dist-upgrade/");
         assert_script_run("sudo mv -f dist-upgrade/*/qubes-dist-upgrade.sh /usr/sbin/qubes-dist-upgrade");
         assert_script_run("sudo mv -f dist-upgrade/*/scripts/* /usr/lib/qubes/");
-        assert_script_run("sudo qubes-dom0-update -y xinput");
+        assert_script_run("sudo qubes-dom0-update -y xinput", timeout => 300);
+    } else {
+        assert_script_run("sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing -y qubes-dist-upgrade", timeout => 360);
     }
 
     if (check_var("VERSION", "4.0")) {

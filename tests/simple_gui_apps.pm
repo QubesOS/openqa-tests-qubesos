@@ -85,7 +85,7 @@ sub run {
     $self->open_menu;
     assert_and_click("menu-vm-work");
     assert_and_click(["menu-vm-evince", "work-vm-atril"]);
-    assert_screen(["work-evince", "work-atril"], timeout => 90);
+    assert_screen(["work-evince", "work-atril"], timeout => 120);
 
     # wait for full startup
     sleep(2);

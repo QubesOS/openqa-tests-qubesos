@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "xpos": 426,
+      "ypos": 345,
+      "width": 149,
+      "height": 18,
+      "type": "match"
+    },
+    {
+      "xpos": 735,
+      "ypos": 359,
+      "width": 75,
+      "height": 27,
+      "type": "match",
+      "click_point": {
+        "xpos": 52,
+        "ypos": 11.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-WIN11",
+    "windows-apps-onedrive"
+  ]
+}

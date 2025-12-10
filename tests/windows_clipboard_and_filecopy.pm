@@ -141,6 +141,23 @@ sub run {
         assert_and_click("gui-warning-large-window");
     }
 
+    # Disable OneDrive ads
+    if (check_var('WINDOWS_VERSION', 'win11x64')) {
+        send_key('meta');
+        assert_screen('windows-menu');
+        type_string('applications');
+        assert_and_click('windows-apps-features');
+        send_key('tab');
+        send_key('tab');
+        send_key('tab');
+        type_string('onedrive');
+        assert_and_click('windows-apps-onedrive');
+        assert_and_click('windows-apps-uninstall');
+        assert_and_click('windows-apps-uninstall-confirm');
+        wait_still_screen;
+        assert_and_click('windows-apps-close');
+    }
+
     # increased timeout, because it may wait for the network setting to finalize
     assert_and_click("windows-Explorer-Documents", timeout => 60);
     assert_and_click("windows-Explorer-empty", button => 'right', mousehide => -1);
@@ -150,6 +167,11 @@ sub run {
         send_key("ret");
     }
     assert_and_click("windows-Explorer-new-text-file-created", timeout => 60, dclick => 1);
+    if (check_screen("windows-dropbox-error", timeout => 60)) {
+        # Error: "'URLSearchParams' is undefined
+        # URL: https://login.live.com/oauths20_desktop.srf?loc=1033
+        assert_and_click("windows-dropbox-error");
+    }
     assert_screen("windows-Notepad");
     if (check_screen("windows-Notepad-autosave-notice", timeout => 10)) {
         click_lastmatch();
@@ -212,8 +234,8 @@ sub run {
     if (check_screen("windows-Explorer-file-more-options", timeout => 10)) {
         click_lastmatch();
     }
-    assert_and_click("windows-Explorer-file-send-to");
-    assert_and_click("windows-Explorer-file-send-to-other-vm");
+    assert_and_click("windows-Explorer-file-send-to", mousehide => -1);
+    assert_and_click("windows-Explorer-file-send-to-other-vm", mousehide => 1);
     assert_screen("file-copy-prompt");
     type_string("personal");
     # wait for anti-clickjacking grace period to pass

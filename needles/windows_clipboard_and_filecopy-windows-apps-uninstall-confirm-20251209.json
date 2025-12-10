@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 710,
+      "ypos": 459,
+      "width": 75,
+      "height": 39,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-WIN11",
+    "windows-apps-uninstall-confirm"
+  ]
+}

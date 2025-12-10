@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 213,
+      "ypos": 108,
+      "width": 377,
+      "height": 75,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-WIN11",
+    "windows-menu"
+  ]
+}

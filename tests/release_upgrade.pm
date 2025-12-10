@@ -132,6 +132,7 @@ sub upgrade_41_to_42_after_reboot {
 }
 
 sub upgrade_42_to_43_before_reboot {
+    assert_script_run("qvm-service --disable dom0 qubes-update-check");
     assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --update --max-concurrency=1 --enable-current-testing' release-upgrade.log", timeout => 7200);
     assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --release-upgrade --enable-current-testing' release-upgrade.log", timeout => 600);
     assert_script_run("script -a -e -c 'sudo qubes-dist-upgrade --releasever=4.3 --assumeyes --dist-upgrade --enable-current-testing' release-upgrade.log", timeout => 7200);

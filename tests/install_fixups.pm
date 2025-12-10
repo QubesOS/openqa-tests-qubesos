@@ -55,6 +55,8 @@ sub run {
         # increase the pool to fit more snapshots; vm-pool is large enough already
         assert_script_run("lvextend -L 30g qubes_dom0/root-pool");
     }
+    # maybe fix for #10236 ?
+    assert_script_run("systemctl disable systemd-homed");
     type_string "exit\n";
     # command echo
     wait_serial("exit");

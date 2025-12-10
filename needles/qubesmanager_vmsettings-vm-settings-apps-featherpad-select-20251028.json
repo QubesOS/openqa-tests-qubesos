@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 139,
+      "ypos": 392,
+      "width": 92,
+      "height": 18,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-apps-featherpad-select"
+  ]
+}

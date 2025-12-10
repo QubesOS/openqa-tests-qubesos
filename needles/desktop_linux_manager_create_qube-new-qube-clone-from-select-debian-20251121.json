@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 67,
+      "type": "match",
+      "height": 20,
+      "ypos": 427,
+      "xpos": 515
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "new-qube-clone-from-select-debian"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 471,
+      "height": 122,
+      "click_point": {
+        "ypos": 58,
+        "xpos": 6
+      },
+      "width": 34,
+      "ypos": 493
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw1",
+    "ENV-VERSION-4.3",
+    "vm-settings-devices-scroll-down"
+  ]
+}

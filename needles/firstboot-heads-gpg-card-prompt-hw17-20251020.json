@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 28,
+      "xpos": 392,
+      "width": 438,
+      "ypos": 546,
+      "match": 94
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw17",
+    "heads-gpg-card-prompt"
+  ]
+}

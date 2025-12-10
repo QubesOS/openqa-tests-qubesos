@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 393,
+      "ypos": 263,
+      "width": 238,
+      "height": 245,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "i3lock",
+    "xscreensaver-prompt"
+  ]
+}

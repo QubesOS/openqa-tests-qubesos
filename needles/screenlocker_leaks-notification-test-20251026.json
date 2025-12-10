@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 77,
+      "type": "match",
+      "xpos": 922,
+      "height": 34,
+      "ypos": 160
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "notification-test",
+    "notifications-proxy"
+  ]
+}

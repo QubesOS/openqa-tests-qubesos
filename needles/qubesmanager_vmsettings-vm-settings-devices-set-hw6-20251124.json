@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 131,
+      "xpos": 561,
+      "ypos": 197,
+      "height": 57
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw6",
+    "vm-settings-devices-set"
+  ]
+}

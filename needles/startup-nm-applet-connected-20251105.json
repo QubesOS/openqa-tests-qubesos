@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "width": 224,
+      "height": 23,
+      "type": "match",
+      "xpos": 777,
+      "ypos": 59
+    },
+    {
+      "type": "match",
+      "height": 22,
+      "xpos": 812,
+      "width": 179,
+      "ypos": 133
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "nm-connection-established"
+  ]
+}

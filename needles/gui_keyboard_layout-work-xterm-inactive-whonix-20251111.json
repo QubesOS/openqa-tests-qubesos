@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 104,
+      "type": "match",
+      "height": 18,
+      "ypos": 34,
+      "xpos": 144
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "work-xterm-inactive"
+  ]
+}

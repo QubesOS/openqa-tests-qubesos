@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 23,
+      "type": "match",
+      "xpos": 1850,
+      "height": 39,
+      "ypos": 1040
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "xscreensaver-prompt-with-chars"
+  ]
+}

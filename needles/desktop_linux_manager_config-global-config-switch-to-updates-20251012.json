@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 360,
+      "xpos": 62,
+      "type": "match",
+      "height": 32,
+      "width": 134
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "global-config-switch-to-updates"
+  ]
+}

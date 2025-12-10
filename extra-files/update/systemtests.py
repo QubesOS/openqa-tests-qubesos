@@ -98,7 +98,7 @@ def systemtests(os_data, log, **kwargs):
                 # Nov 05 16:03:11 host memlockd[927]: Mapped file /lib/x86_64-linux-gnu/libgpg-error.so.0
                 "memlockd.*libgpg-error.so.0",
             ):
-                f.write(f'journal_ignore_pattern_add "{pattern}" || journal_ignore_patterns_list+=( "{pattern}" )\n')
+                f.write(f'journal_ignore_pattern_add "{pattern}" 2>/dev/null || journal_ignore_patterns_list+=( "{pattern}" )\n')
 
     subprocess.call(["systemctl", "disable", "dnsmasq"],
                     stdin=subprocess.DEVNULL)

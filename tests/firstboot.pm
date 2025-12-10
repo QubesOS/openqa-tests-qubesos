@@ -86,6 +86,14 @@ sub run {
 
     # handle both encrypted and unencrypted setups
     assert_screen(\@luks_needles, 300);
+
+    if (check_var('BACKEND', 'generalhw')) {
+        # disconnect storage function when not needed anymore, so usbguard in
+        # dom0 doesn't reject other functions (keyboard, mouse)
+        eject_cd;
+        sleep(5);
+    }
+
     if (match_has_tag("plymouth-text-no-prompt")) {
         # force plymouth to show on HDMI output too
         send_key 'esc';

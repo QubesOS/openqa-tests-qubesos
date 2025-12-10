@@ -89,6 +89,19 @@ sub run {
         my $latest_kernel = script_output('ls -1v /var/lib/qubes/vm-kernels|grep "^[0-9]" |tail -1');
         assert_script_run("qubes-prefs default-kernel $latest_kernel");
     }
+    # disable salt states again
+    script_run('rm -f /srv/salt/_tops/base/*');
+
+    # re-do after updating formula package too
+    if (get_var("UPDATE_TEMPLATES") =~ /whonix-(gw|gateway)-(\d+)/) {
+        my $whonix_vers = $2;
+        assert_script_run("qvm-shutdown --wait sys-whonix", timeout => 90);
+        assert_script_run("sudo qubesctl top.enable qvm.anon-whonix");
+        assert_script_run("(set -o pipefail; sudo qubesctl state.highstate pillar=\"{'qvm':{'whonix':{'version': $whonix_vers}}}\" 2>&1 | tee qubesctl-whonix.log)", timeout => 1800);
+        upload_logs("qubesctl-whonix.log");
+        assert_script_run("sudo qubesctl top.disable qvm.sys-whonix");
+        assert_script_run("qvm-start sys-whonix", timeout => 90);
+    }
 
     # Instead of
     # https://github.com/QubesOS/qubes-core-admin-addon-whonix/pull/24, until

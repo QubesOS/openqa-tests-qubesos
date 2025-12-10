@@ -358,6 +358,7 @@ sub post_fail_hook {
     $self->save_and_upload_log('journalctl -b --output=short-precise', 'journalctl.log', {timeout => 120});
     $self->save_and_upload_log('sudo -u user journalctl --user -b --output=short-precise', 'user-journalctl.log', {timeout => 120});
     upload_logs('/var/lib/qubes/qubes.xml');
+    $self->save_and_upload_log('cat /home/user/tests-*.log', 'tests.log', {failok => 1});
     #my $logs = script_output('ls -1 /var/log/xen/console/*.log');
     #foreach (split(/\n/, $logs)) {
     #    next unless m/\/var\/log/;

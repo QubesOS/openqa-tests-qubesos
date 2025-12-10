@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "xpos": 237,
+      "ypos": 148,
+      "width": 146,
+      "height": 16,
+      "type": "ocr"
+    },
+    {
+      "xpos": 5,
+      "ypos": 180,
+      "width": 187,
+      "height": 421,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "securedrop-client-encrypted-source-messages"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "xpos": 314,
+      "ypos": 332,
+      "width": 410,
+      "height": 136,
+      "type": "match",
+      "click_point": {
+        "xpos": 355,
+        "ypos": 115
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "securedrop-sd-gpg-prompt"
+  ]
+}

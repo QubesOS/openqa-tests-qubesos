@@ -46,11 +46,12 @@ sub run {
 
     foreach (@whonix_vms) {
         next if /-dvm/;
-        my $ret = script_run("qvm-run -ap $_ 'LC_ALL=C whonixcheck --verbose --leak-tests --cli' | tee whonixcheck-$_.log", 500);
+        my $ret = script_run("qvm-run -ap $_ 'LC_ALL=C whonixcheck --verbose --leak-tests --cli' 2>&1 | tee whonixcheck-$_.log", 500);
         upload_logs("whonixcheck-$_.log");
         if ($ret != 0) {
             record_info('fail', "Whonixcheck for $_ failed", result => 'fail');
             $failed = 1;
+            $self->save_and_upload_log("qvm-run -pu root $_ journalctl -b", "journalctl-$_.log", {timeout => 120});
         }
         # shutdown all except sys-whonix
         unless (/sys-whonix/) {

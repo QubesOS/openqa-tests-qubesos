@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "xpos": 475,
+      "ypos": 141,
+      "width": 185,
+      "height": 101,
+      "type": "match",
+      "click_point": {
+        "xpos": 88.5,
+        "ypos": 75.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-WIN11",
+    "windows-apps-installed-apps"
+  ]
+}

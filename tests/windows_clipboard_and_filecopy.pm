@@ -147,9 +147,7 @@ sub run {
         assert_screen('windows-menu');
         type_string('applications');
         assert_and_click('windows-apps-features');
-        send_key('tab');
-        send_key('tab');
-        send_key('tab');
+        assert_and_click('windows-apps-installed-apps');
         type_string('onedrive');
         assert_and_click('windows-apps-onedrive');
         assert_and_click('windows-apps-uninstall');

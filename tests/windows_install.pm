@@ -75,7 +75,20 @@ sub run {
     # point for interactive pause
     check_screen('NO-MATCH');
 
-    assert_script_run("script -e -c 'bash -x /usr/bin/qvm-create-windows-qube --optimize --netvm sys-firewall --disk-size 60 $extra_opts -i $windows_iso -a $answers_file windows-test' qvm-create-windows-qube.log", timeout => 7200);
+    background_script_run("script -e -c 'bash -x /usr/bin/qvm-create-windows-qube --optimize --netvm sys-firewall --disk-size 60 $extra_opts -i $windows_iso -a $answers_file windows-test; echo install-complete-\$?- >/dev/$testapi::serialdev' qvm-create-windows-qube.log </dev/null");
+
+    # PV drivers confirmation sometimes doesn't get focus and then installer
+    # can't click it. Click on it manually.
+    if (check_screen('windows-install-qwt-driver-confirm', timeout => 900)) {
+        click_lastmatch();
+    }
+
+    my $res = testapi::wait_serial(qr/install-complete-\d+-/, timeout => 7200);
+    die "Install timed out" unless $res;
+
+    $res =~ m/install-complete-(\d+)-/;
+
+    die "Install failed with code $1" unless $1 == 0;
 
     sleep(5);
 

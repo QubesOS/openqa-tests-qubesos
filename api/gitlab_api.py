@@ -215,6 +215,8 @@ def run_test():
         values['QUBES_TEST_MGMT_TPL'] = req_values['QUBES_TEST_MGMT_TPL'];
     if 'DISTUPGRADE_TEMPLATES' in req_values:
         values['DISTUPGRADE_TEMPLATES'] = req_values['DISTUPGRADE_TEMPLATES']
+    if 'TEST' in req_values:
+        values['TEST'] = req_values['TEST']
 
     subprocess.check_call([
         'openqa-cli', 'api', '-X', 'POST',

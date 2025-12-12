@@ -115,15 +115,15 @@ ENDFUNC
         parse_extra_log('JUnit', "nose2-junit-$test.xml");
 
         upload_logs("perf_test_results.txt", failok => 1);
+        # open-coded upload_logs function, to not type it for each file
+        # separately
+        my $name_prefix = $autotest::current_test->{name} . '-';
+        my $url_base = autoinst_url("/uploadlog/");
         # upload per-test logs
         my $test_logs_path = "/tmp/$test/";
         assert_script_run("mkdir $test_logs_path");
         assert_script_run("sudo python3 split_logs.py --junit-xml=nose2-junit-$test.xml --outdir=$test_logs_path", timeout => 240);
-        my $files_path_str = script_output("find $test_logs_path -type f");
-        my @files_paths = split /\n/, $files_path_str;
-        foreach my $file_path (@files_paths) {
-             upload_logs($file_path);
-        }
+        assert_script_run("find $test_logs_path -type f | while read fname; do bname=\$(basename \$fname); curl --form upload=\@\$fname --form upname=$name_prefix\$bname $url_base\$bname; done");
         assert_script_run("rm -rf $test_logs_path");
 
         # help debugging tests
@@ -143,10 +143,6 @@ ENDFUNC
             record_soft_failure('qvm-start-daemon crashed');
         }
         if (get_var('SYSTEM_TESTS') =~ m/dispvm_perf/) {
-            # open-coded upload_logs function, to not type it for each file
-            # separately
-            my $name_prefix = $autotest::current_test->{name} . '-';
-            my $url_base = autoinst_url("/uploadlog/");
             assert_script_run("sudo chmod -R a+rX perf_test_results*");
             assert_script_run("ls -l");
             assert_script_run("find perf_test_results.txt_* -type f | while read fname; do bname=\$(basename \$fname); curl --form upload=\@\$fname --form upname=$name_prefix\$bname $url_base\$bname; done");

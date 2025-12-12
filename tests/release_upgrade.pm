@@ -162,9 +162,9 @@ sub upgrade_whonix_17_to_18 {
     $self->maybe_unlock_screen;
     assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get update' whonix-upgrade.log", timeout => 600);
     if ($template =~ m/workstation/) {
-        assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y install qubes-whonix-workstation-gui-lxqt' whonix-upgrade.log", timeout => 1800);
+        assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y install whonix-workstation-qubes-gui-lxqt' whonix-upgrade.log", timeout => 1800);
     } else {
-        assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y install qubes-whonix-gateway-gui-lxqt' whonix-upgrade.log", timeout => 1800);
+        assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y install whonix-gateway-qubes-gui-lxqt' whonix-upgrade.log", timeout => 1800);
     }
     $self->maybe_unlock_screen;
     assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y autoremove' whonix-upgrade.log", timeout => 1800);
@@ -294,6 +294,7 @@ sub post_fail_hook {
     script_run "cat /home/user/release-upgrade.log";
     $self->SUPER::post_fail_hook();
     upload_logs('/home/user/release-upgrade.log', failok => 1);
+    upload_logs('/home/user/whonix-upgrade.log', failok => 1);
 };
 
 1;

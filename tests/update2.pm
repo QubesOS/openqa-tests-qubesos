@@ -107,6 +107,7 @@ sub run {
     # https://github.com/QubesOS/qubes-core-admin-addon-whonix/pull/24, until
     # Whonix 18 happens
     script_run("qvm-prefs whonix-workstation-17 memory 500");
+    script_run("qvm-prefs whonix-workstation-18 memory 500");
 
     my $targets="--templates";
     if (get_var('TEST_TEMPLATES')) {

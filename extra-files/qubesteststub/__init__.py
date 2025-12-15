@@ -18,7 +18,7 @@ class DefaultPV(qubes.ext.Extension):
     @qubes.ext.handler('domain-pre-start')
     async def on_domain_pre_start(self, vm, event, **kwargs):
         # on Xen 4.13 PCI passthrough on PV requires IOMMU too
-        pv_passthrough_available = (self.xeninfo['xen_minor'] < 13 or 
+        pv_passthrough_available = (self.xeninfo['xen_minor'] < 13 or
             'qubes.enable_insecure_pv_passthrough' in self.dom0_cmdline)
         if 'hvm_directio' not in self.physinfo['virt_caps'] and not pv_passthrough_available:
             # FIXME: new devices API
@@ -125,6 +125,7 @@ class DefaultPV(qubes.ext.Extension):
                 if '0c03:' in line:
                     self.usbdevs.append(bdf.replace(':', '_'))
 
+        qubes.vm.qubesvm.QubesVM.shutdown_timeout._default = 120
         qubes.vm.qubesvm.QubesVM.qrexec_timeout._default = 120
         qubes.vm.qubesvm.QubesVM.qrexec_timeout._default_function = None
         if 'xen_scrub_pages' not in qubes.config.defaults['kernelopts']:

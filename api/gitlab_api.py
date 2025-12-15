@@ -34,6 +34,8 @@ config_defaults = {
     'user_allowlist': None,
     'branch_allowlist': 'master release4.0 release4.1 main',
     'github_webhook_key': None,
+    'gitlab_trigger_token': None,
+    'gitlab_trigger_url': 'https://gitlab.com/api/v4/projects/22463399/trigger/pipeline',
 }
 
 app = Flask(__name__)
@@ -199,6 +201,7 @@ def run_test():
     values['PULL_REQUESTS'] = " ".join(
         sorted(req_values['PULL_REQUESTS'].split(" "))
     )
+    machines_list = [""]
     if 'SELINUX_TEMPLATES' in req_values:
         values['SELINUX_TEMPLATES'] = req_values['SELINUX_TEMPLATES']
     if 'TEST_TEMPLATES' in req_values:
@@ -215,10 +218,17 @@ def run_test():
         values['QUBES_TEST_MGMT_TPL'] = req_values['QUBES_TEST_MGMT_TPL'];
     if 'DISTUPGRADE_TEMPLATES' in req_values:
         values['DISTUPGRADE_TEMPLATES'] = req_values['DISTUPGRADE_TEMPLATES']
+    if 'TEST' in req_values:
+        values['TEST'] = req_values['TEST']
+    if 'MACHINE' in req_values:
+        machines_list = req_values['MACHINE'].split(",")
 
-    subprocess.check_call([
-        'openqa-cli', 'api', '-X', 'POST',
-        'isos'] + ['='.join(p) for p in values.items()])
+    for machine in machines_list:
+        subprocess.check_call([
+            'openqa-cli', 'api', '-X', 'POST', 'isos']
+            + ['='.join(p) for p in values.items()]
+            + ([f"MACHINE={machine}"] if machine else [])
+        )
 
     return respond(200, 'done')
 
@@ -240,13 +250,54 @@ def github_event():
 
     return respond(200, 'nothing to do')
 
+def schedule_pr_build(params):
+    if not config['gitlab_trigger_url'] or not config['gitlab_trigger_token']:
+        return respond(404, "missing gitlab trigger config")
+
+    allowlist_params = (
+        "SELINUX_TEMPLATES",
+        "UPDATE_TEMPLATES",
+        "TEST_TEMPLATES",
+        "DEFAULT_TEMPLATE",
+        "TEST",
+        "MACHINE",
+        "FLAVOR",
+        "KERNEL_VERSION",
+        "DISTUPGRADE_TEMPLATES",
+        "QUBES_TEST_MGMT_TPL",
+        "PR_LABEL",
+    )
+    # basic value validation done by the caller already
+    req_params = {}
+    for param in allowlist_params:
+        if param in params:
+            req_params[f"variables[{param}]"] = params[param]
+    req_params["token"] = config['gitlab_trigger_token']
+    req_params["ref"] = "main"
+    r = requests.post(config['gitlab_trigger_url'],
+        data=req_params)
+    r.raise_for_status()
+    return respond(200, "done")
+
+
 def run_test_pr(comment_details):
     comment_body = comment_details['body'].strip()
+    # basic validation, to avoid command injection
+    if not re.match(r"[a-zA-Z0-9_,= -]*", comment_body):
+        return respond(400, "invalid parameters format")
+
     comment_params = dict([
         param.split("=", 1)
         for param in comment_body.split(" ")
         if "=" in param and param[0].isupper()
     ])
+
+    if 'PR_LABEL' in comment_params:
+        if not re.match(r"\A[a-z0-9-]+\Z", comment_params['PR_LABEL']):
+            return respond(400, "invalid LABEL value")
+        return schedule_pr_build(comment_params)
+
+    assert False
 
     # get PR info
     issue_url = comment_details['issue_url']
@@ -260,6 +311,12 @@ def run_test_pr(comment_details):
     version = comment_params.get("VERSION", "4.3")
     if not re.match(r"\A[0-9]\.[0-9]\Z", version):
         return respond(400, "invalid VERSION value")
+    tests_list = comment_params.get("TEST", "")
+    if tests_list and not re.match(r"\A([a-z0-9_]+,)*[a-z0-9_]+\Z", tests_list):
+        return respond(400, "invalid TEST value")
+    machine_list = command_params.get("MACHINE", "")
+    if machine_list and not re.match(r"\A([a-z0-9]+,)*[a-z0-9]+\Z", machine_list):
+        return respond(400, "invalid MACHINE value")
 
     # get associated gitlab job
     repo_job = get_job_from_pr(pr_details, job_name=f"r{version}:publish:repo")
@@ -309,10 +366,15 @@ def run_test_pr(comment_details):
     values['PULL_REQUESTS'] = pr_url\
         .replace('https://api.github.com/repos/', 'https://github.com/')\
         .replace('/pulls/', '/pull/')
+    if tests_list:
+        values['TEST'] = tests_list
 
-    subprocess.check_call([
-        'openqa-cli', 'api', '-X', 'POST',
-        'isos'] + ['='.join(p) for p in values.items()])
+    for machine in set(machine_list.split(",")):
+        subprocess.check_call([
+            'openqa-cli', 'api', '-X', 'POST', 'isos']
+            + ['='.join(p) for p in values.items()]
+            + ([f"MACHINE={machine}"] if machine else [])
+        )
 
     return respond(200, 'done')
 

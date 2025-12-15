@@ -110,3 +110,10 @@ def systemtests(os_data, log, **kwargs):
 
     subprocess.call(["systemctl", "disable", "dnsmasq"],
                     stdin=subprocess.DEVNULL)
+
+    if (
+        os.path.exists("/usr/share/anon-gw-base-files/gateway")
+        or os.path.exists("/usr/share/anon-ws-base-files/workstation")
+    ):
+        subprocess.call(["systemctl", "enable", "check-user-slice-on-shutdown.service"],
+                        stdin=subprocess.DEVNULL)

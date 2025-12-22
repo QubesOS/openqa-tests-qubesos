@@ -300,8 +300,6 @@ def run_test_pr(comment_details):
             return respond(400, "invalid LABEL value")
         return schedule_pr_build(comment_params)
 
-    assert False
-
     # get PR info
     issue_url = comment_details['issue_url']
     r = requests.get(issue_url)
@@ -317,7 +315,7 @@ def run_test_pr(comment_details):
     tests_list = comment_params.get("TEST", "")
     if tests_list and not re.match(r"\A([a-z0-9_]+,)*[a-z0-9_]+\Z", tests_list):
         return respond(400, "invalid TEST value")
-    machine_list = command_params.get("MACHINE", "")
+    machine_list = comment_params.get("MACHINE", "")
     if machine_list and not re.match(r"\A([a-z0-9]+,)*[a-z0-9]+\Z", machine_list):
         return respond(400, "invalid MACHINE value")
 

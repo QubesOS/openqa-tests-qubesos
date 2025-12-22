@@ -216,6 +216,8 @@ def run_test():
         values['KERNEL_VERSION'] = req_values['KERNEL_VERSION']
     if 'QUBES_TEST_MGMT_TPL' in req_values:
         values['QUBES_TEST_MGMT_TPL'] = req_values['QUBES_TEST_MGMT_TPL'];
+    if 'WHONIX_REPO' in req_values:
+        values['WHONIX_REPO'] = req_values['WHONIX_REPO'];
     if 'DISTUPGRADE_TEMPLATES' in req_values:
         values['DISTUPGRADE_TEMPLATES'] = req_values['DISTUPGRADE_TEMPLATES']
     if 'TEST' in req_values:
@@ -265,6 +267,7 @@ def schedule_pr_build(params):
         "KERNEL_VERSION",
         "DISTUPGRADE_TEMPLATES",
         "QUBES_TEST_MGMT_TPL",
+        "WHONIX_REPO",
         "PR_LABEL",
     )
     # basic value validation done by the caller already

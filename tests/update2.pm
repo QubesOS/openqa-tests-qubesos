@@ -82,6 +82,10 @@ sub run {
         assert_script_run('qubesctl top.enable system-tests');
     }
 
+    if (check_var("REPO_DEVEL", "1")) {
+        assert_script_run('qubes-dom0-update --enablerepo=qubes-dom0-current-testing -y qubes-repo-devel');
+    }
+
     assert_script_run('systemctl restart qubesd');
     assert_script_run('(set -o pipefail; qubesctl --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log; ret=$?; qvm-run --nogui -- sys-usb qubes-input-trigger --all; exit $ret)', timeout => 9000);
     if (check_var('KERNEL_VERSION', 'latest')) {
@@ -131,6 +135,7 @@ sub run {
     }
     assert_script_run("sed -i 's%\@REPO_URL\@%$repo_url%' /root/extra-files/update/atestrepo.py");
     assert_script_run("sed -i \"s%\@REPO_KEY\@%\$(cat /srv/salt/update/update-key.asc | sed -z 's:\\n:\\\\n:g')%\" /root/extra-files/update/atestrepo.py");
+    assert_script_run("sed -i 's%\@REPO_DEVEL\@%" . get_var('REPO_DEVEL', '') . "%' /root/extra-files/update/atestrepo.py");
     assert_script_run("sed -i 's%\@QUBES_VER\@%" . get_var('VERSION') . "%' /root/extra-files/update/atestrepo.py");
     assert_script_run("sed -i 's%\@WHONIX_REPO\@%" . get_var('WHONIX_REPO', 'testers') . "%' /root/extra-files/update/atestrepo.py");
     assert_script_run("cp /root/extra-files/update/atestrepo.py /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/");

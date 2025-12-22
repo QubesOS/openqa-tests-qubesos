@@ -4,6 +4,7 @@ from pathlib import Path
 
 UPDATE_REPO_URL = "@REPO_URL@"
 UPDATE_REPO_KEY = """@REPO_KEY@"""
+UPDATE_REPO_DEVEL = "@REPO_DEVEL@"
 ENABLE_TESTING = True
 QUBES_VER = "@QUBES_VER@"
 WHONIX_REPO = "@WHONIX_REPO@"
@@ -22,6 +23,9 @@ def atestrepo(os_data, log, **kwargs):
                 f.write(f"deb [arch=amd64 signed-by=/usr/share/keyrings/test.asc] {UPDATE_REPO_URL}/vm {os_data['codename']} main\n")
                 with open("/usr/share/keyrings/test.asc", "w") as key_f:
                     key_f.write(UPDATE_REPO_KEY)
+        if UPDATE_REPO_DEVEL == "1":
+            subprocess.check_call(["apt-get", "update"])
+            subprocess.check_call(["apt-get", "install", "-y", "qubes-repo-devel"])
     elif os_data["os_family"] == "RedHat":
         with open('/etc/yum.repos.d/qubes-testing.repo', 'w') as f:
             if ENABLE_TESTING:
@@ -40,6 +44,8 @@ def atestrepo(os_data, log, **kwargs):
                 f.write("repo_gpgcheck = 1\n")
                 with open("/etc/pki/rpm-gpg/RPM-GPG-KEY-test", "w") as key_f:
                     key_f.write(UPDATE_REPO_KEY)
+        if UPDATE_REPO_DEVEL == "1":
+            subprocess.check_call(["dnf", "install", "-y", "qubes-repo-devel"])
     elif os_data["os_family"] == "ArchLinux":
         with open('/etc/pacman.d/80-qubes-testing.conf', 'w') as f:
             if UPDATE_REPO_URL:
@@ -64,6 +70,8 @@ def atestrepo(os_data, log, **kwargs):
             if ENABLE_TESTING:
                 f.write(f"[qubes-r{QUBES_VER}-current-testing]\n")
                 f.write(f"Server = https://archlinux.qubes-os.org/r{QUBES_VER}/current-testing/vm/archlinux/pkgs\n")
+        if UPDATE_REPO_DEVEL == "1":
+            subprocess.check_call(["pacman", "--noconfirm", "-Sy", "qubes-repo-devel"])
     if Path('/usr/share/whonix/marker').exists():
         subprocess.check_call([
             "repository-dist",

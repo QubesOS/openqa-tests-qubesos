@@ -41,6 +41,7 @@ sub run {
         assert_script_run("cp /root/extra-files/update/systemtests.py /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/");
     }
     my $targets = get_var('UPDATE_TEMPLATES', "");
+    $targets =~ s,( |^)[^ ]*/qubes-template-([^ ]*)-([^ ]*)-([^ ]*).noarch.rpm,\1\2,g;
     $targets =~ s/ /,/g;
     if (check_var("VERSION", "4.1")) {
         assert_script_run("(set -o pipefail; qubesctl --skip-dom0 --show-output --targets=$targets state.highstate 2>&1 | tee qubesctl-update.log)", timeout => 9000);

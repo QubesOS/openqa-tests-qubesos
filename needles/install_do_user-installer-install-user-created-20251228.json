@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 263,
+      "ypos": 571,
+      "height": 50,
+      "width": 173,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-LOCALE-de",
+    "ENV-VERSION-4.3",
+    "installer-install-user-created"
+  ]
+}

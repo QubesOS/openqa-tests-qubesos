@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 87,
+      "xpos": 159,
+      "height": 24,
+      "ypos": 362
+    },
+    {
+      "xpos": 862,
+      "ypos": 718,
+      "height": 40,
+      "width": 138,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-LOCALE-de",
+    "ENV-VERSION-4.3",
+    "installer-install-done-reboot"
+  ]
+}

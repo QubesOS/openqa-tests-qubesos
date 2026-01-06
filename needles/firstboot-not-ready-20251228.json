@@ -1,0 +1,29 @@
+{
+  "area": [
+    {
+      "width": 124,
+      "type": "match",
+      "ypos": 384,
+      "height": 27,
+      "xpos": 564,
+      "click_point": {
+        "xpos": 62,
+        "ypos": 13.5
+      }
+    },
+    {
+      "type": "match",
+      "width": 207,
+      "height": 25,
+      "ypos": 694,
+      "xpos": 797
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-LOCALE-de",
+    "ENV-VERSION-4.3",
+    "firstboot-not-ready",
+    "firstboot-qubes"
+  ]
+}

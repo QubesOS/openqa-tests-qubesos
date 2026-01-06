@@ -42,6 +42,8 @@ sub run {
 
     if (check_var('LOCALE', 'en_DK.utf8')) {
         assert_and_click 'installer-language-english-denmark';
+    } elsif (check_var('LOCALE', 'de_DE.utf8')) {
+        assert_and_click 'installer-language-german';
     }
 
     send_key 'f12';

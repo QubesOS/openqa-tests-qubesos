@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 405,
+      "ypos": 353,
+      "height": 18,
+      "type": "match",
+      "width": 193
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-LOCALE-de",
+    "ENV-VERSION-4.3",
+    "desktop-runner"
+  ]
+}

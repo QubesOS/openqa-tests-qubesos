@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "xpos": 279,
+      "ypos": 196,
+      "height": 28,
+      "type": "match",
+      "width": 281
+    },
+    {
+      "width": 141,
+      "type": "match",
+      "xpos": 619,
+      "ypos": 545,
+      "height": 25
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-LOCALE-de",
+    "ENV-VERSION-4.3",
+    "installer-prerelease"
+  ]
+}

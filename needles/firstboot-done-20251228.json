@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 206,
+      "type": "match",
+      "xpos": 797,
+      "height": 27,
+      "ypos": 725
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-LOCALE-de",
+    "ENV-VERSION-4.3",
+    "firstboot-done"
+  ]
+}

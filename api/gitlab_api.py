@@ -19,6 +19,8 @@ import hmac
 import hashlib
 from flask import Flask, request, Response
 
+from lib.github_api import GitHubIssue
+
 GITLAB_API = 'https://gitlab.com/api/v4'
 
 TARGET_REPO_DIR = '/var/lib/openqa/factory/repo'
@@ -252,7 +254,7 @@ def github_event():
 
     return respond(200, 'nothing to do')
 
-def schedule_pr_build(params):
+def schedule_pr_build(params, html_url, issue_url):
     if not config['gitlab_trigger_url'] or not config['gitlab_trigger_token']:
         return respond(404, "missing gitlab trigger config")
 
@@ -275,11 +277,25 @@ def schedule_pr_build(params):
     for param in allowlist_params:
         if param in params:
             req_params[f"variables[{param}]"] = params[param]
-    req_params["token"] = config['gitlab_trigger_token']
     req_params["ref"] = "main"
-    r = requests.post(config['gitlab_trigger_url'],
-        data=req_params)
+    safe_params = req_params
+    req_params["token"] = config['gitlab_trigger_token']
+    r = requests.post(config['gitlab_trigger_url'], data=req_params)
     r.raise_for_status()
+    pipeline = r["web_url"]
+    text = \
+    f"""
+    Pipeline ordered by {html_url}
+
+    ```python3
+    {safe_params}
+    ```
+
+    - [GitLab pipeline]({pipeline})
+    """
+    issue = GitHubIssue(issue_url, title=pipeline)
+    issue.post_comment(text)
+    # TODO: after openqa-cli response, patch this comment adding OpenQA pipeline
     return respond(200, "done")
 
 
@@ -295,12 +311,8 @@ def run_test_pr(comment_details):
         if "=" in param and param[0].isupper()
     ])
 
-    if 'PR_LABEL' in comment_params:
-        if not re.match(r"\A[a-z0-9-]+\Z", comment_params['PR_LABEL']):
-            return respond(400, "invalid LABEL value")
-        return schedule_pr_build(comment_params)
-
     # get PR info
+    html_url = comment_details['html_url']
     issue_url = comment_details['issue_url']
     r = requests.get(issue_url)
     r.raise_for_status()
@@ -308,6 +320,11 @@ def run_test_pr(comment_details):
     r = requests.get(pr_url)
     r.raise_for_status()
     pr_details = r.json()
+
+    if 'PR_LABEL' in comment_params:
+        if not re.match(r"\A[a-z0-9-]+\Z", comment_params['PR_LABEL']):
+            return respond(400, "invalid LABEL value")
+        return schedule_pr_build(comment_params, html_url, issue_url)
 
     version = comment_params.get("VERSION", "4.3")
     if not re.match(r"\A[0-9]\.[0-9]\Z", version):

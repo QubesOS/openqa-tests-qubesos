@@ -87,6 +87,11 @@ sub run {
         }
     
         $self->save_and_upload_log("(qvm-features $template template-release || rpm -q qubes-template-$template)", "template-$template-version.txt");
+
+        if ($template eq "archlinux") {
+            assert_script_run("qvm-run -pu root $template 'ln -s /etc/pacman.d/85-qubes-*current-testing.conf.disabled /etc/pacman.d/85-qubes-current-testing.conf'", timeout => 60);
+            assert_script_run("qvm-shutdown --wait $template", timeout => 120);
+        }
     }
 
     # restart only sys-whonix - for potential whonixcheck run

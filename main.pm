@@ -53,7 +53,7 @@ if (get_var('ISO')) {
     autotest::loadtest "tests/install_do_user.pm";
     autotest::loadtest "tests/install_fixups.pm";
     autotest::loadtest "tests/firstboot.pm";
-    if (get_var("INSTALL_TEMPLATES") =~ /\d+/) {
+    if (get_var("INSTALL_TEMPLATES") =~ /\d+|archlinux/) {
         # if a specific template version was requested, add it now
         autotest::loadtest "tests/update_templates.pm";
     }

@@ -116,7 +116,7 @@ sub run {
     my $targets="--templates";
     if (get_var('TEST_TEMPLATES')) {
         # do a reverse map, new->old
-        my %template_map = split /[ :]/, (get_var("DISTUPGRADE_TEMPLATES", "") =~ s/(\S*):(\S*)/\2:\1/gr);
+        my %template_map = split /[ :]/, (get_var("DISTUPGRADE_TEMPLATES", "") =~ s/(\S*):(\S*)/$2:$1/gr);
         my @templates_to_update = ();
         foreach (split / /, get_var('TEST_TEMPLATES')) {
             if ($template_map{$_}) {

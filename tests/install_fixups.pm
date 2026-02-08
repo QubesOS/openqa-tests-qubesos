@@ -97,6 +97,9 @@ sub run {
         $extra_xen_opts .= ' com1=115200,8n1,pci';
         #$extra_xen_opts .= ' dbgp=xhci@pci00:14.0,share=yes';
         #$serial_console = "xhci";
+    } elsif (check_var("MACHINE", "hw18")) {
+        $extra_xen_opts .= ' dbgp=xhci@pci00:14.0,share=yes';
+        $serial_console = "xhci";
     }
     script_run "sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /mnt/sysimage/boot/grub2/grub.cfg";
     script_run "sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";

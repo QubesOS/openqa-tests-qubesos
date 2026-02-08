@@ -140,7 +140,7 @@ sub run {
     assert_script_run("sed -i 's%\@WHONIX_REPO\@%" . get_var('WHONIX_REPO', 'testers') . "%' /root/extra-files/update/atestrepo.py");
     assert_script_run("cp /root/extra-files/update/atestrepo.py /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/");
     if (get_var("SALT_SYSTEM_TESTS")) {
-        assert_script_run("cp /root/extra-files/update/systemtests.py /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/");
+        assert_script_run("cp /root/extra-files/update/zsystemtests.py /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/");
     }
 
     assert_script_run("script -c 'qubes-vm-update --force-update --log DEBUG --max-concurrency=2 $targets --show-output' -a -e qubesctl-upgrade.log", timeout => 14400);
@@ -149,7 +149,7 @@ sub run {
     # disable all states
     script_run('rm -f /srv/salt/_tops/base/*');
     script_run('rm -f /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/atestrepo.py');
-    script_run('rm -f /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/systemtests.py');
+    script_run('rm -f /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/zsystemtests.py');
 
     # minimal net/usb qube
     assert_script_run("qvm-service --enable sys-net minimal-netvm");

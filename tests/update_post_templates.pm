@@ -38,7 +38,7 @@ sub run {
     }
     if (get_var("SALT_SYSTEM_TESTS")) {
         assert_script_run('qubesctl top.enable system-tests');
-        assert_script_run("cp /root/extra-files/update/systemtests.py /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/");
+        assert_script_run("cp /root/extra-files/update/zsystemtests.py /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/");
     }
     my $targets = get_var('UPDATE_TEMPLATES', "");
     $targets =~ s,( |^)[^ ]*/qubes-template-([^ ]*)-([^ ]*)-([^ ]*).noarch.rpm,\1\2,g;
@@ -54,7 +54,7 @@ sub run {
     # disable all states
     script_run('rm -f /srv/salt/_tops/base/*');
     script_run('rm -f /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/atestrepo.py');
-    script_run('rm -f /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/systemtests.py');
+    script_run('rm -f /usr/lib/python3.*/site-packages/vmupdate/agent/source/plugins/zsystemtests.py');
 
 
     type_string("exit\n");

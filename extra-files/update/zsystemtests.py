@@ -41,7 +41,7 @@ def get_packages(dist, version):
         packages.remove("qubes-video-companion") # not packaged yet
     return packages
 
-def systemtests(os_data, log, **kwargs):
+def zsystemtests(os_data, log, **kwargs):
     pkgs = get_packages(os_data["os_family"], None)
     environ = os.environ.copy()
     environ['DEBIAN_FRONTEND'] = 'noninteractive'

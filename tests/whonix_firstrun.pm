@@ -18,29 +18,20 @@
 use base "installedtest";
 use strict;
 use testapi;
-use OpenQA::Test::RunArgs;
 
 sub run {
-    my ($self, $args) = @_;
+    my ($self) = @_;
 
     if (check_var('SKIP_INSTALL', '1')) {
         return;
     }
 
-    my $whonix_gateway = "sys-whonix";
-    if (exists $args->{whonix_gw_override}) {
-        $whonix_gateway = $args->{whonix_gw_override};
-    } else {
-    }
-
     $self->select_gui_console;
 
-    my $start_whonix_gw_cmd = sprintf "qvm-start %s", $whonix_gateway;
-    x11_start_program($start_whonix_gw_cmd, valid => 0);
+    x11_start_program('qvm-start sys-whonix', valid => 0);
     if (!check_screen(['whonix-connected', 'whonix-firstrun', 'whonix-news'], 120)) {
         # no firstrun wizard? maybe already accepted - verify it
-        my $run_whonixcheck_cmd = sprintf "qvm-run %s 'whonixcheck --gui'", $whonix_gateway;
-        x11_start_program($run_whonixcheck_cmd, valid => 0);
+        x11_start_program('qvm-run sys-whonix \'whonixcheck --gui\'', valid => 0);
         assert_screen('whonix-connected', timeout => 60);
     }
 

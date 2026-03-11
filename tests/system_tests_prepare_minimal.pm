@@ -32,6 +32,8 @@ sub run {
             # this is the "all other" extra tests, including QVC, install it
             $packages = "qubes-video-companion";
         }
+    } elsif ($tests =~ m/usbproxy/) {
+        $packages = "qubes-usb-proxy";
     } elsif ($tests =~ m/dom0_update/) {
         $packages = "qubes-core-agent-dom0-updates qubes-core-admin-client qubes-repo-templates qubes-core-agent-networking";
     } elsif ($tests =~ m/grub/) {

@@ -105,6 +105,7 @@ def zsystemtests(os_data, log, **kwargs):
                 "'qubesdb-read /qubes-ip6' or 'qubesdb-read /qubes-gateway6' failed",
                 # Nov 05 16:03:11 host memlockd[927]: Mapped file /lib/x86_64-linux-gnu/libgpg-error.so.0
                 "memlockd.*libgpg-error.so.0",
+                "qubes.VMShell",
             ):
                 f.write(f'journal_ignore_pattern_add "{pattern}" 2>/dev/null || journal_ignore_patterns_list+=( "{pattern}" )\n')
 

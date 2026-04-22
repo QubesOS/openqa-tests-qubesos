@@ -138,6 +138,13 @@ sub run {
         script_run "echo 'qubes.InputTablet * sys-net dom0 allow' >> /mnt/sysimage$policy_path";
     }
 
+    # simulate qvm.sys-usb-prioritize-autostart, even if USB keyboard is not enabled
+    if (check_var("BACKEND", "qemu")) {
+        my $dropin_dir = '/mnt/sysimage/etc/systemd/system/qubes-vm@sys-usb.service.d';
+        assert_script_run "mkdir -p $dropin_dir";
+        assert_script_run "printf '[Unit]\\nBefore=systemd-user-sessions.service\\n' > $dropin_dir/50_autostart-openqa.conf";
+    }
+
     # when changing here, update release_upgrade.pm too
     my $sed_enable_dom0_console_log = 'sed -i -e \'s:quiet:console=hvc0 console=tty0:g\'';
     if (check_var("BACKEND", "qemu")) {

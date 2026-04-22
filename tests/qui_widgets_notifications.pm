@@ -41,7 +41,7 @@ sub run {
     assert_and_click('qui-devices-open', timeout => 20);
     if (!check_screen('qui-devices-mic-selected')) {
         # open a device
-        send_key('down');
+        assert_and_click('qui-devices-mic');
     }
     send_key('right');
     send_key('ret');

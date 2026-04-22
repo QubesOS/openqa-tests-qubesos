@@ -100,6 +100,12 @@ sub run {
     } elsif (check_var("MACHINE", "hw18")) {
         $extra_xen_opts .= ' dbgp=xhci@pci00:14.0,share=yes';
         $serial_console = "xhci";
+    } elsif (check_var("MACHINE", "hw19")) {
+        $extra_xen_opts .= ' dbgp=xhci@pci00:14.0,share=yes';
+        $serial_console = "xhci";
+    } elsif (check_var("MACHINE", "hw20")) {
+        $extra_xen_opts .= ' dbgp=xhci@pci00:14.0,share=yes';
+        $serial_console = "xhci";
     }
     script_run "sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /mnt/sysimage/boot/grub2/grub.cfg";
     script_run "sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /mnt/sysimage/boot/efi/EFI/qubes/grub.cfg";
@@ -171,13 +177,16 @@ sub run {
     # improve logging
     script_run "echo 'XENCONSOLED_ARGS=--timestamp=all' >> /mnt/sysimage/etc/sysconfig/xencommons";
 
+    script_run("sha256sum /mnt/sysimage/var/lib/qubes/template-packages/*.rpm", timeout => 120);
+    script_run("chroot /mnt/sysimage sh -c 'rpm -Kv /var/lib/qubes/template-packages/*.rpm'", timeout => 120);
+
     # some more debug logs
     script_run "cryptsetup luksDump /dev/nvme0n1p3";
     script_run "cat /tmp/storage.log";
 
     type_string "sync\n";
     select_console('installation');
-    if (check_var("MACHINE", "hw3")) {
+    if (check_var("MACHINE", "hw3") || check_var("MACHINE", "hw19")) {
         eject_cd;
     }
     #power 'reset';

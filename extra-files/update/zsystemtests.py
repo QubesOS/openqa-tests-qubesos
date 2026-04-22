@@ -106,6 +106,10 @@ def zsystemtests(os_data, log, **kwargs):
                 # Nov 05 16:03:11 host memlockd[927]: Mapped file /lib/x86_64-linux-gnu/libgpg-error.so.0
                 "memlockd.*libgpg-error.so.0",
                 "qubes.VMShell",
+                # Mar 12 04:59:24 host pulseaudio[1050]: Failed to load authentication key '/home/sysmaint/.pulse-cookie': No such file or directory
+                # normally pulseaudio is not installed at all, it appears here
+                # only because of extra test-related packages
+                "pulseaudio",
             ):
                 f.write(f'journal_ignore_pattern_add "{pattern}" 2>/dev/null || journal_ignore_patterns_list+=( "{pattern}" )\n')
 

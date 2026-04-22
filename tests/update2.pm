@@ -90,8 +90,25 @@ sub run {
     assert_script_run('(set -o pipefail; qubesctl --show-output state.highstate 2>&1 | tee qubesctl-upgrade.log; ret=$?; qvm-run --nogui -- sys-usb qubes-input-trigger --all; exit $ret)', timeout => 9000);
     if (check_var('KERNEL_VERSION', 'latest')) {
         assert_script_run('qubes-dom0-update -y kernel-latest kernel-latest-qubes-vm', timeout => 600);
-        my $latest_kernel = script_output('ls -1v /var/lib/qubes/vm-kernels|grep "^[0-9]" |tail -1');
-        assert_script_run("qubes-prefs default-kernel $latest_kernel");
+    }
+    my $kernel_pkg = check_var('KERNEL_VERSION', 'latest') ? 'kernel-latest' : 'kernel';
+    my $kver_full = script_output("rpm -q --qf '%{EPOCH}:%{VERSION}-%{RELEASE}\\n' $kernel_pkg |sort -V | tail -1");
+    my $kver = ($kver_full =~ m/^\d+:(.*)/)[0];
+    # keep in sync with macros at the top of kernel.spec.in
+    my $kver_vm = ($kver =~ s/.qubes//r);
+    $kver_vm =~ s/-0.rc(\d+)\./-rc\1-/;
+    # switch dom0 (and VM) to boot newest kernel of requested flavor
+    assert_script_run("qubes-prefs default-kernel $kver_vm");
+    my $xver = script_output("rpm -q --qf '%{VERSION}\\n' xen-hypervisor | tail -1");
+    # TODO: adjust menuentry ID for non-LVM install
+    assert_script_run("grub2-set-default 'gnulinux-advanced-/dev/mapper/qubes_dom0-root>xen-hypervisor-$xver-/dev/mapper/qubes_dom0-root>xen-gnulinux-$kver.x86_64-advanced-/dev/mapper/qubes_dom0-root'");
+
+    if (check_var("FLAVOR", "kernel") and check_var("HEADS", "1")) {
+        # convince Heads to really use just installed kernel
+        assert_script_run("ln -s vmlinuz-$kver.x86_64 /boot/vmlinuz-9.0");
+        assert_script_run("ln -s initramfs-$kver.x86_64.img /boot/initramfs-9.0.img");
+        assert_script_run("ln -s config-$kver.x86_64 /boot/config-9.0");
+        assert_script_run("grub2-mkconfig -o /boot/grub2/grub.cfg");
     }
     # disable salt states again
     script_run('rm -f /srv/salt/_tops/base/*');

@@ -52,6 +52,7 @@ sub run {
             record_info('fail', "Whonixcheck for $_ failed", result => 'fail');
             $failed = 1;
             $self->save_and_upload_log("qvm-run -pu root $_ journalctl -b", "journalctl-$_.log", {timeout => 120});
+            $self->save_and_upload_log("qvm-run -pu root $_ journalctl -b -1", "journalctl-previous-$_.log", {timeout => 120});
         }
         # shutdown all except sys-whonix
         unless (/sys-whonix/) {

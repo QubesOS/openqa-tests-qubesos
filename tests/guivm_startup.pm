@@ -63,7 +63,9 @@ sub run {
             assert_script_run("echo -e '$testapi::password\n$testapi::password' | qvm-run --nogui -p -u root $vm 'passwd --stdin user'");
         } else {
             # 'passwd' is not installed by default...
-            assert_script_run("echo '$testapi::password' | qvm-run --nogui -p -u root $vm 'hash=\$(openssl passwd -6 -stdin) && sed -i \"s,^user:[^:]*,user:\$hash,\" /etc/shadow'");
+            my $salt = join '', ('.', '/', 0..9, 'A'..'Z', 'a'..'z')[rand 64, rand 64];
+            my $hash = crypt($testapi::password, "\$6\$$salt");
+            assert_script_run("qvm-run --nogui -p -u root -- $vm sed -i 's,^user:[^:]*,user:$hash,' /etc/shadow");
         }
         # Force 1024x768 so openQA is happy
         assert_script_run("qvm-run --nogui -pu root sys-gui-vnc env XAUTHORITY=/var/run/lightdm/root/:0 xrandr -s 1024x768");
@@ -82,7 +84,9 @@ sub run {
             assert_script_run("echo -e '$testapi::password\n$testapi::password' | qvm-run --nogui -p -u root $vm 'passwd --stdin user'");
         } else {
             # 'passwd' is not installed by default...
-            assert_script_run("echo '$testapi::password' | qvm-run --nogui -p -u root $vm 'hash=\$(openssl passwd -6 -stdin) && sed -i \"s,^user:[^:]*,user:\$hash,;s,^root:[^:]*,root:\$hash,\" /etc/shadow'");
+            my $salt = join '', ('.', '/', 0..9, 'A'..'Z', 'a'..'z')[rand 64, rand 64];
+            my $hash = crypt($testapi::password, "\$6\$$salt");
+            assert_script_run("qvm-run --nogui -p -u root -- $vm sed -i 's,^user:[^:]*,user:$hash,' /etc/shadow");
         }
         # Force 1024x768 so openQA is happy
         assert_script_run("qvm-run --nogui -pu root $vm env XAUTHORITY=/var/run/lightdm/root/:0 xrandr -s 1024x768");
@@ -112,7 +116,9 @@ sub run {
             assert_script_run("echo -e '$testapi::password\n$testapi::password' | qvm-run --nogui -p -u root $vm 'passwd --stdin user'");
         } else {
             # 'passwd' is not installed by default...
-            assert_script_run("echo '$testapi::password' | qvm-run --nogui -p -u root $vm 'hash=\$(openssl passwd -6 -stdin) && sed -i \"s,^user:[^:]*,user:\$hash,\" /etc/shadow'");
+            my $salt = join '', ('.', '/', 0..9, 'A'..'Z', 'a'..'z')[rand 64, rand 64];
+            my $hash = crypt($testapi::password, "\$6\$$salt");
+            assert_script_run("qvm-run --nogui -p -u root -- $vm sed -i 's,^user:[^:]*,user:$hash,' /etc/shadow");
         }
         $self->select_gui_console;
 

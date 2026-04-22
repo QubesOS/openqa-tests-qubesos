@@ -247,7 +247,7 @@ if (get_var("GUI_TESTS")) {
 
 }
 
-if (get_var('TEST_GUI_INTERACTIVE')) {
+if (get_var('TEST_GUI_INTERACTIVE') or get_var("GUI_TESTS")) {
     # collect logs from some successful test that is scheduled on all hw*
     # workers
     autotest::loadtest "tests/collect_logs.pm";

@@ -161,7 +161,7 @@ def run_test():
 
     print(repr(req_values))
 
-    version = req_values.get('VERSION') or '4.3'
+    version = req_values.get('VERSION') or 'devel'
     buildid = time.strftime('%Y%m%d%H-') + version
 
     if 'TEST_TEMPLATES' in req_values:
@@ -189,7 +189,11 @@ def run_test():
 
     values = {}
     values['DISTRI'] = 'qubesos'
-    values['VERSION'] = version
+    if version == 'devel':
+        values['VERSION'] = '4.3'
+        values['REPO_DEVEL'] = '1'
+    else:
+        values['VERSION'] = version
     values['FLAVOR'] = 'pull-requests'
     values['ARCH'] = 'x86_64'
     values['BUILD'] = buildid
@@ -309,8 +313,8 @@ def run_test_pr(comment_details):
     r.raise_for_status()
     pr_details = r.json()
 
-    version = comment_params.get("VERSION", "4.3")
-    if not re.match(r"\A[0-9]\.[0-9]\Z", version):
+    version = comment_params.get("VERSION", "devel")
+    if version != 'devel' and not re.match(r"\A[0-9]\.[0-9]\Z", version):
         return respond(400, "invalid VERSION value")
     tests_list = comment_params.get("TEST", "")
     if tests_list and not re.match(r"\A([a-z0-9_]+,)*[a-z0-9_]+\Z", tests_list):
@@ -343,7 +347,11 @@ def run_test_pr(comment_details):
 
     values = {}
     values['DISTRI'] = 'qubesos'
-    values['VERSION'] = version
+    if version == 'devel':
+        values['VERSION'] = '4.3'
+        values['REPO_DEVEL'] = '1'
+    else:
+        values['VERSION'] = version
     if pr_details['base']['repo']['name'] in (
             'qubes-linux-kernel',
             'qubes-gui-agent-linux',

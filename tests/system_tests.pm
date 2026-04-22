@@ -139,7 +139,7 @@ ENDFUNC
             upload_logs "/tmp/audio-sample-$test.tar.gz";
             script_run "sudo rm -f /tmp/audio-sample-*";
         }
-        if (script_run('pidof -x qvm-start-daemon')) {
+        if (script_run('pgrep -f qvm-start-daemon')) {
             record_soft_failure('qvm-start-daemon crashed');
         }
         if (get_var('SYSTEM_TESTS') =~ m/dispvm_perf/) {

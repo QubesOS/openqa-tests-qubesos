@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 127,
+      "type": "match",
+      "xpos": 619,
+      "ypos": 108,
+      "height": 76
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "EHV-MACHINE-hw7",
+    "ENV-VERSION-4.3",
+    "backup-selected-none"
+  ]
+}

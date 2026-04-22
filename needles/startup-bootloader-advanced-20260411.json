@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "ypos": 79,
+      "width": 199,
+      "type": "match",
+      "height": 17,
+      "xpos": 316
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "bootloader"
+  ]
+}

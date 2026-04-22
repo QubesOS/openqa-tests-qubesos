@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 497,
+      "ypos": 250,
+      "width": 213,
+      "height": 24,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw11",
+    "ENV-VERSION-4.3",
+    "qui-devices-mic"
+  ]
+}

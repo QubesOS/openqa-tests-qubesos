@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 217,
+      "ypos": 295,
+      "width": 143,
+      "height": 30,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "installer-language-german"
+  ]
+}

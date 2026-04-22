@@ -1,0 +1,30 @@
+{
+  "area": [
+    {
+      "width": 288,
+      "ypos": 415,
+      "type": "match",
+      "height": 92,
+      "xpos": 382
+    },
+    {
+      "type": "match",
+      "ypos": 2,
+      "width": 27,
+      "xpos": 1,
+      "height": 26
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "Mouse not properly hidden https://github.com/QubesOS/qubes-issues/issues/10748"
+    }
+  ],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "desktop",
+    "desktop-clear",
+    "x11"
+  ]
+}

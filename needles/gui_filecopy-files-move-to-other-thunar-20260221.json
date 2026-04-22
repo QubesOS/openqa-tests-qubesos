@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 532,
+      "height": 20,
+      "type": "match",
+      "width": 100,
+      "ypos": 606
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "ENV-fedora-xfce",
+    "files-move-to-other"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 28,
+      "xpos": 1,
+      "width": 610,
+      "ypos": 491,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw17",
+    "heads-hash-mismatch-list"
+  ]
+}

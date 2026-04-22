@@ -1,0 +1,35 @@
+{
+  "area": [
+    {
+      "ypos": 265,
+      "height": 20,
+      "xpos": 441,
+      "width": 113,
+      "type": "match"
+    },
+    {
+      "width": 231,
+      "type": "match",
+      "xpos": 415,
+      "height": 27,
+      "ypos": 293
+    },
+    {
+      "xpos": 500,
+      "ypos": 350,
+      "height": 24,
+      "click_point": {
+        "xpos": 103,
+        "ypos": 11
+      },
+      "width": 134,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw7",
+    "ENV-VERSION-4.3",
+    "vm-settings-clone-successful"
+  ]
+}

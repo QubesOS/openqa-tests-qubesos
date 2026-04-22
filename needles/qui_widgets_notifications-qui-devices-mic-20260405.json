@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 785,
+      "height": 24,
+      "type": "match",
+      "width": 93,
+      "ypos": 92
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qui-devices-mic"
+  ]
+}

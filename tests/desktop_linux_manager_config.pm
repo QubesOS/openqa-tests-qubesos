@@ -42,8 +42,13 @@ sub run {
     assert_and_click('global-config-switch-to-file');
     assert_screen('global-config-file-open');
 
-    assert_and_click('global-config-switch-to-url');
-    assert_screen('global-config-url-open');
+    # 4.4+ global config has URL tab moved to Disposables
+    assert_and_click(['global-config-switch-to-url', 'global-config-switch-to-disposables']);
+    if (match_has_tag('global-config-switch-to-url')) {
+        assert_screen('global-config-url-open');
+    } else {
+        assert_screen('global-config-disposables-open');
+    }
 
     assert_and_click('global-config-switch-to-thisdevice');
     assert_screen('global-config-thisdevice-open');
@@ -56,7 +61,7 @@ sub run {
     assert_and_click('global-config-clockvm-select-sysusb');
 
     # try to switch pages
-    assert_and_click('global-config-switch-to-url');
+    assert_and_click('global-config-switch-to-updates');
     assert_and_click('global-config-cancel-changes');
     assert_screen('global-config-general-open');
 

@@ -324,7 +324,13 @@ def run_test_pr(comment_details):
         return respond(400, "invalid MACHINE value")
 
     # get associated gitlab job
-    repo_job = get_job_from_pr(pr_details, job_name=f"r{version}:publish:repo")
+    job_versions = [f"r{version}"]
+    if version == "devel":
+        job_versions = ["devel", "r4.3"]
+    for job_version in job_versions:
+        repo_job = get_job_from_pr(pr_details, job_name=f"{job_version}:publish:repo")
+        if repo_job:
+            break
     if not repo_job:
         return respond(404, "build not found")
 

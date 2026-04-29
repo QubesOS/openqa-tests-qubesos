@@ -44,6 +44,8 @@ sub run {
     wait_still_screen;
     assert_and_click("vm-settings-applications", timeout => 60);
     assert_and_click("vm-settings-applications-refresh");
+    # wait for the operation to start
+    sleep(10);
     # wait until refresh backs to normal (finish refreshing)
     assert_screen("vm-settings-applications-refresh", timeout => 500);
     # wait some more for the VMs to shutdown

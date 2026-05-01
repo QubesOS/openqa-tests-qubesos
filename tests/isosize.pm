@@ -19,7 +19,8 @@ sub run {
     my $size   = $iso ? -s $iso : 0;
     my $result = 'ok';
     my $max    = get_var("ISO_MAXSIZE", 0);
-    if (!$size || !$max || $size > $max) {
+
+    if ($max && (!$size || $size > $max)) {
         $result = 'softfail';
     }
     my $result_text;

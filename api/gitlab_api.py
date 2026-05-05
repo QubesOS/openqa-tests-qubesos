@@ -23,7 +23,9 @@ GITLAB_API = 'https://gitlab.com/api/v4'
 
 TARGET_REPO_DIR = '/var/lib/openqa/factory/repo'
 TARGET_ISO_DIR = '/var/lib/openqa/factory/iso'
+STATE_DIR = '/var/lib/openqa/db'
 
+ci_still_running = object()
 
 # defaults
 config_defaults = {
@@ -131,6 +133,15 @@ def verify_webhook_obj():
     return webhook_obj
 
 def get_job_from_pr(pr_details, job_name="publish:repo"):
+    """Search for publish job for a given PR
+
+    Returns:
+    - URL to the job, if found and completed
+    - None if not found
+    - False if found but still running
+    """
+    found_running = False
+
     r = requests.get(pr_details['_links']['statuses']['href'])
     r.raise_for_status()
     for status in r.json():
@@ -142,11 +153,15 @@ def get_job_from_pr(pr_details, job_name="publish:repo"):
         r = requests.get(f"{GITLAB_API}/projects/{repo.replace('/', '%2F')}/pipelines/{pipeline}/jobs")
         r.raise_for_status()
         for job in r.json():
-            if job['status'] != 'success':
-                continue
             if job_name not in job['name']:
                 continue
+            if job['status'] in ['scheduled', 'running', 'preparing', 'pending', 'created']:
+                found_running = True
+            if job['status'] != 'success':
+                continue
             return job['web_url']
+    if found_running:
+        return False
     return None
 
 @app.route('/api/run_test', methods=['POST'])
@@ -253,8 +268,23 @@ def github_event():
                 return respond(200, 'comment of this user ignored')
         if webhook_obj['comment']['body'].lower().startswith('openqarun'):
             return run_test_pr(webhook_obj['comment'])
+    if request.headers.get('X-GitHub-Event') == 'status':
+        if webhook_obj['context'] != 'continuous-integration/pullrequest':
+            return respond(200, "nothing to do for this status")
+        commit_id = webhook_obj['sha']
+        state_file = os.path.join(STATE_DIR, f"api-command-{commit_id}")
+        if not os.path.exists(state_file):
+            return respond(200, "no queued command")
+        with open(state_file) as f:
+            stored_command = json.load(f)
+        # just to be sure
+        if stored_command['repo'] != webhook_obj['repository']['full_name']:
+            return respond(403, "repository mismatch")
+        os.unlink(state_file)
+        return run_test_pr(stored_command['comment'])
 
     return respond(200, 'nothing to do')
+
 
 def schedule_pr_build(params):
     if not config['gitlab_trigger_url'] or not config['gitlab_trigger_token']:
@@ -312,6 +342,7 @@ def run_test_pr(comment_details):
     r = requests.get(pr_url)
     r.raise_for_status()
     pr_details = r.json()
+    commit_id = pr_details['head']['sha']
 
     version = comment_params.get("VERSION", "devel")
     if version != 'devel' and not re.match(r"\A[0-9]\.[0-9]\Z", version):
@@ -331,6 +362,15 @@ def run_test_pr(comment_details):
         repo_job = get_job_from_pr(pr_details, job_name=f"{job_version}:publish:repo")
         if repo_job:
             break
+    if repo_job is False:
+        state_file = os.path.join(STATE_DIR, f"api-command-{commit_id}")
+        with open(state_file, "w") as f:
+            json.dump({
+                'repo': pr_details['base']['repo']['full_name'],
+                'comment': comment_details
+            },
+            f)
+        return respond(200, "queued")
     if not repo_job:
         return respond(404, "build not found")
 

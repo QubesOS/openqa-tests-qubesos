@@ -47,9 +47,9 @@ def maybe_restart_failed_job(job_id, job_details):
     job_restarts[restart_id] += 1
 
     print('Restarting job {} ({})'.format(job_id, restart_id), file=sys.stderr)
-    subprocess.call([
-        'openqa-client', '--host', API_BASE.partition('/api/')[0],
-        'jobs/{}/restart'.format(job_id), 'post'])
+    subprocess.run([
+        'openqa-cli', 'api', '--host', API_BASE.partition('/api/')[0],
+        '-X', 'POST', 'jobs/{}/restart'.format(job_id), 'skip_parents=1'])
     return True
 
 def callback_done(ch, method, properties, body):

@@ -6,20 +6,24 @@
 # details). Based on this info it decides whether given job can request a test
 # run.
 
+import dateutil
 import subprocess
 import sys
 import os
 import re
 import json
+import jwt
 import time
 import requests
 import tempfile
 import string
 import hmac
 import hashlib
+from datetime import datetime, timezone
 from flask import Flask, request, Response
 
 GITLAB_API = 'https://gitlab.com/api/v4'
+GITHUB_API = 'https://api.github.com'
 
 TARGET_REPO_DIR = '/var/lib/openqa/factory/repo'
 TARGET_ISO_DIR = '/var/lib/openqa/factory/iso'
@@ -38,9 +42,61 @@ config_defaults = {
     'github_webhook_key': None,
     'gitlab_trigger_token': None,
     'gitlab_trigger_url': 'https://gitlab.com/api/v4/projects/22463399/trigger/pipeline',
+    'github_app_id': None,
+    'github_app_key': None,
+    'github_app_installation_id': None,
 }
 
 app = Flask(__name__)
+
+class GithubAppCli:
+    def __init__(self, app_id, private_key, installation_id):
+        self.app_id = app_id
+        self.private_key = private_key
+        self.installation_id = installation_id
+
+        self.token = None
+        self.expires_at = 0
+
+    def get_jwt(self):
+        payload = {
+            "iat": int(time.time()),
+            "exp": int(time.time()) + (9 * 60),
+            "iss": self.app_id,
+        }
+        bearer_token = jwt.encode(payload, self.private_key, algorithm="RS256")
+
+        return bearer_token
+
+    def gen_token(self):
+        bearer_token = self.get_jwt()
+        url = f"https://api.github.com/app/installations/{self.installation_id}/access_tokens"
+        r = requests.post(
+            url,
+            headers={
+                "Authorization": "Bearer {}".format(bearer_token),
+                "Accept": "application/vnd.github.v3+json",
+            },
+        )
+        r.raise_for_status()
+        resp = r.json()
+        self.token = resp["token"]
+        expires = dateutil.parser.parse(resp["expires_at"])
+        self.expires_at = datetime.combine(expires.date(),
+                                           expires.time(),
+                                           tzinfo=timezone.utc)
+        log(f"Got new token, expires at {self.expires_at!r}")
+
+    def get_token(self):
+        if not self.token:
+            self.gen_token()
+        else:
+            delta = self.expires_at - datetime.now(timezone.utc)
+            if delta.total_seconds() <= 0:
+                self.gen_token()
+
+        return self.token
+
 
 def update_config():
     config = config_defaults.copy()
@@ -50,7 +106,17 @@ def update_config():
     return config
 
 config = update_config()
+github_app = None
+if (config["github_app_installation_id"] and
+        config["github_app_id"] and
+        config["github_app_key"]):
+    github_app = GithubAppCli(
+        config["github_app_id"],
+        config["github_app_key"],
+        config["github_app_installation_id"])
 
+def log(msg):
+    print(str(msg), file=sys.stderr, flush=True)
 
 def respond(status, msg=None):
     r = Response('OK' if status == 200 else 'ERROR', status=status, mimetype='text/plain')
@@ -116,6 +182,8 @@ def verify_webhook_obj():
 
     webhook_obj = json.loads(untrusted_data)
 
+    if 'repository' not in webhook_obj:
+        return respond(200, 'ignoring non-repository hook')
     repo = webhook_obj['repository']['full_name']
 
     if config['owner_allowlist']:

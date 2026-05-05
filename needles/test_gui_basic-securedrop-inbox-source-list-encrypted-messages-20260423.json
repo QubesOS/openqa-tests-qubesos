@@ -1,0 +1,32 @@
+{
+  "area": [
+    {
+      "xpos": 488,
+      "ypos": 255,
+      "width": 146,
+      "height": 21,
+      "type": "match"
+    },
+    {
+      "xpos": 490,
+      "ypos": 327,
+      "width": 137,
+      "height": 18,
+      "type": "match"
+    },
+    {
+      "xpos": 488,
+      "ypos": 400,
+      "width": 141,
+      "height": 16,
+      "type": "match",
+      "match": 96
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "ENV-version-4-2",
+    "securedrop-inbox-source-list-encrypted-messages"
+  ]
+}

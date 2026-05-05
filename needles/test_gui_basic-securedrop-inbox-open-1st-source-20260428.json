@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 753,
+      "ypos": 800,
+      "width": 797,
+      "height": 176,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "ENV-version-4-2",
+    "securedrop-inbox-online-mode-source-long-reply-truncated"
+  ]
+}

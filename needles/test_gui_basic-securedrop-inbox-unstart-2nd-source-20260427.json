@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "xpos": 368,
+      "ypos": 161,
+      "width": 74,
+      "height": 201,
+      "type": "match",
+      "click_point": {
+        "xpos": 47,
+        "ypos": 161.5
+      }
+    },
+    {
+      "xpos": 402,
+      "ypos": 238,
+      "width": 29,
+      "height": 30,
+      "type": "exclude"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "ENV-version-4-2",
+    "securedrop-inbox-unstart-2nd-source"
+  ]
+}

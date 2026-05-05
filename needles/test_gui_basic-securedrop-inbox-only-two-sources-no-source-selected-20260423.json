@@ -1,0 +1,38 @@
+{
+  "area": [
+    {
+      "xpos": 369,
+      "ypos": 170,
+      "width": 117,
+      "height": 242,
+      "type": "match"
+    },
+    {
+      "xpos": 443,
+      "ypos": 315,
+      "width": 26,
+      "height": 25,
+      "type": "exclude"
+    },
+    {
+      "xpos": 442,
+      "ypos": 244,
+      "width": 27,
+      "height": 22,
+      "type": "exclude"
+    },
+    {
+      "xpos": 910,
+      "ypos": 429,
+      "width": 489,
+      "height": 322,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "ENV-version-4-2",
+    "securedrop-inbox-only-two-sources-no-source-selected"
+  ]
+}

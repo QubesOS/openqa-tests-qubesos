@@ -1,0 +1,49 @@
+{
+  "area": [
+    {
+      "height": 67,
+      "type": "match",
+      "xpos": 751,
+      "click_point": {
+        "xpos": 63,
+        "ypos": 24.5
+      },
+      "ypos": 924,
+      "width": 799
+    },
+    {
+      "width": 812,
+      "ypos": 110,
+      "type": "match",
+      "height": 51,
+      "xpos": 751
+    },
+    {
+      "type": "exclude",
+      "width": 237,
+      "ypos": 937,
+      "xpos": 838,
+      "height": 30
+    },
+    {
+      "type": "exclude",
+      "ypos": 128,
+      "width": 28,
+      "xpos": 769,
+      "height": 23
+    },
+    {
+      "xpos": 810,
+      "height": 23,
+      "type": "exclude",
+      "width": 173,
+      "ypos": 117
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "ENV-version-4-2",
+    "securedrop-inbox-online-mode-source-reply-box"
+  ]
+}

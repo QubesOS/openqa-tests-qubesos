@@ -1,0 +1,73 @@
+{
+  "area": [
+    {
+      "xpos": 754,
+      "ypos": 119,
+      "width": 796,
+      "height": 79,
+      "type": "match"
+    },
+    {
+      "xpos": 954,
+      "ypos": 142,
+      "width": 280,
+      "height": 17,
+      "type": "exclude"
+    },
+    {
+      "xpos": 817,
+      "ypos": 176,
+      "width": 202,
+      "height": 20,
+      "type": "exclude"
+    },
+    {
+      "xpos": 811,
+      "ypos": 116,
+      "width": 202,
+      "height": 23,
+      "type": "exclude"
+    },
+    {
+      "xpos": 771,
+      "ypos": 187,
+      "width": 28,
+      "height": 28,
+      "type": "exclude"
+    },
+    {
+      "xpos": 773,
+      "ypos": 123,
+      "width": 25,
+      "height": 27,
+      "type": "exclude"
+    },
+    {
+      "xpos": 748,
+      "ypos": 915,
+      "width": 816,
+      "height": 94,
+      "type": "match"
+    },
+    {
+      "xpos": 838,
+      "ypos": 935,
+      "width": 293,
+      "height": 33,
+      "type": "exclude"
+    },
+    {
+      "xpos": 366,
+      "ypos": 224,
+      "width": 75,
+      "height": 62,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "ENV-version-4-2",
+    "securedrop-inbox-source-conversation"
+  ]
+}

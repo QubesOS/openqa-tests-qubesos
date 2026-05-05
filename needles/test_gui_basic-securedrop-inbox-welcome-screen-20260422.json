@@ -1,0 +1,42 @@
+{
+  "area": [
+    {
+      "xpos": 366,
+      "ypos": 91,
+      "width": 1199,
+      "height": 928,
+      "type": "match",
+      "click_point": {
+        "xpos": 797.5,
+        "ypos": 580
+      }
+    },
+    {
+      "xpos": 407,
+      "ypos": 125,
+      "width": 111,
+      "height": 28,
+      "type": "exclude"
+    },
+    {
+      "xpos": 371,
+      "ypos": 219,
+      "width": 376,
+      "height": 205,
+      "type": "exclude"
+    },
+    {
+      "xpos": 372,
+      "ypos": 426,
+      "width": 340,
+      "height": 589,
+      "type": "exclude"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "ENV-version-4-2",
+    "securedrop-inbox-welcome-screen"
+  ]
+}

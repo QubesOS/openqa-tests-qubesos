@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 1324,
+      "ypos": 864,
+      "width": 202,
+      "height": 27,
+      "type": "match",
+      "match": 99
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "ENV-version-4-2",
+    "securedrop-inbox-online-mode-source-reply-is-unformatted"
+  ]
+}

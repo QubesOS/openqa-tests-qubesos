@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "xpos": 763,
+      "ypos": 434,
+      "width": 413,
+      "height": 78,
+      "type": "match",
+      "click_point": {
+        "xpos": 54.5,
+        "ypos": 46
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "ENV-version-4-2",
+    "securedrop-inbox-type-username"
+  ]
+}

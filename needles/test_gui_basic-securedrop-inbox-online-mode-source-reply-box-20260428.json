@@ -1,0 +1,63 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 67,
+      "width": 799,
+      "ypos": 924,
+      "click_point": {
+        "xpos": 63,
+        "ypos": 24.5
+      },
+      "xpos": 751
+    },
+    {
+      "width": 812,
+      "ypos": 110,
+      "type": "match",
+      "height": 51,
+      "xpos": 751
+    },
+    {
+      "height": 30,
+      "xpos": 838,
+      "width": 237,
+      "ypos": 937,
+      "type": "exclude"
+    },
+    {
+      "xpos": 769,
+      "height": 23,
+      "type": "exclude",
+      "ypos": 128,
+      "width": 28
+    },
+    {
+      "type": "exclude",
+      "width": 173,
+      "ypos": 117,
+      "xpos": 810,
+      "height": 23
+    },
+    {
+      "xpos": 365,
+      "ypos": 221,
+      "width": 382,
+      "height": 68,
+      "type": "match"
+    },
+    {
+      "xpos": 405,
+      "ypos": 234,
+      "width": 335,
+      "height": 43,
+      "type": "exclude"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "ENV-version-4-2",
+    "securedrop-inbox-online-mode-source-reply-box"
+  ]
+}

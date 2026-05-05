@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "width": 58,
+      "ypos": 185,
+      "click_point": {
+        "ypos": 42,
+        "xpos": 30
+      },
+      "xpos": 442,
+      "type": "match",
+      "height": 56
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-43",
+    "vm-settings-apps-scroll-up"
+  ]
+}

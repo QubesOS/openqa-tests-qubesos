@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 154,
+      "ypos": 760,
+      "xpos": 2145,
+      "height": 20
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "new-qube-open-label"
+  ]
+}

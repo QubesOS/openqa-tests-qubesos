@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "width": 104,
+      "ypos": 51,
+      "type": "match",
+      "height": 29,
+      "xpos": 70
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4-3",
+    "ENV-fedora-44",
+    "menu-qubes-tools-submenu",
+    "menu-qubes-tools-submenu-selected",
+    "new-menu"
+  ]
+}

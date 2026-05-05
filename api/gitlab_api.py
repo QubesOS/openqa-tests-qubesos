@@ -97,6 +97,50 @@ class GithubAppCli:
 
         return self.token
 
+    def get_or_create_deployment(self, repo, ref):
+        r = requests.get('/'.join([GITHUB_API, 'repos', repo, 'deployments']),
+                          params={
+                              'ref': ref,
+                              'environment': 'qa',
+                          },
+                          headers={'Authorization': 'token {}'.format(self.get_token())},
+                         )
+        r.raise_for_status()
+        deployments_list = r.json()
+        if deployments_list:
+            return deployments_list[0]['url']
+
+        r = requests.post('/'.join([GITHUB_API, 'repos', repo, 'deployments']),
+                          json={
+                              'ref': ref,
+                              'auto_merge': False,
+                              'environment': 'qa',
+                              'required_contexts': [],
+                          },
+                          headers={'Authorization': 'token {}'.format(self.get_token())},
+                         )
+        r.raise_for_status()
+        return r.json()['url']
+
+    def set_deployment_state(self, deployment_url, state, url=None, description=None):
+        kwargs = {}
+        if url:
+            kwargs['log_url'] = url
+        if description:
+            kwargs['description'] = description
+        r = requests.post('/'.join([deployment_url, 'statuses']),
+                          json={
+                              'state': state,
+                              'environment': 'qa',
+                              **kwargs,
+                          },
+                          headers={
+                              'Authorization': 'token {}'.format(self.get_token()),
+                              'Accept': 'application/vnd.github.ant-man-preview+json',
+                          })
+        log(f"deployment {deployment_url} set to {url}")
+        r.raise_for_status()
+
 
 def update_config():
     config = config_defaults.copy()
@@ -199,6 +243,22 @@ def verify_webhook_obj():
             return respond(200, 'ignoring this repo')
 
     return webhook_obj
+
+def set_deployment_for_prs(prs, state, url=None, description=None):
+    if not github_app:
+        log("cannot set deployments without github app")
+        return
+    for pr in prs:
+        pr_params = pr.replace('https://github.com/', '')
+        repo, _, rest = pr_params.partition('/pull/')
+        _, _, commit_id = rest.partition('/commits/')
+        if not repo or not commit_id:
+            print(f"Not setting deployment for {pr}, cannot parse url",
+                  file=sys.stderr, flush=True)
+            continue
+        deployment = github_app.get_or_create_deployment(repo, commit_id)
+        github_app.set_deployment_state(deployment, state, url, description)
+
 
 def get_job_from_pr(pr_details, job_name="publish:repo"):
     """Search for publish job for a given PR
@@ -318,6 +378,11 @@ def run_test():
             + ['='.join(p) for p in values.items()]
             + ([f"MACHINE={machine}"] if machine else [])
         )
+    # https://openqa.qubes-os.org/tests/overview?distri=qubesos&version=4.3&build=2026050409-devel&groupid=11
+    set_deployment_for_prs(req_values['PULL_REQUESTS'].split(" "),
+        'success',
+        f'https://openqa.qubes-os.org/tests/overview?distri=qubesos&version={values['VERSION']}&build={values['BUILD']}',
+        'openQA run started')
 
     return respond(200, 'done')
 
@@ -354,7 +419,7 @@ def github_event():
     return respond(200, 'nothing to do')
 
 
-def schedule_pr_build(params):
+def schedule_pr_build(params, pr_details=None):
     if not config['gitlab_trigger_url'] or not config['gitlab_trigger_token']:
         return respond(404, "missing gitlab trigger config")
 
@@ -382,6 +447,22 @@ def schedule_pr_build(params):
     r = requests.post(config['gitlab_trigger_url'],
         data=req_params)
     r.raise_for_status()
+    if pr_details and github_app:
+        # TODO: ideally it should set it on all selected PRs, but they get
+        # enumerated only on the gitlab side, and enumerating them here
+        # leads to TOCTOU issue
+        deployment = github_app.get_or_create_deployment(
+            pr_details['base']['repo']['full_name'],
+            pr_details['head']['sha']
+        )
+
+        github_app.set_deployment_state(
+            deployment,
+            'in_progress',
+            r.json()['web_url'],
+            'openQA build scheduled'
+        )
+
     return respond(200, "done")
 
 
@@ -397,11 +478,6 @@ def run_test_pr(comment_details):
         if "=" in param and param[0].isupper()
     ])
 
-    if 'PR_LABEL' in comment_params:
-        if not re.match(r"\A[a-z0-9-]+\Z", comment_params['PR_LABEL']):
-            return respond(400, "invalid LABEL value")
-        return schedule_pr_build(comment_params)
-
     # get PR info
     issue_url = comment_details['issue_url']
     r = requests.get(issue_url)
@@ -411,6 +487,11 @@ def run_test_pr(comment_details):
     r.raise_for_status()
     pr_details = r.json()
     commit_id = pr_details['head']['sha']
+
+    if 'PR_LABEL' in comment_params:
+        if not re.match(r"\A[a-z0-9-]+\Z", comment_params['PR_LABEL']):
+            return respond(400, "invalid LABEL value")
+        return schedule_pr_build(comment_params, pr_details)
 
     version = comment_params.get("VERSION", "devel")
     if version != 'devel' and not re.match(r"\A[0-9]\.[0-9]\Z", version):
@@ -438,6 +519,18 @@ def run_test_pr(comment_details):
                 'comment': comment_details
             },
             f)
+        if github_app:
+            deployment = github_app.get_or_create_deployment(
+                pr_details['base']['repo']['full_name'],
+                commit_id
+            )
+
+            github_app.set_deployment_state(
+                deployment,
+                'queued',
+                None,
+                'waiting for build to complete'
+            )
         return respond(200, "queued")
     if not repo_job:
         return respond(404, "build not found")
@@ -499,6 +592,12 @@ def run_test_pr(comment_details):
             + ['='.join(p) for p in values.items()]
             + ([f"MACHINE={machine}"] if machine else [])
         )
+
+    set_deployment_for_prs(
+        values['PULL_REQUESTS'].split(" "),
+        'success',
+        f'https://openqa.qubes-os.org/tests/overview?distri=qubesos&version={values['VERSION']}&build={values['BUILD']}',
+        'openQA run started')
 
     return respond(200, 'done')
 

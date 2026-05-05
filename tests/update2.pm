@@ -105,9 +105,9 @@ sub run {
 
     if (check_var("FLAVOR", "kernel") and check_var("HEADS", "1")) {
         # convince Heads to really use just installed kernel
-        assert_script_run("ln -s vmlinuz-$kver.x86_64 /boot/vmlinuz-9.0");
-        assert_script_run("ln -s initramfs-$kver.x86_64.img /boot/initramfs-9.0.img");
-        assert_script_run("ln -s config-$kver.x86_64 /boot/config-9.0");
+        assert_script_run("ln -nsf vmlinuz-$kver.x86_64 /boot/vmlinuz-9.0");
+        assert_script_run("ln -nsf initramfs-$kver.x86_64.img /boot/initramfs-9.0.img");
+        assert_script_run("ln -nsf config-$kver.x86_64 /boot/config-9.0");
         assert_script_run("grub2-mkconfig -o /boot/grub2/grub.cfg");
     }
     # disable salt states again

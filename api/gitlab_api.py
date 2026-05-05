@@ -582,7 +582,8 @@ def run_test_pr(comment_details):
     #values['UPDATE_TEMPLATES'] = 'fedora-34-xfce'
     values['PULL_REQUESTS'] = pr_url\
         .replace('https://api.github.com/repos/', 'https://github.com/')\
-        .replace('/pulls/', '/pull/')
+        .replace('/pulls/', '/pull/') \
+        + '/commits/' + commit_id
     if tests_list:
         values['TEST'] = tests_list
 

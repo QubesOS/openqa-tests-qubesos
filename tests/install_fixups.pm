@@ -37,10 +37,11 @@ sub run {
         # include only absolutely necessary files to make the archive small, to be typed
         open EXTRA_TARBALL, "tar cz -C " . testapi::get_required_var('CASEDIR') .
             " extra-files/qubesteststub/__init__.py extra-files/setup.py" .
-            "|base64|" or die "failed to create tarball";
+            "|base64 -w 0|" or die "failed to create tarball";
         my $tarball = do { local $/; <EXTRA_TARBALL> };
         close(EXTRA_TARBALL);
-        assert_script_run("echo '$tarball' | base64 -d | tar xz -C /root");
+        type_string("echo '$tarball'");
+        assert_script_run("| base64 -d | tar xz -C /root");
         assert_script_run("cd /root/extra-files");
         assert_script_run("python3 ./setup.py install");
     }
@@ -163,6 +164,7 @@ sub run {
         # restore kexec_rollback.txt saved before wiping the disk
         my $rollback = <$fh>;
         close($fh);
+        chomp($rollback);
         script_run "echo '$rollback' > /mnt/sysimage/boot/kexec_rollback.txt";
     }
 
@@ -170,6 +172,7 @@ sub run {
         # restore kexec_rollback.txt saved before wiping the disk
         my $rollback = <$fh>;
         close($fh);
+        chomp($rollback);
         script_run "echo '$rollback' > /mnt/sysimage/boot/kexec_hotp_counter";
     }
 

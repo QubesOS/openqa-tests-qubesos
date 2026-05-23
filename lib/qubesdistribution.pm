@@ -30,6 +30,17 @@ use testapi qw(diag check_var get_var set_var
 
 );
 
+=head2 new
+
+Class constructor
+=cut
+
+sub new {
+    my ($class) = @_;
+    my $self = $class->SUPER::new(@_);
+    return $self;
+}
+
 sub init {
     my ($self) = @_;
     $self->SUPER::init();
@@ -276,66 +287,6 @@ sub x11_start_program {
     assert_screen([ref $args{target_match} eq 'ARRAY' ? @{$args{target_match}} : $args{target_match}],
         $args{match_timeout}, no_wait => $args{match_no_wait});
 }
-
-=head2 script_run
-
-  script_run($cmd [, timeout => $timeout] [, output => $output] [,quiet => $quiet])
-
-Deprecated mode
-
-  script_run($program, [$timeout])
-
-Run I<$cmd> (by assuming the console prompt and typing the command). After
-that, echo hashed command to serial line and wait for it in order to detect
-execution is finished. To avoid waiting, use I<$timeout> 0. The C<script_run>
-command string must not be terminated with '&' otherwise an exception is
-thrown.
-
-Use C<output> to add a description or a comment of the $cmd.
-
-Use C<quiet> to avoid recording serial_results.
-
-<Returns> exit code received from I<$cmd>, or C<undef> in case of C<not> waiting for I<$cmd>
-to return.
-
-=cut
-
-sub script_run {
-    my ($self, $cmd, @args) = @_;
-    my %args = testapi::compat_args(
-        {
-            timeout => $bmwqemu::default_timeout,
-            output => '',
-            quiet => undef
-        }, ['timeout'], @args);
-
-    if (testapi::is_serial_terminal) {
-        testapi::wait_serial($self->{serial_term_prompt}, no_regex => 1, quiet => $args{quiet});
-    }
-    testapi::type_string("$cmd", max_interval => 150);
-    if ($args{timeout} > 0) {
-        die "Terminator '&' found in script_run call. script_run can not check script success. Use 'background_script_run' instead."
-          if $cmd =~ qr/(?<!\\)&$/;
-        my $str = testapi::hashed_string("SR" . $cmd . $args{timeout});
-        my $marker = "; echo $str-\$?-" . ($args{output} ? "Comment: $args{output}" : '');
-        if (testapi::is_serial_terminal) {
-            testapi::type_string($marker, max_interval => 150);
-            testapi::wait_serial($cmd . $marker, no_regex => 1, quiet => $args{quiet});
-            testapi::type_string("\n");
-        }
-        else {
-            testapi::type_string("$marker > /dev/$testapi::serialdev\n", max_interval => 150);
-        }
-        my $res = testapi::wait_serial(qr/$str-\d+-/, timeout => $args{timeout}, quiet => $args{quiet});
-        return unless $res;
-        return ($res =~ /$str-(\d+)-/)[0];
-    }
-    else {
-        testapi::send_key 'ret';
-        return;
-    }
-}
-
 
 1;
 # vim: sw=4 et ts=4:

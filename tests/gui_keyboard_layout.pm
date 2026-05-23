@@ -128,7 +128,7 @@ sub run {
         if ($guivm eq 'dom0') {
             my $ret = script_run("sudo -u user sed -i -e 's/LayoutList=.*/LayoutList=us,de/' /home/user/.config/kxkbrc");
             if ($ret != 0) {
-                assert_script_run("echo -e '[Layout]\nLayoutList=us,de' | sudo -u user tee /home/user/.config/kxkbrc");
+                assert_script_run("printf '[Layout]\\nLayoutList=us,de\\n' | sudo -u user tee /home/user/.config/kxkbrc");
             }
             assert_script_run("sudo -u user env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus gdbus emit -e -o /Layouts -s org.kde.keyboard.reloadConfig");
         } else {

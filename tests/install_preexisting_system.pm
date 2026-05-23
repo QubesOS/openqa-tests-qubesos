@@ -38,12 +38,12 @@ sub run {
         assert_script_run("efibootmgr -v -c -L 'Qubes old' -d /dev/?da -p 3 -l /EFI/qubes/xen.efi");
     } else {
         # emulate PureOS partition layout
-        my $sfdisk_layout = "label: dos\n\n";
-        $sfdisk_layout .= "size=2GiB, type=83\n"; # "rescue"
-        $sfdisk_layout .= "size=750MiB, type=83, bootable\n"; # /boot
-        $sfdisk_layout .= "type=5\n";
-        $sfdisk_layout .= "type=83\n"; # LUKS
-        assert_script_run("echo '$sfdisk_layout' | sfdisk /dev/?da");
+        my $sfdisk_layout = "label: dos\\n\\n";
+        $sfdisk_layout .= "size=2GiB, type=83\\n"; # "rescue"
+        $sfdisk_layout .= "size=750MiB, type=83, bootable\\n"; # /boot
+        $sfdisk_layout .= "type=5\\n";
+        $sfdisk_layout .= "type=83\\n"; # LUKS
+        assert_script_run("printf '$sfdisk_layout' | sfdisk /dev/?da");
     }
     # make "rescue" filesystem broken as in PureOS installation,
     # to not ease anaconda's life (see bug #3050)

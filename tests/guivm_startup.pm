@@ -35,6 +35,13 @@ sub run {
 
     # FIXME: change to serial console, don't assume x11 session in dom0
     x11_start_program('xterm');
+    if ($OpenQA::Isotovideo::Interface::version >= 55) {
+        $testapi::distri->invalidate_serial_marker_hook();
+    } else {
+        my $console = testapi::current_console() // 'sut';
+        $testapi::distri->{_serial_marker_hook_installed}->{$console} = 0;
+    }
+
     assert_script_run("systemd-run -- sh -c 'tail -F /var/log/xen/console/guest-$vm.log >> /dev/$testapi::serialdev'");
     assert_script_run("qubes-prefs default_guivm $vm");
     assert_script_run("qvm-shutdown --all --wait && sleep 2 && qvm-start sys-firewall && { ! qvm-check sys-usb || qvm-start sys-usb; }", 180+180+90);

@@ -134,6 +134,9 @@ class DefaultPV(qubes.ext.Extension):
         if 'journald' not in qubes.config.defaults['kernelopts']:
             qubes.config.defaults['kernelopts'] += ' systemd.journald.forward_to_console=1 systemd.journald.max_level_console=debug'
             qubes.config.defaults['kernelopts_pcidevs'] += ' systemd.journald.forward_to_console=1 systemd.journald.max_level_console=debug'
+        if 'mem_profiling' not in qubes.config.defaults['kernelopts']:
+            qubes.config.defaults['kernelopts'] += ' sysctl.vm.mem_profiling=1'
+            qubes.config.defaults['kernelopts_pcidevs'] += ' sysctl.vm.mem_profiling=1'
 
         self.dom0_cmdline = pathlib.Path('/proc/cmdline').read_bytes().decode()
 
@@ -161,9 +164,10 @@ class DefaultPV(qubes.ext.Extension):
         if vm.klass != 'TemplateVM':
             return
         if not vm.features.get('fixups-installed', False):
-            # nested virtualization confuses systemd
-            dropin = '/etc/systemd/system/xendriverdomain.service.d'
-            await vm.run_for_stdio('mkdir -p {dropin} && echo -e "[Unit]\\nConditionVirtualization=" > {dropin}/30_openqa.conf'.format(dropin=dropin), user='root')
+            if os.path.exists('/sys/firmware/qemu_fw_cfg'):
+                # nested virtualization confuses systemd
+                dropin = '/etc/systemd/system/xendriverdomain.service.d'
+                await vm.run_for_stdio('mkdir -p {dropin} && echo -e "[Unit]\\nConditionVirtualization=" > {dropin}/30_openqa.conf'.format(dropin=dropin), user='root')
             vm.features['fixups-installed'] = True
 
     @qubes.ext.handler('domain-start-failed')

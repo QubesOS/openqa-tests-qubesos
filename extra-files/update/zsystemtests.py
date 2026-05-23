@@ -110,6 +110,8 @@ def zsystemtests(os_data, log, **kwargs):
                 # normally pulseaudio is not installed at all, it appears here
                 # only because of extra test-related packages
                 "pulseaudio",
+                # May 21 13:57:01 host kernel: Failed to set sysctl parameter 'vm.mem_profiling=1': parameter not found
+                "vm.mem_profiling=1",
             ):
                 f.write(f'journal_ignore_pattern_add "{pattern}" 2>/dev/null || journal_ignore_patterns_list+=( "{pattern}" )\n')
 

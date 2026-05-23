@@ -1,6 +1,7 @@
 dom0-packages:
   pkg.installed:
     - pkgs:
+      - iucode-tool
       - rpm-sign
       - rpm-build
       - xdotool

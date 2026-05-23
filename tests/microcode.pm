@@ -36,7 +36,14 @@ sub run {
     record_info("Running: $ucode_version");
     my $ucode_fname = sprintf("/lib/firmware/intel-ucode/%02x-%02x-%02x", $family, $model, $stepping);
     # https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files#notes
-    my $version_latest = script_output("(od -t x4 $ucode_fname || :) | head -1 |cut -f 3 -d ' '");
+    my $versions = script_output("sudo iucode_tool --scan-system=exact -l /lib/firmware/intel-ucode");
+    my @vers=();
+    foreach (split(/\n/, $versions)) {
+        next unless /sig /;
+        s/.*rev ([0-9a-fx]*).*/\1/;
+        push @vers, $_;
+    }
+    my $version_latest = (sort @vers)[-1];
     record_info("Latest: $version_latest");
     die "Microcode not updated: running $ucode_version expected $version_latest"
         if $version_latest and hex($ucode_version) != hex($version_latest);

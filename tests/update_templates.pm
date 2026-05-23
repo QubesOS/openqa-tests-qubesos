@@ -45,7 +45,7 @@ sub run {
             $template =~ s/^qubes-template-(.*)-(.*)-(.*).noarch.rpm$/\1/;
 
             script_run("qvm-features -D $template fixups-installed");
-            script_run("curl $_ > $rpm", timeout => 1500);
+            script_run("curl -L $_ > $rpm", timeout => 1500);
             if (check_var('VERSION', '4.0')) {
                 assert_script_run("sudo rpm -ivh $rpm", timeout => 1500);
             } else {

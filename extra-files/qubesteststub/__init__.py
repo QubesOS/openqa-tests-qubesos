@@ -134,10 +134,6 @@ class DefaultPV(qubes.ext.Extension):
         if 'journald' not in qubes.config.defaults['kernelopts']:
             qubes.config.defaults['kernelopts'] += ' systemd.journald.forward_to_console=1 systemd.journald.max_level_console=debug'
             qubes.config.defaults['kernelopts_pcidevs'] += ' systemd.journald.forward_to_console=1 systemd.journald.max_level_console=debug'
-        if 'udev' not in qubes.config.defaults['kernelopts_pcidevs']:
-            #qubes.config.defaults['kernelopts'] += ' udev.log_level=debug'
-            qubes.config.defaults['kernelopts_pcidevs'] += ' udev.log_level=debug'
-
         if 'mem_profiling' not in qubes.config.defaults['kernelopts']:
             qubes.config.defaults['kernelopts'] += ' sysctl.vm.mem_profiling=1'
             qubes.config.defaults['kernelopts_pcidevs'] += ' sysctl.vm.mem_profiling=1'

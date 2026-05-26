@@ -27,6 +27,7 @@ sub run {
 
     # set xfce4-screenlocker to "blank" mode
     x11_start_program("env xfconf-query -c xfce4-screensaver -p /saver/mode -n -t int -s 0", valid => 0);
+    sleep(3);
 
     x11_start_program("loginctl lock-session", valid => 0);
     # wait for notifications to (potentially) appear

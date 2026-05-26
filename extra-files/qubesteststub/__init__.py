@@ -77,6 +77,9 @@ class DefaultPV(qubes.ext.Extension):
                 vm.features['pci-e820-host'] = False
                 vm.kernelopts += " iommu=soft"
 
+        if "whonix" in vm.name:
+            vm.features['service.debug-kicksecure'] = True
+
     @qubes.ext.handler('domain-start')
     async def on_domain_start(self, vm, event, **kwargs):
         has_pci_devices = (len(list(vm.devices['pci'].get_assigned_devices()))

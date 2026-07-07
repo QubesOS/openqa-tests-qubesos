@@ -73,6 +73,9 @@ if (get_var('ISO')) {
             autotest::loadtest "tests/update_templates.pm";
         }
         if (get_var('UPDATE') || get_var('SALT_SYSTEM_TESTS')) {
+            if (check_var('MAJOR_XEN_UPDATE', '1')) {
+                autotest::loadtest "tests/update2_xen.pm";
+            }
             if (check_var("VERSION", "4.1")) {
                 autotest::loadtest "tests/update.pm";
             } else {

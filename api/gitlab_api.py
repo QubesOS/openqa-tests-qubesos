@@ -45,6 +45,7 @@ config_defaults = {
     'github_app_id': None,
     'github_app_key': None,
     'github_app_installation_id': None,
+    'gitlab_api_key': None,
 }
 
 app = Flask(__name__)
@@ -301,6 +302,20 @@ def run_test():
     job_details = resp
 
     req_values = request.get_json()
+
+    # get other variables from the pipeline
+    r = requests.get(
+        f"{GITLAB_API}/projects/{job_details['pipeline']['project_id']}/pipelines/{job_details['pipeline']['id']}/variables",
+        headers={
+            "Authorization": "Bearer {}".format(config['gitlab_api_key']),
+        },
+    )
+    r.raise_for_status()
+    for var_info in r.json():
+        if var_info["variable_type"] != "env_var":
+            continue
+        # XXX skip PR_LABEL not relevant here anymore?
+        req_values[var_info["key"]] = var_info["value"]
 
     print(repr(req_values))
 

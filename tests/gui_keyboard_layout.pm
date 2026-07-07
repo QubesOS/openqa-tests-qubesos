@@ -164,6 +164,7 @@ sub run {
 
 sub post_fail_hook {
     my ($self) = @_;
+    sleep(30);
     $self->SUPER::post_fail_hook;
     $self->save_and_upload_log('qvm-prefs dom0', 'qvm-prefs-dom0.log');
     if (get_var('GUIVM')) {

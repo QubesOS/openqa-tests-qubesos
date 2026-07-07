@@ -101,6 +101,7 @@ ENDCODE
     assert_script_run('qvm-start sys-firewall sys-usb', timeout => 240);
     assert_script_run('! qvm-check sys-whonix || qvm-start sys-whonix');
     type_string("exit\n");
+    wait_still_screen;
     type_string("exit\n");
     $testapi::distri->invalidate_serial_marker_hook();
 };

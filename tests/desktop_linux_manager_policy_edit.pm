@@ -58,6 +58,7 @@ sub run {
     # make new file
     send_key("ctrl-n");
     type_string('55-user-test');
+    wait_still_screen;
 
     assert_and_click("policy-editor-new-file-confirm");
     type_string('qubes.StartApp +firefox work @dispvm allow');

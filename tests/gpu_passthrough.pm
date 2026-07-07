@@ -52,7 +52,7 @@ sub run {
     assert_script_run("ansible-playbook -i inventory -e pci_devices=$gpu_devs setup-video.yml |& tee ansible.log", timeout => 600);
     upload_logs("ansible.log");
 
-    assert_script_run("qvm-run -p testvideolin env VGL_DISPLAY=egl vglrun /usr/local/bin/webgl.py", timeout => 60);
+    assert_script_run("qvm-run -p testvideolin env VGL_DISPLAY=egl vglrun /usr/local/bin/webgl.py </dev/null", timeout => 60);
 
 }
 

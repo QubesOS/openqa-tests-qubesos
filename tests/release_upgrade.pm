@@ -157,18 +157,18 @@ sub upgrade_42_to_43_before_reboot {
 sub upgrade_whonix_17_to_18 {
     my ($self, $template) = @_;
 
-    assert_script_run ("qvm-run -u root --no-gui -ap $template 'cat /usr/sbin/release-upgrade | grep version='", timeout => 60);
+    assert_script_run ("qvm-run -u root --no-gui -ap $template 'cat /usr/sbin/release-upgrade | grep version=' </dev/null", timeout => 60);
     save_screenshot;
-    assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template release-upgrade' whonix-upgrade.log", timeout => 1800);
+    assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template \"release-upgrade && systemctl restart qubes-qrexec-agent\" </dev/null' whonix-upgrade.log", timeout => 1800);
     $self->maybe_unlock_screen;
-    assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get update' whonix-upgrade.log", timeout => 600);
+    assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get update </dev/null' whonix-upgrade.log", timeout => 600);
     if ($template =~ m/workstation/) {
-        assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y install whonix-workstation-qubes-gui-lxqt' whonix-upgrade.log", timeout => 1800);
+        assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y install whonix-workstation-qubes-gui-lxqt </dev/null' whonix-upgrade.log", timeout => 1800);
     } else {
-        assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y install whonix-gateway-qubes-gui-lxqt' whonix-upgrade.log", timeout => 1800);
+        assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y install whonix-gateway-qubes-gui-lxqt </dev/null' whonix-upgrade.log", timeout => 1800);
     }
     $self->maybe_unlock_screen;
-    assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y autoremove' whonix-upgrade.log", timeout => 1800);
+    assert_script_run ("script -a -e -c 'qvm-run -u root --no-gui -ap $template apt-get -y autoremove </dev/null' whonix-upgrade.log", timeout => 1800);
     $self->maybe_unlock_screen;
 }
 
@@ -210,7 +210,7 @@ sub run {
         foreach (split /\n/, $templates) {
             next unless /Template/;
             s/\|.*//;
-            assert_script_run ("qvm-run -u root --no-gui -ap $_ 'dnf config-manager --set-enabled qubes*current-testing; sed -i \"/#deb .*deb.qubes-os.org.*-testing/s/^#//\" /etc/apt/sources.list.d/qubes-r4.list; true'", timeout => 180);
+            assert_script_run ("qvm-run -u root --no-gui -ap $_ 'dnf config-manager --set-enabled qubes*current-testing; sed -i \"/#deb .*deb.qubes-os.org.*-testing/s/^#//\" /etc/apt/sources.list.d/qubes-r4.list; true' </dev/null", timeout => 180);
             assert_script_run("qvm-shutdown --wait $_", timeout => 90);
         }
     }

@@ -202,6 +202,13 @@ sub become_root {
     wait_serial("root", 10) || die "Root prompt not there";
     type_string "cd /tmp\n";
     $self->set_standard_prompt('root');
+    if ($OpenQA::Isotovideo::Interface::version >= 55) {
+        $self->invalidate_serial_marker_hook();
+    } else {
+        my $console = testapi::current_console() // 'sut';
+        $testapi::distri->{_serial_marker_hook_installed}->{$console} = 0;
+    }
+
     type_string "clear\n";
 }
 

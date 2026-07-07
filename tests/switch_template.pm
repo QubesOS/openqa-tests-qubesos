@@ -82,6 +82,7 @@ switch_template() {
     for dvmtpl in \$dvm_tpls; do
         running=\$(qvm-ls --raw-data --fields=name,template,state|grep "\$dvmtpl|Running\$"|cut -f 1 -d '|')
         if [ -n "\$running" ]; then
+            if [ "\$new_template" = guix ]; then continue; fi
             echo "Shutting down" \$running
             qvm-shutdown --force --wait \$running
             qvm-prefs "\$dvmtpl" template "\$new_template" || return 1
@@ -93,6 +94,7 @@ switch_template() {
     done
     not_running=\$(qvm-ls --raw-data --fields=name,template,state|grep "\$default_template|Halted\$"|cut -f 1 -d '|')
     for vm in \$not_running; do
+        if [ \$vm = default-dvm ] && [ "\$new_template" = guix ]; then continue; fi
         echo "Switching \$vm"
         qvm-prefs "\$vm" template "\$new_template" || return 1
         if [ "\$(get_appmenus "\$vm")" = "\$old_default_appmenus" ]; then
@@ -101,7 +103,7 @@ switch_template() {
         fi
     done
     running=\$(qvm-ls --raw-data --fields=name,template,state|grep "\$default_template|Running\$"|cut -f 1 -d '|')
-    if [ -n "\$running" ]; then
+    if [ -n "\$running" ] && [ "\$new_template" != guix ]; then
         echo "Shutting down" \$running
         qvm-shutdown --force --wait \$running
         for vm in \$running; do

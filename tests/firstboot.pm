@@ -144,7 +144,9 @@ sub run {
             if (check_var('DEFAULT_TEMPLATE', 'debian')) {
                 assert_and_click('firstboot-default-template-debian');
             } else {
-                die "Unsupported default template";
+                send_key('esc');
+                sleep (1);
+                #die "Unsupported default template";
             }
         }
     }

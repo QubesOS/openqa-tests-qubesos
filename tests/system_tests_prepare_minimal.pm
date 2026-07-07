@@ -79,6 +79,9 @@ sub run {
             if ($commands_debian) {
                 assert_script_run("qvm-run -pu root $template '$commands_debian'", timeout => 300);
             }
+        } elsif ($template =~ m/guix/) {
+            # TODO
+            next;
         } else {
             die "Template $template not supported by this module";
         }

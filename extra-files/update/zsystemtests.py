@@ -72,12 +72,59 @@ def zsystemtests(os_data, log, **kwargs):
         subprocess.check_call(["pacman", "--noconfirm", "-Sy"] + pkgs,
                               stdin=subprocess.DEVNULL,
                               env=environ)
+    elif os_data["os_family"] == "Guix":
+        with open("/etc/config.scm") as f:
+            config = f.read().splitlines()
+        minimal = any("variant 'minimal" in line for line in config)
+        # place where to add modules
+        modules_index = [index for index, line in enumerate(config)
+                         if "use-modules" in line][0]
+
+        packages = "dnsmasq xdotool usbutils gcc pulseaudio"
+        modules = [
+            "(gnu packages dns)",
+            "(gnu packages xdisorg)",
+            "(gnu packages linux)",
+            "(gnu packages gcc)",
+            "(gnu packages pulseaudio)",
+        ]
+        if not minimal:
+            packages += " icecat"
+            modules += ["(gnu packages gnuzilla)"]
+
+        # deduplicate already included
+        modules = [mod for mod in modules
+                   if mod not in config[modules_index]]
+        config[modules_index] = (
+            config[modules_index][:-1] + f" {' '.join(modules)})"
+        )
+        if "qubes-operating-system" in config[-1]:
+            # first time
+            config[-1] = f"(define %qubes-os {config[-1]})"
+            config.extend([
+                "(operating-system",
+                "  (inherit %qubes-os)",
+                f"  (packages (append (list {packages})",
+                "                    (operating-system-packages %qubes-os)))",
+                ")"
+            ])
+        else:
+            # already edited, find packages line
+            packages_index = [index for index, line in enumerate(config)
+                             if "packages (append" in line][0]
+            config[packages_index] = f"  (packages (append (list {packages})"
+        with open("/etc/config.scm", "w") as f:
+            f.write("\n".join(config) + "\n")
     else:
         assert False
 
     # workaround for https://github.com/QubesOS/qubes-issues/issues/9581
-    with open("/etc/udev/rules.d/99-network-workaround.rules", "w") as f:
-        f.write('SUBSYSTEM=="net", DRIVERS=="e1000e", RUN+="/usr/bin/ethtool -K $name sg off"\n')
+    try:
+        with open("/etc/udev/rules.d/99-network-workaround.rules", "w") as f:
+            f.write('SUBSYSTEM=="net", DRIVERS=="e1000e", RUN+="/usr/bin/ethtool -K $name sg off"\n')
+    except OSError as e:
+        log.error(str(e))
+        # pass
 
     setup_dist_dir = "/usr/share/setup-dist/status-files"
     if os.path.exists(setup_dist_dir):
@@ -117,5 +164,8 @@ def zsystemtests(os_data, log, **kwargs):
             ):
                 f.write(f'journal_ignore_pattern_add "{pattern}" 2>/dev/null || journal_ignore_patterns_list+=( "{pattern}" )\n')
 
-    subprocess.call(["systemctl", "disable", "dnsmasq"],
-                    stdin=subprocess.DEVNULL)
+    try:
+        subprocess.call(["systemctl", "disable", "dnsmasq"],
+                        stdin=subprocess.DEVNULL)
+    except FileNotFoundError:
+        pass

@@ -72,9 +72,9 @@ sub run {
     }
 
     # resumed and qrexec really works
-    assert_script_run('qvm-run -p sys-net true');
-    assert_script_run('! qvm-check sys-usb || qvm-run -p sys-usb true');
-    assert_script_run('qvm-run -p sys-firewall true');
+    assert_script_run('qvm-run -p --no-autostart sys-net true');
+    assert_script_run('! qvm-check sys-usb || qvm-run -p --no-autostart sys-usb true');
+    assert_script_run('qvm-run -p --no-autostart sys-firewall true');
 
     # check network
     assert_script_run('qvm-run -p sys-firewall "curl https://www.qubes-os.org/" >/dev/null');

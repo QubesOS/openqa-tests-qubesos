@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "height": 17,
+      "xpos": 427,
+      "width": 121,
+      "ypos": 111,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "menu-vm-evince",
+    "new-menu",
+    "work-vm-atril"
+  ]
+}

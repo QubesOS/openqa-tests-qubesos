@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "ypos": 109,
+      "type": "match",
+      "width": 66,
+      "height": 18,
+      "xpos": 399
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "menu-vm-firefox",
+    "new-menu"
+  ]
+}

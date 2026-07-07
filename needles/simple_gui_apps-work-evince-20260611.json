@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "height": 16,
+      "width": 188,
+      "xpos": 202,
+      "type": "match",
+      "ypos": 34
+    },
+    {
+      "height": 29,
+      "width": 62,
+      "xpos": 23,
+      "type": "match",
+      "ypos": 67
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-guix",
+    "work-evince"
+  ]
+}

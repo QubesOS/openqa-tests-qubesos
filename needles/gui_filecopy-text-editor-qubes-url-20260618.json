@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 209,
+      "height": 19,
+      "xpos": 403,
+      "type": "match",
+      "ypos": 166
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-xfce",
+    "text-editor-qubes-url"
+  ]
+}

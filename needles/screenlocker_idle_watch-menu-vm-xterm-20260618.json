@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "width": 77,
+      "height": 21,
+      "xpos": 398,
+      "ypos": 286,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-xfce",
+    "menu-vm-xterm",
+    "new-menu"
+  ]
+}

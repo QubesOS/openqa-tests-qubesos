@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 116,
+      "xpos": 357,
+      "width": 394,
+      "type": "match",
+      "ypos": 322
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-fedora-xfce",
+    "qubes-website"
+  ]
+}

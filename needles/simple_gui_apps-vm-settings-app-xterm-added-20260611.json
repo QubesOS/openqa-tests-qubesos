@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 492,
+      "height": 19,
+      "width": 109,
+      "type": "match",
+      "ypos": 313
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-guix",
+    "vm-settings-app-xterm-added"
+  ]
+}

@@ -28,6 +28,7 @@ sub run {
     assert_screen "desktop";
     x11_start_program('xterm', match_typed => 'desktop-runner-xterm');
     send_key('alt-f10');
+    assert_script_run('rpm -q iucode-tool || sudo qubes-dom0-update -y iucode-tool');
     my $cpuinfo = script_output('cat /proc/cpuinfo');
     my $family = ($cpuinfo =~ m/^cpu family[ \t]*: (\d+)/m)[0];
     my $model = ($cpuinfo =~ m/^model[ \t]*: (\d+)/m)[0];

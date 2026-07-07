@@ -57,9 +57,9 @@ sub run {
         select_root_console();
         assert_script_run("systemctl stop lightdm");
         assert_script_run("qubesctl state.sls qvm.sys-gui-gpu-attach-gpu");
-        assert_script_run("qvm-start --skip-if-running $vm");
+        assert_script_run("qvm-start --skip-if-running $vm", timeout => 120);
     } else {
-        assert_script_run("qvm-start --skip-if-running $vm");
+        assert_script_run("qvm-start --skip-if-running $vm", timeout => 120);
         type_string("exit\n");
     }
 

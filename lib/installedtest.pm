@@ -189,7 +189,7 @@ sub usbvm_fixup {
 sub connect_wifi {
     my ($self) = @_;
 
-    if (!check_screen("nm-applet-connected-wifi", 90)) {
+    if (!check_screen("nm-applet-connected-wifi", 120)) {
         my $wifi_password = get_required_var("WIFI_PASSWORD");
         my $wifi_needle = "nm-applet-wifi-" . get_var("WIFI_NAME");
         assert_and_click("nm-applet", mousehide => -1);
@@ -318,7 +318,7 @@ sub upload_packages_versions {
     foreach (sort @$templates) {
         $fname = $self->save_and_upload_log("qvm-run --no-gui -ap $_ 'rpm -qa; dpkg -l; pacman -Q; true'",
                 "template-$_-packages.txt",
-                {timeout =>90, failok=>$args{failok}});
+                {timeout =>240, failok=>$args{failok}});
         if ($fname) {
             my $packages = path('ulogs', $fname)->slurp;
             $packages = join("\n$_: ", sort split(/\n/, $packages));

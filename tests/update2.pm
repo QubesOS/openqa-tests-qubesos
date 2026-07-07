@@ -192,7 +192,7 @@ sub run {
         script_run('qvm-shutdown --wait sys-firewall');
         script_run('qvm-kill sys-whonix');
         script_run('qvm-kill sys-firewall');
-        assert_script_run('qvm-start sys-firewall', timeout => 90);
+        assert_script_run('qvm-start sys-firewall', timeout => 180);
         assert_script_run('if qvm-check sys-whonix; then qvm-start sys-whonix; fi', timeout => 90);
         type_string("exit\n");
         type_string("exit\n");

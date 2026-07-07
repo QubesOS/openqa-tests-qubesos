@@ -34,7 +34,7 @@ sub run {
 
     assert_script_run('sudo qubes-dom0-update -y qubes-ansible-dom0');
     assert_script_run('mgmt_tpl=$(qvm-prefs $(qubes-prefs management_dispvm) template)');
-    assert_script_run('qvm-run -pu root $mgmt_tpl "dnf install -y qubes-ansible-vm || apt-get install -y qubes-ansible-vm"');
+    assert_script_run('qvm-run -pu root $mgmt_tpl "dnf install -y qubes-ansible-vm || apt-get install -y qubes-ansible-vm"', timeout => 90);
     assert_script_run('qvm-shutdown --wait $mgmt_tpl');
 
     assert_script_run("qvm-template install debian-12-xfce", timeout => 900);

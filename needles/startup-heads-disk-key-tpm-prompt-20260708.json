@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 2,
+      "ypos": 751,
+      "width": 447,
+      "height": 16,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw5",
+    "heads-disk-key-tpm-prompt"
+  ]
+}

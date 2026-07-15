@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 4,
+      "ypos": 751,
+      "width": 419,
+      "height": 15,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw5",
+    "heads-confirm-default-text"
+  ]
+}

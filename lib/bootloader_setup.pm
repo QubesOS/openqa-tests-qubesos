@@ -78,7 +78,9 @@ sub heads_boot_usb {
     my $usb_boot_selected = 0;
     if (match_has_tag('heads-no-os')) {
         # Select "Boot from USB"
-        send_key 'down';
+        if (!match_has_tag('heads-usb-boot-selected')) {
+            send_key 'down';
+        }
         send_key 'ret';
         $usb_boot_selected = 1;
     } elsif (match_has_tag('heads-no-boot')) {
@@ -147,6 +149,9 @@ sub heads_generate_hotp {
     if ($args{reset_tpm}) {
         send_key 'down';
         send_key 'ret';
+        if (check_screen('heads-integrity-report', timeout => 5)) {
+            send_key 'ret';
+        }
         assert_screen('heads-tpm-reset-confirm');
         send_key 'ret';
         assert_screen('heads-new-tpm-owner-prompt');
@@ -169,7 +174,11 @@ sub heads_generate_hotp {
             assert_screen('heads-gpg-card-pin-prompt');
             type_string '123456';
             send_key 'ret';
+        } elsif (check_screen('heads-gpg-card-pin-prompt')) {
+            type_string '123456';
+            send_key 'ret';
         }
+
     } else {
         send_key 'ret';
     }
@@ -201,9 +210,9 @@ sub heads_generate_hotp {
             send_key 'lukspass';
             send_key 'ret';
             assert_screen("heads-disk-unlock-key-prompt");
-            type_string 'unlockpass';
+            type_string 'unlockpassunlockpass';
             send_key 'ret';
-            type_string 'unlockpass';
+            type_string 'unlockpassunlockpass';
             send_key 'ret';
             # let it remove/add slot and scroll a bit to hide old pin prompts
             sleep(10);
@@ -247,17 +256,30 @@ sub heads_boot_default {
     }
     # Default boot
     send_key 'ret';
-    if (check_screen(['heads-no-hashes', 'heads-hash-mismatch'], 10)) {
+    if (check_screen(['heads-no-hashes', 'heads-hash-mismatch', 'heads-update-hashes-menu'], 10)) {
+        if (check_screen('heads-update-hashes-menu')) {
+            # Menu:
+            # - Investigate discrepancies
+            # - Update checksums now
+            send_key 'down';
+        }
         send_key 'ret';
         if (check_screen("heads-hash-mismatch-list", 10)) {
             send_key 'q';
         }
-        assert_screen(['heads-update-hashes-prompt', 'heads-gpg-card-prompt']);
+        assert_screen(['heads-update-hashes-prompt', 'heads-gpg-card-prompt', 'heads-update-hashes-menu', 'heads-gpg-card-pin-prompt', 'heads-tpm-owner-prompt']);
         if (match_has_tag('heads-update-hashes-prompt')) {
             send_key 'ret';
-            assert_screen('heads-gpg-card-prompt');
+        } elsif (match_has_tag('heads-update-hashes-menu')) {
+            # Menu:
+            # - Investigate discrepancies
+            # - Update checksums now
+            send_key 'down';
+            send_key 'ret';
         }
-        send_key 'ret';
+        if (check_screen('heads-gpg-card-prompt', timeout => 5)) {
+            send_key 'ret';
+        }
         assert_screen(['heads-gpg-card-pin-prompt', 'heads-tpm-owner-prompt']);
         if (match_has_tag('heads-tpm-owner-prompt')) {
             # kexec_rollback.txt does not exist; creating new TPM counter
@@ -284,12 +306,16 @@ sub heads_boot_default {
         send_key 'ret';
         assert_screen('heads-boot-menu-list');
         send_key 'ret';
-        assert_screen(['heads-confirm-default-select', 'heads-confirm-default-selected']);
-        if (!match_has_tag('heads-confirm-default-selected')) {
-            # make default, not just one time boot
-            send_key 'down';
+        assert_screen(['heads-confirm-default-select', 'heads-confirm-default-selected', 'heads-confirm-default-text']);
+        if (match_has_tag('heads-confirm-default-text')) {
+            send_key 'd';
+        } else {
+            if  (!match_has_tag('heads-confirm-default-selected')) {
+                # make default, not just one time boot
+                send_key 'down';
+            }
+            send_key 'ret';
         }
-        send_key 'ret';
         if (check_var("HEADS_DISK_UNLOCK", "1")) {
             # Do you wish to add a disk encryption to the TPM [y/N]?
             assert_screen('heads-disk-key-tpm-prompt');
@@ -303,9 +329,9 @@ sub heads_boot_default {
             type_string 'lukspass';
             send_key 'ret';
             assert_screen("heads-disk-unlock-key-prompt");
-            type_string 'unlockpass';
+            type_string 'unlockpassunlockpass';
             send_key 'ret';
-            type_string 'unlockpass';
+            type_string 'unlockpassunlockpass';
             send_key 'ret';
             # let it remove/add slot and scroll a bit to hide old pin prompts
             sleep(15);
@@ -321,21 +347,27 @@ sub heads_boot_default {
             sleep(10);
         }
         # FIXME: this and the next one matches prompt from earlier (still at the top of the screen)
-        assert_screen('heads-gpg-card-prompt');
-        send_key 'ret';
-        sleep(2);
-        assert_screen('heads-gpg-card-pin-prompt');
-        type_string '123456';
-        send_key 'ret';
+        if (check_screen('heads-gpg-card-prompt', timeout => 30)) {
+            send_key 'ret';
+            sleep(2);
+        }
+        if (check_screen('heads-gpg-card-pin-prompt', timeout => 5)) {
+            type_string '123456';
+            send_key 'ret';
+        }
     }
     if (check_screen('heads-menu', 30)) {
         # depending on Heads version, generating /boot hashes is followed by reboot
         send_key 'ret';
     }
     if (check_var("HEADS_DISK_UNLOCK", "1")) {
+        # Press Esc to continue...
+        if (check_screen('heads-press-esc-to-continue', timeout => 10)) {
+            send_key 'esc';
+        }
         # Enter LUKS Disk Unlock Key passphrase (blank to abort):
         assert_screen('heads-disk-unlock-prompt');
-        type_string 'unlockpass';
+        type_string 'unlockpassunlockpass';
         send_key 'ret';
     }
 }

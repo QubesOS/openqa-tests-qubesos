@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 274,
+      "height": 15,
+      "xpos": 2,
+      "ypos": 752,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw5",
+    "heads-disk-unlock-key-prompt"
+  ]
+}

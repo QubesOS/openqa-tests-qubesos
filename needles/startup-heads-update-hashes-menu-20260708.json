@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "xpos": 357,
+      "ypos": 71,
+      "width": 295,
+      "height": 39,
+      "type": "match"
+    },
+    {
+      "xpos": 80,
+      "ypos": 201,
+      "width": 225,
+      "height": 38,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-HEADS",
+    "ENV-MACHINE-hw5",
+    "heads-update-hashes-menu"
+  ]
+}

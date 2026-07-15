@@ -98,7 +98,7 @@ ENDCODE
 
     assert_script_run('migrate_templates', timeout => 1800);
 
-    assert_script_run('qvm-start sys-firewall sys-usb', timeout => 240);
+    assert_script_run('qvm-start --skip-if-running sys-firewall sys-usb', timeout => 240);
     assert_script_run('! qvm-check sys-whonix || qvm-start sys-whonix');
     type_string("exit\n");
     wait_still_screen;

@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 368,
+      "height": 39,
+      "xpos": 470,
+      "width": 12
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "xscreensaver-prompt-with-chars"
+  ]
+}

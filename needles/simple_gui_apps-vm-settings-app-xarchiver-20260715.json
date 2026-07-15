@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "height": 23,
+      "width": 87,
+      "xpos": 138,
+      "ypos": 567,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-GUIVM-VNC",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "vm-settings-app-xarchiver"
+  ]
+}

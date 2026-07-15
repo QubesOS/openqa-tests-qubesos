@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "width": 46,
+      "height": 18,
+      "xpos": 898,
+      "ypos": 688,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-GUIVM-VNC",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "qubesmanager-ok",
+    "vm-settings-ok"
+  ]
+}

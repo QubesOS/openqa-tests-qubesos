@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "height": 34,
+      "xpos": 922,
+      "width": 77,
+      "ypos": 160,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "notification-test",
+    "notifications-proxy"
+  ]
+}

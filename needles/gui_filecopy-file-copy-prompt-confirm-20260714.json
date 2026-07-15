@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 489,
+      "width": 68,
+      "height": 25,
+      "xpos": 634,
+      "click_point": {
+        "xpos": 50,
+        "ypos": 11.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "file-copy-prompt-confirm"
+  ]
+}

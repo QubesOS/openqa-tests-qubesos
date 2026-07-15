@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 338,
+      "width": 126,
+      "height": 16,
+      "xpos": 165
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "vm-settings-app-atril",
+    "vm-settings-app-evince"
+  ]
+}

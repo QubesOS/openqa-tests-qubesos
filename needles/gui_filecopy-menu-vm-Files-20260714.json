@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "height": 22,
+      "width": 133,
+      "xpos": 400,
+      "ypos": 227,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "ENV-fedora-xfce",
+    "menu-vm-Files",
+    "menu-vm-Thunar"
+  ]
+}

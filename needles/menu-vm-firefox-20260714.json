@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 66,
+      "height": 18,
+      "xpos": 400,
+      "type": "match",
+      "ypos": 109
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "menu-vm-firefox",
+    "new-menu"
+  ]
+}

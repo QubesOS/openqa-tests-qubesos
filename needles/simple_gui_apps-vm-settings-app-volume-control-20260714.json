@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 99,
+      "height": 18,
+      "xpos": 138,
+      "type": "match",
+      "ypos": 410
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "vm-settings-app-volume-control"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "ypos": 353,
+      "type": "match",
+      "height": 18,
+      "xpos": 393,
+      "width": 193
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "ENV-fedora-xfce",
+    "desktop-runner"
+  ]
+}

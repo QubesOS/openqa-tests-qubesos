@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "height": 25,
+      "width": 66,
+      "xpos": 399,
+      "ypos": 167,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "menu-vm-geany",
+    "menu-vm-text-editor",
+    "new-menu"
+  ]
+}

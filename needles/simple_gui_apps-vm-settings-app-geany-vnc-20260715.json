@@ -1,0 +1,20 @@
+{
+  "area": [
+    {
+      "height": 15,
+      "width": 61,
+      "xpos": 143,
+      "ypos": 264,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-GUIVM-VNC",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "ENV-fedora-xfce",
+    "vm-settings-app-geany"
+  ]
+}

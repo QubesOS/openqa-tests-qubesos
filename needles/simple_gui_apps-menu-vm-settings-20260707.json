@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "xpos": 395,
+      "height": 28,
+      "width": 130,
+      "ypos": 671,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4-3",
+    "menu-vm-settings",
+    "new-menu"
+  ]
+}

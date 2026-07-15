@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "height": 19,
+      "xpos": 494,
+      "width": 109,
+      "ypos": 310,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "vm-settings-app-xterm-added"
+  ]
+}

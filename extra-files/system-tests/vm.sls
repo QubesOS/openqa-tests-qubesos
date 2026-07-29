@@ -37,10 +37,12 @@ vm-packages:
 {% endif %}
 {% if grains['os'] == 'Fedora' and grains['osmajorrelease'] >= 29 %}
       - createrepo_c
+      - PackageKit
 {% elif grains['os'] == 'CentOS' and grains['osmajorrelease'] >= 8 %}
       - createrepo_c
 {% elif grains['os'] == 'Debian' and grains['osmajorrelease'] >= 11 %}
       - createrepo-c
+      - packagekit
 {% elif grains['os'] == 'Arch' %}
       - createrepo_c
 {% elif grains['os'] != 'Gentoo' %}

@@ -23,6 +23,7 @@ def get_packages(dist, version):
         "qubes-audio-daemon",
         "qubes-video-companion",
         "fio",
+        "PackageKit" if dist == "RedHat" else "packagekit",
     ]
     if dist == "RedHat":
         packages += [

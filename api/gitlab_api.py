@@ -140,7 +140,10 @@ class GithubAppCli:
                               'Accept': 'application/vnd.github.ant-man-preview+json',
                           })
         log(f"deployment {deployment_url} set to {url}")
-        r.raise_for_status()
+        if r.status_code == 422:
+            log(f"Got HTTP 422: {r.text}")
+        else:
+            r.raise_for_status()
 
 
 def update_config():

@@ -48,6 +48,7 @@ sub run {
     sleep(1);
     # close editor
     send_key("ctrl-q");
+    wait_still_screen();
 
     $self->open_menu;
     assert_and_click("menu-vm-work");
@@ -79,8 +80,10 @@ sub run {
     wait_still_screen(stilltime => 10);
     assert_and_click("menu-vm-Files");
     assert_screen("personal-files", timeout => 90);
-    assert_and_click("files-qubesincoming", dclick => 1);
-    assert_and_click("files-work", dclick => 1);
+    assert_and_click("files-qubesincoming");
+    send_key('ret');
+    assert_and_click("files-work");
+    send_key('ret');
     assert_and_click("files-test-file", button => "right");
     # GTK is stupid and loads stylesheet _after_ showing the widget; it means
     # things will move around

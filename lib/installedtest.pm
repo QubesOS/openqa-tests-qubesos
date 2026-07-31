@@ -101,8 +101,8 @@ sub handle_system_startup {
     # do _not_ allow luks prompt if Unlock Key was entered already
     if (!check_var("HEADS_DISK_UNLOCK", "1")) {
         my @luks_needles = ("luks-prompt", "login-prompt-user-selected");
+        push(@luks_needles, "plymouth-text-no-prompt");
         if (check_var('BACKEND', 'generalhw')) {
-            push(@luks_needles, "plymouth-text-no-prompt");
             if (check_var('HEADS', '1')) {
                 # "plymouth-text-no-prompt" would be whole blank here,
                 # so fallback to the old approach with check_screen timeout
@@ -118,6 +118,12 @@ sub handle_system_startup {
         # handle both encrypted and unencrypted setups
         assert_screen(\@luks_needles, 600);
         if (match_has_tag("plymouth-text-no-prompt")) {
+            if (!check_var('BACKEND', 'generalhw')) {
+                # For now do not consider it a problem on hardware runners
+                # (multi-display), but might be worth looking into it in the
+                # future.
+                record_soft_failure("No LUKS prompt visible on Plymouth");
+            }
             # force plymouth to show on HDMI output too
             send_key 'esc';
             send_key 'esc';

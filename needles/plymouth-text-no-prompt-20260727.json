@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 51,
+      "ypos": 720,
+      "width": 298,
+      "height": 14,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "plymouth-text-no-prompt"
+  ]
+}

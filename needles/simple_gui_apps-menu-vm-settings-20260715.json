@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "height": 28,
+      "xpos": 396,
+      "width": 130,
+      "type": "match",
+      "ypos": 671
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-GUIVM-GPU",
+    "ENV-VERSION-4-3",
+    "ENV-fedora-44",
+    "menu-vm-settings"
+  ]
+}

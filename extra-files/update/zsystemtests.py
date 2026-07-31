@@ -160,7 +160,7 @@ def zsystemtests(os_data, log, **kwargs):
                 # May 21 13:57:01 host kernel: Failed to set sysctl parameter 'vm.mem_profiling=1': parameter not found
                 "vm.mem_profiling=1",
                 # Jun 17 21:35:07 host qrexec-client-vm[1227]: Error reading from stdin: Kind(UnexpectedEof)
-                "Error reading from stdin: Kind(UnexpectedEof)"
+                "Error reading from stdin: Kind\\(UnexpectedEof\\)"
             ):
                 f.write(f'journal_ignore_pattern_add "{pattern}" 2>/dev/null || journal_ignore_patterns_list+=( "{pattern}" )\n')
 

@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "xpos": 3212,
+      "height": 24,
+      "ypos": 299,
+      "width": 87
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw16",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "nm-applet-wifi-test-16"
+  ]
+}

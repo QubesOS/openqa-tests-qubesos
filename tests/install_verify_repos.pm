@@ -41,7 +41,8 @@ sub run {
         assert_script_run("test -d $repos_dir");
         assert_script_run("ls $repos_dir/*.repo");
         script_run("cat $repos_dir/*.repo");
-        assert_script_run("grep -q baseurl= $repos_dir/*.repo");
+        # the repo is written by configparser, so baseurl has spaces around the =
+        assert_script_run("grep -qE '^[[:space:]]*baseurl[[:space:]]*=' $repos_dir/*.repo");
 
         # the crash signature must not appear in the installer logs
         assert_script_run(q{! cat /tmp/anaconda.log /tmp/packaging.log /tmp/program.log 2>/dev/null | grep -F "has no attribute 'repository'"});

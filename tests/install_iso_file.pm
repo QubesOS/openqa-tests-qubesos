@@ -57,7 +57,7 @@ menuentry 'Qubes installation' {
     set isofile='(hd0,msdos1)/qubes.iso'
     loopback loop \\\$isofile
     multiboot2 (loop)/images/pxeboot/xen.gz no-real-mode
-    module2 (loop)/images/pxeboot/vmlinuz inst.repo=hd:LABEL=\$VOLID findiso=/dev/disk/by-uuid/\$DISK_UUID/qubes.iso iso-scan/filename=/qubes.iso
+    module2 (loop)/images/pxeboot/vmlinuz \$INST_SOURCE findiso=/dev/disk/by-uuid/\$DISK_UUID/qubes.iso iso-scan/filename=/qubes.iso
     module2 --nounzip (loop)/images/pxeboot/initrd.img
 }
 END
@@ -122,6 +122,12 @@ sub run {
     # grub config
     assert_script_run("VOLID=\$(eval \$(blkid -o export /dev/sr0); echo \$LABEL)");
     assert_script_run("DISK_UUID=\$(eval \$(blkid -o export /dev/sdb1); echo \$UUID)");
+    # inst.stage2 alone gives a RepoPathSourceModule (no .repository), inst.repo gives HardDrive. See QubesOS/qubes-issues#10844
+    my $inst_source = check_var('INSTALL_REPO_PATH_SOURCE', '1')
+      ? 'inst.stage2=hd:LABEL=$VOLID'
+      : 'inst.repo=hd:LABEL=$VOLID';
+    assert_script_run("INST_SOURCE=\"$inst_source\"");
+    record_info('inst source', $inst_source);
     type_string("cat >/mnt/iso/grub2/grub.cfg <<EOF\n${grub_cfg}EOF\n", max_interval => 128);
     if (check_var("VERSION", "4.0")) {
         # older grub

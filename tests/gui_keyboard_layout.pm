@@ -110,10 +110,29 @@ sub run {
     assert_screen "desktop";
 
     select_root_console();
-    # '-' is in different place on 'de' keyboard, make a symlink to avoid it
-    my $templates = script_output('qvm-ls --raw-data --fields name,klass');
+
+    my @templates = ();
+    if (get_var('TEST_TEMPLATES')) {
+        # do a reverse map, new->old
+        my %template_map = split /[ :]/, (get_var("DISTUPGRADE_TEMPLATES", "") =~ s/(\S*):(\S*)/$2:$1/gr);
+        foreach (split / /, get_var('TEST_TEMPLATES')) {
+            if ($template_map{$_}) {
+                push @templates, $template_map{$_};
+            } else {
+                push @templates, $_;
+            }
+        }
+    } else {
+        my $templates_str = script_output('qvm-ls --raw-data --fields name,klass');
+        foreach (split /\n/, $templates_str) {
+            next unless /Template/;
+            s/\|.*//;
+            push @templates, $_;
+        }
+    }
     my $guivm = script_output('qubes-prefs default-guivm 2>/dev/null || echo dom0');
     if ($guivm eq 'dom0') {
+        # '-' is in different place on 'de' keyboard, make a symlink to avoid it
         assert_script_run("ln -s /usr/bin/qvm-run /usr/local/bin/qvmrun");
     } else {
         # make qvm-run work for arbitrary commands too
@@ -137,9 +156,7 @@ sub run {
         }
     }
 
-    foreach (split /\n/, $templates) {
-        next unless /Template/;
-        s/\|.*//;
+    foreach (@templates) {
         my $template = $_;
 
         select_root_console();

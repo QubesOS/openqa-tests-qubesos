@@ -7,6 +7,11 @@ sub run {
         return;
     }
 
+    if (check_var('TEST_GUIVM', '1') && check_var('GUIVM_GPU', '1')) {
+        record_soft_failure("System shutdown from sys-gui-gpu not implemented yet");
+        return;
+    }
+
     if (get_var("STORE_HDD_1") || get_var("PUBLISH_HDD_1") || check_var("BACKEND", "generalhw")) {
         select_console('root-console');
         # make upload as small as possible

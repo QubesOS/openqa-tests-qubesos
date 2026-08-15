@@ -168,5 +168,10 @@ def zsystemtests(os_data, log, **kwargs):
     try:
         subprocess.call(["systemctl", "disable", "dnsmasq"],
                         stdin=subprocess.DEVNULL)
+        # Dovecot quite often stalls VM shutdown. Since it's used only for
+        # split-gpg tests (which will start it manually anyway), disable it by
+        # default.
+        subprocess.call(["systemctl", "disable", "dovecot"],
+                        stdin=subprocess.DEVNULL)
     except FileNotFoundError:
         pass

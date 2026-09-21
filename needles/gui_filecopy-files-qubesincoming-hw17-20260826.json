@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 27,
+      "ypos": 1200,
+      "width": 127,
+      "xpos": 1780
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "files-qubesincoming"
+  ]
+}

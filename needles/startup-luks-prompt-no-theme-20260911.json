@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "xpos": 2,
+      "ypos": 364,
+      "height": 23,
+      "type": "match",
+      "width": 256
+    }
+  ],
+  "properties": [
+    {
+      "name": "workaround",
+      "value": "Missing plymouth theme"
+    }
+  ],
+  "tags": [
+    "ENV-MACHINE-hw11",
+    "ENV-VERSION-4.3",
+    "luks-prompt",
+    "luks-prompt-no-theme",
+    "luks-prompt-text"
+  ]
+}

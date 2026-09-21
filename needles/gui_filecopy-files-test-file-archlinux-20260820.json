@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 73,
+      "ypos": 438,
+      "type": "match",
+      "width": 86,
+      "xpos": 197
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-archlinux",
+    "files-test-file"
+  ]
+}

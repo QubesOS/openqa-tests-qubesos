@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 27,
+      "ypos": 619,
+      "width": 127,
+      "xpos": 696
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-archlinux",
+    "files-qubesincoming"
+  ]
+}

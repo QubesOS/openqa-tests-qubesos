@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 640,
+      "width": 115,
+      "type": "match",
+      "height": 20,
+      "ypos": 330
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-archlinux",
+    "files-open-in-dispvm"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "xpos": 133,
+      "height": 26,
+      "ypos": 266,
+      "type": "match",
+      "width": 163
+    },
+    {
+      "click_point": {
+        "xpos": 44,
+        "ypos": 13
+      },
+      "xpos": 282,
+      "ypos": 351,
+      "height": 22,
+      "type": "match",
+      "width": 98
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-archlinux",
+    "text-editor-save-prompt"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 34,
+      "height": 18,
+      "width": 172,
+      "xpos": 392
+    },
+    {
+      "height": 20,
+      "ypos": 106,
+      "type": "match",
+      "width": 164,
+      "xpos": 101
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-firewall-warning"
+  ]
+}

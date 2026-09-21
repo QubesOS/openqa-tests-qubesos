@@ -1,0 +1,27 @@
+{
+  "area": [
+    {
+      "xpos": 435,
+      "width": 100,
+      "type": "match",
+      "ypos": 270,
+      "height": 24
+    },
+    {
+      "height": 70,
+      "ypos": 373,
+      "type": "match",
+      "width": 91,
+      "click_point": {
+        "xpos": 45.5,
+        "ypos": 35
+      },
+      "xpos": 484
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "vm-settings-delete-cancel"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 115,
+      "type": "match",
+      "height": 20,
+      "ypos": 1303,
+      "xpos": 1860
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "files-open-in-dispvm"
+  ]
+}

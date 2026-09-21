@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "xpos": 570,
+      "click_point": {
+        "ypos": 17.5,
+        "xpos": 49.5
+      },
+      "width": 95,
+      "ypos": 383,
+      "height": 67,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-archlinux",
+    "files-work"
+  ]
+}

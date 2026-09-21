@@ -1,0 +1,33 @@
+{
+  "area": [
+    {
+      "width": 74,
+      "type": "match",
+      "ypos": 3,
+      "height": 16,
+      "xpos": 569
+    },
+    {
+      "xpos": 719,
+      "width": 109,
+      "height": 18,
+      "ypos": 3,
+      "type": "match"
+    },
+    {
+      "width": 174,
+      "type": "match",
+      "ypos": 76,
+      "height": 21,
+      "xpos": 659
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-i3",
+    "ENV-DESKTOP-i3",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "personal-firefox"
+  ]
+}

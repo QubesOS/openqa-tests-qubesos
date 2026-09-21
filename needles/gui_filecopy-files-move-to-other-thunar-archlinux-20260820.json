@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 100,
+      "height": 20,
+      "ypos": 339,
+      "type": "match",
+      "xpos": 260
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-archlinux",
+    "RELEASE-4-2",
+    "files-move-to-other"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 692,
+      "width": 77,
+      "type": "match",
+      "height": 34,
+      "ypos": 48
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-archlinux",
+    "notification-test"
+  ]
+}

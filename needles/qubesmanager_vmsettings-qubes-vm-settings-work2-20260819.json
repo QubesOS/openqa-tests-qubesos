@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "width": 165,
+      "type": "match",
+      "height": 15,
+      "ypos": 37,
+      "xpos": 394
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "qubes-vm-settings",
+    "work2"
+  ]
+}

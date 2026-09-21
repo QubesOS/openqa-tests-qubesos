@@ -57,7 +57,7 @@ menuentry 'Qubes installation' {
     set isofile='(hd0,msdos1)/qubes.iso'
     loopback loop \\\$isofile
     multiboot2 (loop)/images/pxeboot/xen.gz no-real-mode
-    module2 (loop)/images/pxeboot/vmlinuz \$INST_SOURCE findiso=/dev/disk/by-uuid/\$DISK_UUID/qubes.iso iso-scan/filename=/qubes.iso
+    module2 (loop)/images/pxeboot/vmlinuz \$INST_SOURCE plymouth.ignore-serial-consoles findiso=/dev/disk/by-uuid/\$DISK_UUID/qubes.iso iso-scan/filename=/qubes.iso
     module2 --nounzip (loop)/images/pxeboot/initrd.img
 }
 END

@@ -85,8 +85,9 @@ migrate_templates() {
     done
 }
 ENDCODE
-    chop($migrate_templates);
-    assert_script_run($migrate_templates);
+    type_string($migrate_templates);
+    # check for errors earlier
+    assert_script_run('test $? -eq 0');
 
     if (get_var("TEST_TEMPLATES")) {
         my $test_templates = get_var("TEST_TEMPLATES");

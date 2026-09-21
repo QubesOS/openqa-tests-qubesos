@@ -46,8 +46,9 @@ sub run {
 
     foreach (@whonix_vms) {
         next if /-dvm/;
-        script_run("qvm-run -ap $_ systemctl --wait is-system-running", timeout => 180);
-        my $ret = script_run("qvm-run -ap $_ 'LC_ALL=C whonixcheck --verbose --leak-tests --cli' 2>&1 | tee whonixcheck-$_.log", 500);
+        s/\r//;
+        script_run("qvm-run -ap $_ systemctl --wait is-system-running </dev/null", timeout => 180);
+        my $ret = script_run("qvm-run -ap $_ 'LC_ALL=C whonixcheck --verbose --leak-tests --cli' 2>&1 </dev/null | tee whonixcheck-$_.log", 500);
         upload_logs("whonixcheck-$_.log");
         if ($ret != 0) {
             record_info('fail', "Whonixcheck for $_ failed", result => 'fail');

@@ -40,8 +40,8 @@ sub run {
             "|base64 -w 0|" or die "failed to create tarball";
         my $tarball = do { local $/; <EXTRA_TARBALL> };
         close(EXTRA_TARBALL);
-        type_string("echo '$tarball'");
-        assert_script_run("| base64 -d | tar xz -C /root");
+        type_string("tarball='$tarball'\n");
+        assert_script_run('echo "$tarball" | base64 -d | tar xz -C /root');
         assert_script_run("cd /root/extra-files");
         assert_script_run("python3 ./setup.py install");
     }

@@ -83,8 +83,9 @@ testfunc() {
     return \$retval
 }
 ENDFUNC
-    chop($testfunc);
-    assert_script_run($testfunc);
+    type_string($testfunc);
+    # check for errors earlier
+    assert_script_run('test $? -eq 0');
     assert_script_run("export QUBES_TEST_PERF_FILE=\$PWD/perf_test_results.txt");
     foreach (split / /, get_var('SYSTEM_TESTS')) {
         my ($test, $timeout) = split /:/;

@@ -213,7 +213,7 @@ sub post_fail_hook {
 
     $self->SUPER::post_fail_hook();
     upload_logs('/tmp/qubesctl-upgrade.log', failok => 1);
-    script_run('pidof -x qvm-start-gui || echo qvm-start-gui crashed');
+    script_run('pgrep -f  qvm-start-daemon || echo qvm-start-daemon crashed');
 };
 
 1;

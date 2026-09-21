@@ -1,0 +1,28 @@
+{
+  "area": [
+    {
+      "xpos": 691,
+      "ypos": 384,
+      "width": 513,
+      "height": 145,
+      "type": "match"
+    },
+    {
+      "xpos": 1027,
+      "ypos": 640,
+      "width": 177,
+      "height": 41,
+      "type": "match",
+      "click_point": {
+        "xpos": 47.5,
+        "ypos": 26.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-securedrop",
+    "securedrop-launcher-updates-complete-reboot"
+  ]
+}

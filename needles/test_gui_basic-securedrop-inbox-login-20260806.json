@@ -1,0 +1,24 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "width": 1206,
+      "ypos": 195,
+      "xpos": 363,
+      "height": 720
+    },
+    {
+      "height": 26,
+      "xpos": 862,
+      "ypos": 837,
+      "width": 209,
+      "type": "exclude"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-securedrop",
+    "ENV-version-4-2",
+    "securedrop-inbox-login"
+  ]
+}

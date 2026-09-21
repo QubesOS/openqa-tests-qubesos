@@ -2,6 +2,14 @@ import subprocess
 import os
 from pathlib import Path
 
+# make late dnf_cli import survive python upgrade:
+# fedora-44-xfce:err:   File "/run/qubes-update/agent/source/dnf/dnf_cli.py", line 26, in <module>
+# fedora-44-xfce:err:     import random
+# fedora-44-xfce:err:   File "/usr/lib64/python3.14/random.py", line 63, in <module>
+# fedora-44-xfce:err:     import _random
+# fedora-44-xfce:err: ImportError: internal Python C API version mismatch: module _random compiled with 3.14.7; runtime version is 3.14.6
+import random
+
 UPDATE_REPO_URL = "@REPO_URL@"
 UPDATE_REPO_KEY = """@REPO_KEY@"""
 UPDATE_REPO_DEVEL = "@REPO_DEVEL@"

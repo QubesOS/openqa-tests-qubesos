@@ -89,6 +89,8 @@ ENDFUNC
     assert_script_run("export QUBES_TEST_PERF_FILE=\$PWD/perf_test_results.txt");
     foreach (split / /, get_var('SYSTEM_TESTS')) {
         my ($test, $timeout) = split /:/;
+        # skip non-existing tests in this version
+        next if (script_run("python3 -c 'import $test'") != 0);
         $timeout //= 3600;
         my $ret = script_run("testfunc $test", $timeout);
         if (!defined $ret) {

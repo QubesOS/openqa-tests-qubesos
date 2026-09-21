@@ -60,7 +60,7 @@ sub post_fail_hook {
     my ($self) = @_;
 
     save_screenshot;
-    upload_logs("/home/user/extra-files/ansible.log", failok => 1);
+    upload_logs("/home/user/extra-files/ansible/ansible.log", failok => 1);
     $self->SUPER::post_fail_hook;
 
 };

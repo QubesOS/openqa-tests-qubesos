@@ -350,11 +350,7 @@ def run_test():
 
     values = {}
     values['DISTRI'] = 'qubesos'
-    if version == 'devel':
-        values['VERSION'] = '4.3'
-        values['REPO_DEVEL'] = '1'
-    else:
-        values['VERSION'] = version
+    values['VERSION'] = version
     values['FLAVOR'] = 'pull-requests'
     values['ARCH'] = 'x86_64'
     values['BUILD'] = buildid
@@ -575,11 +571,7 @@ def run_test_pr(comment_details):
 
     values = {}
     values['DISTRI'] = 'qubesos'
-    if version == 'devel':
-        values['VERSION'] = '4.3'
-        values['REPO_DEVEL'] = '1'
-    else:
-        values['VERSION'] = version
+    values['VERSION'] = version
     if pr_details['base']['repo']['name'] in (
             'qubes-linux-kernel',
             'qubes-gui-agent-linux',

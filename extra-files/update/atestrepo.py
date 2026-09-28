@@ -26,7 +26,10 @@ def atestrepo(os_data, log, **kwargs):
     if os_data["os_family"] == "Debian":
         with open('/etc/apt/sources.list.d/qubes-testing.list', 'w') as f:
             if ENABLE_TESTING:
-                f.write(f"deb [arch=amd64 signed-by=/usr/share/keyrings/qubes-archive-keyring.gpg] https://deb.qubes-os.org/r{QUBES_VER}/vm {os_data['codename']}-testing main\n")
+                keyring = "/usr/share/keyrings/qubes-archive-keyring.gpg"
+                if QUBES_VER == "devel":
+                    keyring = "/usr/share/keyrings/qubes-devel-debian.pgp"
+                f.write(f"deb [arch=amd64 signed-by={keyring}] https://deb.qubes-os.org/r{QUBES_VER}/vm {os_data['codename']}-testing main\n")
             if UPDATE_REPO_URL:
                 f.write(f"deb [arch=amd64 signed-by=/usr/share/keyrings/test.asc] {UPDATE_REPO_URL}/vm {os_data['codename']} main\n")
                 with open("/usr/share/keyrings/test.asc", "w") as key_f:

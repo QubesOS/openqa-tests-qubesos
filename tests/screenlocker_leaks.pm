@@ -27,7 +27,7 @@ sub run {
 
     select_root_console();
     # install mate-notification-daemon, as it triggers the issue more reliably than xfce4-notifyd
-    assert_script_run('qvm-run -p -u root work "dnf -y install mate-notification-daemon || apt -y install mate-notification-daemon"', timeout => 180);
+    assert_script_run('qvm-run -p -u root work "dnf -y install mate-notification-daemon || apt -y install mate-notification-daemon || pacman -Sy --noconfirm mate-notification-daemon"', timeout => 180);
     $self->select_gui_console;
 
     # set xfce4-screenlocker to "blank" mode

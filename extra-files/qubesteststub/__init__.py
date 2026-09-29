@@ -171,6 +171,21 @@ class DefaultPV(qubes.ext.Extension):
                 # nested virtualization confuses systemd
                 dropin = '/etc/systemd/system/xendriverdomain.service.d'
                 await vm.run_for_stdio('mkdir -p {dropin} && echo -e "[Unit]\\nConditionVirtualization=" > {dropin}/30_openqa.conf'.format(dropin=dropin), user='root')
+                # for https://github.com/QubesOS/qubes-issues/issues/9581
+                link = "/etc/systemd/network/50-qubes-ci-no-offload.link"
+                content = """[Match]
+Driver=e1000e e1000 rtl8139 virtio_net
+
+[Link]
+TransmitChecksumOffload=false
+ReceiveChecksumOffload=false
+TCPSegmentationOffload=false
+TCP6SegmentationOffload=false
+GenericSegmentationOffload=false
+GenericReceiveOffload=false
+LargeReceiveOffload=false
+"""
+                await vm.run_for_stdio(f'mkdir -p /etc/systemd/network && cat > "{link}"', input=content)
             vm.features['fixups-installed'] = True
 
     @qubes.ext.handler('domain-start-failed')

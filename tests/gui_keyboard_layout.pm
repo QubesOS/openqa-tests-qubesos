@@ -161,7 +161,7 @@ sub run {
 
         select_root_console();
         # wait for it to finish starting first
-        assert_script_run("qvm-run -pu root work systemctl --wait is-system-running");
+        assert_script_run("qvm-run -pu root work 'systemctl --wait is-system-running || systemctl' </dev/null");
         assert_script_run("qvm-shutdown --wait work");
         record_info($template, "Switching work qube to $template");
         assert_script_run("qvm-prefs work template $template");

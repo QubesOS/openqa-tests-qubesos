@@ -66,7 +66,7 @@ ENDCODE
 $appmenus_funcs
 switch_template() {
     default_template=\$(qubes-prefs default-template)
-    new_template=\$(qvm-ls --raw-data --fields=name|grep ^$new_template|head -1)
+    new_template=\$(qvm-ls --raw-list "$new_template")
     old_default_appmenus=\$(get_default_appmenus "\$default_template")
     new_default_appmenus=\$(get_default_appmenus "\$new_template")
     if [ "\$default_template" = "\$new_template" ]; then
@@ -74,45 +74,37 @@ switch_template() {
         return
     fi
     # kill preloaded disposables
-    preloaded=\$(qvm-ls --raw-list --paused --class DispVM)
+    preloaded=\$(qvm-ls --raw-list --prefs is_preload=True)
     if [ -n "\$preloaded" ]; then
         qvm-kill \$preloaded
     fi
-    dvm_tpls=\$(qvm-ls --raw-data --fields=name,template,template_for_dispvms|grep "\$default_template|True\$"|cut -f 1 -d '|')
-    for dvmtpl in \$dvm_tpls; do
-        running=\$(qvm-ls --raw-data --fields=name,template,state|grep "\$dvmtpl|Running\$"|cut -f 1 -d '|')
-        if [ -n "\$running" ]; then
-            if [ "\$new_template" = guix ]; then continue; fi
-            echo "Shutting down" \$running
-            qvm-shutdown --force --wait \$running
-            qvm-prefs "\$dvmtpl" template "\$new_template" || return 1
-            echo "Starting up" \$running
-            qvm-start --skip-if-running \$running || return 1
-        else
-            qvm-prefs "\$dvmtpl" template "\$new_template" || return 1
-        fi
+
+    descendants=\$(qvm-ls --raw-list --prefs template="\$default_template")
+    running=\$(qvm-ls --raw-list --running \$descendants)
+    for qube in \$running; do
+        running="\$running \$(qvm-ls --raw-list --running --prefs template="\$qube")"
     done
-    not_running=\$(qvm-ls --raw-data --fields=name,template,state|grep "\$default_template|Halted\$"|cut -f 1 -d '|')
+
+    echo "Shutting down: \$running"
+    qvm-shutdown --force --wait \$running
+
+    for qube in \$descendants; do
+        if [ "\$new_template" = guix ]; then continue; fi
+        echo "Changing template property of \$qube"
+        qvm-prefs "\$dvmtpl" template "\$new_template" || return 1
+    done
+
+    echo "Starting up \$running"
+    qvm-start --skip-if-running \$running || return 1
+
+    not_running=\$(qvm-ls --raw-list --halted --prefs template=\$default_template)
     for vm in \$not_running; do
         if [ \$vm = default-dvm ] && [ "\$new_template" = guix ]; then continue; fi
-        echo "Switching \$vm"
-        qvm-prefs "\$vm" template "\$new_template" || return 1
         if [ "\$(get_appmenus "\$vm")" = "\$old_default_appmenus" ]; then
             set_appmenus "\$vm" "\$new_default_appmenus"
             qvm-appmenus --update "\$vm"
         fi
     done
-    running=\$(qvm-ls --raw-data --fields=name,template,state|grep "\$default_template|Running\$"|cut -f 1 -d '|')
-    if [ -n "\$running" ] && [ "\$new_template" != guix ]; then
-        echo "Shutting down" \$running
-        qvm-shutdown --force --wait \$running
-        for vm in \$running; do
-            echo "Switching \$vm"
-            qvm-prefs "\$vm" template "\$new_template" || return 1
-        done
-        echo "Starting up" \$running
-        qvm-start --skip-if-running \$running || return 1
-    fi
     qubes-prefs default-template \$new_template
 }
 ENDCODE

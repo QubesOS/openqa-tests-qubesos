@@ -173,7 +173,7 @@ class DefaultPV(qubes.ext.Extension):
                 await vm.run_for_stdio('mkdir -p {dropin} && echo -e "[Unit]\\nConditionVirtualization=" > {dropin}/30_openqa.conf'.format(dropin=dropin), user='root')
                 # for https://github.com/QubesOS/qubes-issues/issues/9581
                 link = "/etc/systemd/network/50-qubes-ci-no-offload.link"
-                content = """[Match]
+                content = b"""[Match]
 Driver=e1000e e1000 rtl8139 virtio_net
 
 [Link]

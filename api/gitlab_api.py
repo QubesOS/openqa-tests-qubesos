@@ -323,7 +323,7 @@ def run_test():
     print(repr(req_values))
 
     version = req_values.get('VERSION') or 'devel'
-    buildid = time.strftime('%Y%m%d%H-') + version
+    buildid = time.strftime('%Y%m%d%H%M-') + version
 
     if 'TEST_TEMPLATES' in req_values:
         # append distro name to buildid if test is limited to some

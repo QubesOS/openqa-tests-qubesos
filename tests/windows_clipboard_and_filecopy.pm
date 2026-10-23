@@ -28,10 +28,15 @@ sub open_website_paste_edge {
         assert_and_click("windows-Edge-complete-setup-confirm");
         assert_and_click("windows-Edge-no-signin");
     } else {
+        if (check_screen("windows-Edge-no-microsoft-sign-in", timeout => 15)) {
+            click_lastmatch();
+        }
         if (check_screen("windows-Edge-no-google-signin", timeout => 15)) {
             assert_and_click("windows-Edge-no-google-signin");
         }
-        assert_and_click("windows-Edge-setup-no-import");
+        if (check_screen("windows-Edge-setup-no-import", timeout => 15)) {
+            click_lastmatch();
+        }
         my $profiling_disabled;
         if (check_screen("windows-Edge-no-profiling", timeout => 10)) {
             click_lastmatch();
@@ -43,7 +48,11 @@ sub open_website_paste_edge {
                 click_lastmatch();
             }
             assert_and_click("windows-Edge-no-profiling");
-            assert_and_click("windows-Edge-complete-setup-confirm-and-start");
+            assert_and_click(["windows-Edge-complete-setup-confirm-and-start",
+                              "windows-Edge-complete-setup-confirm"]);
+            if (match_has_tag("windows-Edge-complete-setup-confirm")) {
+                assert_and_click("windows-Edge-complete-setup-confirm-and-start");
+            }
         }
     }
     if (check_screen("gui-warning-large-window")) {
@@ -173,6 +182,9 @@ sub run {
     assert_screen("windows-Notepad");
     if (check_screen("windows-Notepad-autosave-notice", timeout => 10)) {
         click_lastmatch();
+        $notepad_has_autosave = 1;
+    } elsif (check_var('WINDOWS_VERSION', 'win11x64')) {
+        # apparently there is no notification in Win11 about this "feature" anymore
         $notepad_has_autosave = 1;
     }
 

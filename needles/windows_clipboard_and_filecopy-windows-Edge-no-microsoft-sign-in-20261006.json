@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 60,
+      "ypos": 667,
+      "width": 180,
+      "height": 28,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-WIN11",
+    "windows-Edge-no-microsoft-sign-in"
+  ]
+}

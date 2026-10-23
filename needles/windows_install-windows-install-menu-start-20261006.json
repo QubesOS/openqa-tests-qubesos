@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "height": 43,
+      "ypos": 116,
+      "width": 447,
+      "click_point": {
+        "xpos": 64.5,
+        "ypos": 20.5
+      },
+      "xpos": 216
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "ENV-WIN11",
+    "windows-install-menu-start"
+  ]
+}

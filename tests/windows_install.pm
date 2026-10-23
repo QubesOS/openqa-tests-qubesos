@@ -77,9 +77,14 @@ sub run {
 
     background_script_run("script -e -c 'bash -x /usr/bin/qvm-create-windows-qube --optimize --netvm sys-firewall --disk-size 60 $extra_opts -i $windows_iso -a $answers_file windows-test; echo install-complete-\$?- >/dev/$testapi::serialdev' qvm-create-windows-qube.log </dev/null");
 
+    # Windows opens a start menu after install, possibly covering (and taking
+    # focus from) QWT installation
+    if (check_screen('windows-install-menu-start', timeout => 1500)) {
+        send_key('esc');
+    }
     # PV drivers confirmation sometimes doesn't get focus and then installer
     # can't click it. Click on it manually.
-    if (check_screen('windows-install-qwt-driver-confirm', timeout => 900)) {
+    if (check_screen('windows-install-qwt-driver-confirm', timeout => 90)) {
         click_lastmatch();
     }
 

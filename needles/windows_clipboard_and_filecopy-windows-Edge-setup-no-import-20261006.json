@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "ypos": 652,
+      "height": 25,
+      "type": "match",
+      "width": 187,
+      "xpos": 60
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "windows-Edge-setup-no-import"
+  ]
+}

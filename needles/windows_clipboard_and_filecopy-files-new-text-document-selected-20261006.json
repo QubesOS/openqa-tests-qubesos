@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 177,
+      "width": 136,
+      "height": 73,
+      "ypos": 173,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "files-new-text-document-selected"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "width": 185,
+      "height": 35,
+      "ypos": 402,
+      "type": "match",
+      "xpos": 628,
+      "click_point": {
+        "xpos": 42.5,
+        "ypos": 18.5
+      }
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-WIN11",
+    "windows-install-qwt-driver-confirm"
+  ]
+}

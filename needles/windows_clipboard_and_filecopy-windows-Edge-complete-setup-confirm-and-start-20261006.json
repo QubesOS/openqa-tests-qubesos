@@ -1,0 +1,19 @@
+{
+  "area": [
+    {
+      "xpos": 68,
+      "width": 180,
+      "ypos": 650,
+      "height": 23,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "ENV-WIN11",
+    "windows-Edge-complete-setup-confirm-and-continue",
+    "windows-Edge-complete-setup-confirm-and-start"
+  ]
+}

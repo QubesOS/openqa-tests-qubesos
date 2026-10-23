@@ -111,7 +111,7 @@ sub run {
         select_console('installation', await_console=>0);
     }
 
-    if (check_var("MACHINE", "hw7") or check_var("MACHINE", "hw12")) {
+    if (check_var("MACHINE", "hw7") or check_var("MACHINE", "hw12") or check_var("MACHINE", "hw16")) {
         select_root_console();
         # RTC battery not connected
         script_run("date -s @" . time());

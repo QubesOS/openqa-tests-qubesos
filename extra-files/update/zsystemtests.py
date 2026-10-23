@@ -35,11 +35,12 @@ def get_packages(dist, version):
     if dist == "ArchLinux":
         packages += ("qubes-vm-dom0-updates",)
         packages += ("pipewire-audio",)  # pipewire-utils on Fedora
+        # FIXME: include in default template
+        packages += ("qubes-vm-thunar",)
         packages.remove("qubes-gpg-split-tests") # not a separate package
         packages.remove("split-gpg2-tests") # not a separate package
         #packages.remove("qubes-core-admin-client") # not packaged yet
-        packages.remove("qubes-audio-daemon") # not packaged yet
-        packages.remove("qubes-video-companion") # not packaged yet
+        packages.remove("python3-uinput") # removed?
     return packages
 
 def zsystemtests(os_data, log, **kwargs):

@@ -1,0 +1,32 @@
+{
+  "area": [
+    {
+      "xpos": 376,
+      "ypos": 44,
+      "height": 16,
+      "type": "match",
+      "width": 74
+    },
+    {
+      "xpos": 583,
+      "height": 18,
+      "ypos": 43,
+      "type": "match",
+      "width": 109
+    },
+    {
+      "width": 181,
+      "height": 21,
+      "ypos": 119,
+      "type": "match",
+      "xpos": 299
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw19",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "personal-firefox"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "height": 21,
+      "ypos": 519,
+      "type": "match",
+      "width": 161,
+      "xpos": 323
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw19",
+    "ENV-VERSION-4.3",
+    "ENV-debian-13",
+    "new-qube-remove-firefox"
+  ]
+}

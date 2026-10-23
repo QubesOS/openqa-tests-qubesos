@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "xpos": 847,
+      "width": 95,
+      "height": 25,
+      "ypos": 189,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DESKTOP-i3",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "firefox-multitab-close"
+  ]
+}

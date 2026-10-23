@@ -1,0 +1,32 @@
+{
+  "area": [
+    {
+      "xpos": 290,
+      "ypos": 36,
+      "height": 16,
+      "type": "match",
+      "width": 74
+    },
+    {
+      "xpos": 500,
+      "width": 109,
+      "type": "match",
+      "height": 18,
+      "ypos": 35
+    },
+    {
+      "xpos": 214,
+      "ypos": 102,
+      "height": 21,
+      "type": "match",
+      "width": 174
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-GUIVM",
+    "ENV-VERSION-4.3",
+    "ENV-fedora-44",
+    "personal-firefox"
+  ]
+}

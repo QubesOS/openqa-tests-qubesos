@@ -57,7 +57,7 @@ skip_if_unavailable=True
     my $qubes_ver = get_var('VERSION');
     assert_script_run("echo '[qubes-testing]
 name = Qubes updates testing
-baseurl = http://yum.qubes-os.org/r$qubes_ver/current-testing/host/fc37
+baseurl = http://yum.qubes-os.org/r$qubes_ver/current-testing/host/fc41
 gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-qubes-$qubes_ver-primary
 gpgcheck = 1
 ' > /etc/yum.repos.d/qubes-dom0-testing.repo");

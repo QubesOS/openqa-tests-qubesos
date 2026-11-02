@@ -185,7 +185,7 @@ GenericSegmentationOffload=false
 GenericReceiveOffload=false
 LargeReceiveOffload=false
 """
-                await vm.run_for_stdio(f'mkdir -p /etc/systemd/network && cat > "{link}"', input=content)
+                await vm.run_for_stdio(f'mkdir -p /etc/systemd/network && cat > "{link}"', input=content, user='root')
             vm.features['fixups-installed'] = True
 
     @qubes.ext.handler('domain-start-failed')

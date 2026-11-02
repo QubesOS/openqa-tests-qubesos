@@ -1,0 +1,31 @@
+{
+  "area": [
+    {
+      "height": 16,
+      "ypos": 561,
+      "xpos": 1742,
+      "width": 74,
+      "type": "match"
+    },
+    {
+      "width": 109,
+      "type": "match",
+      "ypos": 560,
+      "xpos": 1949,
+      "height": 18
+    },
+    {
+      "height": 21,
+      "ypos": 641,
+      "xpos": 1555,
+      "width": 174,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "personal-firefox"
+  ]
+}

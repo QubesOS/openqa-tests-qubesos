@@ -1,0 +1,21 @@
+{
+  "area": [
+    {
+      "click_point": {
+        "ypos": 14,
+        "xpos": 31
+      },
+      "ypos": 580,
+      "xpos": 640,
+      "type": "match",
+      "width": 64,
+      "height": 20
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-VERSION-4.3",
+    "ENV-WIN11",
+    "windows-Explorer-new"
+  ]
+}

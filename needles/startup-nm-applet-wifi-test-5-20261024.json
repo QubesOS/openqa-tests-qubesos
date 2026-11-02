@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "height": 24,
+      "width": 92,
+      "type": "match",
+      "ypos": 384,
+      "xpos": 357
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw5",
+    "nm-applet-wifi-test-5"
+  ]
+}

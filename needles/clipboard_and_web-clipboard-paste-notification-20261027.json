@@ -1,0 +1,18 @@
+{
+  "area": [
+    {
+      "width": 283,
+      "type": "match",
+      "ypos": 56,
+      "xpos": 714,
+      "height": 65
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw13",
+    "ENV-VERSION-4.3",
+    "ENV-WIN11",
+    "clipboard-paste-notification"
+  ]
+}

@@ -24,6 +24,7 @@ def get_packages(dist, version):
         "qubes-video-companion",
         "fio",
         "PackageKit" if dist == "RedHat" else "packagekit",
+        "xclip",
     ]
     if dist == "RedHat":
         packages += [

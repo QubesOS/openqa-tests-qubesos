@@ -166,6 +166,8 @@ def zsystemtests(os_data, log, **kwargs):
                 "Error reading from stdin: Kind\\(UnexpectedEof\\)"
             ):
                 f.write(f'journal_ignore_pattern_add "{pattern}" 2>/dev/null || journal_ignore_patterns_list+=( "{pattern}" )\n')
+            # having updates available isn't really a reason to fail a test
+            f.write('systemcheck_skip_functions+=" check_operating_system "\n')
 
     try:
         subprocess.call(["systemctl", "disable", "dnsmasq"],

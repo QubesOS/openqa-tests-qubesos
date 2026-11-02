@@ -186,6 +186,25 @@ GenericReceiveOffload=false
 LargeReceiveOffload=false
 """
                 await vm.run_for_stdio(f'mkdir -p /etc/systemd/network && cat > "{link}"', input=content)
+            # Copy ~/.xsession-errors (where qrexec-fork-server and other
+            # session programs log) to the journal, so it gets to the console
+            # too (systemd.journald.forward_to_console=1 above)
+            # for https://github.com/QubesOS/qubes-issues/issues/10740
+            unit = "qubes-ci-xsession-errors.service"
+            content = b"""[Unit]
+Description=Copy ~user/.xsession-errors to the journal
+After=qubes-mount-dirs.service
+
+[Service]
+ExecStart=/usr/bin/tail -n +1 -F /home/user/.xsession-errors
+SyslogIdentifier=xsession-errors
+
+[Install]
+WantedBy=multi-user.target
+"""
+            await vm.run_for_stdio(
+                f'cat > "/etc/systemd/system/{unit}" && systemctl enable "{unit}"',
+                input=content, user='root')
             vm.features['fixups-installed'] = True
 
     @qubes.ext.handler('domain-start-failed')

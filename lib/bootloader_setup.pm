@@ -150,6 +150,7 @@ sub heads_generate_hotp {
         send_key 'down';
         send_key 'ret';
         if (check_screen('heads-integrity-report', timeout => 5)) {
+            send_key 'down';
             send_key 'ret';
         }
         assert_screen('heads-tpm-reset-confirm');
@@ -257,7 +258,7 @@ sub heads_boot_default {
     # Default boot
     send_key 'ret';
     if (check_screen(['heads-no-hashes', 'heads-hash-mismatch', 'heads-update-hashes-menu'], 10)) {
-        if (check_screen('heads-update-hashes-menu')) {
+        if (match_has_tag('heads-update-hashes-menu')) {
             # Menu:
             # - Investigate discrepancies
             # - Update checksums now
@@ -304,7 +305,8 @@ sub heads_boot_default {
     }
     if (check_screen(['heads-no-default-set', 'heads-boot-list-changed'], 10)) {
         send_key 'ret';
-        assert_screen('heads-boot-menu-list');
+    }
+    if (check_screen('heads-boot-menu-list'), 30) {
         send_key 'ret';
         assert_screen(['heads-confirm-default-select', 'heads-confirm-default-selected', 'heads-confirm-default-text']);
         if (match_has_tag('heads-confirm-default-text')) {
@@ -347,6 +349,10 @@ sub heads_boot_default {
             sleep(10);
         }
         # FIXME: this and the next one matches prompt from earlier (still at the top of the screen)
+        if (check_screen('heads-tpm-owner-prompt', timeout => 30)) {
+            type_string '12345678';
+            send_key 'ret';
+        }
         if (check_screen('heads-gpg-card-prompt', timeout => 30)) {
             send_key 'ret';
             sleep(2);

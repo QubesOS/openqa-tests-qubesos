@@ -12,6 +12,7 @@
   "tags": [
     "ENV-HEADS",
     "ENV-MACHINE-hw5",
-    "heads-hash-mismatch"
+    "heads-hash-mismatch",
+    "heads-update-hashes-menu"
   ]
 }

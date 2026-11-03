@@ -185,7 +185,7 @@ GenericSegmentationOffload=false
 GenericReceiveOffload=false
 LargeReceiveOffload=false
 """
-                await vm.run_for_stdio(f'mkdir -p /etc/systemd/network && cat > "{link}"', input=content)
+                await vm.run_for_stdio(f'mkdir -p /etc/systemd/network && cat > "{link}"', input=content, user='root')
             # Copy ~/.xsession-errors (where qrexec-fork-server and other
             # session programs log) to the journal, so it gets to the console
             # too (systemd.journald.forward_to_console=1 above)

@@ -5,6 +5,7 @@ import fcntl
 
 def get_packages(dist, version):
     packages = [
+        "ethtool",
         "createrepo_c" if dist != "Debian" else "createrepo-c",
         "dnsmasq",
         "python3-pip" if dist != "ArchLinux" else "python-pip",

@@ -265,6 +265,13 @@ sub heads_boot_default {
             send_key 'down';
         }
         send_key 'ret';
+        if (check_screen("heads-menu", 10)) {
+            # some versions seems to go back to the menu the first time...
+            send_key 'ret';
+            if (check_screen("heads-hash-mismatch", 10)) {
+                send_key 'ret';
+            }
+        }
         if (check_screen("heads-hash-mismatch-list", 10)) {
             send_key 'q';
         }

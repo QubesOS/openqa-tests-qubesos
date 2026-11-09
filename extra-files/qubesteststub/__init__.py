@@ -187,17 +187,18 @@ LargeReceiveOffload=false
 """
                 await vm.run_for_stdio(f'mkdir -p /etc/systemd/network && cat > "{link}"', input=content, user='root')
             # Copy ~/.xsession-errors (where qrexec-fork-server and other
-            # session programs log) to the journal, so it gets to the console
-            # too (systemd.journald.forward_to_console=1 above)
+            # session programs log) to the console. Not via the journal:
+            # whonixcheck fails on journal lines matching "error" or "warn".
             # for https://github.com/QubesOS/qubes-issues/issues/10740
-            unit = "qubes-ci-xsession-errors.service"
+            unit = "qubes-ci-xsession-log.service"
             content = b"""[Unit]
-Description=Copy ~user/.xsession-errors to the journal
+Description=Copy the X session log to the console
 After=qubes-mount-dirs.service
 
 [Service]
 ExecStart=/usr/bin/tail -n +1 -F /home/user/.xsession-errors
-SyslogIdentifier=xsession-errors
+StandardOutput=tty
+StandardError=inherit
 
 [Install]
 WantedBy=multi-user.target

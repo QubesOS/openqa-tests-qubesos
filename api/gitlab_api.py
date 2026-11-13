@@ -519,6 +519,9 @@ def run_test_pr(comment_details):
     machine_list = comment_params.get("MACHINE", "")
     if machine_list and not re.match(r"\A([a-z0-9]+,)*[a-z0-9]+\Z", machine_list):
         return respond(400, "invalid MACHINE value")
+    flavor = comment_params.get("FLAVOR", "")
+    if flavor and not re.match(r"\A[a-z0-9-]+\Z", flavor):
+        return respond(400, "invalid FLAVOR value")
 
     # get associated gitlab job
     job_versions = [f"r{version}"]
@@ -572,7 +575,9 @@ def run_test_pr(comment_details):
     values = {}
     values['DISTRI'] = 'qubesos'
     values['VERSION'] = version
-    if pr_details['base']['repo']['name'] in (
+    if flavor:
+        values['FLAVOR'] = flavor
+    elif pr_details['base']['repo']['name'] in (
             'qubes-linux-kernel',
             'qubes-gui-agent-linux',
             'qubes-grub2',

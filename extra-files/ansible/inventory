@@ -8,4 +8,4 @@ ansible_connection=local
 testvideolin
 
 [standalonevms:vars]
-ansible_connection=qubes
+ansible_connection=qubesos.core.qubes

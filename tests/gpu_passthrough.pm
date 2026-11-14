@@ -37,8 +37,6 @@ sub run {
     assert_script_run('qvm-run -pu root $mgmt_tpl "dnf install -y qubes-ansible-vm || apt-get install -y qubes-ansible-vm"', timeout => 90);
     assert_script_run('qvm-shutdown --wait $mgmt_tpl');
 
-    assert_script_run("qvm-template install debian-12-xfce", timeout => 900);
-
     # update extra files
     open EXTRA_TARBALL, "tar cz -C " . testapi::get_required_var('CASEDIR') . " extra-files/ansible|base64|" or die "failed to create tarball";
     my $tarball = do { local $/; <EXTRA_TARBALL> };

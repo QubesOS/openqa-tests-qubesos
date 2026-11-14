@@ -1,17 +1,19 @@
 - hosts: local
   tasks:
       - name: Create testvideolin
-        qubesos:
-          guest: testvideolin
+        qubesos.core.qube:
+          name: testvideolin
           vmtype: "StandaloneVM"
-          label: red
           state: present
-          template: "debian-12-xfce"
+          clone_src: "debian-13-xfce"
           properties:
+            label: red
             kernel: ""
             virt_mode: "hvm"
             memory: 4000
             maxmem: 0
+          features:
+            video-model: "none"
           devices:
             strategy: strict
             items: >
@@ -25,15 +27,14 @@
 - hosts: local
   tasks:
     - name: Restart
-      qubesos:
-        guest: testvideolin
+      qubesos.core.qube:
+        name: testvideolin
         state: restarted
-        wait: true
 
 - hosts: testvideolin
   become: yes
   tasks:
-    - name: Run glxinfo via VirtualGL and capture output
+    - name: Run glxinfo and capture output
       shell: |
         VGL_DISPLAY=egl vglrun glxinfo -B
       register: glxinfo_output

@@ -7,7 +7,8 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 
 def get_webgl_fps_firefox() -> float:
-    driver = webdriver.Firefox()
+    service = webdriver.FirefoxService(executable_path="/usr/local/bin/geckodriver")
+    driver = webdriver.Firefox(service=service)
     try:
         # default values
         width = 3840

@@ -20,13 +20,8 @@
       - nvidia-driver
       - python3-selenium
       - mesa-utils
+      - linux-headers-amd64
     state: present
-
-- name: Add 'user' to the 'render' group
-  user:
-    name: user
-    groups: render
-    append: yes
 
 - name: Get VirtualGL GPG keyring
   get_url:
@@ -51,15 +46,15 @@
     name: virtualgl
     state: present
 
-- name: Download Geckodriver v0.36.0 archive
+- name: Download Geckodriver v0.37.1 archive
   get_url:
-    url: https://github.com/mozilla/geckodriver/releases/download/v0.36.0/geckodriver-v0.36.0-linux64.tar.gz
-    dest: /tmp/geckodriver-v0.36.0-linux64.tar.gz
+    url: https://github.com/mozilla/geckodriver/releases/download/v0.37.1/geckodriver-v0.37.1-linux64.tar.gz
+    dest: /tmp/geckodriver-v0.37.1-linux64.tar.gz
     mode: '0644'
 
 - name: Extract geckodriver binary into /usr/local/bin
   unarchive:
-    src: /tmp/geckodriver-v0.36.0-linux64.tar.gz
+    src: /tmp/geckodriver-v0.37.1-linux64.tar.gz
     dest: /usr/local/bin
     remote_src: yes
     creates: /usr/local/bin/geckodriver
@@ -74,7 +69,7 @@
 
 - name: Remove downloaded Geckodriver archive
   file:
-    path: /tmp/geckodriver-v0.36.0-linux64.tar.gz
+    path: /tmp/geckodriver-v0.37.1-linux64.tar.gz
     state: absent
 
 - name: Copy webgl.py

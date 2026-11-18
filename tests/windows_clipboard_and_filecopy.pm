@@ -27,6 +27,13 @@ sub open_website_paste_edge {
         click_lastmatch();
         assert_and_click("windows-Edge-complete-setup-confirm");
         assert_and_click("windows-Edge-no-signin");
+    } elsif (check_screen("windows-Edge-customize", timeout => 5)) {
+        assert_and_click("windows-Edge-customize-continue");
+        wait_still_screen;
+        assert_and_click("windows-Edge-customize-continue");
+        assert_and_click("windows-Edge-no-signin");
+        assert_and_click("windows-Edge-setup-no-import");
+        assert_and_click("windows-Edge-customize-continue");
     } else {
         if (check_screen("windows-Edge-no-microsoft-sign-in", timeout => 15)) {
             click_lastmatch();

@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 403,
+      "ypos": 658,
+      "width": 222,
+      "height": 24,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-WIN10",
+    "windows-Edge-no-signin"
+  ]
+}

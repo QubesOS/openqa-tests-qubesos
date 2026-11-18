@@ -36,12 +36,13 @@ sub run {
     }
 
     if (match_has_tag('whonix-connected') or match_has_tag('whonix-news')) {
-        # already configured and connected, wait for notification to disappear
-        assert_screen('no-notifications');
         # this may show up some time after connecting...
         if (check_screen("whonix-news", timeout => 300)) {
-            assert_and_click("whonix-news");
+            send_key('ret');
+            #assert_and_click("whonix-news");
         }
+        # already configured and connected, wait for notification to disappear
+        assert_screen('no-notifications');
         return;
     }
 

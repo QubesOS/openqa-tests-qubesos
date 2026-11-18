@@ -113,6 +113,9 @@ sub run {
     } elsif (check_var("MACHINE", "hw22")) {
         $extra_xen_opts .= ' com1=115200,8n1';
         $serial_console = "com1";
+    } elsif (check_var("MACHINE", "hw23")) {
+        # not really AMT, but LPSS on PCI bus 0
+        $extra_xen_opts .= ' com1=115200,8n1,amt';
     }
     $extra_xen_opts .= ' noreboot sync_console';
     script_run "sed -i -e 's/console=none/console=vga,$serial_console $extra_xen_opts/' /mnt/sysimage/boot/grub2/grub.cfg";

@@ -29,17 +29,24 @@ sub run {
     $self->select_gui_console;
 
     x11_start_program('qvm-start sys-whonix', valid => 0);
+    # each systemcheck run (sys-whonix starts one) ends with a report window
+    my $systemchecks = 1;
     if (!check_screen(['whonix-connected', 'whonix-firstrun', 'whonix-news'], 120)) {
         # no firstrun wizard? maybe already accepted - verify it
         x11_start_program('qvm-run sys-whonix \'whonixcheck --gui\'', valid => 0);
+        $systemchecks++;
         assert_screen('whonix-connected', timeout => 60);
     }
 
     if (match_has_tag('whonix-connected') or match_has_tag('whonix-news')) {
         # this may show up some time after connecting...
-        if (check_screen("whonix-news", timeout => 300)) {
-            send_key('ret');
-            #assert_and_click("whonix-news");
+        # close every report, or a late one takes the keyboard in a later test
+        for (1 .. $systemchecks) {
+            if (check_screen("whonix-news", timeout => 300)) {
+                send_key('ret');
+                #assert_and_click("whonix-news");
+                wait_still_screen;
+            }
         }
         # already configured and connected, wait for notification to disappear
         assert_screen('no-notifications');

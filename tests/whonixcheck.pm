@@ -34,11 +34,11 @@ sub run {
     x11_start_program('xterm');
     curl_via_netvm;
 
-    my @whonix_vms = split(/\n/, script_output("qvm-ls --raw-list|grep whonix"));
+    my @whonix_vms = map { s/\r//r } split(/\n/, script_output("qvm-ls --raw-list|grep whonix"));
     # sort sys-whonix first
     @whonix_vms = sort {
-        if ($a == 'sys-whonix') { return -1; }
-        if ($b == 'sys-whonix') { return  1; }
+        if ($a eq 'sys-whonix') { return -1; }
+        if ($b eq 'sys-whonix') { return  1; }
         return $a cmp $b;
     } @whonix_vms;
 

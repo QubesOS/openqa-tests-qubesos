@@ -48,6 +48,11 @@ sub run {
         next if /-dvm/;
         s/\r//;
         script_run("qvm-run -ap $_ systemctl --wait is-system-running </dev/null", timeout => 180);
+        if (/^sys-whonix$/) {
+            # its update check starts 5 min after boot, about now; systemcheck counts it as a failed unit while it runs
+            my $busy = script_run(q{qvm-run -pu root sys-whonix 'systemctl -q is-active qubes-update-check.timer || exit 0; for i in $(seq 84); do test "$(systemctl show -P LastTriggerUSecMonotonic qubes-update-check.timer)" != 0 && test "$(systemctl is-active qubes-update-check.service)" != activating && exit 0; sleep 5; done; exit 1' </dev/null}, timeout => 450);
+            record_info('update check', 'qubes-update-check in sys-whonix still running after 420 s') if $busy;
+        }
         my $ret = script_run("qvm-run -ap $_ 'LC_ALL=C whonixcheck --verbose --leak-tests --cli' 2>&1 </dev/null | tee whonixcheck-$_.log", 500);
         upload_logs("whonixcheck-$_.log");
         if ($ret != 0) {

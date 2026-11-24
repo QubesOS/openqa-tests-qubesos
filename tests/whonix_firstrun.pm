@@ -18,6 +18,7 @@
 use base "installedtest";
 use strict;
 use testapi;
+use serial_terminal;
 
 sub run {
     my ($self) = @_;
@@ -26,13 +27,16 @@ sub run {
         return;
     }
 
+    # usually already running: initial-setup starts it
+    select_root_console();
+    assert_script_run('qvm-start --skip-if-running sys-whonix', timeout => 120);
     $self->select_gui_console;
 
-    x11_start_program('qvm-start sys-whonix', valid => 0);
     # each systemcheck run (sys-whonix starts one) ends with a report window
     my $systemchecks = 1;
-    if (!check_screen(['whonix-connected', 'whonix-firstrun', 'whonix-news'], 120)) {
-        # no firstrun wizard? maybe already accepted - verify it
+    # its "Tor Bootstrap Test" step alone can take 300 s
+    if (!check_screen(['whonix-connected', 'whonix-firstrun', 'whonix-news'], 400)) {
+        # no report at all from sys-whonix's own check - start another one
         x11_start_program('qvm-run sys-whonix \'whonixcheck --gui\'', valid => 0);
         $systemchecks++;
         assert_screen('whonix-connected', timeout => 60);

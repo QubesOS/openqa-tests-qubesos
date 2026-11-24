@@ -320,7 +320,7 @@ sub post_fail_hook {
     my ($self) = @_;
     save_screenshot;
     $self->SUPER::post_fail_hook;
-
+    $self->collect_windows_logs('windows-test');
 };
 
 1;

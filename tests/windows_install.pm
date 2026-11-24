@@ -110,6 +110,7 @@ sub post_fail_hook {
     save_screenshot;
     $self->SUPER::post_fail_hook();
     upload_logs('/home/user/qvm-create-windows-qube.log', failok => 1);
+    $self->collect_windows_logs('windows-test');
 };
 
 1;

@@ -34,11 +34,20 @@ sub run {
     x11_start_program('xterm');
     curl_via_netvm;
 
-    my @whonix_vms = split(/\n/, script_output("qvm-ls --raw-list|grep whonix"));
+    # an image saved hours earlier has an expired consensus; sdwdate then gives up
+    my $consensus_stale = script_run(q{qvm-run -pu root sys-whonix 'f=/var/lib/tor/cached-microdesc-consensus; for i in $(seq 30); do test ! -e $f && exit 0; test $(date -u -d "$(sed -n "s/^valid-until //p" $f)" +%s) -gt $(date -u +%s) && exit 0; sleep 10; done; exit 1'}, timeout => 330);
+    record_info('consensus', 'Tor consensus in sys-whonix still expired after 300 s') if $consensus_stale;
+    if (!$consensus_stale && script_run(q{qvm-run -pu root sys-whonix 'for i in $(seq 30); do test -e /run/sdwdate/first_success && exit 1; journalctl -b -u sdwdate | grep -q "Giving up" && break; sleep 5; done; journalctl -b -u sdwdate | grep -q "Tor Consensus Time Sanity Check: fast"'}, timeout => 180) == 0) {
+        record_soft_failure('sdwdate in sys-whonix gave up on the expired Tor consensus; restarting it');
+        $self->save_and_upload_log('qvm-run -pu root sys-whonix journalctl -b -u sdwdate', 'sdwdate-before-restart-sys-whonix.log', {timeout => 120});
+        script_run(q{qvm-run -pu root sys-whonix 'systemctl restart sdwdate && timeout 300 sh -c "until test -e /run/sdwdate/first_success; do sleep 5; done"'}, timeout => 330);
+    }
+
+    my @whonix_vms = map { s/\r//r } split(/\n/, script_output("qvm-ls --raw-list|grep whonix"));
     # sort sys-whonix first
     @whonix_vms = sort {
-        if ($a == 'sys-whonix') { return -1; }
-        if ($b == 'sys-whonix') { return  1; }
+        if ($a eq 'sys-whonix') { return -1; }
+        if ($b eq 'sys-whonix') { return  1; }
         return $a cmp $b;
     } @whonix_vms;
 

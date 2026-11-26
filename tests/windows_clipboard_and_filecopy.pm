@@ -199,7 +199,12 @@ sub run {
     send_key("ctrl-a");
     send_key("ctrl-c");
     send_key("ctrl-shift-c");
-    assert_screen("clipboard-copy-notification");
+    # dom0 reads the qube's clipboard at once, maybe before Windows handled ctrl-c
+    unless (check_screen("clipboard-copy-notification")) {
+        record_info('retry', 'No clipboard copy notification, pressing ctrl-shift-c again');
+        send_key("ctrl-shift-c");
+        assert_screen("clipboard-copy-notification");
+    }
 
     # try to start "Firefox" in personal
     assert_and_click("menu");

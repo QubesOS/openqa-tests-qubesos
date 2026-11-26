@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 898,
+      "type": "match",
+      "height": 25,
+      "width": 23,
+      "ypos": 3
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw23",
+    "ENV-VERSION-4.3",
+    "nm-applet"
+  ]
+}

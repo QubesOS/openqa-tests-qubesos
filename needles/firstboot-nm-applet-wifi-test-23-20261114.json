@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "xpos": 410,
+      "ypos": 356,
+      "width": 103,
+      "height": 28,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw23",
+    "ENV-VERSION-4.3",
+    "nm-applet-wifi-test-23"
+  ]
+}

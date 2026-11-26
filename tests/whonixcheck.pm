@@ -66,6 +66,8 @@ sub run {
             assert_script_run("qvm-shutdown --wait $_", timeout => 90);
         }
     }
+    # Whonix sends Tor's own log to this file, not to the journal
+    $self->save_and_upload_log("qvm-run -pu root sys-whonix 'cat /run/tor/log'", 'tor-log-sys-whonix.log', {timeout => 120, failok => 1}) if ($failed);
     type_string("exit\n");
     die "systemcheck failed" if ($failed);
 }

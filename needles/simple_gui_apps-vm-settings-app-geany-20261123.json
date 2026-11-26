@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 1265,
+      "xpos": 1521,
+      "width": 119,
+      "height": 19
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-MACHINE-hw17",
+    "ENV-VERSION-4.3",
+    "vm-settings-app-geany"
+  ]
+}

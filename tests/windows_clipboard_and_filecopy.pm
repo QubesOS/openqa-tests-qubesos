@@ -19,6 +19,30 @@ use base "installedtest";
 use strict;
 use testapi;
 use utils;
+use Encode qw(encode);
+use MIME::Base64 qw(encode_base64);
+
+# Win11's Notepad drops typed keys while it spell-checks the word just typed.
+# Its settings.dat is a registry hive; reg import fails silently, hence the query.
+my $notepad_spellcheck_off = <<'EOF';
+$d = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsNotepad_8wekyb3d8bbwe\Settings"
+md -Force $d | Out-Null
+$b = [Text.Encoding]::Unicode.GetBytes('{"Enabled":false,"FileExtensionsOverrides":[]}') + 0, 0 + [BitConverter]::GetBytes([DateTime]::Now.ToFileTime())
+"Windows Registry Editor Version 5.00`r`n`r`n[HKEY_USERS\np\LocalState]`r`n""SpellCheckState""=hex(5f5e10c):" + (($b | % { '{0:x2}' -f $_ }) -join ',') | Out-File -Encoding Unicode $env:TEMP\np.reg
+reg load HKU\np $d\settings.dat
+reg import $env:TEMP\np.reg
+reg query HKU\np\LocalState /v SpellCheckState
+$r = $LASTEXITCODE
+reg unload HKU\np
+exit $r
+EOF
+
+sub disable_notepad_spellcheck {
+    my $cmd = encode_base64(encode('UTF-16LE', $notepad_spellcheck_off), '');
+    x11_start_program('xterm');
+    assert_script_run("qvm-run -p windows-test 'powershell -NoProfile -EncodedCommand $cmd'", timeout => 180);
+    type_string("exit\n");
+}
 
 sub open_website_paste_edge {
     assert_and_click("menu-vm-windows-Edge");
@@ -118,6 +142,8 @@ sub run {
         }
         sleep(5);
     }
+
+    disable_notepad_spellcheck() if check_var('WINDOWS_VERSION', 'win11x64');
 
     # try to start File Explorer
     assert_and_click("menu");

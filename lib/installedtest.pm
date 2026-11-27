@@ -294,6 +294,32 @@ sub save_and_upload_log {
     return $ret;
 }
 
+sub collect_windows_logs {
+    my ($self, $vm) = @_;
+
+    my $wait_up = "sh -c 'until timeout 60 qvm-run --no-gui -p $vm \"echo ok\" | grep -q ok; do sleep 10; done'";
+    my $was_running = script_run("qvm-check --running $vm", timeout => 30) == 0;
+    script_run("qvm-start $vm", timeout => 300) unless $was_running;
+    # a Windows qube hung after QWT setup answers again after a restart, and keeps its logs
+    if (script_run("timeout " . ($was_running ? 120 : 600) . " $wait_up", timeout => 630) != 0) {
+        script_run("qvm-kill $vm", timeout => 120);
+        script_run("qvm-start $vm", timeout => 300);
+        return if script_run("timeout 600 $wait_up", timeout => 630) != 0;
+    }
+
+    $self->save_and_upload_log("timeout 300 qvm-run --no-gui -p $vm 'wevtutil qe System /c:500 /rd:true /f:text'",
+        "$vm-system-events.log", {timeout => 330, failok => 1});
+    $self->save_and_upload_log("timeout 300 qvm-run --no-gui -p $vm 'wevtutil qe Application /c:300 /rd:true /f:text'",
+        "$vm-application-events.log", {timeout => 330, failok => 1});
+    # QWT logs (LogDir is one of the first two) and the driver install log
+    my $ps = q{Get-Service | Where-Object { $_.Name -match 'qubes|qrexec|qga|xen' } | Format-Table -AutoSize | Out-String; }
+        . q{Get-ChildItem -File -Path 'C:\Program Files\Qubes Tools\log\*','Q:\Qubes Logs\*','C:\qwt-install*.log','C:\Windows\INF\setupapi.dev.log' -ErrorAction SilentlyContinue | }
+        . q{ForEach-Object { '=== ' + $_.FullName; Get-Content -LiteralPath $_.FullName -Tail 1000 }};
+    $ps =~ s/\$/\\\$/g;
+    $self->save_and_upload_log("timeout 300 qvm-run --no-gui -p $vm \"powershell -NoProfile -Command \\\"$ps\\\"\"",
+        "$vm-qwt-logs.log", {timeout => 330, failok => 1});
+}
+
 sub upload_packages_versions {
     my ($self, %args) = @_;
 
